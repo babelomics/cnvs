@@ -1,0 +1,16 @@
+{
+  "name": "Copy Number Variation Server",
+  "version": "1.0.0",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/babelomics/cnvs.git"
+  },
+  "scripts": {
+    "build": "./build.sh"
+  },
+  "devDependencies": {
+    "crisper": "^1.0.3",
+    "uglify-js": "^2.4.24",
+    "vulcanize": "1.8.1"
+  }
+}

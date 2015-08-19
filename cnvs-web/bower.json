@@ -1,0 +1,29 @@
+{
+  "name": "Copy Number Variation Server",
+  "version": "1.0.0",
+  "homepage": "https://github.com/babelomics/svs",
+  "authors": [
+    "frastor <frastor@gmail.com>",
+    "aaleman <alejandro.aleman.ramos@gmail.com>",
+    "agaor <>"
+  ],
+  "license": "GPLv2",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components"
+  ],
+  "dependencies": {
+    "polymer": "Polymer/polymer#1.0.9",
+    "iron-flex-layout": "PolymerElements/iron-flex-layout#1.0.3",
+    "fontawesome": "*",
+    "cookies-js": "~1.1.0",
+    "crypto-js-evanvosberg": "3.1.4",
+    "highcharts-release": "~4.0.4",
+    "underscore": "~1.7.0",
+    "jquery": "1.11.3",
+    "backbone": "~1.1.2",
+    "qtip2": "~2.2.1",
+    "pako": "~0.2.6"
+  }
+}

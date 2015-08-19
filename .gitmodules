@@ -1,0 +1,6 @@
+[submodule "svs-web/lib/jsorolla"]
+	path = svs-web/lib/jsorolla
+	url = https://github.com/opencb/jsorolla.git
+[submodule "cnvs-web/lib/jsorolla"]
+	path = cnvs-web/lib/jsorolla
+	url = https://github.com/opencb/jsorolla.git
