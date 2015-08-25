@@ -32,6 +32,7 @@ public class CNVSCopyNumberVariationXLSDataReader implements DataReader<CNV> {
     private FileInputStream fis;
     private Map<Integer, String> header;
     private Iterator<Row> it;
+    private int nc;// numero de campos-columnas
 
     public CNVSCopyNumberVariationXLSDataReader(String fileName) {
         this();
@@ -89,8 +90,8 @@ public class CNVSCopyNumberVariationXLSDataReader implements DataReader<CNV> {
     	//header 
     	
     	Row headerRow= this.it.next();
-    	
-    	for(int i = 0; i < headerRow.getLastCellNum(); i++){
+    	nc = headerRow.getLastCellNum();
+    	for(int i = 0; i < nc; i++){
     		Cell cell = headerRow.getCell(i, Row.CREATE_NULL_AS_BLANK);
     		this.header.put(i,cell.getStringCellValue());    		
     	}
@@ -105,7 +106,7 @@ public class CNVSCopyNumberVariationXLSDataReader implements DataReader<CNV> {
         return false;
     }
 
-    @Override
+   
     public List<CNV> read() {
     	CNV cnv = new CNV();
     	if(this.it.hasNext()){
@@ -113,18 +114,64 @@ public class CNVSCopyNumberVariationXLSDataReader implements DataReader<CNV> {
     		List<CNV> list = new ArrayList<>();
     		Row r = this.it.next();
     		
-    		String ref = r.getCell(0, Row.CREATE_NULL_AS_BLANK).getStringCellValue();
+    		
+			String ref = r.getCell(0, Row.CREATE_NULL_AS_BLANK).getStringCellValue();
     		String chr = r.getCell(1, Row.CREATE_NULL_AS_BLANK).getStringCellValue();
     		long start = (long) r.getCell(2, Row.CREATE_NULL_AS_BLANK).getNumericCellValue();
     		long end = (long) r.getCell(3, Row.CREATE_NULL_AS_BLANK).getNumericCellValue();
+    		String ass = r.getCell(4, Row.CREATE_NULL_AS_BLANK).getStringCellValue();
+    		String gen = r.getCell(5, Row.CREATE_NULL_AS_BLANK).getStringCellValue();
+    		String bc = r.getCell(6, Row.CREATE_NULL_AS_BLANK).getStringCellValue();
+    		String size = r.getCell(7, Row.CREATE_NULL_AS_BLANK).getStringCellValue();
     		String type = r.getCell(8, Row.CREATE_NULL_AS_BLANK).getStringCellValue();
+    		String doses = r.getCell(9, Row.CREATE_NULL_AS_BLANK).getStringCellValue();
+    		String clisig = r.getCell(10, Row.CREATE_NULL_AS_BLANK).getStringCellValue();
+    		String inhe = r.getCell(11, Row.CREATE_NULL_AS_BLANK).getStringCellValue();
+    		int nv = (int)r.getCell(12, Row.CREATE_NULL_AS_BLANK).getNumericCellValue();
+    		String cellLine = r.getCell(13, Row.CREATE_NULL_AS_BLANK).getStringCellValue();
+    		String chrgen = r.getCell(14, Row.CREATE_NULL_AS_BLANK).getStringCellValue();
+    		String status = r.getCell(15, Row.CREATE_NULL_AS_BLANK).getStringCellValue();
+    		String typeSample = r.getCell(16, Row.CREATE_NULL_AS_BLANK).getStringCellValue();
+    		String hpo = r.getCell(17, Row.CREATE_NULL_AS_BLANK).getStringCellValue();
+    		int yearB = (int)r.getCell(18, Row.CREATE_NULL_AS_BLANK).getNumericCellValue();
+    		String refediag = r.getCell(19, Row.CREATE_NULL_AS_BLANK).getStringCellValue();
+    		String ehnic = r.getCell(20, Row.CREATE_NULL_AS_BLANK).getStringCellValue();
+    		String geo = r.getCell(21, Row.CREATE_NULL_AS_BLANK).getStringCellValue();
+    		String deciId = r.getCell(22, Row.CREATE_NULL_AS_BLANK).getStringCellValue();
+    		String arrayPlat = r.getCell(23, Row.CREATE_NULL_AS_BLANK).getStringCellValue();
+    		String arrayId = r.getCell(24, Row.CREATE_NULL_AS_BLANK).getStringCellValue();
+    		String centerId = r.getCell(25, Row.CREATE_NULL_AS_BLANK).getStringCellValue();
+	    		
+	    		
     		
     		
     		cnv.setRef(ref);
     		cnv.setChromosome(chr);
     		cnv.setStart(start);
     		cnv.setEnd(end);
+    		cnv.setAssembly(ass);
+    		cnv.setGenes(gen);
+    		cnv.setBrazoCromo(bc);
+    		cnv.setSize(size);
     		cnv.setType(type);
+    		cnv.setDoses(doses);
+    		cnv.setClinical_Sig(clisig);
+    		cnv.setInheritance(inhe);
+    		cnv.setNv(nv);
+    		cnv.setCell_Line(cellLine);
+    		cnv.setChromoGender(chrgen);
+    		cnv.setStatus(status);
+    		cnv.setType_Sample(typeSample);
+    		cnv.setPhenotype(hpo);
+    		cnv.setYear_of_Birth(yearB);
+    		cnv.setReferal_diag(refediag);
+    		cnv.setEthnic_Group(ehnic);
+    		cnv.setOrigin(geo);
+    		cnv.setDecipher_id(deciId);
+    		cnv.setArray_platform(arrayPlat);
+    		cnv.setArray_id(arrayId);
+    		cnv.setCenter_id(centerId);
+    		
     		
     		list.add(cnv);
     		
