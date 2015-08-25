@@ -5,7 +5,7 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>org.babelomics.cnvs</groupId>
-    <artifactId>csvs</artifactId>
+    <artifactId>cnvs</artifactId>
     <version>${cnvs.version}</version>
     <packaging>pom</packaging>
 
@@ -169,6 +169,11 @@
                 <artifactId>morphia</artifactId>
                 <version>1.0.1</version>
             </dependency>
+            <dependency>
+			<groupId>org.apache.poi</groupId>
+			<artifactId>poi-ooxml</artifactId>
+			<version>3.7</version>
+		</dependency>
         </dependencies>
     </dependencyManagement>
 

@@ -22,7 +22,7 @@ public class CNVSMain {
     public static void main(String[] args) throws IOException {
 
 
-        String fileName = "Planilla.xls";
+        String fileName = "/home/sgallego/appl-clinic11/cnvsCarga/Planilla.xls";
 
         DataReader<CNV> reader = new CNVSCopyNumberVariationXLSDataReader(fileName);
         DataWriter<CNV> writer = new CNVSCopyNumberVariationMongoDataWriter();

@@ -32,11 +32,14 @@ public class CNVSCopyNumberVariationMongoDataWriter implements DataWriter<CNV> {
     @Override
     public boolean write(CNV elem) {
         System.out.println(elem.toString());
-        return false;
+        return true;
     }
 
     @Override
     public boolean write(List<CNV> batch) {
-        return false;
+    	for(CNV c: batch){
+    		this.write(c);
+    	}
+        return true;
     }
 }
