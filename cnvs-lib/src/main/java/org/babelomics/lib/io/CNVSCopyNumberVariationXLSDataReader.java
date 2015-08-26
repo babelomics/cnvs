@@ -143,7 +143,7 @@ public class CNVSCopyNumberVariationXLSDataReader implements DataReader<CNV> {
     		String ass = r.getCell(4, Row.CREATE_NULL_AS_BLANK).getStringCellValue();
     		String gen = r.getCell(5, Row.CREATE_NULL_AS_BLANK).getStringCellValue();
     		String locus = r.getCell(6, Row.CREATE_NULL_AS_BLANK).getStringCellValue();
-    		String size = r.getCell(7, Row.CREATE_NULL_AS_BLANK).getStringCellValue();
+    		String size = r.getCell(7, Row.CREATE_NULL_AS_BLANK).getNumericCellValue() + "";
     		String type = r.getCell(8, Row.CREATE_NULL_AS_BLANK).getStringCellValue();
     		String doses = r.getCell(9, Row.CREATE_NULL_AS_BLANK).getStringCellValue();
     		String clisig = r.getCell(10, Row.CREATE_NULL_AS_BLANK).getStringCellValue();
@@ -158,10 +158,10 @@ public class CNVSCopyNumberVariationXLSDataReader implements DataReader<CNV> {
     		String refediag = r.getCell(19, Row.CREATE_NULL_AS_BLANK).getStringCellValue();
     		String ehnic = r.getCell(20, Row.CREATE_NULL_AS_BLANK).getStringCellValue();
     		String geo = r.getCell(21, Row.CREATE_NULL_AS_BLANK).getStringCellValue();
-    		String deciId = r.getCell(22, Row.CREATE_NULL_AS_BLANK).getStringCellValue();
+    		String deciId = r.getCell(22, Row.CREATE_NULL_AS_BLANK).getNumericCellValue() + "";
     		String arrayPlat = r.getCell(23, Row.CREATE_NULL_AS_BLANK).getStringCellValue();
     		String arrayId = r.getCell(24, Row.CREATE_NULL_AS_BLANK).getStringCellValue();
-    		String centerId = r.getCell(25, Row.CREATE_NULL_AS_BLANK).getStringCellValue();
+    		String centerId = r.getCell(25, Row.CREATE_NULL_AS_BLANK).getNumericCellValue() + "";
 	    		
 	    		
     		

@@ -33,7 +33,7 @@ public class CNVSMain {
     	Datastore datastore = morphia.createDatastore(mongoClient, "cnvs");
     	datastore.ensureIndexes();
 
-        String fileName = "/home/sgallego/appl-clinic11/cnvsCarga/Planilla.xls";
+        String fileName = "/home/sgallego/appl-clinic11/cnvsCarga/Proba4.xls";
 
         DataReader<CNV> reader = new CNVSCopyNumberVariationXLSDataReader(fileName);
         DataWriter<CNV> writer = new CNVSCopyNumberVariationMongoDataWriter(datastore);
