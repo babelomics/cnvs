@@ -13,17 +13,12 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
-import jersey.repackaged.com.google.common.collect.Lists;
 
-/**
- * @author Alejandro Alemán Ramos <alejandro.aleman.ramos@gmail.com>
- */
 public class CNVSCopyNumberVariationXLSDataReader implements DataReader<CNV> {
 
     private String fileName;
@@ -33,6 +28,7 @@ public class CNVSCopyNumberVariationXLSDataReader implements DataReader<CNV> {
     private Map<Integer, String> header;
     private Iterator<Row> it;
     private int nc;// numero de campos-columnas
+    private int vacio = 0;
 
     public CNVSCopyNumberVariationXLSDataReader(String fileName) {
         this();
@@ -40,7 +36,7 @@ public class CNVSCopyNumberVariationXLSDataReader implements DataReader<CNV> {
         
     }
     public CNVSCopyNumberVariationXLSDataReader() {
-	this.header= new HashMap<>();
+    	this.header= new HashMap<>();
 	}
 
     @Override
@@ -88,15 +84,35 @@ public class CNVSCopyNumberVariationXLSDataReader implements DataReader<CNV> {
     	
     	
     	//header 
-    	
+    	/*
     	Row headerRow= this.it.next();
     	nc = headerRow.getLastCellNum();
     	for(int i = 0; i < nc; i++){
     		Cell cell = headerRow.getCell(i, Row.CREATE_NULL_AS_BLANK);
     		this.header.put(i,cell.getStringCellValue());    		
     	}
-    	
+    	*/
     	System.out.println(this.header);
+    	
+    	String[] columnas = {"CASE Ref", "Chromosome", "Start", "End", "Assembly", "Genes", " " , "Size (Kb)", "Type of variant" , "Doses", "Clinical significance", "Inheritance", "Number of variants", "Cell line", "Chromosomal gender", "Status", "Type of sample", "Phenotype (HPO)", "Year of Birth", "Referral diagnosis", "Ethnic group", "Geographical origin (if Spain, province)", "Decipher ID", "Array platform", "array ID", "ID"};
+    	Row headerRow= this.it.next();
+    	nc = headerRow.getLastCellNum();
+    	for(int i = 0; i < nc; i++){
+    		String col = (headerRow.getCell(i, Row.CREATE_NULL_AS_BLANK)).getStringCellValue();
+    		if(!(columnas[i].replaceAll(" ", "")).equals(col.replaceAll(" ", ""))){
+    			System.out.println("El programa no reconoce las columnas, las columnas deben ser exactamente estas: ");
+    			System.out.print("{ ");
+				for (String c: columnas){
+					System.out.print(c);
+					System.out.print(",");
+				}
+				System.out.println("}");
+				System.out.println( "La columna que se difencia es la numero " + i + "(" + col + ") debería ser "+ columnas[i] + "");
+				System.exit(0);
+    		}
+    	}
+    		 		
+    	System.out.println("*** Se han reconocido todas las columnas del excel, cargando a la base de datos: ***");
     	
         return true;
     }
@@ -109,13 +125,18 @@ public class CNVSCopyNumberVariationXLSDataReader implements DataReader<CNV> {
    
     public List<CNV> read() {
     	CNV cnv = new CNV();
-    	if(this.it.hasNext()){
+    	
+    	if(this.it.hasNext() && vacio <3){
 
     		List<CNV> list = new ArrayList<>();
     		Row r = this.it.next();
     		
     		
 			String ref = r.getCell(0, Row.CREATE_NULL_AS_BLANK).getStringCellValue();
+			if(ref.equals("")){
+				vacio++;
+				System.out.println("PASO POR VACIO **************************"+ vacio);
+			}
     		String chr = r.getCell(1, Row.CREATE_NULL_AS_BLANK).getStringCellValue();
     		long start = (long) r.getCell(2, Row.CREATE_NULL_AS_BLANK).getNumericCellValue();
     		long end = (long) r.getCell(3, Row.CREATE_NULL_AS_BLANK).getNumericCellValue();

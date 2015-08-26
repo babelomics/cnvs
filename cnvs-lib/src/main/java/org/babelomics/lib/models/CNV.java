@@ -16,12 +16,12 @@ public class CNV {
 	private int type;
 	private int doses;
 	private int clinicalSig;
-	private String inheritance;
+	private int inheritance;
 	private int nv; // Numero de variant
-	private String cellLine;
-	private String chromoGender;
+	private int cellLine; // 0 germline, 1 somatic
+	private int chromGender; //0 XX, 1 XY
 	private int status; //0 proband, 1 Father, 2 Mother, 3 Control, 4 Other relatives
-	private String typeSample;
+	private int typeSample;
 	private String phenotype;
 	private int yearOfBirth;
 	private String referalDiag;
@@ -37,7 +37,7 @@ public class CNV {
 	
 	public CNV(String ref, String chromosome, long start, long end,
 			String assembly, String genes, String brazo_Cromo, String size,
-			int type, int doses, int clinical_Sig, String inheritance, int nv,
+			int type, int doses, int clinical_Sig, int inheritance, int nv,
 			String cell_Line, String chromo_Gender, int status,
 			String type_Sample, String phenotype, int year_of_Birth,
 			String referal_diag, String ethnic_Group, String origin,
@@ -170,14 +170,14 @@ public class CNV {
 	}
 
 	public void setClinical_Sig(String clinical_Sig) {
+		
 		switch (clinical_Sig.toLowerCase()) {
 		case "benign":
 			this.clinicalSig = 0;
-			break;
+			break;		
 		case "pathogenic":
 			this.clinicalSig = 1;
 			break;
-
 		case "likely benign":
 			this.clinicalSig = 2;
 			break;
@@ -194,11 +194,43 @@ public class CNV {
 	}
 
 	public String getInheritance() {
-		return inheritance;
+		switch (inheritance) {
+		case 0:
+			return "de novo constitutive";
+		case 1:
+			return "maternally inherited";
+
+		case 2:
+			return "paternally inherited";
+		case 3:
+			return "unknown";
+		default:
+			return "";
+		}
+		
 	}
 
 	public void setInheritance(String inheritance) {
-		this.inheritance = inheritance;
+		switch (inheritance.toLowerCase()) {
+		case "de novo constitutive":
+			this.inheritance = 0;
+			break;
+		case "maternally inherited":
+			this.inheritance = 1;
+			break;
+
+		case "paternally inherited":
+			this.inheritance = 2;
+			break;
+		case "unknown":
+			this.inheritance = 3;
+			break;
+		default:
+			this.inheritance = -1;
+			break;
+
+		}
+		
 	}
 
 	public int getNv() {
@@ -210,19 +242,58 @@ public class CNV {
 	}
 
 	public String getCell_Line() {
-		return cellLine;
+		switch (cellLine) {
+		case 0:
+			return "germline";
+		case 1:
+			return "somatic";
+		default:
+			return "";
+		}
+
 	}
 
 	public void setCell_Line(String cell_Line) {
-		this.cellLine = cell_Line;
+		switch (cell_Line.toLowerCase()) {
+		case "germline":
+			this.cellLine = 0;
+			break;
+		case "somatic":
+			this.cellLine = 1;
+			break;
+		default:
+			this.cellLine = -1;
+			break;
+
+		}
+		
 	}
 
 	public String getChromoGender() {
-		return chromoGender;
+		switch (chromGender) {
+		case 0:
+			return "XX";
+		case 1:
+			return "XY";
+		default:
+			return "";
+		}
+		
 	}
 
-	public void setChromoGender(String chromo_Gender) {
-		this.chromoGender = chromo_Gender;
+	public void setChromoGender(String chromGender) {
+		switch (chromGender.toLowerCase()) {
+		case "xx":
+			this.chromGender = 0;
+			break;
+		case "xy":
+			this.chromGender = 1;
+			break;
+		default:
+			this.chromGender = -1;
+			break;
+
+		}
 	}
 
 	public String getStatus() {
@@ -245,20 +316,19 @@ public class CNV {
 
 	public void setStatus(String status) {
 		switch (status.toLowerCase()) {
-		case "Proband":
+		case "proband":
 			this.status = 0;
 			break;
-		case "Father":
+		case "father":
 			this.status = 1;
 			break;
-
-		case "Mother":
+		case "mother":
 			this.status = 2;
 			break;
-		case "Control":
+		case "control":
 			this.status = 3;
 			break;
-		case "Other relatives":
+		case "other relatives":
 			this.status = 4;
 			break;
 		default:
@@ -269,11 +339,47 @@ public class CNV {
 	}
 
 	public String getType_Sample() {
-		return typeSample;
+		switch (typeSample) {
+		case 0:
+			return "blood";
+		case 1:
+			return "amniotic fluid";
+
+		case 2:
+			return "chorionic villi";
+		case 3:
+			return "tumour";
+		case 4:
+			return "others";
+		default:
+			return "";
+		}
+	
 	}
 
 	public void setType_Sample(String type_Sample) {
-		this.typeSample = type_Sample;
+		switch (type_Sample.toLowerCase()) {
+		case "blood":
+			this.typeSample = 0;
+			break;
+		case "amniotic fluid":
+			this.typeSample = 1;
+			break;
+		case "chorionic villi":
+			this.typeSample = 2;
+			break;
+		case "tumour":
+			this.typeSample = 3;
+			break;
+		case "others":
+			this.typeSample = 4;
+			break;
+		default:
+			this.typeSample = -1;
+			break;
+
+		}
+		
 	}
 
 	public String getPhenotype() {
@@ -360,7 +466,7 @@ public class CNV {
 				+ ", size=" + size + ", type=" + type + ", doses=" + doses
 				+ ", clinical_Sig=" + clinicalSig + ", inheritance="
 				+ inheritance + ", nv=" + nv + ", cell_Line=" + cellLine
-				+ ", chromo_Gender=" + chromoGender + ", status=" + status
+				+ ", chromo_Gender=" + chromGender + ", status=" + status
 				+ ", type_Sample=" + typeSample + ", phenotype=" + phenotype
 				+ ", year_of_Birth=" + yearOfBirth + ", referal_diag="
 				+ referalDiag + ", ethnic_Group=" + ethnicGroup + ", origin="
