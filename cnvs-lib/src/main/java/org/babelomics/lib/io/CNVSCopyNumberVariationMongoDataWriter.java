@@ -1,6 +1,7 @@
 package org.babelomics.lib.io;
 
 import org.babelomics.lib.models.CNV;
+import org.mongodb.morphia.Datastore;
 import org.opencb.commons.io.DataWriter;
 
 import java.util.List;
@@ -9,7 +10,18 @@ import java.util.List;
  * @author Alejandro Alemán Ramos <alejandro.aleman.ramos@gmail.com>
  */
 public class CNVSCopyNumberVariationMongoDataWriter implements DataWriter<CNV> {
-    @Override
+	
+	Datastore datastore;
+	
+	public static final int CHUNK_SIZE_SMALL = 1000;
+    public static final int CHUNK_SIZE_BIG = 10000;	
+	
+    public CNVSCopyNumberVariationMongoDataWriter(Datastore datastore) {
+		super();
+		this.datastore = datastore;
+	}
+
+	@Override
     public boolean open() {
         return false;
     }
@@ -31,8 +43,10 @@ public class CNVSCopyNumberVariationMongoDataWriter implements DataWriter<CNV> {
 
     @Override
     public boolean write(CNV elem) {
-        System.out.println(elem.toString());
-        return true;
+    	
+    	datastore.save(elem);
+        
+    	return true;
     }
 
     @Override

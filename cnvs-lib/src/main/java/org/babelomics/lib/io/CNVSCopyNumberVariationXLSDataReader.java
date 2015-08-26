@@ -142,7 +142,7 @@ public class CNVSCopyNumberVariationXLSDataReader implements DataReader<CNV> {
     		long end = (long) r.getCell(3, Row.CREATE_NULL_AS_BLANK).getNumericCellValue();
     		String ass = r.getCell(4, Row.CREATE_NULL_AS_BLANK).getStringCellValue();
     		String gen = r.getCell(5, Row.CREATE_NULL_AS_BLANK).getStringCellValue();
-    		String bc = r.getCell(6, Row.CREATE_NULL_AS_BLANK).getStringCellValue();
+    		String locus = r.getCell(6, Row.CREATE_NULL_AS_BLANK).getStringCellValue();
     		String size = r.getCell(7, Row.CREATE_NULL_AS_BLANK).getStringCellValue();
     		String type = r.getCell(8, Row.CREATE_NULL_AS_BLANK).getStringCellValue();
     		String doses = r.getCell(9, Row.CREATE_NULL_AS_BLANK).getStringCellValue();
@@ -172,7 +172,7 @@ public class CNVSCopyNumberVariationXLSDataReader implements DataReader<CNV> {
     		cnv.setEnd(end);
     		cnv.setAssembly(ass);
     		cnv.setGenes(gen);
-    		cnv.setBrazoCromo(bc);
+    		cnv.setLocus(locus);
     		cnv.setSize(size);
     		cnv.setType(type);
     		cnv.setDoses(doses);

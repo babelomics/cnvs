@@ -1,79 +1,82 @@
 package org.babelomics.lib.models;
 
-/**
- * @author Alejandro Alemán Ramos <alejandro.aleman.ramos@gmail.com>
- */
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import org.babelomics.lib.io.CNVSCopyNumberVariationMongoDataWriter;
+import org.bson.types.ObjectId;
+import org.mongodb.morphia.annotations.*;
+
+@Entity(noClassnameStored=true)
+@Indexes(@Index(name = "index", value="c,p,e", unique = true))
+
 public class CNV {
 
+	@Id
+	private ObjectId id;
+	
+	@Property("r")
 	private String ref;
+	@Property("c")
 	private String chromosome;
+	@Property("s")
 	private long start;
+	@Property("e")
 	private long end;
+	@Property("a")
 	private String assembly;
+	@Property("g")
 	private String genes;
-	private String brazoCromo;
+	@Property("l")
+	private String locus;
+	@Property("sz")
 	private String size;
+	@Property("t")
 	private int type;
+	@Property("d")
 	private int doses;
+	@Property("cs")
 	private int clinicalSig;
+	@Property("i")
 	private int inheritance;
 	private int nv; // Numero de variant
+	@Property("cl")
 	private int cellLine; // 0 germline, 1 somatic
+	@Property("cg")
 	private int chromGender; //0 XX, 1 XY
+	@Property("st")
 	private int status; //0 proband, 1 Father, 2 Mother, 3 Control, 4 Other relatives
+	@Property("ts")
 	private int typeSample;
+	@Property("p")
 	private String phenotype;
+	@Property("y")
 	private int yearOfBirth;
+	@Property("rd")
 	private String referalDiag;
+	@Property("eg")
 	private String ethnicGroup;
+	@Property("o")
 	private String origin;
+	@Property("di")
 	private String decipherId;
+	@Property("ap")
 	private String arrayPlatform;
+	@Property("ai")
 	private String arrayId;
+	@Property("ci")
 	private String centerId;
 	
+	@Property("_at")
+    private Map<String, Object> attr;
 	
-	
-	
-	public CNV(String ref, String chromosome, long start, long end,
-			String assembly, String genes, String brazo_Cromo, String size,
-			int type, int doses, int clinical_Sig, int inheritance, int nv,
-			String cell_Line, String chromo_Gender, int status,
-			String type_Sample, String phenotype, int year_of_Birth,
-			String referal_diag, String ethnic_Group, String origin,
-			String decipher_id, String array_platform, String array_id,
-			String center_id) {
-		this.setRef(ref);
-//		this.ref = ref;
-//		this.chromosome = chromosome;
-//		this.start = start;
-//		this.end = end;
-//		this.assembly = assembly;
-//		this.genes = genes;
-//		this.brazo_Cromo = brazo_Cromo;
-//		this.size = size;
-//		this.type = type;
-//		this.doses = doses;
-//		this.clinical_Sig = clinical_Sig;
-//		this.inheritance = inheritance;
-//		this.nv = nv;
-//		this.cell_Line = cell_Line;
-//		this.chromo_Gender = chromo_Gender;
-//		this.status = status;
-//		this.type_Sample = type_Sample;
-//		this.phenotype = phenotype;
-//		this.year_of_Birth = year_of_Birth;
-//		this.referal_diag = referal_diag;
-//		this.ethnic_Group = ethnic_Group;
-//		this.origin = origin;
-//		this.decipher_id = decipher_id;
-//		this.array_platform = array_platform;
-//		this.array_id = array_id;
-//		this.center_id = center_id;
-	}
+
 
 	public CNV() {
-		super();
+        this.attr = new HashMap<>();
+
 	}
 
 	public String getAssembly() {
@@ -92,12 +95,12 @@ public class CNV {
 		this.genes = genes;
 	}
 
-	public String getBrazoCromo() {
-		return brazoCromo;
+	public String getLocus() {
+		return locus;
 	}
 
-	public void setBrazoCromo(String brazoCromo) {
-		this.brazoCromo = brazoCromo;
+	public void setLocus(String locus) {
+		this.locus = locus;
 	}
 
 	public String getSize() {
@@ -462,7 +465,7 @@ public class CNV {
 	public String toString() {
 		return "CNV [ref=" + ref + ", chromosome=" + chromosome + ", start="
 				+ start + ", end=" + end + ", assembly=" + assembly
-				+ ", genes=" + genes + ", brazo_Cromo=" + brazoCromo
+				+ ", genes=" + genes + ", brazo_Cromo=" + locus
 				+ ", size=" + size + ", type=" + type + ", doses=" + doses
 				+ ", clinical_Sig=" + clinicalSig + ", inheritance="
 				+ inheritance + ", nv=" + nv + ", cell_Line=" + cellLine
@@ -539,6 +542,16 @@ public class CNV {
 		this.ref = ref;
 	}
 	
+	 @PrePersist
+	    private void prePresist() {
+
+	        String chunkSmall = this.getChromosome() + "_" + this.getStart() / CNVSCopyNumberVariationMongoDataWriter.CHUNK_SIZE_SMALL + "_" + CNVSCopyNumberVariationMongoDataWriter.CHUNK_SIZE_SMALL / 1000 + "k";
+	        String chunkBig = this.getChromosome() + "_" + this.getStart() / CNVSCopyNumberVariationMongoDataWriter.CHUNK_SIZE_BIG + "_" + CNVSCopyNumberVariationMongoDataWriter.CHUNK_SIZE_BIG / 1000 + "k";
+	        List<String> chunks = Arrays.asList(chunkSmall, chunkBig);
+
+	        this.attr.put("chIds", chunks);
+
+	    }
 	
 	
 
