@@ -16,9 +16,17 @@ public class CNV {
 
 	@Id
 	private ObjectId id;
-	
+
 	@Property("r")
 	private String ref;
+	@Property("di")
+	private long decipherId;
+	@Property("ci1")
+	private String centerId1;
+	@Property("ci2")
+	private String centerId2;
+	@Property("ci3")
+	private String centerId3;
 	@Property("c")
 	private String chromosome;
 	@Property("s")
@@ -28,11 +36,11 @@ public class CNV {
 	@Property("a")
 	private String assembly;
 	@Property("g")
-	private String genes;
+	private String genes; // ARRAY
 	@Property("l")
 	private String locus;
-	@Property("sz")
-	private String size;
+	/*@Property("sz")
+	private String size; */ // LO QUITAMOS DE BD
 	@Property("t")
 	private int type;
 	@Property("d")
@@ -50,32 +58,34 @@ public class CNV {
 	private int status; //0 proband, 1 Father, 2 Mother, 3 Control, 4 Other relatives
 	@Property("ts")
 	private int typeSample;
+	@Property("rd")
+	private String referalDiag;
 	@Property("p")
 	private String phenotype;
 	@Property("y")
 	private int yearOfBirth;
-	@Property("rd")
-	private String referalDiag;
 	@Property("eg")
 	private String ethnicGroup;
 	@Property("o")
 	private String origin;
-	@Property("di")
-	private String decipherId;
+
+
+
+
 	@Property("ap")
 	private String arrayPlatform;
 	@Property("ai")
 	private String arrayId;
-	@Property("ci")
-	private String centerId;
-	
+	@Property("co")
+	private String comments;
+
 	@Property("_at")
-    private Map<String, Object> attr;
-	
+	private Map<String, Object> attr;
+
 
 
 	public CNV() {
-        this.attr = new HashMap<>();
+		this.attr = new HashMap<>();
 
 	}
 
@@ -103,13 +113,13 @@ public class CNV {
 		this.locus = locus;
 	}
 
-	public String getSize() {
+	/*public String getSize() {
 		return size;
 	}
 
 	public void setSize(String size) {
 		this.size = size;
-	}
+	}*/
 
 	public String getDoses() {
 		switch (doses) {
@@ -130,14 +140,14 @@ public class CNV {
 	}
 
 	public void setDoses(String doses) {
-		switch (doses.toLowerCase()) {
+		switch (doses.toLowerCase().replaceAll(" ", "")) {
 		case "x0":
 			this.doses = 0;
 			break;
 		case "x1":
 			this.doses = 1;
 			break;
-		case "x2":
+		case "x2(xy)":
 			this.doses = 2;
 			break;
 		case "x3":
@@ -150,10 +160,10 @@ public class CNV {
 			this.doses = -1;
 			break;
 		}
-		
+
 	}
 
-	public String getClinical_Sig() {
+	public String getClinicalSig() {
 		switch (clinicalSig) {
 		case 0:
 			return "benign";
@@ -169,12 +179,12 @@ public class CNV {
 		default:
 			return "";
 		}
-		
+
 	}
 
-	public void setClinical_Sig(String clinical_Sig) {
-		
-		switch (clinical_Sig.toLowerCase()) {
+	public void setClinicalSig(String clinicalSig) {
+
+		switch (clinicalSig.toLowerCase()) {
 		case "benign":
 			this.clinicalSig = 0;
 			break;		
@@ -210,7 +220,7 @@ public class CNV {
 		default:
 			return "";
 		}
-		
+
 	}
 
 	public void setInheritance(String inheritance) {
@@ -233,7 +243,7 @@ public class CNV {
 			break;
 
 		}
-		
+
 	}
 
 	public int getNv() {
@@ -244,7 +254,7 @@ public class CNV {
 		this.nv = nv;
 	}
 
-	public String getCell_Line() {
+	public String getCellLine() {
 		switch (cellLine) {
 		case 0:
 			return "germline";
@@ -256,8 +266,8 @@ public class CNV {
 
 	}
 
-	public void setCell_Line(String cell_Line) {
-		switch (cell_Line.toLowerCase()) {
+	public void setCellLine(String cellLine) {
+		switch (cellLine.toLowerCase()) {
 		case "germline":
 			this.cellLine = 0;
 			break;
@@ -269,7 +279,7 @@ public class CNV {
 			break;
 
 		}
-		
+
 	}
 
 	public String getChromoGender() {
@@ -281,7 +291,7 @@ public class CNV {
 		default:
 			return "";
 		}
-		
+
 	}
 
 	public void setChromoGender(String chromGender) {
@@ -341,7 +351,7 @@ public class CNV {
 		}
 	}
 
-	public String getType_Sample() {
+	public String getTypeSample() {
 		switch (typeSample) {
 		case 0:
 			return "blood";
@@ -357,11 +367,11 @@ public class CNV {
 		default:
 			return "";
 		}
-	
+
 	}
 
-	public void setType_Sample(String type_Sample) {
-		switch (type_Sample.toLowerCase()) {
+	public void setTypeSample(String typeSample) {
+		switch (typeSample.toLowerCase()) {
 		case "blood":
 			this.typeSample = 0;
 			break;
@@ -382,7 +392,7 @@ public class CNV {
 			break;
 
 		}
-		
+
 	}
 
 	public String getPhenotype() {
@@ -393,28 +403,28 @@ public class CNV {
 		this.phenotype = phenotype;
 	}
 
-	public int getYear_of_Birth() {
+	public int getYearOfBirth() {
 		return yearOfBirth;
 	}
 
-	public void setYear_of_Birth(int year_of_Birth) {
-		this.yearOfBirth = year_of_Birth;
+	public void setYearOfBirth(int yearOfBirth) {
+		this.yearOfBirth = yearOfBirth;
 	}
 
-	public String getReferal_diag() {
+	public String getReferalDiag() {
 		return referalDiag;
 	}
 
-	public void setReferal_diag(String referal_diag) {
-		this.referalDiag = referal_diag;
+	public void setReferalDiag(String referalDiag) {
+		this.referalDiag = referalDiag;
 	}
 
-	public String getEthnic_Group() {
+	public String getEthnicGroup() {
 		return ethnicGroup;
 	}
 
-	public void setEthnic_Group(String ethnic_Group) {
-		this.ethnicGroup = ethnic_Group;
+	public void setEthnicGroup(String ethnicGroup) {
+		this.ethnicGroup = ethnicGroup;
 	}
 
 	public String getOrigin() {
@@ -425,57 +435,84 @@ public class CNV {
 		this.origin = origin;
 	}
 
-	public String getDecipher_id() {
+	public long getDecipherId() {
 		return decipherId;
 	}
 
-	public void setDecipher_id(String decipher_id) {
-		this.decipherId = decipher_id;
+	public void setDecipherId(long decipherId) {
+		this.decipherId = decipherId;
 	}
 
-	public String getArray_platform() {
+	public String getArrayPlatform() {
 		return arrayPlatform;
 	}
 
-	public void setArray_platform(String array_platform) {
-		this.arrayPlatform = array_platform;
+	public void setArrayPlatform(String arrayPlatform) {
+		this.arrayPlatform = arrayPlatform;
 	}
 
-	public String getArray_id() {
+	public String getArrayId() {
 		return arrayId;
 	}
 
-	public void setArray_id(String array_id) {
-		this.arrayId = array_id;
+	public void setArrayId(String arrayId) {
+		this.arrayId = arrayId;
 	}
 
-	public String getCenter_id() {
-		return centerId;
-	}
 
-	public void setCenter_id(String center_id) {
-		this.centerId = center_id;
-	}
-/*
+	/*
 	public void setType(int type) {
 		this.type = type;
 	} */
 
 	@Override
 	public String toString() {
-		return "CNV [ref=" + ref + ", chromosome=" + chromosome + ", start="
-				+ start + ", end=" + end + ", assembly=" + assembly
-				+ ", genes=" + genes + ", brazo_Cromo=" + locus
-				+ ", size=" + size + ", type=" + type + ", doses=" + doses
-				+ ", clinical_Sig=" + clinicalSig + ", inheritance="
-				+ inheritance + ", nv=" + nv + ", cell_Line=" + cellLine
-				+ ", chromo_Gender=" + chromGender + ", status=" + status
-				+ ", type_Sample=" + typeSample + ", phenotype=" + phenotype
-				+ ", year_of_Birth=" + yearOfBirth + ", referal_diag="
-				+ referalDiag + ", ethnic_Group=" + ethnicGroup + ", origin="
-				+ origin + ", decipher_id=" + decipherId + ", array_platform="
-				+ arrayPlatform + ", array_id=" + arrayId + ", center_id="
-				+ centerId + "]";
+		return "CNV [id=" + id + ", ref=" + ref + ", decipherId=" + decipherId
+				+ ", centerId1=" + centerId1 + ", centerId2=" + centerId2
+				+ ", centerId3=" + centerId3 + ", chromosome=" + chromosome
+				+ ", start=" + start + ", end=" + end + ", assembly="
+				+ assembly + ", genes=" + genes + ", locus=" + locus
+				+ ", type=" + type + ", doses=" + doses + ", clinicalSig="
+				+ clinicalSig + ", inheritance=" + inheritance + ", nv=" + nv
+				+ ", cellLine=" + cellLine + ", chromGender=" + chromGender
+				+ ", status=" + status + ", typeSample=" + typeSample
+				+ ", referalDiag=" + referalDiag + ", phenotype=" + phenotype
+				+ ", yearOfBirth=" + yearOfBirth + ", ethnicGroup="
+				+ ethnicGroup + ", origin=" + origin + ", arrayPlatform="
+				+ arrayPlatform + ", arrayId=" + arrayId + ", comments="
+				+ comments + "]";
+	}
+
+	public String getCenterId1() {
+		return centerId1;
+	}
+
+	public void setCenterId1(String centerId1) {
+		this.centerId1 = centerId1;
+	}
+
+	public String getCenterId2() {
+		return centerId2;
+	}
+
+	public void setCenterId2(String centerId2) {
+		this.centerId2 = centerId2;
+	}
+
+	public String getCenterId3() {
+		return centerId3;
+	}
+
+	public void setCenterId3(String centerId3) {
+		this.centerId3 = centerId3;
+	}
+
+	public String getComments() {
+		return comments;
+	}
+
+	public void setComments(String comments) {
+		this.comments = comments;
 	}
 
 	public String getChromosome() {
@@ -541,18 +578,18 @@ public class CNV {
 	public void setRef(String ref) {
 		this.ref = ref;
 	}
-	
-	 @PrePersist
-	    private void prePresist() {
 
-	        String chunkSmall = this.getChromosome() + "_" + this.getStart() / CNVSCopyNumberVariationMongoDataWriter.CHUNK_SIZE_SMALL + "_" + CNVSCopyNumberVariationMongoDataWriter.CHUNK_SIZE_SMALL / 1000 + "k";
-	        String chunkBig = this.getChromosome() + "_" + this.getStart() / CNVSCopyNumberVariationMongoDataWriter.CHUNK_SIZE_BIG + "_" + CNVSCopyNumberVariationMongoDataWriter.CHUNK_SIZE_BIG / 1000 + "k";
-	        List<String> chunks = Arrays.asList(chunkSmall, chunkBig);
+	@PrePersist
+	private void prePresist() {
 
-	        this.attr.put("chIds", chunks);
+		String chunkSmall = this.getChromosome() + "_" + this.getStart() / CNVSCopyNumberVariationMongoDataWriter.CHUNK_SIZE_SMALL + "_" + CNVSCopyNumberVariationMongoDataWriter.CHUNK_SIZE_SMALL / 1000 + "k";
+		String chunkBig = this.getChromosome() + "_" + this.getStart() / CNVSCopyNumberVariationMongoDataWriter.CHUNK_SIZE_BIG + "_" + CNVSCopyNumberVariationMongoDataWriter.CHUNK_SIZE_BIG / 1000 + "k";
+		List<String> chunks = Arrays.asList(chunkSmall, chunkBig);
 
-	    }
-	
-	
+		this.attr.put("chIds", chunks);
+
+	}
+
+
 
 }

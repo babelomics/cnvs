@@ -43,7 +43,7 @@ public class OptionsParser {
     class CommandQuery implements Command {
 
         @Parameter(names = {"--all"}, description = "List all variants", arity = 0)
-        boolean variant;
+        boolean all;
 
         @Parameter(names = {"--regions"}, description = "Comma-separated list of regions")
         List<String> regionLIst = new ArrayList<>();
@@ -54,11 +54,13 @@ public class OptionsParser {
         @Parameter(names = {"--type"}, description = "Type of variant")
         String type = null;
 
-        @Parameter(names = {"--start"}, description = "Lower limit of the region")
-        Integer lowlimit = null;
+        @Parameter(names = {"--skip"}, description = "Skip")
+        Integer skip = null;
         
-        @Parameter(names = {"--limit"}, description = "Upper limit of the region")
-        Integer uplimit = null;
+        @Parameter(names = {"--limit"}, description = "Limit number of results ")
+        Integer limit = null;
+
+		
 
        
 
@@ -68,7 +70,8 @@ public class OptionsParser {
     @Parameters(commandNames = {"setup"}, commandDescription = "Setup Database")
     class CommandSetup implements Command {
 
-        @Parameter(names = {"--populate-diseases"}, description = "Populate diseases", arity = 0)
+    	//TENEMOS SETUP ? 
+       /* @Parameter(names = {"--populate-diseases"}, description = "Populate diseases", arity = 0)
         boolean populateDiseases;
 
         @Parameter(names = {"--new-disease"}, description = "New Diseases", arity = 1)
@@ -81,7 +84,7 @@ public class OptionsParser {
         @Parameter(names = {"--pass"}, description = "DB Pass", arity = 1)
         String pass = "";
 
-
+*/
     }
 
 
