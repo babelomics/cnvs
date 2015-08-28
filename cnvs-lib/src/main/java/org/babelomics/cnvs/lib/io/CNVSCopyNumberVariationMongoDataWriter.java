@@ -1,6 +1,6 @@
-package org.babelomics.lib.io;
+package org.babelomics.cnvs.lib.io;
 
-import org.babelomics.lib.models.CNV;
+import org.babelomics.cnvs.lib.models.CNV;
 import org.mongodb.morphia.Datastore;
 import org.opencb.commons.io.DataWriter;
 

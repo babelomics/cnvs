@@ -1,11 +1,11 @@
 package org.babelomics.cnvs.app.cli;
 
 import org.apache.commons.lang3.mutable.MutableLong;
-import org.babelomics.lib.io.CNVSCopyNumberVariationMongoDataWriter;
-import org.babelomics.lib.io.CNVSCopyNumberVariationXLSDataReader;
-import org.babelomics.lib.io.CNVSQueryManager;
-import org.babelomics.lib.io.CNVSRunner;
-import org.babelomics.lib.models.CNV;
+import org.babelomics.cnvs.lib.models.CNV;
+import org.babelomics.cnvs.lib.io.CNVSCopyNumberVariationMongoDataWriter;
+import org.babelomics.cnvs.lib.io.CNVSCopyNumberVariationXLSDataReader;
+import org.babelomics.cnvs.lib.io.CNVSQueryManager;
+import org.babelomics.cnvs.lib.io.CNVSRunner;
 import org.mongodb.morphia.Datastore;
 import org.mongodb.morphia.Morphia;
 import org.opencb.biodata.models.feature.Region;
@@ -15,13 +15,19 @@ import org.opencb.commons.io.DataWriter;
 import org.opencb.commons.run.Runner;
 import org.opencb.commons.run.Task;
 
+import com.beust.jcommander.Parameter;
 import com.beust.jcommander.ParameterException;
 import com.mongodb.MongoClient;
+import com.mongodb.MongoCredential;
+import com.mongodb.ServerAddress;
 
 import java.io.IOException;
 import java.nio.file.Paths;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -30,13 +36,18 @@ import java.util.regex.Pattern;
  */
 public class CNVSMain {
 
-	private static Datastore getDatastore() {
+	private static Datastore getDatastore(String host, String user, String pass) {
 
 		final Morphia morphia = new Morphia();
 		morphia.mapPackage("org.babelomics.cnvs.lib.models");
 
-		MongoClient mongoClient = new MongoClient();
-
+		MongoClient mongoClient;
+        if (user == "" && pass == "") {
+            mongoClient = new MongoClient(host);
+        } else {
+            MongoCredential credential = MongoCredential.createCredential(user, "cnvs", pass.toCharArray());
+            mongoClient = new MongoClient(new ServerAddress(host), Arrays.asList(credential));
+        }
 		Datastore datastore = morphia.createDatastore(mongoClient, "cnvs");
 		datastore.ensureIndexes();
 
@@ -91,9 +102,6 @@ public class CNVSMain {
 
 		try {
 			switch (parser.parse(args)) {
-			case "setup":
-				command = parser.getSetupCommand();
-				break;
 			case "load":
 				command = parser.getLoadCommand();
 				break;
@@ -112,20 +120,13 @@ public class CNVSMain {
 		}
 
 
-		if (command instanceof OptionsParser.CommandSetup) {
-			OptionsParser.CommandSetup c = (OptionsParser.CommandSetup) command;
-
-			Datastore datastore = getDatastore();
-			//Algun tipo de configuración ? 
-
-
-		}else if (command instanceof OptionsParser.CommandLoad) {
+		if (command instanceof OptionsParser.CommandLoad) {
 			OptionsParser.CommandLoad c = (OptionsParser.CommandLoad) command;
 
 
-			Datastore datastore = getDatastore();
+			Datastore datastore = getDatastore(c.host, c.user, c.pass);
 
-			String fileName = "/home/sgallego/appl-clinic11/cnvsCarga/Proba4.xls";
+			String fileName = c.input;
 
 			DataReader<CNV> reader = new CNVSCopyNumberVariationXLSDataReader(fileName);
 			DataWriter<CNV> writer = new CNVSCopyNumberVariationMongoDataWriter(datastore);
@@ -144,56 +145,68 @@ public class CNVSMain {
 		}else if (command instanceof OptionsParser.CommandQuery) {
 			OptionsParser.CommandQuery c = (OptionsParser.CommandQuery) command;
 
-			Datastore datastore = getDatastore();
+			Datastore datastore = getDatastore(c.host, c.user, c.pass);
 
 			CNVSQueryManager qm = new CNVSQueryManager(datastore);
 
+			Map<String,String> map = new HashMap<String, String>();
+				
+		        
+			if(!c.code.isEmpty()){
+				map.put("code", c.code);
+			}
+			
+			if(!c.decipId.isEmpty()){
+				map.put("decipId", c.decipId);
+			}
+			if(!c.regionList.isEmpty()){
+				map.put("region", c.regionList);
+			}
+			if(!c.assembly.isEmpty()){
+				map.put("assembly", c.assembly);
+			}
+			if(!c.band.isEmpty()){
+				map.put("band", c.band);
+			}
+			if(!c.doses.isEmpty()){
+				map.put("doses", c.doses);
+			}
+			if(!c.inhe.isEmpty()){
+				map.put("inheritance", c.inhe);
+			}
+			if(!c.cl.isEmpty()){
+				map.put("cellline", c.cl);
+			}
+			if(!c.gender.isEmpty()){
+				map.put("gender", c.gender);
+			}
+			if(!c.status.isEmpty()){
+				map.put("status", c.status);
+			}
+			
+			
+			if(!c.typeSample.isEmpty()){
+				map.put("typeSample", c.typeSample);
+			}
+			if(!c.hpo.isEmpty()){
+				map.put("hpo", c.hpo);
+			}
+			if(!c.ethic.isEmpty()){
+				map.put("ethic", c.ethic);
+			}
+			if(!c.origin.isEmpty()){
+				map.put("origin", c.origin);
+			}
+			
+			
+			
+			
+			MutableLong count = new MutableLong(-1);
 
-			if (c.all) {
-
-				System.out.println("\n\n All variants");
-
-				List<CNV> list = datastore.createQuery(CNV.class).asList();
-
-				for(CNV a: list){
-					System.out.println(a);
-				}
-
-			} else if (c.regionLIst.size() > 0) {
-
-
-				Pattern p = Pattern.compile("(\\w+):(\\d+)-(\\d+)");
-				List<Region> regionList = new ArrayList<>();
-
-				for (String region : c.regionLIst) {
-					Matcher m = p.matcher(region);
-
-					if (m.matches()) {
-						String chr = m.group(1);
-						int start = Integer.parseInt(m.group(2));
-						int end = Integer.parseInt(m.group(3));
-
-						Region r = new Region(chr, start, end);
-						regionList.add(r);
-
-					} else {
-						System.out.println("no: " + region);
-					}
-
-				}
-
-				long start = System.currentTimeMillis();
-				MutableLong count = new MutableLong(-1);
-
-				Iterable<CNV> query = qm.getVariantsByRegionList(regionList,  c.skip, c.limit, count);
-				for (CNV v : query) {
-					System.out.println("v = " + v);
-				}
-
-				long end = System.currentTimeMillis();
-				System.out.println(end - start);
-				System.out.println("count: " + count);
-
+			Iterable<CNV> res= qm.getVariantsByFilters(map, c.skip, c.limit, count);
+			
+			for(CNV cnv: res){
+				System.out.println(cnv);
 			}
 
 		}

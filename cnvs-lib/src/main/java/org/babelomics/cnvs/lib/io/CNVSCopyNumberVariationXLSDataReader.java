@@ -1,4 +1,4 @@
-package org.babelomics.lib.io;
+package org.babelomics.cnvs.lib.io;
 
 import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
 import org.apache.poi.ss.usermodel.Cell;
@@ -6,7 +6,7 @@ import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.ss.usermodel.WorkbookFactory;
-import org.babelomics.lib.models.CNV;
+import org.babelomics.cnvs.lib.models.CNV;
 import org.opencb.commons.io.DataReader;
 
 import java.io.FileInputStream;
@@ -97,8 +97,9 @@ public class CNVSCopyNumberVariationXLSDataReader implements DataReader<CNV> {
     	String[] columnas = {"#","01-Code", "02-Decipher ID","03-Local ID","03-Local ID","03-Local ID","04-Chromosome", "05-Start", "06-End", "07-Assembly", "08-Genes", "09-Band" , "10-Size (Kb)", "11-Type of variant" , "12-Doses", "13-Clinical significance", "14-Inheritance", "15-Number of variants", "16-Cell line", "17-Chromosomal gender", "18-Status", "19-Type of sample", "20-Referral diagnosis", "21-Phenotype (HPO)", "22-Year of Birth", "23-Ethnic group", "24-Geographic origin", "25-Array platform", "26-array ID", "27-Comments"};
     	Row headerRow= this.it.next();
     	nc = headerRow.getLastCellNum();
-    	for(int i = 0; i < nc; i++){
+    	for(int i = 0; i < columnas.length; i++){
     		String col = (headerRow.getCell(i, Row.CREATE_NULL_AS_BLANK)).getStringCellValue();
+    		
     		if(!(columnas[i].replaceAll(" ", "")).equals(col.replaceAll(" ", ""))){
     			System.out.println("El programa no reconoce las columnas, las columnas deben ser exactamente estas: ");
     			System.out.print("{ ");
@@ -122,6 +123,24 @@ public class CNVSCopyNumberVariationXLSDataReader implements DataReader<CNV> {
         return false;
     }
 
+    private String getCellAsString(Cell cell){
+    	
+    	String value = "";
+    	
+    	switch(cell.getCellType()){
+    	case Cell.CELL_TYPE_STRING:
+    		value = cell.getStringCellValue();
+    		break;
+    	case Cell.CELL_TYPE_NUMERIC:
+    		value = Integer.toString((int)cell.getNumericCellValue());
+    		break;
+    	default:
+    		value = "";
+    		break;
+    	}
+    	return value;
+    	
+    }
    
     public List<CNV> read() {
     	CNV cnv = new CNV();
@@ -138,10 +157,12 @@ public class CNVSCopyNumberVariationXLSDataReader implements DataReader<CNV> {
 				System.out.println("PASO POR VACIO **************************"+ vacio);
 			}
 			long deciId = (long)r.getCell(2, Row.CREATE_NULL_AS_BLANK).getNumericCellValue();
-			String centerId1 = r.getCell(3, Row.CREATE_NULL_AS_BLANK).getStringCellValue();
-			String centerId2 = r.getCell(4, Row.CREATE_NULL_AS_BLANK).getStringCellValue();
-			String centerId3 = r.getCell(5, Row.CREATE_NULL_AS_BLANK).getStringCellValue();
-    		String chr = r.getCell(6, Row.CREATE_NULL_AS_BLANK).getStringCellValue();
+			
+			String centerId1 = this.getCellAsString(r.getCell(3, Row.CREATE_NULL_AS_BLANK));
+			String centerId2 = this.getCellAsString(r.getCell(4, Row.CREATE_NULL_AS_BLANK));
+			String centerId3 = this.getCellAsString(r.getCell(5, Row.CREATE_NULL_AS_BLANK));
+			
+			String chr = this.getCellAsString(r.getCell(6, Row.CREATE_NULL_AS_BLANK));
     		long start = (long) r.getCell(7, Row.CREATE_NULL_AS_BLANK).getNumericCellValue();
     		long end = (long) r.getCell(8, Row.CREATE_NULL_AS_BLANK).getNumericCellValue();
     		String ass = r.getCell(9, Row.CREATE_NULL_AS_BLANK).getStringCellValue();
@@ -159,8 +180,8 @@ public class CNVSCopyNumberVariationXLSDataReader implements DataReader<CNV> {
     		String cellLine = r.getCell(18, Row.CREATE_NULL_AS_BLANK).getStringCellValue();
     		String chrgen = r.getCell(19, Row.CREATE_NULL_AS_BLANK).getStringCellValue();
     		String status = r.getCell(20, Row.CREATE_NULL_AS_BLANK).getStringCellValue();
-    		String refediag = r.getCell(21, Row.CREATE_NULL_AS_BLANK).getStringCellValue();// HABRA QUE RETOCARLO
-    		String typeSample = r.getCell(22, Row.CREATE_NULL_AS_BLANK).getStringCellValue();// HABRA QUE RETOCARLO
+    		String typeSample = r.getCell(21, Row.CREATE_NULL_AS_BLANK).getStringCellValue();// HABRA QUE RETOCARLO
+    		String refediag = r.getCell(22, Row.CREATE_NULL_AS_BLANK).getStringCellValue();// HABRA QUE RETOCARLO
     		String hpo = r.getCell(23, Row.CREATE_NULL_AS_BLANK).getStringCellValue();
     		int yearB = (int)r.getCell(24, Row.CREATE_NULL_AS_BLANK).getNumericCellValue();
     		String ehnic = r.getCell(25, Row.CREATE_NULL_AS_BLANK).getStringCellValue();
@@ -192,8 +213,8 @@ public class CNVSCopyNumberVariationXLSDataReader implements DataReader<CNV> {
     		cnv.setCellLine(cellLine);
     		cnv.setChromoGender(chrgen);
     		cnv.setStatus(status);
-    		cnv.setReferalDiag(refediag);
     		cnv.setTypeSample(typeSample);
+    		cnv.setReferalDiag(refediag);
     		cnv.setPhenotype(hpo);
     		cnv.setYearOfBirth(yearB);
     		cnv.setEthnicGroup(ehnic);

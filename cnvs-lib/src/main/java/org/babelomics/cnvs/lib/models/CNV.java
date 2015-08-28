@@ -1,16 +1,16 @@
-package org.babelomics.lib.models;
+package org.babelomics.cnvs.lib.models;
 
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.babelomics.lib.io.CNVSCopyNumberVariationMongoDataWriter;
+import org.babelomics.cnvs.lib.io.CNVSCopyNumberVariationMongoDataWriter;
 import org.bson.types.ObjectId;
 import org.mongodb.morphia.annotations.*;
 
 @Entity(noClassnameStored=true)
-@Indexes(@Index(name = "index", value="c,p,e", unique = true))
+@Indexes(@Index(name = "index", value="c,s,e"))
 
 public class CNV {
 
@@ -175,7 +175,7 @@ public class CNV {
 		case 3:
 			return "likely pathogenic";
 		case 4:
-			return "uncertain";
+			return "vous";
 		default:
 			return "";
 		}
