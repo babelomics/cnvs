@@ -51,56 +51,56 @@ public class OptionsParser {
         boolean all = false;
         
         @Parameter(names = {"--code"}, description = "Code INGEMM-ING, NIM GENETIICS-NIM, QGENOMICS-QGE, SANTIAGO-USC")
-        String code = null;
+        String code = "";
         
         @Parameter(names = {"--decipherId"}, description = "Decipher ID")
-        String decipId = null;
+        String decipId = "";
         
         @Parameter(names = {"--regions"}, description = "Comma-separated list of regions")//HECHO
         String regionList;
         
         @Parameter(names = {"--assembly"}, description = "Assembly hg18, hg19")
-        String assembly = null;
+        String assembly = "";
         
         @Parameter(names = {"--band"}, description = "Band")
-        String band = null;
+        String band = "";
         
         @Parameter(names = {"--type"}, description = "Type of variant: gain, loss or LOH neutral")
-        String type = null;
+        String type = "";
         
         @Parameter(names = {"--doses"}, description = "Doses: x0,x1,x2(XY),x3")
-        String doses = null;
+        String doses = "";
 
         @Parameter(names = {"--inheritance"}, description = "Inheritance: de novo constitutive, maternally inherited, paternally inherited, unknown")
-        String inhe = null;
+        String inhe = "";
         
         @Parameter(names = {"--cl"}, description = "Cell Line")
-        String cl = null;
+        String cl = "";
         
         @Parameter(names = {"--gender"}, description = "Chromosomal gender")
-        String gender = null;
+        String gender = "";
         
         @Parameter(names = {"--status"}, description = "Status")
-        String status = null;
+        String status = "";
 
 
         @Parameter(names = {"--typeS"}, description = "Type of sample")
-        String typeSample = null;
+        String typeSample = "";
 
         @Parameter(names = {"--hpo"}, description = "Phenotype (HPO)")
-        String hpo = null;
+        String hpo = "";
         
         @Parameter(names = {"--ethic"}, description = "Ethic Group")
-        String ethic = null;
+        String ethic = "";
 
         @Parameter(names = {"--geo"}, description = "Geographic origin")
-        String origin = null;
+        String origin = "";
         
         @Parameter(names = {"--skip"}, description = "Skip")
-        int skip = 0;
-        
+        int skip;
+       
         @Parameter(names = {"--limit"}, description = "Limit number of results ")
-        int limit = 10;
+        int limit;
         
         @Parameter(names = {"--host"}, description = "DB host", arity = 1)
         String host = "localhost";

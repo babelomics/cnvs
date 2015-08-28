@@ -17,6 +17,7 @@ import org.mongodb.morphia.query.Query;
 import org.opencb.biodata.models.feature.Region;
 import org.apache.commons.lang3.mutable.MutableLong;
 
+import com.google.common.base.Splitter;
 import com.mongodb.AggregationOutput;
 import com.mongodb.BasicDBList;
 import com.mongodb.BasicDBObject;
@@ -63,7 +64,7 @@ public class CNVSQueryManager {
 				this.addDecipToQuery(value, query);
 				break;
 			case "region":
-				this.addRegionToQuery(value, query);
+				this.addRegionsToQuery(value, query);
 				break;
 			case "assembly":
 				this.addAssemblyToQuery(value, query);
@@ -129,11 +130,10 @@ public class CNVSQueryManager {
 
 	private void addHpoToQuery(String value, Query<CNV> query) {
 		query.filter("phenotype =", value);
-
 	}
 
 	private void addTypeSampleToQuery(String value, Query<CNV> query) {
-		query.filter("typeSample =", value);
+		query.filter("typeSample =", Integer.parseInt(value));
 
 	}
 
@@ -182,13 +182,28 @@ public class CNVSQueryManager {
 
 	}
 
-	private void addRegionToQuery(String region, Query<CNV> query) {
-		Region r = new Region(region);
-		List<String> chunkIds = getChunkIds(r);
-		// filter("_at.chIds in", chunkIds)
-		query.filter("chromosome =", r.getChromosome())
-		.filter("start >=", r.getStart())
-		.filter("end <=", r.getEnd());
+	private void addRegionsToQuery(String listRegions, Query<CNV> query) {
+		
+		List<String> regions = Splitter.on(",").splitToList(listRegions);
+		
+		Criteria[] or = new Criteria[regions.size()];
+
+		int i = 0;
+		for(String r: regions){
+			Region region = new Region(r);
+			List<String> chunkIds = this.getChunkIds(region);
+            Query<CNV> auxQuery = this.datastore.createQuery(CNV.class);
+            
+            List<Criteria> and = new ArrayList<>();
+            and.add(auxQuery.criteria("_at.chIds").in(chunkIds));
+            and.add(auxQuery.criteria("chromosome").equal(region.getChromosome()));
+            and.add(auxQuery.criteria("start").greaterThanOrEq(region.getStart()));
+            and.add(auxQuery.criteria("end").lessThanOrEq(region.getEnd()));
+
+            or[i++] = auxQuery.and(and.toArray(new Criteria[and.size()]));
+		}
+		query.or(or);
+		
 	}
 
 	public Iterable<CNV> getVariantsByRegionList(List<Region> regions,
