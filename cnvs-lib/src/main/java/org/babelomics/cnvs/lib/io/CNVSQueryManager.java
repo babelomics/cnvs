@@ -172,28 +172,26 @@ public class CNVSQueryManager {
 		
 	}
 
-	public Iterable<CNV> getVariantsByRegionList(List<Region> regions,
-			Integer skip, Integer limit, MutableLong count) {
+	public Iterable<CNV> getVariantsByRegionList(List<Region> regions,Integer skip, Integer limit, MutableLong count) {
 
+		Query<CNV> query = this.datastore.createQuery(CNV.class);
 		Criteria[] or = new Criteria[regions.size()];
 
 		int i = 0;
-		for (Region r : regions) {
-			List<String> chunkIds = getChunkIds(r);
+		for(Region region : regions){
+			List<String> chunkIds = this.getChunkIds(region);
 			Query<CNV> auxQuery = this.datastore.createQuery(CNV.class);
 
 			List<Criteria> and = new ArrayList<>();
 			and.add(auxQuery.criteria("_at.chIds").in(chunkIds));
-			and.add(auxQuery.criteria("chromosome").equal(r.getChromosome()));
-			and.add(auxQuery.criteria("position").greaterThanOrEq(r.getStart()));
-			and.add(auxQuery.criteria("position").lessThanOrEq(r.getEnd()));
+			and.add(auxQuery.criteria("chromosome").equal(region.getChromosome()));
+			and.add(auxQuery.criteria("start").greaterThanOrEq(region.getStart()));
+			and.add(auxQuery.criteria("end").lessThanOrEq(region.getEnd()));
 
 			or[i++] = auxQuery.and(and.toArray(new Criteria[and.size()]));
 		}
-
-		Query<CNV> query = this.datastore.createQuery(CNV.class);
-
 		query.or(or);
+		System.out.println(query);
 
 		if (skip != null && limit != null) {
 			query.offset(skip).limit(limit);
@@ -201,6 +199,8 @@ public class CNVSQueryManager {
 
 		Iterable<CNV> aux = query.fetch();
 		count.setValue(query.countAll());
+
+		System.out.println("count = " + count.getValue());
 
 		return aux;
 	}
