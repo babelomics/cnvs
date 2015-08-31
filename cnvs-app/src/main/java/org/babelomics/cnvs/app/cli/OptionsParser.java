@@ -57,7 +57,7 @@ public class OptionsParser {
         String decipId = "";
         
         @Parameter(names = {"--regions"}, description = "Comma-separated list of regions")//HECHO
-        String regionList;
+        String regionList = "";
         
         @Parameter(names = {"--assembly"}, description = "Assembly hg18, hg19")
         String assembly = "";
@@ -68,27 +68,33 @@ public class OptionsParser {
         @Parameter(names = {"--type"}, description = "Type of variant: gain, loss or LOH neutral")
         String type = "";
         
-        @Parameter(names = {"--doses"}, description = "Doses: x0,x1,x2(XY),x3")
+        @Parameter(names = {"--doses"}, description = "Doses: 0 x0,1 x1,2 x2(XY),3 x3")
         String doses = "";
+        
+        @Parameter(names = {"--clis"}, description = "Clinical Significance: 0 Benign, 1 Pathogenic, 2 Likely benign 3 Likely pathogenic 4 VOUS")
+        String cli = "";
 
-        @Parameter(names = {"--inheritance"}, description = "Inheritance: de novo constitutive, maternally inherited, paternally inherited, unknown")
+        @Parameter(names = {"--inheritance"}, description = " Inheritance: 0 de novo constitutive, 1 maternally inherited, 2 paternally inherited, 3unknown")
         String inhe = "";
         
-        @Parameter(names = {"--cl"}, description = "Cell Line")
+        @Parameter(names = {"--cl"}, description = "Cell Line: 0 germline, 1 somatic")
         String cl = "";
         
-        @Parameter(names = {"--gender"}, description = "Chromosomal gender")
+        @Parameter(names = {"--gender"}, description = "Chromosomal gender: 0 XX, 1 XY")
         String gender = "";
         
-        @Parameter(names = {"--status"}, description = "Status")
+        @Parameter(names = {"--status"}, description = "Status: 0 Proband, 1 Father, 2 Mother, 3 Control")
         String status = "";
 
 
-        @Parameter(names = {"--typeS"}, description = "Type of sample")
+        @Parameter(names = {"--typeS"}, description = "Type of sample: 0 blood, 1 amniotic fluid, 2 chorionic villi, 3 tumour, 4 etc")
         String typeSample = "";
 
         @Parameter(names = {"--hpo"}, description = "Phenotype (HPO)")
         String hpo = "";
+        
+        @Parameter(names = {"--year"}, description = "Year of Birth")
+        String year = "";
         
         @Parameter(names = {"--ethic"}, description = "Ethic Group")
         String ethic = "";

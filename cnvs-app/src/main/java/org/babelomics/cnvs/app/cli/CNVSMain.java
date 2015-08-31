@@ -168,6 +168,10 @@ public class CNVSMain {
 			if(!c.band.isEmpty()){
 				map.put("band", c.band);
 			}
+			if(!c.type.isEmpty()){
+				map.put("type", c.type);
+			}
+			
 			if(!c.doses.isEmpty()){
 				map.put("doses", c.doses);
 			}

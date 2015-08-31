@@ -72,6 +72,9 @@ public class CNVSQueryManager {
 			case "band":
 				this.addBandToQuery(value, query);
 				break;
+			case "type":
+				this.addTypeToQuery(value, query);
+				break;
 			case "doses":
 				this.addDosesToQuery(value, query);
 				break;
@@ -118,6 +121,11 @@ public class CNVSQueryManager {
 		return aux;
 	}
 
+	private void addTypeToQuery(String value, Query<CNV> query) {
+		query.filter("type =", Integer.parseInt(value));
+		
+	}
+
 	private void addOriginToQuery(String value, Query<CNV> query) {
 		query.filter("origin =", value);
 
@@ -143,7 +151,7 @@ public class CNVSQueryManager {
 	}
 
 	private void addGenderToQuery(String value, Query<CNV> query) {
-		query.filter("chromGender =", value);
+		query.filter("chromGender =", Integer.parseInt(value));
 
 	}
 
@@ -153,12 +161,12 @@ public class CNVSQueryManager {
 	}
 
 	private void addInheToQuery(String value, Query<CNV> query) {
-		query.filter("inheritance =", value);
+		query.filter("inheritance =", Integer.parseInt(value));
 
 	}
 
 	private void addDosesToQuery(String value, Query<CNV> query) {
-		query.filter("doses =", value);
+		query.filter("doses =", Integer.parseInt(value));
 
 	}
 
@@ -173,7 +181,7 @@ public class CNVSQueryManager {
 	}
 
 	private void addDecipToQuery(String value, Query<CNV> query) {
-		query.filter("decipherId =", value);
+		query.filter("decipherId =", Long.parseLong(value));
 
 	}
 
