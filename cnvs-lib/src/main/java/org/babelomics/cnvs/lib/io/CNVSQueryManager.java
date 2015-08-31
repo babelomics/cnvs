@@ -29,9 +29,9 @@ public class CNVSQueryManager {
 	final Datastore datastore;
 	static final int DECIMAL_POSITIONS = 3;
 
-	public CNVSQueryManager(String host, String dbName) {
+	public CNVSQueryManager(String host, String dbName) { 
 		Morphia morphia = new Morphia();
-		morphia.mapPackage("org.babelomics.cnvs.lib.models");
+		morphia.mapPackage("org.babelomics.cnvs.lib.models"); 
 		this.datastore = morphia.createDatastore(new MongoClient(host), dbName);
 		this.datastore.ensureIndexes();
 	}

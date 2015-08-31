@@ -169,7 +169,7 @@ public class CNVSMain {
 				map.put("band", c.band);
 			}
 			if(!c.type.isEmpty()){
-				map.put("type", c.type);
+				map.put("type", c.type); 
 			}
 			
 			if(!c.doses.isEmpty()){

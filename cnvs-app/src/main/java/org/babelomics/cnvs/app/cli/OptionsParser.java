@@ -115,7 +115,7 @@ public class OptionsParser {
         String user = "";
         
         @Parameter(names = {"--pass"}, description = "DB Pass", arity = 1)
-        String pass = "";
+        String pass = ""; 
 
     }
 
