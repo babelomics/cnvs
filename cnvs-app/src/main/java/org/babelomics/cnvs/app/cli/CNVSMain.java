@@ -2,6 +2,7 @@ package org.babelomics.cnvs.app.cli;
 
 import org.apache.commons.lang3.mutable.MutableLong;
 import org.babelomics.cnvs.lib.models.CNV;
+import org.babelomics.cnvs.lib.cli.QueryCommandLine;
 import org.babelomics.cnvs.lib.io.CNVSCopyNumberVariationMongoDataWriter;
 import org.babelomics.cnvs.lib.io.CNVSCopyNumberVariationXLSDataReader;
 import org.babelomics.cnvs.lib.io.CNVSQueryManager;
@@ -15,6 +16,7 @@ import org.opencb.commons.io.DataWriter;
 import org.opencb.commons.run.Runner;
 import org.opencb.commons.run.Task;
 
+import com.beust.jcommander.JCommander;
 import com.beust.jcommander.Parameter;
 import com.beust.jcommander.ParameterException;
 import com.mongodb.MongoClient;
@@ -52,44 +54,13 @@ public class CNVSMain {
 		datastore.ensureIndexes();
 
 		return datastore;
-		/*
-
-        List<CNV> list = datastore.createQuery(CNV.class).asList();
-
-        for(CNV c: list){
-        	System.out.println(c);
-        }
-		 */
+	
 	}
 
 	public static void main(String[] args) throws IOException {
 
-		/*	final Morphia morphia = new Morphia();
-    	morphia.mapPackage("org.babelomics.cnvs.lib.models");
-
-    	MongoClient mongoClient = new MongoClient();
-
-    	Datastore datastore = morphia.createDatastore(mongoClient, "cnvs");
-    	datastore.ensureIndexes();
-
-        String fileName = "/home/sgallego/appl-clinic11/cnvsCarga/Proba4.xls";
-
-        DataReader<CNV> reader = new CNVSCopyNumberVariationXLSDataReader(fileName);
-        DataWriter<CNV> writer = new CNVSCopyNumberVariationMongoDataWriter(datastore);
-
-        List<Task<CNV>> taskList = new SortedList<>();
-        List<DataWriter<CNV>> writers = new ArrayList<>();
-        writers.add(writer);
-
-        Runner<CNV> runner = new CNVSRunner(reader, writers, taskList, 1);
-
-        runner.run();
-
-        List<CNV> list = datastore.createQuery(CNV.class).asList();
-
-        for(CNV c: list){
-        	System.out.println(c);
-        }*/
+			
+				
 		OptionsParser parser = new OptionsParser();
 
 		// If no arguments are provided, or -h/--help is the first argument, the usage is shown
@@ -98,19 +69,68 @@ public class CNVSMain {
 			return;
 		}
 
+		String cmd = args[0];
+
+		String[] newArgs = new String[args.length - 1]; 
+		for(int i = 1; i < args.length; i++) {
+			newArgs[i-1] = new String(args[i]);
+		}
+		
 		OptionsParser.Command command = null;
 
 		try {
-			switch (parser.parse(args)) {
-			case "load":
-				command = parser.getLoadCommand();
-				break;
-			case "query":
-				command = parser.getQueryCommand();
-				break;
+			
+			if (cmd.equalsIgnoreCase("load")){
+				OptionsParser.CommandLoad c = (OptionsParser.CommandLoad) command;
 
-			default:
+
+				Datastore datastore = getDatastore(c.host, c.user, c.pass);
+
+				String fileName = c.input;
+
+				DataReader<CNV> reader = new CNVSCopyNumberVariationXLSDataReader(fileName);
+				DataWriter<CNV> writer = new CNVSCopyNumberVariationMongoDataWriter(datastore);
+
+				List<Task<CNV>> taskList = new SortedList<>();
+				List<DataWriter<CNV>> writers = new ArrayList<>();
+				writers.add(writer);
+
+				Runner<CNV> runner = new CNVSRunner(reader, writers, taskList, 1);
+
+				try {
+					runner.run();
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+			}else if (cmd.equalsIgnoreCase("query")) {
+				
+				QueryCommandLine cmdLine = new QueryCommandLine();
+				JCommander cmd1 = new JCommander(cmdLine);
+				
+				try {
+					
+					cmd1.parse(newArgs);
+				} catch (Exception e) {
+					cmd1.usage();
+					
+					System.exit(-1);
+				}
+				
+				Datastore datastore = getDatastore(cmdLine.getHost(), cmdLine.getUser(), cmdLine.getPass());
+
+				CNVSQueryManager qm = new CNVSQueryManager(datastore, cmdLine);
+				MutableLong count = new MutableLong(-1);
+
+				Iterable<CNV> res= qm.getVariantsByFilters(count);
+				
+				for(CNV cnv: res){
+					System.out.println(cnv);
+				}
+				
+				
+			}else{
 				System.out.println("Command not implemented!!");
+				System.err.println(parser.usage());
 				System.exit(1);
 			}
 		} catch (ParameterException ex) {
@@ -119,100 +139,7 @@ public class CNVSMain {
 			System.exit(1);
 		}
 
+		
 
-		if (command instanceof OptionsParser.CommandLoad) {
-			OptionsParser.CommandLoad c = (OptionsParser.CommandLoad) command;
-
-
-			Datastore datastore = getDatastore(c.host, c.user, c.pass);
-
-			String fileName = c.input;
-
-			DataReader<CNV> reader = new CNVSCopyNumberVariationXLSDataReader(fileName);
-			DataWriter<CNV> writer = new CNVSCopyNumberVariationMongoDataWriter(datastore);
-
-			List<Task<CNV>> taskList = new SortedList<>();
-			List<DataWriter<CNV>> writers = new ArrayList<>();
-			writers.add(writer);
-
-			Runner<CNV> runner = new CNVSRunner(reader, writers, taskList, 1);
-
-			try {
-				runner.run();
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
-		}else if (command instanceof OptionsParser.CommandQuery) {
-			OptionsParser.CommandQuery c = (OptionsParser.CommandQuery) command;
-
-			Datastore datastore = getDatastore(c.host, c.user, c.pass);
-
-			CNVSQueryManager qm = new CNVSQueryManager(datastore);
-
-			Map<String,String> map = new HashMap<String, String>();
-				
-		        
-			if(!c.code.isEmpty()){
-				map.put("code", c.code);
-			}
-			
-			if(!c.decipId.isEmpty()){
-				map.put("decipId", c.decipId);
-			}
-			if(!c.regionList.isEmpty()){
-				map.put("region", c.regionList);
-			}
-			if(!c.assembly.isEmpty()){
-				map.put("assembly", c.assembly);
-			}
-			if(!c.band.isEmpty()){
-				map.put("band", c.band);
-			}
-			if(!c.type.isEmpty()){
-				map.put("type", c.type); 
-			}
-			
-			if(!c.doses.isEmpty()){
-				map.put("doses", c.doses);
-			}
-			if(!c.inhe.isEmpty()){
-				map.put("inheritance", c.inhe);
-			}
-			if(!c.cl.isEmpty()){
-				map.put("cellline", c.cl);
-			}
-			if(!c.gender.isEmpty()){
-				map.put("gender", c.gender);
-			}
-			if(!c.status.isEmpty()){
-				map.put("status", c.status);
-			}
-			
-			
-			if(!c.typeSample.isEmpty()){
-				map.put("typeSample", c.typeSample);
-			}
-			if(!c.hpo.isEmpty()){
-				map.put("hpo", c.hpo);
-			}
-			if(!c.ethic.isEmpty()){
-				map.put("ethic", c.ethic);
-			}
-			if(!c.origin.isEmpty()){
-				map.put("origin", c.origin);
-			}
-			
-			
-			
-			
-			MutableLong count = new MutableLong(-1);
-
-			Iterable<CNV> res= qm.getVariantsByFilters(map, c.skip, c.limit, count);
-			
-			for(CNV cnv: res){
-				System.out.println(cnv);
-			}
-
-		}
 	}
 }

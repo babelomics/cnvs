@@ -14,6 +14,14 @@
     <artifactId>cnvs-app</artifactId>
 
     <dependencies>
+    
+        <dependency>
+            <groupId>org.babelomics.cnvs</groupId>
+            <artifactId>cnvs-lib</artifactId>
+        </dependency>
+        
+        
+        
         <dependency>
             <groupId>org.opencb.biodata</groupId>
             <artifactId>biodata-models</artifactId>
@@ -31,10 +39,6 @@
             <artifactId>commons-lib</artifactId>
         </dependency>
 
-        <dependency>
-            <groupId>org.babelomics.cnvs</groupId>
-            <artifactId>cnvs-lib</artifactId>
-        </dependency>
 
         <dependency>
             <groupId>com.google.guava</groupId>

@@ -38,7 +38,7 @@ public class CNV {
 	@Property("g")
 	private String genes; // ARRAY
 	@Property("l")
-	private String locus;
+	private String band;
 	/*@Property("sz")
 	private String size; */ // LO QUITAMOS DE BD
 	@Property("t")
@@ -106,11 +106,11 @@ public class CNV {
 	}
 
 	public String getLocus() {
-		return locus;
+		return band;
 	}
 
 	public void setLocus(String locus) {
-		this.locus = locus;
+		this.band = locus;
 	}
 
 	/*public String getSize() {
@@ -471,7 +471,7 @@ public class CNV {
 				+ ", centerId1=" + centerId1 + ", centerId2=" + centerId2
 				+ ", centerId3=" + centerId3 + ", chromosome=" + chromosome
 				+ ", start=" + start + ", end=" + end + ", assembly="
-				+ assembly + ", genes=" + genes + ", locus=" + locus
+				+ assembly + ", genes=" + genes + ", locus=" + band
 				+ ", type=" + type + ", doses=" + doses + ", clinicalSig="
 				+ clinicalSig + ", inheritance=" + inheritance + ", nv=" + nv
 				+ ", cellLine=" + cellLine + ", chromGender=" + chromGender

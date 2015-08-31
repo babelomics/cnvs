@@ -5,8 +5,9 @@ import java.math.RoundingMode;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Map;
 
+
+import org.babelomics.cnvs.lib.cli.QueryCommandLine;
 import org.babelomics.cnvs.lib.models.CNV;
 import org.mongodb.morphia.Datastore;
 import org.mongodb.morphia.Morphia;
@@ -18,16 +19,13 @@ import org.opencb.biodata.models.feature.Region;
 import org.apache.commons.lang3.mutable.MutableLong;
 
 import com.google.common.base.Splitter;
-import com.mongodb.AggregationOutput;
-import com.mongodb.BasicDBList;
-import com.mongodb.BasicDBObject;
-import com.mongodb.DBCollection;
-import com.mongodb.DBObject;
+
 import com.mongodb.MongoClient;
 
 public class CNVSQueryManager {
 	final Datastore datastore;
 	static final int DECIMAL_POSITIONS = 3;
+	QueryCommandLine q;
 
 	public CNVSQueryManager(String host, String dbName) { 
 		Morphia morphia = new Morphia();
@@ -44,74 +42,83 @@ public class CNVSQueryManager {
 		this.datastore = datastore;
 	}
 
-	public Iterable<CNV> getVariantsByFilters(Map<String, String> queries,
-			Integer skip, Integer limit, MutableLong count) {
-
+	public CNVSQueryManager(Datastore datastore, QueryCommandLine q) {
+		this.datastore = datastore;
+		this.q = q;
+		
+	}
+	
+	
+	public Iterable<CNV> getVariantsByFilters(MutableLong count) {
+	
 		Query<CNV> query = this.datastore.createQuery(CNV.class);
-
-
-		System.out.println(queries);
-
-		for (Map.Entry<String, String> elem : queries.entrySet()) {
-			String value = elem.getValue();
-			String key = elem.getKey();
-
-			switch (key) {
-			case "code":
-				this.addCodeToQuery(value, query);
-				break;
-			case "decipId":
-				this.addDecipToQuery(value, query);
-				break;
-			case "region":
-				this.addRegionsToQuery(value, query);
-				break;
-			case "assembly":
-				this.addAssemblyToQuery(value, query);
-				break;
-			case "band":
-				this.addBandToQuery(value, query);
-				break;
-			case "type":
-				this.addTypeToQuery(value, query);
-				break;
-			case "doses":
-				this.addDosesToQuery(value, query);
-				break;
-			case "inheritance":
-				this.addInheToQuery(value, query);
-				break;
-			case "cellline":
-				this.addCellLineToQuery(value, query);
-				break;
-			case "gender":
-				this.addGenderToQuery(value, query);
-				break;
-			case "status":
-				this.addStatusToQuery(value, query);
-				break;
-			case "typeSample":
-				this.addTypeSampleToQuery(value, query);
-				break;
-			case "hpo":
-				this.addHpoToQuery(value, query);
-				break;
-			case "ethic":
-				this.addEthicToQuery(value, query);
-				break;
-			case "origin":
-				this.addOriginToQuery(value, query);
-				break;
-
-			default:
-				break;
-
-			}
+		
+		
+		if(q.getCode() != null){
+			query.filter("ref =", q.getCode());
 		}
-
-		if (skip != null && limit != null) {
-			query.offset(skip).limit(limit);
+		if(q.getDecipId() != null){
+			this.addTypeLongToQuery(q.getDecipId(), query, "decipId");
 		}
+		
+		if(q.getRegionList() != null){
+			this.addRegionsToQuery(q.getRegionList(), query);
+		}
+		if(q.getAssembly() != null){
+			query.filter("assembly =", q.getAssembly());
+		}
+		if(q.getBand() != null){
+			this.addTypeStringToQuery(q.getBand(), query, "band");
+		}
+		
+		
+		if(q.getType() != null){
+			this.addTypeIntToQuery(q.getType(), query, "type");
+		}
+		if(q.getDoses() != null){
+			this.addTypeIntToQuery(q.getDoses(), query, "doses");
+		}
+		if(q.getCli() != null){
+			this.addTypeIntToQuery(q.getCli(), query, "clinicalSig");
+		}
+		
+		if(q.getInhe() != null){
+			this.addTypeIntToQuery(q.getInhe(), query, "inheritance");
+		}
+		if(q.getCl() != -1){
+			query.filter("cellLine =", q.getCl());
+		}
+		if(q.getGender() != -1){
+			query.filter("chromGender =", q.getGender());
+		}
+		
+		if(q.getStatus() != null){
+			this.addTypeIntToQuery(q.getStatus(), query, "status");
+		}
+		
+		if(q.getTypeSample() != null){
+			this.addTypeIntToQuery(q.getTypeSample(), query, "typeSample");
+		}
+		
+		if(q.getHpo() != null){
+			this.addTypeStringToQuery(q.getHpo(), query, "hpo");
+		}
+		
+		if(q.getYear() != null){
+			this.addTypeIntToQuery(q.getYear(), query, "yearOfBirth");
+		}
+		
+		if(q.getEthic() != null){
+			this.addTypeStringToQuery(q.getEthic(), query, "ethnicGroup");
+		}
+		if(q.getOrigin() != null){
+			this.addTypeStringToQuery(q.getOrigin(), query, "origin");
+		}
+	
+		if((q.getSkip()!= -1) && (q.getLimit() != -1)){
+		
+			query.offset(q.getSkip()).limit(q.getLimit());
+		} 
 
 		System.out.println(query);
 
@@ -120,76 +127,26 @@ public class CNVSQueryManager {
 
 		return aux;
 	}
-
-	private void addTypeToQuery(String value, Query<CNV> query) {
-		query.filter("type =", Integer.parseInt(value));
+	
+	
+	private void addTypeIntToQuery(List <Integer> l, Query<CNV> query, String name) {
+		query.field(name).in(l);
 		
 	}
+	
+	private void addTypeLongToQuery(List <Long> l, Query<CNV> query, String name) {
 
-	private void addOriginToQuery(String value, Query<CNV> query) {
-		query.filter("origin =", value);
-
+		//query.filter("type in ", l);
+		query.field(name).in(l);
+		
 	}
+	private void addTypeStringToQuery(List <String> l, Query<CNV> query, String name) {
 
-	private void addEthicToQuery(String value, Query<CNV> query) {
-		query.filter("ethnicGroup =", value);
-
+		//query.filter("type in ", l);
+		query.field(name).in(l);
+		
 	}
-
-	private void addHpoToQuery(String value, Query<CNV> query) {
-		query.filter("phenotype =", value);
-	}
-
-	private void addTypeSampleToQuery(String value, Query<CNV> query) {
-		query.filter("typeSample =", Integer.parseInt(value));
-
-	}
-
-	private void addStatusToQuery(String value, Query<CNV> query) {
-		query.filter("status =", value);
-
-	}
-
-	private void addGenderToQuery(String value, Query<CNV> query) {
-		query.filter("chromGender =", Integer.parseInt(value));
-
-	}
-
-	private void addCellLineToQuery(String value, Query<CNV> query) {
-		query.filter("cellLine =", value);
-
-	}
-
-	private void addInheToQuery(String value, Query<CNV> query) {
-		query.filter("inheritance =", Integer.parseInt(value));
-
-	}
-
-	private void addDosesToQuery(String value, Query<CNV> query) {
-		query.filter("doses =", Integer.parseInt(value));
-
-	}
-
-	private void addBandToQuery(String value, Query<CNV> query) {
-		query.filter("locus =", value);
-
-	}
-
-	private void addAssemblyToQuery(String value, Query<CNV> query) {
-		query.filter("assembly =", value);
-
-	}
-
-	private void addDecipToQuery(String value, Query<CNV> query) {
-		query.filter("decipherId =", Long.parseLong(value));
-
-	}
-
-	private void addCodeToQuery(String value, Query<CNV> query) {
-		query.filter("ref =", value);
-
-	}
-
+	
 	private void addRegionsToQuery(String listRegions, Query<CNV> query) {
 		
 		List<String> regions = Splitter.on(",").splitToList(listRegions);
@@ -211,6 +168,7 @@ public class CNVSQueryManager {
             or[i++] = auxQuery.and(and.toArray(new Criteria[and.size()]));
 		}
 		query.or(or);
+		System.out.println(query);
 		
 	}
 
