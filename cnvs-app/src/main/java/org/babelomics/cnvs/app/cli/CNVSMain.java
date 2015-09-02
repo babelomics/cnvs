@@ -9,7 +9,6 @@ import org.babelomics.cnvs.lib.io.CNVSQueryManager;
 import org.babelomics.cnvs.lib.io.CNVSRunner;
 import org.mongodb.morphia.Datastore;
 import org.mongodb.morphia.Morphia;
-import org.opencb.biodata.models.feature.Region;
 import org.opencb.commons.containers.list.SortedList;
 import org.opencb.commons.io.DataReader;
 import org.opencb.commons.io.DataWriter;
@@ -17,21 +16,15 @@ import org.opencb.commons.run.Runner;
 import org.opencb.commons.run.Task;
 
 import com.beust.jcommander.JCommander;
-import com.beust.jcommander.Parameter;
 import com.beust.jcommander.ParameterException;
 import com.mongodb.MongoClient;
 import com.mongodb.MongoCredential;
 import com.mongodb.ServerAddress;
 
 import java.io.IOException;
-import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 /**
  * @author Alejandro Alemán Ramos <alejandro.aleman.ramos@gmail.com>
@@ -121,7 +114,7 @@ public class CNVSMain {
 				CNVSQueryManager qm = new CNVSQueryManager(datastore, cmdLine);
 				MutableLong count = new MutableLong(-1);
 
-				Iterable<CNV> res= qm.getVariantsByFilters(count);
+				Iterable<CNV> res= qm.getCNVsByFilters(count);
 				
 				for(CNV cnv: res){
 					System.out.println(cnv);
