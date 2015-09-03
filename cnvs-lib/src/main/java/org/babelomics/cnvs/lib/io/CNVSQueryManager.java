@@ -42,6 +42,7 @@ public class CNVSQueryManager {
         this.datastore = datastore;
     }
 
+    @Deprecated
     public CNVSQueryManager(Datastore datastore, QueryCommandLine q) {
         this.datastore = datastore;
         this.q = q;
@@ -136,7 +137,7 @@ public class CNVSQueryManager {
         if (q.getCode() != null && !q.getCode().isEmpty()) {
             query.filter("ref =", q.getCode());
         }
-        if (q.getDecipId() != null) {
+        if (q.getDecipId() != null && (!q.getDecipId().isEmpty())) {
             this.addTypeLongToQuery(q.getDecipId(), query, "decipherId");
         }
 
@@ -157,11 +158,11 @@ public class CNVSQueryManager {
             this.addTypeIntToQuery(q.getDoses(), query, "doses");
         }
 
-        if (q.getCli() != null) {
+        if (q.getCli() != null && (!q.getCli().isEmpty())) {
             this.addTypeIntToQuery(q.getCli(), query, "clinicalSig");
         }
 
-        if (q.getInhe() != null) {
+        if (q.getInhe() != null && (!q.getInhe().isEmpty())) {
             this.addTypeIntToQuery(q.getInhe(), query, "inheritance");
         }
         if (q.getCl() != -1) {
@@ -171,26 +172,26 @@ public class CNVSQueryManager {
             query.filter("chromGender =", q.getGender());
         }
 
-        if (q.getStatus() != null) {
+        if (q.getStatus() != null && (!q.getStatus().isEmpty())) {
             this.addTypeIntToQuery(q.getStatus(), query, "status");
         }
 
-        if (q.getTypeSample() != null) {
+        if (q.getTypeSample() != null && (!q.getTypeSample().isEmpty())) {
             this.addTypeIntToQuery(q.getTypeSample(), query, "typeSample");
         }
 
-        if (q.getHpo() != null) {
+        if (q.getHpo() != null && (!q.getHpo().isEmpty())) {
             this.addTypeStringToQuery(q.getHpo(), query, "phenotype");
         }
 
-        if (q.getYear() != null) {
+        if (q.getYear() != null && (!q.getYear().isEmpty())) {
             this.addTypeIntToQuery(q.getYear(), query, "yearOfBirth");
         }
 
-        if (q.getEthic() != null) {
+        if (q.getEthic() != null && (!q.getEthic().isEmpty())) {
             this.addTypeStringToQuery(q.getEthic(), query, "ethnicGroup");
         }
-        if (q.getOrigin() != null) {
+        if (q.getOrigin() != null && (!q.getOrigin().isEmpty())) {
             this.addTypeStringToQuery(q.getOrigin(), query, "origin");
         }
 

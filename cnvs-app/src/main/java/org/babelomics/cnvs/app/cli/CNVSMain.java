@@ -111,10 +111,10 @@ public class CNVSMain {
 				
 				Datastore datastore = getDatastore(cmdLine.getHost(), cmdLine.getUser(), cmdLine.getPass());
 
-				CNVSQueryManager qm = new CNVSQueryManager(datastore, cmdLine);
+				CNVSQueryManager qm = new CNVSQueryManager(datastore);
 				MutableLong count = new MutableLong(-1);
 
-				Iterable<CNV> res= qm.getCNVsByFilters(count);
+				Iterable<CNV> res= qm.getCNVsByFilters(cmdLine,count);
 				
 				for(CNV cnv: res){
 					System.out.println(cnv);
