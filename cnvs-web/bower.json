@@ -1,11 +1,11 @@
 {
-  "name": "Copy Number Variation Server",
+  "name": "CopyNumberVariationServer",
   "version": "1.0.0",
   "homepage": "https://github.com/babelomics/svs",
   "authors": [
     "frastor <frastor@gmail.com>",
     "aaleman <alejandro.aleman.ramos@gmail.com>",
-    "agaor <>"
+    "agaor <sgaort@gmail.com>"
   ],
   "license": "GPLv2",
   "ignore": [

@@ -4,6 +4,8 @@
 <link rel="import" href="../lib/jsorolla/src/lib/components/opencga/jso-opencga-header.html">
 <link rel="import" href="../lib/jsorolla/src/lib/components/opencga/jso-opencga-footer.html">
 
+<link rel="import" href="cnvs-search-element.html">
+
 <dom-module id="cnvs-element">
     <style>
         :host {
@@ -63,14 +65,14 @@
     <template>
 
         <div id="content" selected-option="{{selectedOption}}">
-            TODO
+            <cnvs-search-element></cnvs-search-element>
         </div>
 
         <jso-opencga-header id="jsoHeader"
                             selected-option="{{selectedOption}}"
                             allow-login="false">
             <div class="icon">
-                <img src="images/bier-text.svg" style="height: 50px;margin: 5px 0px 0 0;">
+                <img src="images/CS.svg" style="height: 50px;margin: 5px 0px 0 0;">
             </div>
             <span class="title">Ciber<b>er</b> Copy Number Variation Server</span>
             <span class="description"></span>
@@ -95,13 +97,13 @@
             </jso-help-menu>
         </jso-opencga-header>
 
-        <jso-opencga-footer hidden$="{{computeSelectedOption(selectedOption, 'home')}}" menu-option="home">
-            CNVS: created by Computational Genomics Department
-            <br>
-            Principe Felipe Research Center
-            <br>
-            2015
-        </jso-opencga-footer>
+        <!--<jso-opencga-footer hidden$="{{computeSelectedOption(selectedOption, 'home')}}" menu-option="home">-->
+            <!--CNVS: created by Computational Genomics Department-->
+            <!--<br>-->
+            <!--Principe Felipe Research Center-->
+            <!--<br>-->
+            <!--2015-->
+        <!--</jso-opencga-footer>-->
     </template>
 </dom-module>
 <script>

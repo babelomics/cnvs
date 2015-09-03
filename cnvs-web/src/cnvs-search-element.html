@@ -1,0 +1,526 @@
+<link rel="import" href="../lib/jsorolla/src/lib/components/jso-genome-viewer-element.html">
+
+<dom-module id="cnvs-search-element">
+    <style>
+        :host {
+            display: block;
+            box-sizing: border-box;
+            position: relative;
+        }
+
+        #filter-form-element {
+            background-color: #FFFFFF;
+            width: 350px;
+            margin: 20px;
+            min-height: 900px;
+        }
+
+        textarea {
+            resize: none;
+        }
+
+        .searchGene {
+            margin-top: 5px;
+        }
+
+        #dataGridElement {
+            border-radius: 0px !important;
+            margin: 20px 20px 20px 0px;
+            background-color: #FFFFFF;
+            width: calc(100% - 290px);
+        }
+
+        .container > span {
+            margin-left: 10px;
+        }
+
+        #diseases_div {
+            height: 300px;
+            max-height: 300px;
+            overflow-y: auto;
+        }
+
+        #exportBtn {
+            height: 20px;
+        }
+
+        #dataTable {
+            font-size: 11px;
+        }
+
+        jso-table {
+            overflow-y: auto;
+
+        }
+
+        jso-table::shadow .table-header-field > .name.jso-table {
+            padding: 4px 0;
+        }
+
+        jso-table::shadow #list {
+            height: 300px;
+            overflow-x: auto
+        }
+
+        #menu {
+            /*border-bottom: 1px solid rgba(125, 125, 125, 0.4);*/
+            margin-top: 15px;
+        }
+
+        #menu > div {
+            font-size: 17px;
+            padding: 5px 5px;
+            margin: 0 20px;
+            border-bottom: 2px solid transparent;
+            transition: all 0.1s;
+            cursor: pointer;
+        }
+
+        #menu > div:hover {
+            border-bottom-color: rgba(125, 125, 125, 0.4);
+        }
+
+        #menu > div[selected] {
+            border-bottom-color: rgba(125, 125, 125, 0.7);
+        }
+
+        #tools {
+
+            margin-top: 10px;
+        }
+
+        jso-variant-frequencies-grid,
+        jso-variant-effect-grid,
+        jso-variant-grid,
+        jso-genome-viewer-element,
+        .jso-formbox,
+        #dataTable {
+            box-shadow: 0px 0px 2px 0px rgba(0, 0, 0, 0.2);
+        }
+
+        jso-variant-frequencies-grid,
+        jso-variant-effect-grid,
+        #dataTable {
+            border: 1px solid var(--divider-color)
+        }
+
+        .check {
+            cursor: pointer;
+            color: var(--secondary-text-color);
+        }
+
+        .check:hover {
+            color: var(--accent-color);
+        }
+
+        /*input[type=checkbox] {*/
+        /*display: block;*/
+        /*float: left;*/
+        /*outline: 0;*/
+        /*box-sizing: border-box;*/
+        /*line-height: 21px;*/
+        /*border: 1px solid #ccc;*/
+        /*padding: 0px 5px;*/
+        /*color: #333;*/
+        /*background-color: #fff;*/
+        /*font-size: inherit;*/
+        /*}*/
+
+        /*input[type=checkbox]:checked {*/
+        /*box-shadow: inset 0 3px 5px rgba(0, 0, 0, .125);*/
+        /*background-color: #ebebeb;*/
+        /*}*/
+
+        /*input[type=checkbox]:hover {*/
+        /*background-color: red;*/
+        /*}*/
+
+    </style>
+    <template>
+
+        <div class="horizontal layout">
+            <div id="filter-form-element">
+                <form id="filter_form" class="vertical layout" method="get">
+                    <div vertical layout>
+                        <div id="buttons_container" class="horizontal layout end-justified" style="margin:10px 5px;">
+                            <div class="jso-btn jso-btn-shdw flex" on-click="clearForm" style="margin-right: 3px;">
+                                Clear
+                            </div>
+                            <div class="jso-btn jso-btn-shdw flex" on-click="submitForm">Search</div>
+                        </div>
+                        <div class="form_block positionBlock">
+
+                            <div class="jso-formbox">
+                                <div class="jso-formtitle">
+                                    Position
+                                </div>
+                                <div class="jso-formcontent">
+                                    <div class="input_container vertical layout">
+                                        <label class="jso">Chromosomal Location:</label>
+                                        <textarea id="region" name="region" placeholder="1:1-100000,2:1-100000"
+                                                  value="{{regionValue::change}}" rows="3"></textarea>
+                                    </div>
+                                    <div class="input_container vertical layout">
+                                        <label class="jso">Gene:</label>
+                                        <textarea id="gene" name="gene" placeholder="BRCA2,PPL"
+                                                  value="{{geneValue::change}}" rows="3"></textarea>
+
+                                        <div class="searchGene horizontal layout end-justified" hidden>
+                                            <input id="searchField" list="searchDataList" placeholder="Search gene"
+                                                   type="text"
+                                                   style="width: 100px;">
+                                            <datalist id="searchDataList"></datalist>
+                                            <div id="quickSearchButton" class="button" style="border-left: none;">
+                                                <font-awesome icon="search"></font-awesome>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+                            <div class="jso-formbox">
+                                <div class="jso-formtitle">
+                                    Identifiers
+                                </div>
+                                <div class="jso-formcontent">
+                                    <div class="input_container vertical layout">
+                                        <label class="jso"> Code</label>
+                                    <textarea id="code" name="code" placeholder="ING-01,ING-02"
+                                              value="{{codeValue::change}}" rows="3">
+
+                                    </textarea>
+                                    </div>
+                                    <div class="input_container vertical layout">
+                                        <label class="jso"> Decipher ID</label>
+                                    <textarea id="decipherId" name="decipherId" placeholder="12840,25600"
+                                              value="{{decipherIdValue::change}}" rows="3">
+
+                                    </textarea>
+                                    </div>
+
+                                </div>
+                            </div>
+                            <div class="jso-formbox">
+                                <div class="jso-formtitle">
+                                    Filters
+                                </div>
+                                <div class="jso-formcontent">
+                                    <div class="input_container vertical layout">
+                                        <label class="jso"> Genes</label>
+                                    <textarea id="gen" name="gen" placeholder="CYP2E1,SYCE1"
+                                              value="{{genValue::change}}" rows="3">
+
+                                    </textarea>
+                                    </div>
+                                    <div class="input_container vertical layout">
+                                        <label class="jso"> Type of variant
+                                            <div class="horizontal layout">
+                                                <input type="checkbox" name="type" value="0"/>Gain
+                                                <input type="checkbox" name="type" value="1"/>Loss
+                                                <input type="checkbox" name="type" value="2"/>LOH neutral
+                                            </div>
+                                        </label>
+                                    </div>
+                                    <div class="input_container vertical layout">
+                                        <label class="jso"> Assembly
+                                            <div class="horizontal layout">
+                                                <input type="checkbox" name="assembly" value="0"/>hg18
+                                                <input type="checkbox" name="assembly" value="1"/>hg19
+                                            </div>
+                                        </label>
+
+                                    </div>
+                                    <div class="input_container vertical layout">
+                                        <label class="jso"> Doses
+
+                                            <div class="horizontal layout">
+                                                <input type="checkbox" name="doses" value="0"/>x0
+                                                <input type="checkbox" name="doses" value="1"/>x1
+                                                <input type="checkbox" name="doses" value="2"/>x2(XY)
+                                                <input type="checkbox" name="doses" value="3"/>x3
+
+                                            </div>
+                                        </label>
+
+                                    </div>
+                                    <div class="input_container vertical layout">
+                                        <label class="jso"> Clinical Significance
+                                            <div class="horizontal layout">
+                                                <input type="checkbox" name="clis" value="0"/>Benign
+                                                <input type="checkbox" name="clis" value="1"/>Pathogenic
+                                                <input type="checkbox" name="clis" value="4"/>VOUS
+                                            </div>
+                                            <div class="horizontal layout">
+                                                <input type="checkbox" name="clis" value="2"/>Likely Benign
+                                                <input type="checkbox" name="clis" value="3"/>Likely Pathogenic
+                                            </div>
+                                        </label>
+
+                                    </div>
+
+                                    <div class="input_container vertical layout">
+                                        <label class="jso"> Inheritance
+
+                                            <div class="horizontal layout">
+                                                <input type="checkbox" name="inheritance" value="0"/>De novo
+                                                constitutive
+                                                <input type="checkbox" name="inheritance" value="1"/>Maternally
+                                                inherited
+
+                                            </div>
+                                            <div class="horizontal layout">
+                                                <input type="checkbox" name="inheritance" value="2"/>Parternally
+                                                inherited
+                                                <input type="checkbox" name="inheritance" value="3"/>Unknown
+
+                                            </div>
+                                        </label>
+
+                                    </div>
+
+                                    <div class="input_container vertical layout">
+                                        <label class="jso"> Cell line</label>
+
+                                        <div class="horizontal layout">
+                                            <input type="radio" name="cl" value="0"/>Germline
+                                            <input type="radio" name="cl" value="1"/>Somatic
+
+                                        </div>
+                                    </div>
+                                    <div class="input_container vertical layout">
+                                        <label class="jso"> Chromosomal Gender</label>
+
+                                        <div class="horizontal layout">
+                                            <input type="radio" name="gender" value="0"/>XX
+                                            <input type="radio" name="gender" value="1"/>XY
+                                        </div>
+                                    </div>
+                                    <div class="input_container vertical layout">
+                                        <label class="jso"> Status</label>
+
+                                        <div class="horizontal layout">
+                                            <input type="checkbox" name="status" value="0"/>Proband
+                                            <input type="checkbox" name="status" value="1"/>Father
+                                            <input type="checkbox" name="status" value="2"/>Mother
+                                            <input type="checkbox" name="status" value="3"/>Control
+
+                                        </div>
+
+                                    </div>
+                                    <div class="input_container vertical layout">
+                                        <label class="jso"> Type of Sample</label>
+
+                                        <div class="horizontal layout">
+                                            <input type="checkbox" name="typeS" value="0"/>Blood
+                                            <input type="checkbox" name="typeS" value="1"/>Amniotic fluid
+                                        </div>
+                                        <div class="horizontal layout">
+                                            <input type="checkbox" name="typeS" value="2"/>Chorionic villi
+                                            <input type="checkbox" name="typeS" value="3"/>Tumour
+                                            <input type="checkbox" name="typeS" value="4"/>Etc
+
+                                        </div>
+                                    </div>
+                                    <div class="jso-formcontent">
+                                        <div class="input_container vertical layout">
+                                            <label class="jso"> Phenotype(HPO)</label>
+                                        <textarea id="hpo" name="hpo" placeholder="HP:0001249,HP:0001290"
+                                                  value="{{hpoValue::change}}" rows="3">
+
+                                        </textarea>
+                                        </div>
+                                        <div class="input_container vertical layout">
+                                            <label class="jso"> Year of Birth</label>
+                                    <textarea id="year" name="year" placeholder="2004,2003"
+                                              value="{{yearIdValue::change}}" rows="3">
+
+                                    </textarea>
+                                        </div>
+
+                                    </div>
+                                    <div class="jso-formcontent">
+                                        <div class="input_container vertical layout">
+                                            <label class="jso"> Ethic Group</label>
+                                        <textarea id="ethic" name="ethic" placeholder="White Mediterranean,Amerindian"
+                                                  value="{{ethicValue::change}}" rows="3">
+
+                                        </textarea>
+                                        </div>
+                                        <div class="input_container vertical layout">
+                                            <label class="jso"> Geographic Origin</label>
+                                    <textarea id="geo" name="geo" placeholder="Spain,Bolivia"
+                                              value="{{geoValue::change}}" rows="3">
+
+                                    </textarea>
+                                        </div>
+
+                                    </div>
+
+
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <jso-genome-viewer-element id="gv" on-created="handleGenomeViewerCreated"></jso-genome-viewer-element>
+        </div>
+
+    </template>
+</dom-module>
+<script>
+    Polymer({
+        is: 'cnvs-search-element',
+        properties: {
+            regionValue: {
+                type: String,
+                value: "1:100000-200000"
+            }
+        },
+        ready: function () {
+            this.species = 'Homo sapiens';
+
+            this.$.gv.createGenomeViewer();
+            this.$.gv.genomeViewer.draw();
+            this.$.gv.genomeViewer.toggleAutoHeight(true);
+        },
+        created: function () {
+            this.selectedSpecies = DEFAULT_SPECIES;
+        },
+        handleGenomeViewerCreated: function () {
+            var me = this;
+
+//            var adapter = new FeatureTemplateAdapter({
+//                uriTemplate: PVS_HOST + '/regions/{region}/fetch',
+////                templateVariables: {
+////                    customVar: 'info',
+////                },
+//                species: this.$.gv.genomeViewer.species,
+//                getRegionsFromIntervals: function (response) {
+//
+//                    var regions = [];
+//                    for (var i = 0; i < response.result.length; i++) {
+//                        var r = response.result[i];
+//                        for (var j = 0; j < r.length; j++) {
+//                            var interval = r[j];
+//                            var region = new Region(interval);
+//                            regions.push(region);
+//                        }
+//                    }
+//                    return regions;
+//
+//                },
+//                parse: function (response, dataType) {
+//                    var itemsArray = [];
+//
+//                    if (dataType == "histogram") {
+//                        for (var i = 0; i < response.result.length; i++) {
+//                            var r = response.result[i]
+//                            for (var j = 0; j < r.length; j++) {
+//                                var interval = r[j];
+//                                interval.features_count = interval.featuresCount;
+//                                itemsArray.push(interval);
+//                            }
+//                        }
+//                    } else {
+//                        for (var i = 0; i < response.result.length; i++) {
+//                            var r = response.result[i];
+//                            for (var j = 0; j < r.length; j++) {
+//                                var elem = r[j];
+//                                elem.start = elem.position;
+//                                elem.end = elem.position;
+//                            }
+//                            itemsArray.push(r);
+//                        }
+//                    }
+//                    return itemsArray;
+//                }
+//            });
+//
+//            var args = FEATURE_TYPES.undefined;
+//            args.handlers = {
+//                "feature:click": function (e) {
+//
+//                    var elem = e.feature;
+//                    console.log(elem);
+//
+//                    me.$.dataTable.selectElem(elem, function (x, y) {
+//                        return x.chromosome == y.chromosome && x.position == y.position &&
+//                                x.reference == y.reference && x.alternate == y.alternate;
+//                    });
+//                }
+//
+//            }
+//
+//            var track = new FeatureTrack({
+//                title: 'CSVS',
+//                featureType: 'csvs',
+//                minHistogramRegionSize: 12000,
+//                maxLabelRegionSize: 3000,
+//                height: 120,
+//                renderer: new FeatureRenderer(args),
+//                dataAdapter: adapter
+//            });
+
+//            this.$.gv.genomeViewer.addTrack(track);
+        },
+        submitForm: function () {
+            var me = this;
+            var query = {};
+
+            if (this.$.filter_form.checkValidity() && (this.regionValue != '' || this.geneValue != '')) {
+
+                var regions = [];
+
+
+//                if (this.geneValue) {
+//                    var gene = this.geneValue.toUpperCase();
+//                    CellBaseManager.get({
+//                        species: 'hsapiens',
+//                        category: 'feature',
+//                        subCategory: 'gene',
+//                        query: gene,
+//                        resource: "info",
+//                        async: false,
+//                        params: {
+//                            include: 'chromosome,start,end'
+//                        },
+//                        success: function (data) {
+//                            for (var i = 0; i < data.response.length; i++) {
+//                                var queryResult = data.response[i];
+//
+//                                if (queryResult.result.length > 0) {
+//                                    var region = new Region(queryResult.result[0]);
+//                                    regions.push(region.toString());
+//
+//                                } else {
+//                                    alert("Wrong gene: " + gene);
+//                                }
+//                            }
+//                        }
+//                    });
+//                }
+
+                query.regions = this.regionValue;
+
+                var url = CNVSManager.regions.fetch({
+                    query: query,
+                    request: {
+                        url: true
+                    }
+                });
+                console.log(url);
+
+                var region = new Region(this.regionValue);
+                this.$.gv.genomeViewer.setRegion(region);
+
+
+            } else {
+                alert("Please add a region/gene ");
+            }
+
+        },
+    });
+
+</script>
