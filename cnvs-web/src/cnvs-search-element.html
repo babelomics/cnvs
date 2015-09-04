@@ -48,20 +48,6 @@
             font-size: 11px;
         }
 
-        jso-table {
-            overflow-y: auto;
-
-        }
-
-        jso-table::shadow .table-header-field > .name.jso-table {
-            padding: 4px 0;
-        }
-
-        jso-table::shadow #list {
-            height: 300px;
-            overflow-x: auto
-        }
-
         #menu {
             /*border-bottom: 1px solid rgba(125, 125, 125, 0.4);*/
             margin-top: 15px;
@@ -84,33 +70,14 @@
             border-bottom-color: rgba(125, 125, 125, 0.7);
         }
 
-        #tools {
-
-            margin-top: 10px;
-        }
-
-        jso-variant-frequencies-grid,
-        jso-variant-effect-grid,
-        jso-variant-grid,
         jso-genome-viewer-element,
-        .jso-formbox,
-        #dataTable {
+        .jso-formbox {
             box-shadow: 0px 0px 2px 0px rgba(0, 0, 0, 0.2);
         }
 
-        jso-variant-frequencies-grid,
-        jso-variant-effect-grid,
-        #dataTable {
-            border: 1px solid var(--divider-color)
-        }
+        .jso-formcontent {
+            display: none;
 
-        .check {
-            cursor: pointer;
-            color: var(--secondary-text-color);
-        }
-
-        .check:hover {
-            color: var(--accent-color);
         }
 
         /*input[type=checkbox] {*/
@@ -151,10 +118,13 @@
                         <div class="form_block positionBlock">
 
                             <div class="jso-formbox">
-                                <div class="jso-formtitle">
-                                    Position
-                                </div>
-                                <div class="jso-formcontent">
+                                <label onclick="escondido('positions')">
+                                    <div class="jso-formtitle">
+                                        Position
+                                    </div>
+                                </label>
+
+                                <div class="jso-formcontent" id="positions">
                                     <div class="input_container vertical layout">
                                         <label class="jso">Chromosomal Location:</label>
                                         <textarea id="region" name="region" placeholder="1:1-100000,2:1-100000"
@@ -179,10 +149,13 @@
                                 </div>
                             </div>
                             <div class="jso-formbox">
-                                <div class="jso-formtitle">
-                                    Identifiers
-                                </div>
-                                <div class="jso-formcontent">
+                                <label onclick="escondido('identifiers')">
+                                    <div class="jso-formtitle">
+                                        Identifiers
+                                    </div>
+                                </label>
+
+                                <div class="jso-formcontent" id="identifiers">
                                     <div class="input_container vertical layout">
                                         <label class="jso"> Code</label>
                                     <textarea id="code" name="code" placeholder="ING-01,ING-02"
@@ -201,37 +174,57 @@
                                 </div>
                             </div>
                             <div class="jso-formbox">
-                                <div class="jso-formtitle">
-                                    Filters
-                                </div>
-                                <div class="jso-formcontent">
-                                    <div class="input_container vertical layout">
-                                        <label class="jso"> Genes</label>
-                                    <textarea id="gen" name="gen" placeholder="CYP2E1,SYCE1"
-                                              value="{{genValue::change}}" rows="3">
+                                <label onclick="escondido('type')">
+                                    <div class="jso-formtitle">
+                                        Type of variant
+                                    </div>
+                                </label>
 
-                                    </textarea>
-                                    </div>
+                                <div class="jso-formcontent" id="type">
+
                                     <div class="input_container vertical layout">
-                                        <label class="jso"> Type of variant
+
                                             <div class="horizontal layout">
-                                                <input type="checkbox" name="type" value="0"/>Gain
-                                                <input type="checkbox" name="type" value="1"/>Loss
-                                                <input type="checkbox" name="type" value="2"/>LOH neutral
+                                                <input type="checkbox" name="type" id="type0" value="0"/><label
+                                                    for="type0"> Gain</label>
+                                                <input type="checkbox" name="type" id="type1" value="1"/><label
+                                                    for="type1">Loss</label>
+                                                <input type="checkbox" name="type" id="type2" value="2"/><label
+                                                    for="type2">LOH neutral</label>
                                             </div>
-                                        </label>
+
                                     </div>
+                                </div>
+                            </div>
+                            <div class="jso-formbox">
+                                <label onclick="escondido('assembly')">
+                                    <div class="jso-formtitle">
+                                        Assembly
+                                    </div>
+                                </label>
+
+                                <div class="jso-formcontent" id="assembly">
                                     <div class="input_container vertical layout">
-                                        <label class="jso"> Assembly
+
                                             <div class="horizontal layout">
                                                 <input type="checkbox" name="assembly" value="0"/>hg18
                                                 <input type="checkbox" name="assembly" value="1"/>hg19
                                             </div>
-                                        </label>
+
 
                                     </div>
+                                </div>
+                            </div>
+                            <div class="jso-formbox">
+                                <label onclick="escondido('doses')">
+                                    <div class="jso-formtitle">
+                                        Doses
+                                    </div>
+                                </label>
+
+                                <div class="jso-formcontent" id="doses">
                                     <div class="input_container vertical layout">
-                                        <label class="jso"> Doses
+
 
                                             <div class="horizontal layout">
                                                 <input type="checkbox" name="doses" value="0"/>x0
@@ -240,64 +233,106 @@
                                                 <input type="checkbox" name="doses" value="3"/>x3
 
                                             </div>
-                                        </label>
+
 
                                     </div>
+                                </div>
+                            </div>
+                            <div class="jso-formbox">
+                                <label onclick="escondido('clis')">
+                                    <div class="jso-formtitle">
+                                        Clinical Significance
+                                    </div>
+                                </label>
+
+                                <div class="jso-formcontent" id="clis">
                                     <div class="input_container vertical layout">
-                                        <label class="jso"> Clinical Significance
-                                            <div class="horizontal layout">
-                                                <input type="checkbox" name="clis" value="0"/>Benign
-                                                <input type="checkbox" name="clis" value="1"/>Pathogenic
-                                                <input type="checkbox" name="clis" value="4"/>VOUS
-                                            </div>
-                                            <div class="horizontal layout">
-                                                <input type="checkbox" name="clis" value="2"/>Likely Benign
-                                                <input type="checkbox" name="clis" value="3"/>Likely Pathogenic
-                                            </div>
-                                        </label>
+                                        <div class="horizontal layout">
+                                            <input type="checkbox" name="clis" value="0"/>Benign
+                                            <input type="checkbox" name="clis" value="1"/>Pathogenic
+                                            <input type="checkbox" name="clis" value="4"/>VOUS
+                                        </div>
+                                        <div class="horizontal layout">
+                                            <input type="checkbox" name="clis" value="2"/>Likely Benign
+                                            <input type="checkbox" name="clis" value="3"/>Likely Pathogenic
+                                        </div>
 
                                     </div>
+                                </div>
+                            </div>
 
+                            <div class="jso-formbox">
+                                <label onclick="escondido('inheritance')">
+                                    <div class="jso-formtitle">
+                                        Inheritance
+                                    </div>
+                                </label>
+
+                                <div class="jso-formcontent" id="inheritance">
                                     <div class="input_container vertical layout">
-                                        <label class="jso"> Inheritance
 
-                                            <div class="horizontal layout">
-                                                <input type="checkbox" name="inheritance" value="0"/>De novo
-                                                constitutive
-                                                <input type="checkbox" name="inheritance" value="1"/>Maternally
-                                                inherited
+                                        <div class="horizontal layout">
+                                            <input type="checkbox" name="inheritance" value="0"/>De novo
+                                            constitutive
+                                            <input type="checkbox" name="inheritance" value="1"/>Maternally
+                                            inherited
 
-                                            </div>
-                                            <div class="horizontal layout">
-                                                <input type="checkbox" name="inheritance" value="2"/>Parternally
-                                                inherited
-                                                <input type="checkbox" name="inheritance" value="3"/>Unknown
+                                        </div>
+                                        <div class="horizontal layout">
+                                            <input type="checkbox" name="inheritance" value="2"/>Parternally
+                                            inherited
+                                            <input type="checkbox" name="inheritance" value="3"/>Unknown
 
-                                            </div>
-                                        </label>
+                                        </div>
+
 
                                     </div>
+                                </div>
+                            </div>
+                            <div class="jso-formbox">
+                                <label onclick="escondido('cl')">
+                                    <div class="jso-formtitle">
+                                        Cell line
+                                    </div>
+                                </label>
 
+                                <div class="jso-formcontent" id="cl">
                                     <div class="input_container vertical layout">
-                                        <label class="jso"> Cell line</label>
-
                                         <div class="horizontal layout">
                                             <input type="radio" name="cl" value="0"/>Germline
                                             <input type="radio" name="cl" value="1"/>Somatic
 
                                         </div>
                                     </div>
+                                </div>
+                            </div>
+
+                            <div class="jso-formbox">
+                                <label onclick="escondido('gender')">
+                                    <div class="jso-formtitle">
+                                        Chromosomal Gender
+                                    </div>
+                                </label>
+
+                                <div class="jso-formcontent" id="gender">
                                     <div class="input_container vertical layout">
-                                        <label class="jso"> Chromosomal Gender</label>
 
                                         <div class="horizontal layout">
                                             <input type="radio" name="gender" value="0"/>XX
                                             <input type="radio" name="gender" value="1"/>XY
                                         </div>
                                     </div>
-                                    <div class="input_container vertical layout">
-                                        <label class="jso"> Status</label>
+                                </div>
+                            </div>
+                            <div class="jso-formbox">
+                                <label onclick="escondido('status')">
+                                    <div class="jso-formtitle">
+                                        Status
+                                    </div>
+                                </label>
 
+                                <div class="jso-formcontent" id="status">
+                                    <div class="input_container vertical layout">
                                         <div class="horizontal layout">
                                             <input type="checkbox" name="status" value="0"/>Proband
                                             <input type="checkbox" name="status" value="1"/>Father
@@ -307,8 +342,18 @@
                                         </div>
 
                                     </div>
+                                </div>
+                            </div>
+                            <div class="jso-formbox">
+                                <label onclick="escondido('typeS')">
+                                    <div class="jso-formtitle">
+                                        Type of Sample
+                                    </div>
+                                </label>
+
+                                <div class="jso-formcontent" id="typeS">
                                     <div class="input_container vertical layout">
-                                        <label class="jso"> Type of Sample</label>
+
 
                                         <div class="horizontal layout">
                                             <input type="checkbox" name="typeS" value="0"/>Blood
@@ -320,48 +365,87 @@
                                             <input type="checkbox" name="typeS" value="4"/>Etc
 
                                         </div>
+
                                     </div>
-                                    <div class="jso-formcontent">
-                                        <div class="input_container vertical layout">
-                                            <label class="jso"> Phenotype(HPO)</label>
+                                </div>
+                            </div>
+                            <div class="jso-formbox">
+                                <label onclick="escondido('hpoid')">
+                                    <div class="jso-formtitle">
+                                        Phenotype(HPO)
+                                    </div>
+                                </label>
+
+                                <div class="jso-formcontent" id="hpoid">
+
+                                    <div class="input_container vertical layout">
+
                                         <textarea id="hpo" name="hpo" placeholder="HP:0001249,HP:0001290"
                                                   value="{{hpoValue::change}}" rows="3">
 
                                         </textarea>
-                                        </div>
-                                        <div class="input_container vertical layout">
-                                            <label class="jso"> Year of Birth</label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="jso-formbox">
+                                <label onclick="escondido('yearid')">
+                                    <div class="jso-formtitle">
+                                        Year of Birth
+                                    </div>
+                                </label>
+
+                                <div class="jso-formcontent" id="yearid">
+                            <div class="input_container vertical layout">
+
                                     <textarea id="year" name="year" placeholder="2004,2003"
                                               value="{{yearIdValue::change}}" rows="3">
 
                                     </textarea>
-                                        </div>
-
+                            </div>
                                     </div>
-                                    <div class="jso-formcontent">
-                                        <div class="input_container vertical layout">
-                                            <label class="jso"> Ethic Group</label>
+                                </div>
+
+                        </div>
+                        <div class="jso-formbox">
+                            <label onclick="escondido('ethicid')">
+                                <div class="jso-formtitle">
+                                    Ethic Group
+                                </div>
+                            </label>
+
+                            <div class="jso-formcontent" id="ethicid">
+
+                            <div class="input_container vertical layout">
+
                                         <textarea id="ethic" name="ethic" placeholder="White Mediterranean,Amerindian"
                                                   value="{{ethicValue::change}}" rows="3">
 
                                         </textarea>
-                                        </div>
-                                        <div class="input_container vertical layout">
-                                            <label class="jso"> Geographic Origin</label>
-                                    <textarea id="geo" name="geo" placeholder="Spain,Bolivia"
-                                              value="{{geoValue::change}}" rows="3">
+                            </div>
+                                </div>
+                            </div>
+                        <div class="jso-formbox">
+                            <label onclick="escondido('geoid')">
+                                <div class="jso-formtitle">
+                                    Geographic Origin
+                                </div>
+                            </label>
 
-                                    </textarea>
-                                        </div>
+                            <div class="jso-formcontent" id="geoid">
+                            <div class="input_container vertical layout">
 
-                                    </div>
+                                        <textarea id="geo" name="geo" placeholder="Spain,Bolivia"
+                                                  value="{{geoValue::change}}" rows="3">
 
-
+                                        </textarea>
+                            </div>
                                 </div>
                             </div>
 
                         </div>
-                    </div>
+
+
+
                 </form>
             </div>
             <jso-genome-viewer-element id="gv" on-created="handleGenomeViewerCreated"></jso-genome-viewer-element>
@@ -370,6 +454,14 @@
     </template>
 </dom-module>
 <script>
+    function escondido(x) {
+        var ele = document.getElementById(x);
+        if ((ele.style.display) == "none") {
+            ele.style.display = "block";
+        } else {
+            ele.style.display = "none";
+        }
+    }
     Polymer({
         is: 'cnvs-search-element',
         properties: {
@@ -387,6 +479,15 @@
         },
         created: function () {
             this.selectedSpecies = DEFAULT_SPECIES;
+        },
+        escondido: function (x) {
+            var ele = document.getElementById(x);
+            if (ele.style.visibility.equals("hidden")) {
+
+            } else {
+                ele.style.visibility = "hidden";
+            }
+
         },
         handleGenomeViewerCreated: function () {
             var me = this;
