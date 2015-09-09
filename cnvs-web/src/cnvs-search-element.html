@@ -106,8 +106,25 @@
             height: 300px;
             overflow-x: auto
         }
+        /*.jso-formbox  img{
 
-        /*input[type=checkbox] {*/
+
+        }*/
+
+        .jso-formtitle img{
+            float: right;
+           // background: #006699;
+            height: 20px;
+            width: 20px;
+            -moz-transition: all 1s ease-in-out;
+            -webkit-transition: all 1s ease-in-out;
+            -o-transition: all 1s ease-in-out;
+            transition: all 1s ease-in;
+
+
+        }
+
+            /*input[type=checkbox] {*/
         /*display: block;*/
         /*float: left;*/
         /*outline: 0;*/
@@ -129,12 +146,15 @@
         /*background-color: red;*/
         /*}*/
 
+        .toggleElement {
+            display: block;
+        }
     </style>
     <template>
 
         <div class="horizontal layout">
             <div id="filter-form-element">
-                <form id="filter_form" class="vertical layout" >
+                <form id="filter_form" class="vertical layout">
                     <div vertical layout>
                         <div id="buttons_container" class="horizontal layout end-justified" style="margin:10px 5px;">
                             <div class="jso-btn jso-btn-shdw flex" on-click="clearForm" style="margin-right: 3px;">
@@ -145,10 +165,12 @@
                         <div class="form_block positionBlock">
 
                             <div class="jso-formbox">
-                                <label onclick="escondido('positions')">
-                                    <div class="jso-formtitle">
+                                <label on-click="toggleElement" data-option="positions">
+                                    <div class="jso-formtitle ">
                                         Position
+                                        <img src="images/flechaizquierdaazul.png" id="positionsfoto"/>
                                     </div>
+
                                 </label>
 
                                 <div class="jso-formcontent" id="positions">
@@ -176,7 +198,7 @@
                                 </div>
                             </div>
                             <div class="jso-formbox">
-                                <label onclick="escondido('identifiers')">
+                                <label on-click="toggleElement" data-option="identifiers">
                                     <div class="jso-formtitle">
                                         Identifiers
                                     </div>
@@ -201,7 +223,7 @@
                                 </div>
                             </div>
                             <div class="jso-formbox">
-                                <label onclick="escondido('type')">
+                                <label on-click="toggleElement" data-option="type">
                                     <div class="jso-formtitle">
                                         Type of variant
                                     </div>
@@ -224,7 +246,7 @@
                                 </div>
                             </div>
                             <div class="jso-formbox">
-                                <label onclick="escondido('assembly')">
+                                <label on-click="toggleElement" data-option="assembly">
                                     <div class="jso-formtitle">
                                         Assembly
                                     </div>
@@ -245,7 +267,7 @@
                                 </div>
                             </div>
                             <div class="jso-formbox">
-                                <label onclick="escondido('doses')">
+                                <label on-click="toggleElement" data-option="doses">
                                     <div class="jso-formtitle">
                                         Doses
                                     </div>
@@ -271,7 +293,7 @@
                                 </div>
                             </div>
                             <div class="jso-formbox">
-                                <label onclick="escondido('clis')">
+                                <label on-click="toggleElement" data-option="clis">
                                     <div class="jso-formtitle">
                                         Clinical Significance
                                     </div>
@@ -296,7 +318,7 @@
                             </div>
 
                             <div class="jso-formbox">
-                                <label onclick="escondido('inheritance')">
+                                <label on-click="toggleElement" data-option="inheritance">
                                     <div class="jso-formtitle">
                                         Inheritance
                                     </div>
@@ -328,7 +350,7 @@
                                 </div>
                             </div>
                             <div class="jso-formbox">
-                                <label onclick="escondido('cl')">
+                                <label on-click="toggleElement" data-option="cl">
                                     <div class="jso-formtitle">
                                         Cell line
                                     </div>
@@ -348,8 +370,8 @@
                             </div>
 
                             <div class="jso-formbox">
-                                <label onclick="escondido('gender')">
-                                    <div class="jso-formtitle">
+                                <label on-click="toggleElement" data-option="gender">
+                                    <div class="jso-formtitle horizontal layout" >
                                         Chromosomal Gender
                                     </div>
                                 </label>
@@ -367,7 +389,7 @@
                                 </div>
                             </div>
                             <div class="jso-formbox">
-                                <label onclick="escondido('status')">
+                                <label on-click="toggleElement" data-option="status">
                                     <div class="jso-formtitle">
                                         Status
                                     </div>
@@ -391,7 +413,7 @@
                                 </div>
                             </div>
                             <div class="jso-formbox">
-                                <label onclick="escondido('typeS')">
+                                <label on-click="toggleElement" data-option="typeS">
                                     <div class="jso-formtitle">
                                         Type of Sample
                                     </div>
@@ -421,7 +443,7 @@
                                 </div>
                             </div>
                             <div class="jso-formbox">
-                                <label onclick="escondido('hpoid')">
+                                <label on-click="toggleElement" data-option="hpoid">
                                     <div class="jso-formtitle">
                                         Phenotype(HPO)
                                     </div>
@@ -439,7 +461,7 @@
                                 </div>
                             </div>
                             <div class="jso-formbox">
-                                <label onclick="escondido('yearid')">
+                                <label on-click="toggleElement" data-option="yearid">
                                     <div class="jso-formtitle">
                                         Year of Birth
                                     </div>
@@ -458,7 +480,7 @@
 
                         </div>
                         <div class="jso-formbox">
-                            <label onclick="escondido('ethicid')">
+                            <label on-click="toggleElement" data-option="ethicid">
                                 <div class="jso-formtitle">
                                     Ethic Group
                                 </div>
@@ -476,7 +498,7 @@
                             </div>
                         </div>
                         <div class="jso-formbox">
-                            <label onclick="escondido('geoid')">
+                            <label on-click="toggleElement" data-option="geoid">
                                 <div class="jso-formtitle">
                                     Geographic Origin
                                 </div>
@@ -511,10 +533,9 @@
                 </div>
 
 
-
                 <div id="tools">
                     <jso-genome-viewer-element id="gv"
-                                               on-created="handleGenomeViewerCreated" onload="escondertodo()"></jso-genome-viewer-element>
+                                               on-created="handleGenomeViewerCreated"></jso-genome-viewer-element>
                 </div>
             </div>
         </div>
@@ -522,13 +543,7 @@
     </template>
 </dom-module>
 <script>
-    function escondertodo(){
-     var array =["positions", "identifiers", "type", "assembly", "doses", "clis",
-            "inheritance", "cl", "gender", "status", "typeS", "hpoid", "ethicid",  "geoid" ];
-        for(var i = 0; i < array.size(); i ++){
-            (document.getElementById(array[i])).style.display = "none";
-        }
-    }
+/*
     function escondido(x) {
         var ele = document.getElementById(x);
         if ((ele.style.display) == "none") {
@@ -537,6 +552,16 @@
             ele.style.display = "none";
         }
     }
+    function proba() {
+        var array = ['positions', 'identifiers', 'type', 'assembly', 'doses', 'clis',
+            "inheritance", "cl", 'gender', 'status', 'typeS', 'hpoid', 'ethicid', "geoid"];
+
+        for (var i = 0; i < array.length; i++) {
+            var elearray = array[i];
+            var ele = document.getElementById(array[i]);
+            ele.style.display = "none";
+        }
+    }*/
     Polymer({
         is: 'cnvs-search-element',
         properties: {
@@ -615,27 +640,46 @@
                 value: ""
             }
         },
+        toggleElement: function (e) {
+
+            var me = this;
+            var elem = e.currentTarget;
+            var option = elem.dataset.option;
+            var id = this.$[option];
+            var idfoto = this.$[option+"foto"];
+
+//            id.classList.toggle("toggleElement");
+
+            if (id.style.display == "" || id.style.display == "none") {
+                id.style.display = "block";
+               // idfoto.css("-moz-transform","rotate(" + 90 + "deg)");
+                $(idfoto).css("-moz-transform", "rotate(-90deg)");
+                $(idfoto).css("-webkit-transform", "rotate( -90deg)");
+                // idfoto.src="/cnvs/cnvs-web/src/images/flechaabajoazul.png";
+            } else {
+                id.style.display = "none";
+                $(idfoto).css("-moz-transform", "rotate(90deg)");
+                $(idfoto).css("-webkit-transform", "rotate( 0deg)");
+               // idfoto.src = "/cnvs/cnvs-web/src/images/flechaizquierdaazul.png";
+            }
+
+        },
         ready: function () {
             this.species = 'Homo sapiens';
 
             this.$.gv.createGenomeViewer();
             this.$.gv.genomeViewer.draw();
             this.$.gv.genomeViewer.toggleAutoHeight(true);
+
+
         },
         created: function () {
             this.selectedSpecies = DEFAULT_SPECIES;
-        },
-        escondido: function (x) {
-            var ele = document.getElementById(x);
-            if (ele.style.visibility.equals("hidden")) {
-
-            } else {
-                ele.style.visibility = "hidden";
-            }
 
         },
         clearForm: function () {
             this.$.filter_form.reset();
+
         },
         urlChanged: function (neo, old) {
             var me = this;
@@ -765,7 +809,7 @@
 
                 query.regions = this.regionValue;
                 query.code = this.codeValue;
-                query.decipherId= this.decipherIdValue;
+                query.decipherId = this.decipherIdValue;
                 query.assembly = this.assemblyValue;
                 query.type = this.typeValue;
                 query.doses = this.dosesValue;
@@ -782,13 +826,6 @@
                 query.geo = this.geoValue;
 
 
-
-
-
-
-
-
-
                 var url = CNVSManager.regions.fetch({
                     query: query,
                     request: {
@@ -797,8 +834,8 @@
                 });
                 console.log(url);
 
-                /* var region = new Region(this.regionValue);
-                 this.$.gv.genomeViewer.setRegion(region);*/
+                 var region = new Region(this.regionValue);
+                 this.$.gv.genomeViewer.setRegion(region);
                 this.forURL = url;
 
 
