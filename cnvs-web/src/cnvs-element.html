@@ -69,8 +69,7 @@
         </div>
 
         <jso-opencga-header id="jsoHeader"
-                            selected-option="{{selectedOption}}"
-                            allow-login="false">
+                            selected-option="{{selectedOption}}">
             <div class="icon">
                 <img src="images/gotaCS.png" style="height: 50px;margin: 5px 0px 0 0;">
             </div>
@@ -81,7 +80,8 @@
                 <div style="margin-left:4vw;"></div>
             </div>
 
-<        <jso-help-menu class="helpmenu" selectedOption="{{selectedOption}}" >
+            <button onclick="https://github.com/babelomics/cnvs">Upload</button>
+            <jso-help-menu class="helpmenu" selectedOption="{{selectedOption}}">
                 <a href="https://github.com/babelomics/cnvs" target="_blank">
                     <i class="fa fa-book"></i>
                     &nbsp; Documentation
@@ -98,11 +98,11 @@
         </jso-opencga-header>
 
         <!--<jso-opencga-footer hidden$="{{computeSelectedOption(selectedOption, 'home')}}" menu-option="home">-->
-            <!--CNVS: created by Computational Genomics Department-->
-            <!--<br>-->
-            <!--Principe Felipe Research Center-->
-            <!--<br>-->
-            <!--2015-->
+        <!--CNVS: created by Computational Genomics Department-->
+        <!--<br>-->
+        <!--Principe Felipe Research Center-->
+        <!--<br>-->
+        <!--2015-->
         <!--</jso-opencga-footer>-->
     </template>
 </dom-module>
@@ -121,7 +121,7 @@
         created: function () {
         },
         ready: function () {
-            this.$.jsoHeader.allowLogin = false;
+//            this.$.jsoHeader.allowLogin = false;
         },
         computeSelectedOption: function (selectedOption, option) {
             return this.selectedOption != option;
