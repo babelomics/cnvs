@@ -74,8 +74,13 @@ public class CNVSMain {
 		try {
 			
 			if (cmd.equalsIgnoreCase("load")){
-				OptionsParser.CommandLoad c = (OptionsParser.CommandLoad) command;
+				parser.parse(args);
+				OptionsParser.CommandLoad c = parser.getLoadCommand();
 
+
+				System.out.println("c.user = " + c.user);
+				System.out.println("c.host = " + c.host);
+				System.out.println("c.pass = " + c.pass);
 
 				Datastore datastore = getDatastore(c.host, c.user, c.pass);
 

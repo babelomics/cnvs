@@ -106,25 +106,25 @@
             height: 300px;
             overflow-x: auto
         }
+
         /*.jso-formbox  img{
 
 
         }*/
 
-        .jso-formtitle img{
+        .jso-formtitle img {
             float: right;
-           // background: #006699;
+        / / background : #006699;
             height: 20px;
             width: 20px;
-            -moz-transition: all 1s ease-in-out;
-            -webkit-transition: all 1s ease-in-out;
-            -o-transition: all 1s ease-in-out;
-            transition: all 1s ease-in;
-
+            -moz-transition: all 0.5s ease-in-out;
+            -webkit-transition: all 0.5s ease-in-out;
+            -o-transition: all 0.5s ease-in-out;
+            transition: all 0.5s ease-in;
 
         }
 
-            /*input[type=checkbox] {*/
+        /*input[type=checkbox] {*/
         /*display: block;*/
         /*float: left;*/
         /*outline: 0;*/
@@ -201,6 +201,7 @@
                                 <label on-click="toggleElement" data-option="identifiers">
                                     <div class="jso-formtitle">
                                         Identifiers
+                                        <img src="images/flechaizquierdaazul.png" id="identifiersfoto"/>
                                     </div>
                                 </label>
 
@@ -226,6 +227,7 @@
                                 <label on-click="toggleElement" data-option="type">
                                     <div class="jso-formtitle">
                                         Type of variant
+                                        <img src="images/flechaizquierdaazul.png" id="typefoto"/>
                                     </div>
                                 </label>
 
@@ -249,6 +251,7 @@
                                 <label on-click="toggleElement" data-option="assembly">
                                     <div class="jso-formtitle">
                                         Assembly
+                                        <img src="images/flechaizquierdaazul.png" id="assemblyfoto"/>
                                     </div>
                                 </label>
 
@@ -270,6 +273,7 @@
                                 <label on-click="toggleElement" data-option="doses">
                                     <div class="jso-formtitle">
                                         Doses
+                                        <img src="images/flechaizquierdaazul.png" id="dosesfoto"/>
                                     </div>
                                 </label>
 
@@ -296,6 +300,7 @@
                                 <label on-click="toggleElement" data-option="clis">
                                     <div class="jso-formtitle">
                                         Clinical Significance
+                                        <img src="images/flechaizquierdaazul.png" id="clisfoto"/>
                                     </div>
                                 </label>
 
@@ -321,6 +326,7 @@
                                 <label on-click="toggleElement" data-option="inheritance">
                                     <div class="jso-formtitle">
                                         Inheritance
+                                        <img src="images/flechaizquierdaazul.png" id="inheritancefoto"/>
                                     </div>
                                 </label>
 
@@ -353,6 +359,7 @@
                                 <label on-click="toggleElement" data-option="cl">
                                     <div class="jso-formtitle">
                                         Cell line
+                                        <img src="images/flechaizquierdaazul.png" id="clfoto"/>
                                     </div>
                                 </label>
 
@@ -371,8 +378,9 @@
 
                             <div class="jso-formbox">
                                 <label on-click="toggleElement" data-option="gender">
-                                    <div class="jso-formtitle horizontal layout" >
+                                    <div class="jso-formtitle ">
                                         Chromosomal Gender
+                                        <img src="images/flechaizquierdaazul.png" id="genderfoto"/>
                                     </div>
                                 </label>
 
@@ -392,6 +400,7 @@
                                 <label on-click="toggleElement" data-option="status">
                                     <div class="jso-formtitle">
                                         Status
+                                        <img src="images/flechaizquierdaazul.png" id="statusfoto"/>
                                     </div>
                                 </label>
 
@@ -416,6 +425,7 @@
                                 <label on-click="toggleElement" data-option="typeS">
                                     <div class="jso-formtitle">
                                         Type of Sample
+                                        <img src="images/flechaizquierdaazul.png" id="typeSfoto"/>
                                     </div>
                                 </label>
 
@@ -446,6 +456,7 @@
                                 <label on-click="toggleElement" data-option="hpoid">
                                     <div class="jso-formtitle">
                                         Phenotype(HPO)
+                                        <img src="images/flechaizquierdaazul.png" id="hpoidfoto"/>
                                     </div>
                                 </label>
 
@@ -464,6 +475,7 @@
                                 <label on-click="toggleElement" data-option="yearid">
                                     <div class="jso-formtitle">
                                         Year of Birth
+                                        <img src="images/flechaizquierdaazul.png" id="yearidfoto"/>
                                     </div>
                                 </label>
 
@@ -478,59 +490,61 @@
                                 </div>
                             </div>
 
-                        </div>
-                        <div class="jso-formbox">
-                            <label on-click="toggleElement" data-option="ethicid">
-                                <div class="jso-formtitle">
-                                    Ethic Group
-                                </div>
-                            </label>
 
-                            <div class="jso-formcontent" id="ethicid">
+                            <div class="jso-formbox">
+                                <label on-click="toggleElement" data-option="ethicid">
+                                    <div class="jso-formtitle">
+                                        Ethic Group
+                                        <img src="images/flechaizquierdaazul.png" id="ethicidfoto"/>
+                                    </div>
+                                </label>
 
-                                <div class="input_container vertical layout">
+                                <div class="jso-formcontent" id="ethicid">
+
+                                    <div class="input_container vertical layout">
 
                                         <textarea id="ethic" name="ethic" placeholder="White Mediterranean,Amerindian"
                                                   value="{{ethicValue::change}}" rows="3">
 
                                         </textarea>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                        <div class="jso-formbox">
-                            <label on-click="toggleElement" data-option="geoid">
-                                <div class="jso-formtitle">
-                                    Geographic Origin
-                                </div>
-                            </label>
+                            <div class="jso-formbox">
+                                <label on-click="toggleElement" data-option="geoid">
+                                    <div class="jso-formtitle">
+                                        Geographic Origin
+                                        <img src="images/flechaizquierdaazul.png" id="geoidfoto"/>
+                                    </div>
+                                </label>
 
-                            <div class="jso-formcontent" id="geoid">
-                                <div class="input_container vertical layout">
+                                <div class="jso-formcontent" id="geoid">
+                                    <div class="input_container vertical layout">
 
                                         <textarea id="geo" name="geo" placeholder="Spain,Bolivia"
                                                   value="{{geoValue::change}}" rows="3">
 
                                         </textarea>
+                                    </div>
                                 </div>
                             </div>
                         </div>
-
                     </div>
 
 
                 </form>
             </div>
             <div id="dataGridElement" class="vertical layout">
-                <jso-table id="dataTable" enable-paging enable-remote enable-select enable-resize request="{{request}}"
-                           columns="{{columns}}" on-rowclick="handleRowClick">
-                </jso-table>
+                <!--<jso-table id="dataTable" enable-paging enable-remote enable-select enable-resize request="{{request}}"-->
+                           <!--columns="{{columns}}" on-rowclick="handleRowClick">-->
+                <!--</jso-table>-->
 
-                <div id="menu" class="color-2 color-hover-2 horizontal layout">
-                    <div on-click="handleMenuClick" data-option="gv">Genomic context</div>
+                <!--<div id="menu" class="color-2 color-hover-2 horizontal layout">-->
+                    <!--<div on-click="handleMenuClick" data-option="gv">Genomic context</div>-->
 
-                    <div on-click="handleMenuClick" data-option="phenotype">Phenotype</div>
-                    <div on-click="handleMenuClick" data-option="effect">Effect</div>
-                </div>
+                    <!--<div on-click="handleMenuClick" data-option="phenotype">Phenotype</div>-->
+                    <!--<div on-click="handleMenuClick" data-option="effect">Effect</div>-->
+                <!--</div>-->
 
 
                 <div id="tools">
@@ -543,31 +557,31 @@
     </template>
 </dom-module>
 <script>
-/*
-    function escondido(x) {
-        var ele = document.getElementById(x);
-        if ((ele.style.display) == "none") {
-            ele.style.display = "block";
-        } else {
-            ele.style.display = "none";
-        }
-    }
-    function proba() {
-        var array = ['positions', 'identifiers', 'type', 'assembly', 'doses', 'clis',
-            "inheritance", "cl", 'gender', 'status', 'typeS', 'hpoid', 'ethicid', "geoid"];
+    /*
+     function escondido(x) {
+     var ele = document.getElementById(x);
+     if ((ele.style.display) == "none") {
+     ele.style.display = "block";
+     } else {
+     ele.style.display = "none";
+     }
+     }
+     function proba() {
+     var array = ['positions', 'identifiers', 'type', 'assembly', 'doses', 'clis',
+     "inheritance", "cl", 'gender', 'status', 'typeS', 'hpoid', 'ethicid', "geoid"];
 
-        for (var i = 0; i < array.length; i++) {
-            var elearray = array[i];
-            var ele = document.getElementById(array[i]);
-            ele.style.display = "none";
-        }
-    }*/
+     for (var i = 0; i < array.length; i++) {
+     var elearray = array[i];
+     var ele = document.getElementById(array[i]);
+     ele.style.display = "none";
+     }
+     }*/
     Polymer({
         is: 'cnvs-search-element',
         properties: {
             regionValue: {
                 type: String,
-                value: ""
+                value: "1:1022-1022"
             },
             formURL: {
                 type: String,
@@ -646,13 +660,13 @@
             var elem = e.currentTarget;
             var option = elem.dataset.option;
             var id = this.$[option];
-            var idfoto = this.$[option+"foto"];
+            var idfoto = this.$[option + "foto"];
 
 //            id.classList.toggle("toggleElement");
 
             if (id.style.display == "" || id.style.display == "none") {
                 id.style.display = "block";
-               // idfoto.css("-moz-transform","rotate(" + 90 + "deg)");
+                // idfoto.css("-moz-transform","rotate(" + 90 + "deg)");
                 $(idfoto).css("-moz-transform", "rotate(-90deg)");
                 $(idfoto).css("-webkit-transform", "rotate( -90deg)");
                 // idfoto.src="/cnvs/cnvs-web/src/images/flechaabajoazul.png";
@@ -660,7 +674,7 @@
                 id.style.display = "none";
                 $(idfoto).css("-moz-transform", "rotate(90deg)");
                 $(idfoto).css("-webkit-transform", "rotate( 0deg)");
-               // idfoto.src = "/cnvs/cnvs-web/src/images/flechaizquierdaazul.png";
+                // idfoto.src = "/cnvs/cnvs-web/src/images/flechaizquierdaazul.png";
             }
 
         },
@@ -696,57 +710,54 @@
         handleGenomeViewerCreated: function () {
             var me = this;
 
-//            var adapter = new FeatureTemplateAdapter({
-//                uriTemplate: PVS_HOST + '/regions/{region}/fetch',
-////                templateVariables: {
-////                    customVar: 'info',
-////                },
-//                species: this.$.gv.genomeViewer.species,
-//                getRegionsFromIntervals: function (response) {
-//
-//                    var regions = [];
-//                    for (var i = 0; i < response.result.length; i++) {
-//                        var r = response.result[i];
-//                        for (var j = 0; j < r.length; j++) {
-//                            var interval = r[j];
-//                            var region = new Region(interval);
-//                            regions.push(region);
-//                        }
-//                    }
-//                    return regions;
-//
+            var adapter = new FeatureTemplateAdapter({
+                uriTemplate: CNVS_HOST + '/regions/{region}/fetch?limit=1000',
+//                templateVariables: {
+//                    customVar: 'info',
 //                },
-//                parse: function (response, dataType) {
-//                    var itemsArray = [];
-//
-//                    if (dataType == "histogram") {
-//                        for (var i = 0; i < response.result.length; i++) {
-//                            var r = response.result[i]
-//                            for (var j = 0; j < r.length; j++) {
-//                                var interval = r[j];
-//                                interval.features_count = interval.featuresCount;
-//                                itemsArray.push(interval);
-//                            }
-//                        }
-//                    } else {
-//                        for (var i = 0; i < response.result.length; i++) {
-//                            var r = response.result[i];
-//                            for (var j = 0; j < r.length; j++) {
-//                                var elem = r[j];
-//                                elem.start = elem.position;
-//                                elem.end = elem.position;
-//                            }
-//                            itemsArray.push(r);
-//                        }
-//                    }
-//                    return itemsArray;
-//                }
-//            });
-//
-//            var args = FEATURE_TYPES.undefined;
-//            args.handlers = {
-//                "feature:click": function (e) {
-//
+                species: this.$.gv.genomeViewer.species,
+                getRegionsFromIntervals: function (response) {
+
+
+                    var regions = [];
+                    for (var i = 0; i < response.result.length; i++) {
+                        var r = response.result[i];
+                        for (var j = 0; j < r.length; j++) {
+                            var interval = r[j];
+                            var region = new Region(interval);
+                            regions.push(region);
+                        }
+                    }
+                    return regions;
+                },
+                parse: function (response, dataType) {
+
+                    var itemsArray = [];
+
+                    if (dataType == "histogram") {
+                        for (var i = 0; i < response.result.length; i++) {
+                            var r = response.result[i]
+                            for (var j = 0; j < r.length; j++) {
+                                var interval = r[j];
+                                interval.features_count = interval.featuresCount;
+                                itemsArray.push(interval);
+                            }
+                        }
+                    } else {
+                        for (var i = 0; i < response.result.length; i++) {
+                            var r = response.result[i];
+                            itemsArray.push(r);
+                        }
+                    }
+
+                    return [itemsArray];
+                }
+            });
+
+            var args = FEATURE_TYPES.undefined;
+            args.handlers = {
+                "feature:click": function (e) {
+
 //                    var elem = e.feature;
 //                    console.log(elem);
 //
@@ -754,21 +765,21 @@
 //                        return x.chromosome == y.chromosome && x.position == y.position &&
 //                                x.reference == y.reference && x.alternate == y.alternate;
 //                    });
-//                }
-//
-//            }
-//
-//            var track = new FeatureTrack({
-//                title: 'CSVS',
-//                featureType: 'csvs',
-//                minHistogramRegionSize: 12000,
-//                maxLabelRegionSize: 3000,
-//                height: 120,
-//                renderer: new FeatureRenderer(args),
-//                dataAdapter: adapter
-//            });
+                }
 
-//            this.$.gv.genomeViewer.addTrack(track);
+            }
+
+            var track = new FeatureTrack({
+                title: 'CNVS',
+                featureType: 'cnvs',
+                minHistogramRegionSize: 12000,
+                maxLabelRegionSize: 3000,
+                height: 120,
+                renderer: new FeatureRenderer(args),
+                dataAdapter: adapter
+            });
+//
+            this.$.gv.genomeViewer.addTrack(track);
         },
         submitForm: function () {
             var me = this;
@@ -834,8 +845,8 @@
                 });
                 console.log(url);
 
-                 var region = new Region(this.regionValue);
-                 this.$.gv.genomeViewer.setRegion(region);
+                var region = new Region(this.regionValue);
+                this.$.gv.genomeViewer.setRegion(region);
                 this.forURL = url;
 
 

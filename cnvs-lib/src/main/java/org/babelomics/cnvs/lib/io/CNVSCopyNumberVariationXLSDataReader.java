@@ -43,6 +43,7 @@ public class CNVSCopyNumberVariationXLSDataReader implements DataReader<CNV> {
     public boolean open() {
     	
     	try {
+			System.out.println("this.fileName = " + this.fileName);
 			this.fis = new FileInputStream(this.fileName);
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();

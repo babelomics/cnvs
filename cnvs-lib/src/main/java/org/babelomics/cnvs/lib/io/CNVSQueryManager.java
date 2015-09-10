@@ -242,13 +242,33 @@ public class CNVSQueryManager {
             List<String> chunkIds = this.getChunkIds(region);
             Query<CNV> auxQuery = this.datastore.createQuery(CNV.class);
 
-            List<Criteria> and = new ArrayList<>();
-            and.add(auxQuery.criteria("_at.chIds").in(chunkIds));
-            and.add(auxQuery.criteria("chromosome").equal(region.getChromosome()));
-            and.add(auxQuery.criteria("start").greaterThanOrEq(region.getStart()));
-            and.add(auxQuery.criteria("end").lessThanOrEq(region.getEnd()));
+            Criteria[] auxOr = new Criteria[3];
 
-            or[i++] = auxQuery.and(and.toArray(new Criteria[and.size()]));
+            List<Criteria> and1 = new ArrayList<>();
+            and1.add(auxQuery.criteria("_at.chIds").in(chunkIds));
+            and1.add(auxQuery.criteria("chromosome").equal(region.getChromosome()));
+            and1.add(auxQuery.criteria("start").greaterThanOrEq(region.getStart()));
+            and1.add(auxQuery.criteria("end").lessThanOrEq(region.getEnd()));
+
+            List<Criteria> and2 = new ArrayList<>();
+            and2.add(auxQuery.criteria("_at.chIds").in(chunkIds));
+            and2.add(auxQuery.criteria("chromosome").equal(region.getChromosome()));
+            and2.add(auxQuery.criteria("start").lessThanOrEq(region.getStart()));
+            and2.add(auxQuery.criteria("end").greaterThanOrEq(region.getStart()));
+
+            List<Criteria> and3 = new ArrayList<>();
+            and3.add(auxQuery.criteria("_at.chIds").in(chunkIds));
+            and3.add(auxQuery.criteria("chromosome").equal(region.getChromosome()));
+            and3.add(auxQuery.criteria("start").lessThanOrEq(region.getEnd()));
+            and3.add(auxQuery.criteria("end").greaterThanOrEq(region.getEnd()));
+
+            auxOr[0] = auxQuery.and(and1.toArray(new Criteria[and1.size()]));
+            auxOr[1] = auxQuery.and(and2.toArray(new Criteria[and2.size()]));
+            auxOr[2] = auxQuery.and(and3.toArray(new Criteria[and3.size()]));
+
+
+//            or[i++] = auxQuery.and(and.toArray(new Criteria[and.size()]));
+            or[i++] = auxQuery.or(auxOr);
         }
         query.or(or);
         System.out.println(query);
@@ -265,13 +285,33 @@ public class CNVSQueryManager {
             List<String> chunkIds = this.getChunkIds(region);
             Query<CNV> auxQuery = this.datastore.createQuery(CNV.class);
 
-            List<Criteria> and = new ArrayList<>();
-            and.add(auxQuery.criteria("_at.chIds").in(chunkIds));
-            and.add(auxQuery.criteria("chromosome").equal(region.getChromosome()));
-            and.add(auxQuery.criteria("start").greaterThanOrEq(region.getStart()));
-            and.add(auxQuery.criteria("end").lessThanOrEq(region.getEnd()));
+            Criteria[] auxOr = new Criteria[3];
 
-            or[i++] = auxQuery.and(and.toArray(new Criteria[and.size()]));
+            List<Criteria> and1 = new ArrayList<>();
+            and1.add(auxQuery.criteria("_at.chIds").in(chunkIds));
+            and1.add(auxQuery.criteria("chromosome").equal(region.getChromosome()));
+            and1.add(auxQuery.criteria("start").greaterThanOrEq(region.getStart()));
+            and1.add(auxQuery.criteria("end").lessThanOrEq(region.getEnd()));
+
+            List<Criteria> and2 = new ArrayList<>();
+            and2.add(auxQuery.criteria("_at.chIds").in(chunkIds));
+            and2.add(auxQuery.criteria("chromosome").equal(region.getChromosome()));
+            and2.add(auxQuery.criteria("start").lessThanOrEq(region.getStart()));
+            and2.add(auxQuery.criteria("end").greaterThanOrEq(region.getStart()));
+
+            List<Criteria> and3 = new ArrayList<>();
+            and3.add(auxQuery.criteria("_at.chIds").in(chunkIds));
+            and3.add(auxQuery.criteria("chromosome").equal(region.getChromosome()));
+            and3.add(auxQuery.criteria("start").lessThanOrEq(region.getEnd()));
+            and3.add(auxQuery.criteria("end").greaterThanOrEq(region.getEnd()));
+
+            auxOr[0] = auxQuery.and(and1.toArray(new Criteria[and1.size()]));
+            auxOr[1] = auxQuery.and(and2.toArray(new Criteria[and2.size()]));
+            auxOr[2] = auxQuery.and(and3.toArray(new Criteria[and3.size()]));
+
+
+//            or[i++] = auxQuery.and(and.toArray(new Criteria[and.size()]));
+            or[i++] = auxQuery.or(auxOr);
         }
         query.or(or);
         System.out.println(query);
