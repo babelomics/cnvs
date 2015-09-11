@@ -11,8 +11,12 @@
 
         #filter-form-element {
             background-color: #FFFFFF;
-            width: 350px;
-            margin: 20px;
+            width: 250px;
+            margin-top: 20px;
+            margin-left: 20px;
+            margin-right: 10px;
+            margin-bottom: 20px;
+
             min-height: 900px;
         }
 
@@ -117,10 +121,10 @@
         / / background : #006699;
             height: 20px;
             width: 20px;
-            -moz-transition: all 0.5s ease-in-out;
-            -webkit-transition: all 0.5s ease-in-out;
-            -o-transition: all 0.5s ease-in-out;
-            transition: all 0.5s ease-in;
+            -moz-transition: all 0.2s ease-in-out;
+            -webkit-transition: all 0.2s ease-in-out;
+            -o-transition: all 0.2s ease-in-out;
+            transition: all 0.2s ease-in;
 
         }
 
@@ -234,15 +238,19 @@
                                 <div class="jso-formcontent" id="type">
 
                                     <div class="input_container vertical layout">
+                                        <label for="type0" class="jso-control flex">
+                                            <input type="checkbox" name="type" id="type0" value="0"/>
+                                            <span>Gain</span>
+                                        </label>
+                                        <label for="type1" class="jso-control flex">
+                                            <input type="checkbox" name="type" id="type1" value="1"/>
+                                            <span>Loss</span>
+                                        </label>
+                                        <label for="type2" class="jso-control flex">
+                                            <input type="checkbox" name="type" id="type2" value="2"/>
+                                            <span>LOH neutral</span>
+                                        </label>
 
-                                        <div class="horizontal layout">
-                                            <input type="checkbox" name="type" id="type0" value="0"/><label
-                                                for="type0"> Gain</label>
-                                            <input type="checkbox" name="type" id="type1" value="1"/><label
-                                                for="type1">Loss</label>
-                                            <input type="checkbox" name="type" id="type2" value="2"/><label
-                                                for="type2">LOH neutral</label>
-                                        </div>
 
                                     </div>
                                 </div>
@@ -279,21 +287,28 @@
 
                                 <div class="jso-formcontent" id="doses">
                                     <div class="input_container vertical layout">
-
-
                                         <div class="horizontal layout">
-                                            <input type="checkbox" name="doses" value="0" id="x0"/><label
-                                                for="x0">x0</label>
-                                            <input type="checkbox" name="doses" value="1" id="x1"/><label
-                                                for="x1">x1</label>
-                                            <input type="checkbox" name="doses" value="2" id="x2"/><label for="x2">x2(XY)</label>
-                                            <input type="checkbox" name="doses" value="3" id="x3"/><label
-                                                for="x3">x3</label>
-
+                                            <label for="x0" class="jso-control flex">
+                                                <input type="checkbox" name="doses" value="0" id="x0"/>
+                                                <span>x0</span>
+                                            </label>
+                                            <label for="x1" class="jso-control flex">
+                                                <input type="checkbox" name="doses" value="1" id="x1"/>
+                                                <span>x1</span>
+                                            </label>
                                         </div>
-
-
+                                        <div class="horizontal layout">
+                                            <label for="x2" class="jso-control flex">
+                                                <input type="checkbox" name="doses" value="2" id="x2"/>
+                                                <span>x2(XY)</span>
+                                            </label>
+                                            <label for="x3" class="jso-control flex">
+                                                <input type="checkbox" name="doses" value="3" id="x3"/>
+                                                <span>x3</span>
+                                            </label>
+                                        </div>
                                     </div>
+
                                 </div>
                             </div>
                             <div class="jso-formbox">
@@ -306,17 +321,26 @@
 
                                 <div class="jso-formcontent" id="clis">
                                     <div class="input_container vertical layout">
-                                        <div class="horizontal layout">
-                                            <input type="checkbox" name="clis" value="0" id="clis0"/><label for="clis0">Benign</label>
-                                            <input type="checkbox" name="clis" value="1" id="clis1"/><label for="clis1">Pathogenic</label>
-                                            <input type="checkbox" name="clis" value="4" id="clis4"/><label for="clis4">VOUS</label>
-                                        </div>
-                                        <div class="horizontal layout">
-                                            <input type="checkbox" name="clis" value="2" id="clis2"/><label for="clis2">Likely
-                                            Benign</label>
-                                            <input type="checkbox" name="clis" value="3" id="clis3"/><label for="clis3">Likely
-                                            Pathogenic</label>
-                                        </div>
+                                        <label for="clis0" class="jso-control flex">
+                                            <input type="checkbox" name="clis" value="0" id="clis0"/><span>Benign</span>
+                                        </label>
+                                        <label for="clis1" class="jso-control flex">
+                                            <input type="checkbox" name="clis" value="1"
+                                                   id="clis1"/><span>Pathogenic</span>
+                                        </label>
+                                        <label for="clis4" class="jso-control flex">
+                                            <input type="checkbox" name="clis" value="4" id="clis4"/><span>VOUS</span>
+                                        </label>
+
+                                        <label for="clis2" class="jso-control flex">
+                                            <input type="checkbox" name="clis" value="2" id="clis2"/><span>Likely
+                                            Benign</span>
+                                        </label>
+                                        <label for="clis3" class="jso-control flex">
+                                            <input type="checkbox" name="clis" value="3" id="clis3"/><span>Likely
+                                            Pathogenic</span>
+                                        </label>
+
 
                                     </div>
                                 </div>
@@ -333,23 +357,21 @@
                                 <div class="jso-formcontent" id="inheritance">
                                     <div class="input_container vertical layout">
 
-                                        <div class="horizontal layout">
-                                            <input type="checkbox" name="inheritance" value="0" id="inhe0"/><label
-                                                for="inhe0">De novo constitutive</label>
+                                        <label for="inhe0" class="jso-control flex">
+                                            <input type="checkbox" name="inheritance" value="0" id="inhe0"/><span>De novo constitutive</span>
+                                        </label>
+                                        <label
+                                                for="inhe1" class="jso-control flex">
+                                            <input type="checkbox" name="inheritance" value="1" id="inhe1"/><span>Maternally inherited</span>
+                                        </label>
 
-                                            <input type="checkbox" name="inheritance" value="1" id="inhe1"/><label
-                                                for="inhe1">Maternally inherited</label>
 
-
-                                        </div>
-                                        <div class="horizontal layout">
-                                            <input type="checkbox" name="inheritance" value="2" id="inhe2"/><label
-                                                for="inhe2">Parternally inherited</label>
-
-                                            <input type="checkbox" name="inheritance" value="3" id="inhe3"/><label
-                                                for="inhe3">Unknown</label>
-
-                                        </div>
+                                        <label for="inhe2" class="jso-control flex">
+                                            <input type="checkbox" name="inheritance" value="2" id="inhe2"/><span>Parternally inherited</span>
+                                        </label>
+                                        <label for="inhe3" class="jso-control flex">
+                                            <input type="checkbox" name="inheritance" value="3" id="inhe3"/><span>Unknown</span>
+                                        </label>
 
 
                                     </div>
@@ -364,14 +386,19 @@
                                 </label>
 
                                 <div class="jso-formcontent" id="cl">
-                                    <div class="input_container vertical layout">
-                                        <div class="horizontal layout">
-                                            <input type="radio" name="cl" value="0" id="cl0"/><label
-                                                for="cl0">Germline</label>
-                                            <input type="radio" name="cl" value="1" id="cl1"/><label
-                                                for="cl1">Somatic</label>
+                                    <div class="input_container horizontal layout flex">
 
-                                        </div>
+                                        <label for="cl0" class="jso-control flex">
+                                            <input type="radio" name="cl" value="0" id="cl0"/>
+
+                                            <span>Germline</span>
+                                        </label>
+                                        <label for="cl1" class="jso-control flex">
+                                            <input type="radio" name="cl" value="1" id="cl1"/>
+                                            <span>Somatic</span>
+                                        </label>
+
+
                                     </div>
                                 </div>
                             </div>
@@ -385,14 +412,17 @@
                                 </label>
 
                                 <div class="jso-formcontent" id="gender">
-                                    <div class="input_container vertical layout">
+                                    <div class="input_container horizontal layout flex">
 
-                                        <div class="horizontal layout">
-                                            <input type="radio" name="gender" value="0" id="gender0"/><label
-                                                for="gender0">XX</label>
-                                            <input type="radio" name="gender" value="1" id="gender1"/><label
-                                                for="gender1">XY</label>
-                                        </div>
+                                        <label for="gender0" class="jso-control flex">
+                                            <input type="radio" name="gender" value="0" id="gender0"/>
+                                            <span>XX </span>
+                                        </label>
+                                        <label for="gender1" class="jso-control flex">
+                                            <input type="radio" name="gender" value="1" id="gender1"/>
+                                            <span>XY </span>
+                                        </label>
+
                                     </div>
                                 </div>
                             </div>
@@ -407,14 +437,24 @@
                                 <div class="jso-formcontent" id="status">
                                     <div class="input_container vertical layout">
                                         <div class="horizontal layout">
-                                            <input type="checkbox" name="status" value="0" id="status0"/><label
-                                                for="status0">Proband</label>
-                                            <input type="checkbox" name="status" value="1" id="status1"/><label
-                                                for="status1">Father</label>
-                                            <input type="checkbox" name="status" value="2" id="status2"/><label
-                                                for="status2">Mother</label>
-                                            <input type="checkbox" name="status" value="3" id="status3"/><label
-                                                for="status3">Control</label>
+                                            <label for="status0" class="jso-control flex">
+                                                <input type="checkbox" name="status" value="0" id="status0"/>
+                                                <span>Proband</span>
+                                            </label>
+                                            <label for="status1" class="jso-control flex">
+                                                <input type="checkbox" name="status" value="1" id="status1"/>
+                                                <span>Father</span>
+                                            </label>
+                                        </div>
+                                        <div class="horizontal layout">
+                                            <label for="status2" class="jso-control flex">
+                                                <input type="checkbox" name="status" value="2" id="status2"/>
+                                                <span>Mother </span>
+                                            </label>
+                                            <label for="status3" class="jso-control flex">
+                                                <input type="checkbox" name="status" value="3" id="status3"/>
+                                                <span>Control</span>
+                                            </label>
 
                                         </div>
 
@@ -431,101 +471,107 @@
 
                                 <div class="jso-formcontent" id="typeS">
                                     <div class="input_container vertical layout">
+                                        <label for="typeS0" class="jso-control flex">
+                                            <input type="checkbox" name="typeS" value="0" id="typeS0"/>
+                                            <span>Blood</span>
+                                        </label>
+                                        <label for="typeS1" class="jso-control flex">
+                                            <input type="checkbox" name="typeS" value="1" id="typeS1"/>
+                                            <span>Amniotic fluid</span>
+                                        </label>
 
+                                        <label for="typeS2" class="jso-control flex">
+                                            <input type="checkbox" name="typeS" value="2" id="typeS2"/>
+                                            <span>Chorionic villi</span>
+                                        </label>
+                                        <label for="typeS3" class="jso-control flex">
+                                            <input type="checkbox" name="typeS" value="3" id="typeS3"/>
+                                            <span>Tumour</span>
+                                        </label>
+                                        <label for="typeS4" class="jso-control flex">
+                                            <input type="checkbox" name="typeS" value="4" id="typeS4"/>
+                                            <span>Etc</span>
+                                        </label>
 
-                                        <div class="horizontal layout">
-                                            <input type="checkbox" name="typeS" value="0" id="typeS0"/><label
-                                                for="typeS0">Blood</label>
-                                            <input type="checkbox" name="typeS" value="1" id="typeS1"/><label
-                                                for="typeS1">Amniotic fluid</label>
-                                        </div>
-                                        <div class="horizontal layout">
-                                            <input type="checkbox" name="typeS" value="2" id="typeS2"/><label
-                                                for="typeS2">Chorionic villi</label>
-                                            <input type="checkbox" name="typeS" value="3" id="typeS3"/><label
-                                                for="typeS3">Tumour</label>
-                                            <input type="checkbox" name="typeS" value="4" id="typeS4"/><label
-                                                for="typeS4">Etc</label>
-
-                                        </div>
 
                                     </div>
+
                                 </div>
                             </div>
-                            <div class="jso-formbox">
-                                <label on-click="toggleElement" data-option="hpoid">
-                                    <div class="jso-formtitle">
-                                        Phenotype(HPO)
-                                        <img src="images/flechaizquierdaazul.png" id="hpoidfoto"/>
-                                    </div>
-                                </label>
+                        </div>
+                        <div class="jso-formbox">
+                            <label on-click="toggleElement" data-option="hpoid">
+                                <div class="jso-formtitle">
+                                    Phenotype(HPO)
+                                    <img src="images/flechaizquierdaazul.png" id="hpoidfoto"/>
+                                </div>
+                            </label>
 
-                                <div class="jso-formcontent" id="hpoid">
+                            <div class="jso-formcontent" id="hpoid">
 
-                                    <div class="input_container vertical layout">
+                                <div class="input_container vertical layout">
 
                                         <textarea id="hpo" name="hpo" placeholder="HP:0001249,HP:0001290"
                                                   value="{{hpoValue::change}}" rows="3">
 
                                         </textarea>
-                                    </div>
                                 </div>
                             </div>
-                            <div class="jso-formbox">
-                                <label on-click="toggleElement" data-option="yearid">
-                                    <div class="jso-formtitle">
-                                        Year of Birth
-                                        <img src="images/flechaizquierdaazul.png" id="yearidfoto"/>
-                                    </div>
-                                </label>
+                        </div>
+                        <div class="jso-formbox">
+                            <label on-click="toggleElement" data-option="yearid">
+                                <div class="jso-formtitle">
+                                    Year of Birth
+                                    <img src="images/flechaizquierdaazul.png" id="yearidfoto"/>
+                                </div>
+                            </label>
 
-                                <div class="jso-formcontent" id="yearid">
-                                    <div class="input_container vertical layout">
+                            <div class="jso-formcontent" id="yearid">
+                                <div class="input_container vertical layout">
 
                                     <textarea id="year" name="year" placeholder="2004,2003"
                                               value="{{yearIdValue::change}}" rows="3">
 
                                     </textarea>
-                                    </div>
                                 </div>
                             </div>
+                        </div>
 
 
-                            <div class="jso-formbox">
-                                <label on-click="toggleElement" data-option="ethnicid">
-                                    <div class="jso-formtitle">
-                                        Ethnic Group
-                                        <img src="images/flechaizquierdaazul.png" id="ethnicidfoto"/>
-                                    </div>
-                                </label>
+                        <div class="jso-formbox">
+                            <label on-click="toggleElement" data-option="ethnicid">
+                                <div class="jso-formtitle">
+                                    Ethnic Group
+                                    <img src="images/flechaizquierdaazul.png" id="ethnicidfoto"/>
+                                </div>
+                            </label>
 
-                                <div class="jso-formcontent" id="ethnicid">
+                            <div class="jso-formcontent" id="ethnicid">
 
-                                    <div class="input_container vertical layout">
+                                <div class="input_container vertical layout">
 
                                         <textarea id="ethnic" name="ethnic" placeholder="White Mediterranean,Amerindian"
                                                   value="{{ethicValue::change}}" rows="3">
 
                                         </textarea>
-                                    </div>
                                 </div>
                             </div>
-                            <div class="jso-formbox">
-                                <label on-click="toggleElement" data-option="geoid">
-                                    <div class="jso-formtitle">
-                                        Geographic Origin
-                                        <img src="images/flechaizquierdaazul.png" id="geoidfoto"/>
-                                    </div>
-                                </label>
+                        </div>
+                        <div class="jso-formbox">
+                            <label on-click="toggleElement" data-option="geoid">
+                                <div class="jso-formtitle">
+                                    Geographic Origin
+                                    <img src="images/flechaizquierdaazul.png" id="geoidfoto"/>
+                                </div>
+                            </label>
 
-                                <div class="jso-formcontent" id="geoid">
-                                    <div class="input_container vertical layout">
+                            <div class="jso-formcontent" id="geoid">
+                                <div class="input_container vertical layout">
 
                                         <textarea id="geo" name="geo" placeholder="Spain,Bolivia"
                                                   value="{{geoValue::change}}" rows="3">
 
                                         </textarea>
-                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -536,14 +582,14 @@
             </div>
             <div id="dataGridElement" class="vertical layout">
                 <!--<jso-table id="dataTable" enable-paging enable-remote enable-select enable-resize request="{{request}}"-->
-                           <!--columns="{{columns}}" on-rowclick="handleRowClick">-->
+                <!--columns="{{columns}}" on-rowclick="handleRowClick">-->
                 <!--</jso-table>-->
 
                 <!--<div id="menu" class="color-2 color-hover-2 horizontal layout">-->
-                    <!--<div on-click="handleMenuClick" data-option="gv">Genomic context</div>-->
+                <!--<div on-click="handleMenuClick" data-option="gv">Genomic context</div>-->
 
-                    <!--<div on-click="handleMenuClick" data-option="phenotype">Phenotype</div>-->
-                    <!--<div on-click="handleMenuClick" data-option="effect">Effect</div>-->
+                <!--<div on-click="handleMenuClick" data-option="phenotype">Phenotype</div>-->
+                <!--<div on-click="handleMenuClick" data-option="effect">Effect</div>-->
                 <!--</div>-->
 
 
@@ -685,6 +731,9 @@
             this.$.gv.genomeViewer.draw();
             this.$.gv.genomeViewer.toggleAutoHeight(true);
 
+            var r = new Region("1:1-2000");
+            this.$.gv.genomeViewer.setRegion(r);
+
 
         },
         created: function () {
@@ -754,20 +803,30 @@
                 }
             });
 
-            var args = FEATURE_TYPES.undefined;
-            args.handlers = {
-                "feature:click": function (e) {
+            var args = {
+                label: function (f) {
+                    var str = "";
+                    str += f.chromosome + ":" + f.start + "-" + f.end;
+                    return str;
+                },
+                tooltipTitle: function (f) {
+                    return FEATURE_TYPES.getTipTitleCommons(f);
+                },
+                tooltipText: function (f) {
+                    return FEATURE_TYPES.getTipCommons(f) + FEATURE_TYPES._getSimpleKeys(f);
+                },
+                color: function (f) {
+                    return CNVS_TRACK_TYPE_COLORS[f.type];
+                },
+                infoWidgetId: "id",
+                height: 10,
+                histogramColor: "lightgray",
+                handlers: {
+                    "feature:click": function (e) {
 
-//                    var elem = e.feature;
-//                    console.log(elem);
-//
-//                    me.$.dataTable.selectElem(elem, function (x, y) {
-//                        return x.chromosome == y.chromosome && x.position == y.position &&
-//                                x.reference == y.reference && x.alternate == y.alternate;
-//                    });
+                    }
                 }
-
-            }
+            };
 
             var track = new FeatureTrack({
                 title: 'CNVS',
