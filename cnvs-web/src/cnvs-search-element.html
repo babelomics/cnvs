@@ -640,11 +640,11 @@
             },
             codeValue: {
                 type: String,
-                value: ""
+                value: null
             },
             decipherIdValue: {
                 type: String,
-                value: ""
+                value: null
             },
             typeValue: {
                 type: String,
@@ -755,13 +755,12 @@
                 };
             }
         },
-
         handleGenomeViewerCreated: function () {
             var me = this;
 
-            var adapter = new FeatureTemplateAdapter({
+            this.adapter = new FeatureTemplateAdapter({
                 uriTemplate: CNVS_HOST + '/regions/{region}/fetch?limit=1000',
-//                templateVariables: {
+                // templateVariables: {
 //                    customVar: 'info',
 //                },
                 species: this.$.gv.genomeViewer.species,
@@ -835,7 +834,7 @@
                 maxLabelRegionSize: 3000,
                 height: 120,
                 renderer: new FeatureRenderer(args),
-                dataAdapter: adapter
+                dataAdapter: this.adapter
             });
 //
             this.$.gv.genomeViewer.addTrack(track);
@@ -877,14 +876,63 @@
 //                    });
 //                }
 
+
+                var inputs = this.$.type.querySelectorAll("input");
+                var typev = [];
+
+                for (var i = 0; i < inputs.length; i++) {
+                    var inputtype = inputs[i];
+                    if (inputtype.checked) {
+                        typev.push(inputtype.value);
+                    }
+                }
+
                 query.regions = this.regionValue;
                 query.code = this.codeValue;
                 query.decipherId = this.decipherIdValue;
-                query.assembly = this.assemblyValue;
-                query.type = this.typeValue;
-                query.doses = this.dosesValue;
-                query.clis = this.clisValue;
-                query.inheritance = this.inheritanceValue;
+                //    query.assembly = this.assemblyValue;
+                if (typev.length > 0) {
+                    query.type = typev.join(",");
+                }
+
+                inputs = this.$.doses.querySelectorAll("input");
+                var dosesv = [];
+
+                for (var i = 0; i < inputs.length; i++) {
+                    var inputdoses = inputs[i];
+                    if (inputdoses.checked) {
+                        dosesv.push(inputdoses.value);
+                    }
+                }
+                if (dosesv.length > 0) {
+                    query.doses = dosesv.join(",");
+                }
+
+                inputs = this.$.clis.querySelectorAll("input");
+                var clisv = [];
+
+                for (var i = 0; i < inputs.length; i++) {
+                    var inputclis = inputs[i];
+                    if (inputclis.checked) {
+                        clisv.push(inputclis.value);
+                    }
+                }
+                if (clisv.length > 0) {
+                    query.clis = clisv.join(",");
+                }
+
+                inputs = this.$.inheritance.querySelectorAll("input");
+                var inhev = [];
+
+                for (var i = 0; i < inputs.length; i++) {
+                    var inputinhe = inputs[i];
+                    if (inputinhe.checked) {
+                        inhev.push(inputinhe.value);
+                    }
+                }
+                if (inhev.length > 0) {
+                    query.inheritance = inhev.join(",");
+                }
                 query.cl = this.clValue;
                 query.gender = this.genderValue;
                 query.status = this.statusValue;
@@ -905,6 +953,9 @@
                 console.log(url);
 
                 var region = new Region(this.regionValue);
+
+                this.adapter.params = query;
+
                 this.$.gv.genomeViewer.setRegion(region);
                 this.forURL = url;
 

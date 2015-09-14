@@ -1,5 +1,4 @@
 <link rel="import" href="jso-opencga-login-custom.html">
-<link rel="import" href="../lib/jsorolla/src/lib/components/opencga/jso-opencga-signup.html">
 <link rel="import" href="../lib/jsorolla/src/lib/components/opencga/jso-opencga-profile.html">
 <link rel="import" href="../lib/jsorolla/src/lib/components/opencga/jso-opencga-remember.html">
 <!--
@@ -95,16 +94,13 @@
     </style>
     <template>
         <div id="tools">
-            <jso-opencga-login id="jsoLogin"
+            <jso-opencga-login-custom id="jsoLogin"
                                menu-option="login"
                                on-login="handleLogin"
                                on-remember="handleRemember"
                                on-signup="handleSignup">
-            </jso-opencga-login>
-            <jso-opencga-signup id="jsoSignup"
-                                on-login="handleLogin"
-                                menu-option="signup">
-            </jso-opencga-signup>
+            </jso-opencga-login-custom>
+
 
             <jso-opencga-profile id="jsoProfile"
                                  menu-option="profile">
