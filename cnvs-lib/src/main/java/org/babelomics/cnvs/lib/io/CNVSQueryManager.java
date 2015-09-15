@@ -377,4 +377,12 @@ public class CNVSQueryManager {
         return (id * chunksize) + chunksize - 1;
     }
 
+
+    public List<String> getAllEthnicGroup(){
+
+        List auxQuery = this.datastore.getCollection(CNV.class).distinct("eg");
+
+        return null;
+
+    }
 }

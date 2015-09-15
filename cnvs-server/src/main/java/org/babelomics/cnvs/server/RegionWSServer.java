@@ -128,6 +128,8 @@ public class RegionWSServer extends CNVSWSServer {
         Iterable<CNV> variantes = qm.getCNVsByFilters(qpa, count);
 
         QueryResponse qr = createQueryResponse(variantes);
+
+
         //  qr.setNumTotalResults(count.getValue());
         // qr.addQueryOption("regions", regionList);
         // qr.addQueryOption("doses", dosesaux);

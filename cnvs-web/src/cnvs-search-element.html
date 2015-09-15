@@ -2,6 +2,7 @@
 <link rel="import" href="../lib/jsorolla/src/lib/components/table/jso-table.html">
 <link rel="import" href="../lib/jsorolla/src/lib/components/variant/jso-variant-phenotype-grid.html">
 <dom-module id="cnvs-search-element">
+
     <style>
         :host {
             display: block;
@@ -603,25 +604,7 @@
     </template>
 </dom-module>
 <script>
-    /*
-     function escondido(x) {
-     var ele = document.getElementById(x);
-     if ((ele.style.display) == "none") {
-     ele.style.display = "block";
-     } else {
-     ele.style.display = "none";
-     }
-     }
-     function proba() {
-     var array = ['positions', 'identifiers', 'type', 'assembly', 'doses', 'clis',
-     "inheritance", "cl", 'gender', 'status', 'typeS', 'hpoid', 'ethicid', "geoid"];
 
-     for (var i = 0; i < array.length; i++) {
-     var elearray = array[i];
-     var ele = document.getElementById(array[i]);
-     ele.style.display = "none";
-     }
-     }*/
     Polymer({
         is: 'cnvs-search-element',
         properties: {
@@ -646,58 +629,22 @@
                 type: String,
                 value: null
             },
-            typeValue: {
-                type: String,
-                value: ""
-            },
-            assemblyValue: {
-                type: String,
-                value: ""
-            },
-            dosesValue: {
-                type: String,
-                value: ""
-            },
-            inheritanceValue: {
-                type: String,
-                value: ""
-            },
-            clValue: {
-                type: String,
-                value: ""
-            },
-            clisValue: {
-                type: String,
-                value: ""
-            },
-            typeSValue: {
-                type: String,
-                value: ""
-            },
-            genderValue: { //gender de genero
-                type: String,
-                value: ""
-            },
-            statusValue: {
-                type: String,
-                value: ""
-            },
 
             hpoValue: {
                 type: String,
-                value: ""
+                value: null
             },
             yearIdValue: {
                 type: String,
-                value: ""
+                value: null
             },
             ethicValue: {
                 type: String,
-                value: ""
+                value: null
             },
             geoValue: {
                 type: String,
-                value: ""
+                value: null
             }
         },
         toggleElement: function (e) {
@@ -843,10 +790,15 @@
             var me = this;
             var query = {};
 
-            if (this.$.filter_form.checkValidity() && (this.regionValue != '' || this.geneValue != '')) {
+            //  if (this.$.filter_form.checkValidity() && (this.regionValue != '' || this.geneValue != '')) {
+            if (this.$.filter_form.checkValidity()) {
 
-                var regions = [];
-
+                var region = null;
+                if (this.regionValue == "") {
+                    region = new Region(this.$.gv.genomeViewer.region);
+                }else{
+                    region = new Region(this.regionValue);
+                }
 
 //                if (this.geneValue) {
 //                    var gene = this.geneValue.toUpperCase();
@@ -887,7 +839,6 @@
                     }
                 }
 
-                query.regions = this.regionValue;
                 query.code = this.codeValue;
                 query.decipherId = this.decipherIdValue;
                 //    query.assembly = this.assemblyValue;
@@ -933,12 +884,66 @@
                 if (inhev.length > 0) {
                     query.inheritance = inhev.join(",");
                 }
-                query.cl = this.clValue;
-                query.gender = this.genderValue;
-                query.status = this.statusValue;
-                query.typeS = this.typeSValue;
+
+                inputs = this.$.cl.querySelectorAll("input");
+                var clv = [];
+
+                for (var i = 0; i < inputs.length; i++) {
+                    var inputcl = inputs[i];
+                    if (inputcl.checked) {
+                        clv.push(inputcl.value);
+                    }
+                }
+                if (clv.length > 0) {
+                    query.cl = clv.join(",");
+                }
+
+                inputs = this.$.gender.querySelectorAll("input");
+                var genderv = [];
+
+                for (var i = 0; i < inputs.length; i++) {
+                    var inputgender = inputs[i];
+                    if (inputgender.checked) {
+                        genderv.push(inputgender.value);
+                    }
+                }
+                if (genderv.length > 0) {
+                    query.gender = genderv.join(",");
+                }
+
+                inputs = this.$.status.querySelectorAll("input");
+                var statusv = [];
+
+                for (var i = 0; i < inputs.length; i++) {
+                    var inputstatus = inputs[i];
+                    if (inputstatus.checked) {
+                        statusv.push(inputstatus.value);
+                    }
+                }
+                if (statusv.length > 0) {
+                    query.status = statusv.join(",");
+                }
+
+                inputs = this.$.inheritance.querySelectorAll("input");
+                var typeSv = [];
+
+                for (var i = 0; i < inputs.length; i++) {
+                    var inputtypeS = inputs[i];
+                    if (inputtypeS.checked) {
+                        typeSv.push(inputtypeS.value);
+                    }
+                }
+                if (typeS.length > 0) {
+                    query.typeS = typeSv.join(",");
+                }
+
+
                 query.hpo = this.hpoValue;
+
+                //Comprobar que todos son números
                 query.year = this.yearIdValue;
+
+
                 //query.gene = this.geneValue;
                 query.ethic = this.ethicValue;
                 query.geo = this.geoValue;
@@ -952,7 +957,6 @@
                 });
                 console.log(url);
 
-                var region = new Region(this.regionValue);
 
                 this.adapter.params = query;
 

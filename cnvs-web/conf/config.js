@@ -4,6 +4,6 @@ CELLBASE_HOST = "http://bioinfodev.hpc.cam.ac.uk/cellbase";
 
 CNVS_TRACK_TYPE_COLORS = {
     "loss": "red",
-    "gain": "green",
-    "LOH neutral": "blue"
+    "gain": "blue",
+    "LOH neutral": "green"
 };
