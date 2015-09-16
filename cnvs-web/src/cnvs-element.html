@@ -67,9 +67,9 @@
     <template>
 
         <div id="content" selected-option="{{selectedOption}}">
-            <!--<cnvs-search-element></cnvs-search-element>-->
+            <cnvs-search-element></cnvs-search-element>
 
-            <susi-entrada></susi-entrada>
+            <!--<susi-entrada></susi-entrada>-->
          </div>
 
          <jso-opencga-header id="jsoHeader"
@@ -120,12 +120,13 @@
                 notify: true,
                 reflectToAttribute: true,
                 observer: 'selectedOptionChanged'
-            },
+            }
         },
         created: function () {
         },
         ready: function () {
 //            this.$.jsoHeader.allowLogin = false;
+
         },
         computeSelectedOption: function (selectedOption, option) {
             return this.selectedOption != option;

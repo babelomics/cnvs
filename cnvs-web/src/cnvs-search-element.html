@@ -40,25 +40,18 @@
             margin-left: 10px;
         }
 
-        #diseases_div {
-            height: 300px;
-            max-height: 300px;
-            overflow-y: auto;
-        }
+        #bandaocultar{
+            border-bottom:1px solid #225e71;
+            font-family: 'Lato', 'Helvetica Neue', Helvetica, Arial, 'sans-serif' ;
+            padding:  2px  2px 2px 8px;
+            font-size:13px;
+            background-color: #83aec0;
+           color:white;
 
-        #exportBtn {
-            height: 20px;
         }
-
-        #dataTable {
-            font-size: 11px;
+        #bandaocultar button{
+            float:right;
         }
-
-        #menu {
-            /*border-bottom: 1px solid rgba(125, 125, 125, 0.4);*/
-            margin-top: 15px;
-        }
-
         #menu > div {
             font-size: 17px;
             padding: 5px 5px;
@@ -129,27 +122,7 @@
 
         }
 
-        /*input[type=checkbox] {*/
-        /*display: block;*/
-        /*float: left;*/
-        /*outline: 0;*/
-        /*box-sizing: border-box;*/
-        /*line-height: 21px;*/
-        /*border: 1px solid #ccc;*/
-        /*padding: 0px 5px;*/
-        /*color: #333;*/
-        /*background-color: #fff;*/
-        /*font-size: inherit;*/
-        /*}*/
 
-        /*input[type=checkbox]:checked {*/
-        /*box-shadow: inset 0 3px 5px rgba(0, 0, 0, .125);*/
-        /*background-color: #ebebeb;*/
-        /*}*/
-
-        /*input[type=checkbox]:hover {*/
-        /*background-color: red;*/
-        /*}*/
 
         .toggleElement {
             display: block;
@@ -592,8 +565,14 @@
                 <!--<div on-click="handleMenuClick" data-option="phenotype">Phenotype</div>-->
                 <!--<div on-click="handleMenuClick" data-option="effect">Effect</div>-->
                 <!--</div>-->
+                <div id="bandaocultar">
+                    Results Table
+                    <!-- font awesome icons: expand y compress-->
+                    <button on-click="cerrartabla"><i id="iconoexpan" class="fa fa-expand"></i></button>
 
-
+                </div>
+                <jso-table id="tablaresultados" enable-paging enable-remote enable-select enable-resize request="{{request}}"
+                           columns="{{columns}}"></jso-table>
                 <div id="tools">
                     <jso-genome-viewer-element id="gv"
                                                on-created="handleGenomeViewerCreated"></jso-genome-viewer-element>
@@ -611,6 +590,12 @@
             regionValue: {
                 type: String,
                 value: "1:1022-1022"
+            },
+            columns: {
+                type: Array,
+                value: function () {
+                    return [];
+                }
             },
             formURL: {
                 type: String,
@@ -671,6 +656,21 @@
             }
 
         },
+        cerrartabla: function(){
+            var elem = this.$.tablaresultados;
+
+            if (elem.style.display == "" || elem.style.display == "block") {
+                elem.style.display = "none";
+               // this.$.iconoexpan.className = this.$.iconoexpan.className.replace(/(?:|\s)fa-expan(?!\S)/g ,'')
+                document.getElementById("iconoexpan").classList.remove('fa-expand');
+                document.getElementById("iconoexpan").classList.add('fa-compress');
+            }else{
+                elem.style.display="block";
+                document.getElementById("iconoexpan").classList.remove('fa-compress');
+                document.getElementById("iconoexpan").classList.add('fa-expand');
+            }
+
+        },
         ready: function () {
             this.species = 'Homo sapiens';
 
@@ -680,6 +680,48 @@
 
             var r = new Region("1:1-2000");
             this.$.gv.genomeViewer.setRegion(r);
+            this.columns = [
+                {name: 'Code', title: "Code", width: 60},
+                {name: 'DecipherId', title: 'DecipherId', width: 80},
+                {
+                    name: 'LocalID', title: 'Local ID', width: 180, columns: [
+                    {name: 'ID1', title: 'ID 1', width: 60},
+                    {name: 'ID2', title: 'ID 2', width: 60},
+                    {name: 'ID3', title: 'ID 3', width: 60}
+                ]
+                },
+                {
+                    name: 'Position', title: 'Position', width: 180, columns: [
+                    {name: 'Chromosome', title: 'Chr', width: 60},
+                    {name: 'Start', title: 'Start', width: 60},
+                    {name: 'End', title: 'End', width: 60}
+                ]
+                },
+
+                {name: 'Assembly', title: 'Assembly', width: 80},
+                {name: 'Genes', title: 'Genes', width: 60},
+                {name: 'Band', title: 'Band', width: 60},
+                {name: 'Size(Kb)', title: 'Size(Kb)', width: 60},
+                {name: 'Type', title: 'Type', width: 60},
+                {name: 'Doses', title: 'Doses', width: 60},
+                {name: 'ClinicalSignificance', title: 'Clinical Significance', width: 150},
+                {name: 'Inheritance', title: 'Inheritance', width: 80},
+                {name: 'N_of_variants', title: 'Nº of variants', width: 90},
+                {name: 'CellLine', title: 'Cell Line', width: 80},
+                {name: 'Chr_gender', title: 'Chr gender', width: 80},
+                {name: 'Status', title: 'Status', width: 80},
+                {name: 'TypeofSample', title: 'Type of Sample', width: 120},
+                {name: 'RefDiagnosis', title: 'Referal Diagnosis', width: 120},
+                {name: 'HPO', title: 'Phenotype', width: 120},
+                {name: 'year', title: 'Year', width: 60},
+                {name: 'EthnicGroup', title: 'Ethnic Group', width: 120},
+                {name: 'GeographicOrigin', title: 'Greographic Origin', width: 120},
+                {name: 'ArrayPlatform', title: 'Array Platform', width: 120},
+                {name: 'ArrayId', title: 'Array ID', width: 80},
+                {name: 'Comments', title: 'Comments', width: 120}
+
+
+            ]
 
 
         },
@@ -796,7 +838,7 @@
                 var region = null;
                 if (this.regionValue == "") {
                     region = new Region(this.$.gv.genomeViewer.region);
-                }else{
+                } else {
                     region = new Region(this.regionValue);
                 }
 

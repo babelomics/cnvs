@@ -1,5 +1,5 @@
 <link rel="import" href="../bower_components/polymer/polymer.html">
-
+<link rel="import" href="../lib/jsorolla/src/lib/components/table/jso-table.html">
 
 <dom-module id="susi-entrada">
     <style>
@@ -8,50 +8,205 @@
             box-sizing: border-box;
             position: relative;
             height: 200px;
-            width: 600px;
+
+
+        }
+        jso-table {
+            margin:20px;
+            font-size:13px;
+            overflow-y: auto;
+            background-color: #83aec0;
+            background-image: url(images/fondo_th.png);
+            background-repeat: repeat-x;
+        }
+        jso-table::shadow .table-header-field > .name.jso-table {
+            padding: 4px 0;
+        }
+        jso-table::shadow #list {
+            height: 300px;
+            overflow-x: auto;
         }
 
 
-
+ table{
+     overflow: auto;
+ }
         .tabla {
+            margin: 20px;
             font-family: Verdana, Arial, Helvetica, sans-serif;
-            font-size: 12px;
+            font-size: 10px;
             text-align: right;
-            width: 600px;
+
+            overflow: auto;
+
 
         }
+        .tabla th {
+            padding: 5px;
+            font-size: 12px;
+            background-color: #83aec0;
+            background-image: url(images/fondo_th.png);
+            background-repeat: repeat-x;
+            color: #FFFFFF;
+            border-right-width: 1px;
+            border-bottom-width: 1px;
+            border-right-style: solid;
+            border-bottom-style: solid;
+            border-right-color: #558FA6;
+            border-bottom-color: #558FA6;
+            font-family: “Trebuchet MS”, Arial;
+
+        }
+        .tabla .modo1 {
+            font-size: 10px;
+            font-weight:bold;
+            background-color: #e2ebef;
+
+            background-repeat: repeat-x;
+            color: #34484E;
+            font-family: “Trebuchet MS”, Arial;
+        }
+        .tabla .modo1 td {
+            padding: 5px;
+            border-right-width: 1px;
+            border-bottom-width: 1px;
+            border-right-style: solid;
+            border-bottom-style: solid;
+            border-right-color: #A4C4D0;
+            border-bottom-color: #A4C4D0;
+            text-align:right;
+        }
+
+
     </style>
     <template>
         <!-- <jso-table id = "tabla">
 
          </jso-table>!-->
-<div>Hola</div>
-        <div class="horizontal layout">
+
+        <!--<div class="horizontal layout">-->
         <table border="0" cellpadding="0" cellspacing="0" class="tabla">
 
             <tr>
-                <th>Hola</th>
-                <th>Hola</th>
-                <th>Hola</th>
-                <th>Hola</th>
-                <th>Hola</th>
+
+                <th>#</th>
+                <th>01-Code</th>
+                <th>02-Decipher ID</th>
+                <th>03-Local ID 1</th>
+                <th>03-Local ID 2</th>
+                <th>03-Local ID 3</th>
+                <th>04-Chromosome</th>
+                <th>05-Start</th>
+                <th>06-End</th>
+                <th>07-Assembly</th>
+                <th>08-Genes</th>
+                <th>09-Band</th>
+                <th>10-Size(Kb)</th>
+                <th>11-Type of variant</th>
+                <th>12-Doses</th>
+                <th>13-clinical Significance</th>
+                <th>14-Inheritance</th>
+                <th>15-Number of variants</th>
+                <th>16-Cell line</th>
+                <th>17-Chromosomal gender</th>
+                <th>18-Status</th>
+                <th>19-Type of Sample</th>
+                <th>20-Referal diagnosis</th>
+                <th>21-HPO</th>
+                <th>22-Year of Birth</th>
+                <th>23-Ethnic group</th>
+                <th>24-Geographic origin</th>
+                <th>25-Array platform</th>
+                <th>26-Array Id</th>
+
             </tr>
 
             <tbody>
-            <tr>
-                <td>cuerpo</td>
-                <td>cuerpo</td>
-                <td>cuerpo</td>
-                <td>cuerpo</td>
-                <td>cuerpo</td>
+            <tr class="modo1">
+                <td>#</td>
+                <td>01-Code</td>
+                <td>02-Decipher ID</td>
+                <td>03-Local ID 1</td>
+                <td>03-Local ID 2</td>
+                <td>03-Local ID 3</td>
+                <td>04-Chromosome</td>
+                <td>05-Start</td>
+                <td>06-End</td>
+                <td>07-Assembly</td>
+                <td>08-Genes</td>
+                <td>09-Band</td>
+                <td>10-Size(Kb)</td>
+                <td>11-Type of variant</td>
+                <td>12-Doses</td>
+                <td>13-clinical Significance</td>
+                <td>14-Inheritance</td>
+                <td>03-Local ID 3</td>
+                <td>04-Chromosome</td>
+                <td>05-Start</td>
+                <td>06-End</td>
+                <td>07-Assembly</td>
+                <td>08-Genes</td>
+                <td>09-Band</td>
             </tr>
             </tbody>
         </table>
-            </div>
+
+<jso-table id="tablacarga" enable-paging enable-remote enable-select enable-resize request="{{request}}"
+           columns="{{columns}}"></jso-table>
+         <!--   </div>-->
     </template>
     <script>
         Polymer({
             is:"susi-entrada"
+            ,properties: {
+                columns: {
+                    type: Array,
+                    value: function () {
+                        return [];
+                    }
+                }
+            },
+            ready: function () {
+//            this.$.jsoHeader.allowLogin = false;
+                this.columns = [
+                    {name:'Code',title:"Code",width:60},
+                    {name:'DecipherId', title:'DecipherId', width:80},
+                    {name:'LocalID', title:'Local ID', width:150, columns:[
+                        {name:'ID1', title:'ID 1', width:50},
+                        {name:'ID2', title:'ID 2', width:50},
+                        {name:'ID3', title:'ID 3', width:50}
+                    ]},
+                    {name:'Position', title:'Position', width:150,columns:[
+                        {name:'Chromosome', title:'Chr', width:50},
+                        {name:'Start', title:'Start', width:50},
+                        {name:'End', title:'End', width:50}
+                    ]},
+
+                    {name:'Assembly', title:'Assembly', width:80},
+                    {name:'Genes', title:'Genes', width:60},
+                    {name:'Band', title:'Band', width:60},
+                    {name:'Size(Kb)', title:'Size(Kb)', width:60},
+                    {name:'Type', title:'Type', width:60},
+                    {name:'Doses', title:'Doses', width:60},
+                    {name:'ClinicalSignificance', title:'Clinical Significance', width:150},
+                    {name:'Inheritance', title:'Inheritance', width:80},
+                    {name:'N_of_variants', title:'Nº of variants', width:90},
+                    {name:'CellLine', title:'Cell Line', width:80},
+                    {name:'Chr_gender', title:'Chr gender', width:80},
+                    {name:'Status', title:'Status', width:80},
+                    {name:'TypeofSample', title:'Type of Sample', width:120},
+                    {name:'RefDiagnosis', title:'Referal Diagnosis', width:120},
+                    {name:'HPO', title:'Phenotype', width:120},
+                    {name:'year',  title:'Year', width:60},
+                    {name:'EthnicGroup', title:'Ethnic Group', width: 120},
+                    {name:'GeographicOrigin', title:'Greographic Origin', width:120},
+                    {name:'ArrayPlatform', title:'Array Platform', width:120},
+                    {name:'ArrayId', title:'Array ID', width:80},
+                    {name:'Comments', title:'Comments', width:120}
+
+
+                ]
+            },
         });
     </script>
 </dom-module>
