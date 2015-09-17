@@ -244,6 +244,8 @@ public class CNVSQueryManager {
 
             Criteria[] auxOr = new Criteria[3];
 
+            // Rs < Fe && Re > Fs
+
             List<Criteria> and1 = new ArrayList<>();
             and1.add(auxQuery.criteria("_at.chIds").in(chunkIds));
             and1.add(auxQuery.criteria("chromosome").equal(region.getChromosome()));

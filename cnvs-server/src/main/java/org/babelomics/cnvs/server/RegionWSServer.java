@@ -129,6 +129,8 @@ public class RegionWSServer extends CNVSWSServer {
 
         QueryResponse qr = createQueryResponse(variantes);
 
+        qr.setNumTotalResults(count.getValue());
+
 
         //  qr.setNumTotalResults(count.getValue());
         // qr.addQueryOption("regions", regionList);
@@ -181,28 +183,28 @@ public class RegionWSServer extends CNVSWSServer {
     @Produces("application/json")
     @ApiOperation(value = "Get Variants By Filters")
     public Response getCNVsByFilters(
-                                     @ApiParam(value = "regions") @QueryParam("regions") @DefaultValue("") String regions,
-                                     @ApiParam(value = "code") @QueryParam("code") @DefaultValue("") String code,
-                                     @ApiParam(value = "decipherId") @QueryParam("decipherId") @DefaultValue("") String decipherId,
-                                     @ApiParam(value = "assembly") @QueryParam("assembly") @DefaultValue("") String assembly,
-                                     @ApiParam(value = "band") @QueryParam("band") @DefaultValue("") String band,
-                                     @ApiParam(value = "type") @QueryParam("type") @DefaultValue("") String type,
-                                     @ApiParam(value = "doses") @QueryParam("doses") @DefaultValue("") String doses,
-                                     @ApiParam(value = "clis") @QueryParam("clis") @DefaultValue("") String clis,
-                                     @ApiParam(value = "inheritance") @QueryParam("inheritance") @DefaultValue("") String inheritance,
-                                     @ApiParam(value = "cl") @QueryParam("cl") @DefaultValue("-1") int cl,
-                                     @ApiParam(value = "gender") @QueryParam("gender") @DefaultValue("-1") int gender,
-                                     @ApiParam(value = "status") @QueryParam("status") @DefaultValue("") String status,
-                                     @ApiParam(value = "typeS") @QueryParam("typeS") @DefaultValue("") String typeS,
-                                     @ApiParam(value = "hpo") @QueryParam("hpo") @DefaultValue("") String hpo,
-                                     @ApiParam(value = "year") @QueryParam("year") @DefaultValue("") String year,
-                                     @ApiParam(value = "ethic") @QueryParam("ethic") @DefaultValue("") String ethic,
-                                     @ApiParam(value = "geo") @QueryParam("geo") @DefaultValue("") String geo,
-                                     @ApiParam(value = "limit") @QueryParam("limit") @DefaultValue("10") int limit,
-                                     @ApiParam(value = "skip") @QueryParam("skip") @DefaultValue("0") int skip,
-                                     @ApiParam(value = "host") @QueryParam("host") @DefaultValue("") String host,
-                                     @ApiParam(value = "user") @QueryParam("user") @DefaultValue("") String user,
-                                     @ApiParam(value = "pass") @QueryParam("pass") @DefaultValue("") String pass
+            @ApiParam(value = "regions") @QueryParam("regions") @DefaultValue("") String regions,
+            @ApiParam(value = "code") @QueryParam("code") @DefaultValue("") String code,
+            @ApiParam(value = "decipherId") @QueryParam("decipherId") @DefaultValue("") String decipherId,
+            @ApiParam(value = "assembly") @QueryParam("assembly") @DefaultValue("") String assembly,
+            @ApiParam(value = "band") @QueryParam("band") @DefaultValue("") String band,
+            @ApiParam(value = "type") @QueryParam("type") @DefaultValue("") String type,
+            @ApiParam(value = "doses") @QueryParam("doses") @DefaultValue("") String doses,
+            @ApiParam(value = "clis") @QueryParam("clis") @DefaultValue("") String clis,
+            @ApiParam(value = "inheritance") @QueryParam("inheritance") @DefaultValue("") String inheritance,
+            @ApiParam(value = "cl") @QueryParam("cl") @DefaultValue("-1") int cl,
+            @ApiParam(value = "gender") @QueryParam("gender") @DefaultValue("-1") int gender,
+            @ApiParam(value = "status") @QueryParam("status") @DefaultValue("") String status,
+            @ApiParam(value = "typeS") @QueryParam("typeS") @DefaultValue("") String typeS,
+            @ApiParam(value = "hpo") @QueryParam("hpo") @DefaultValue("") String hpo,
+            @ApiParam(value = "year") @QueryParam("year") @DefaultValue("") String year,
+            @ApiParam(value = "ethic") @QueryParam("ethic") @DefaultValue("") String ethic,
+            @ApiParam(value = "geo") @QueryParam("geo") @DefaultValue("") String geo,
+            @ApiParam(value = "limit") @QueryParam("limit") @DefaultValue("10") int limit,
+            @ApiParam(value = "skip") @QueryParam("skip") @DefaultValue("0") int skip,
+            @ApiParam(value = "host") @QueryParam("host") @DefaultValue("") String host,
+            @ApiParam(value = "user") @QueryParam("user") @DefaultValue("") String user,
+            @ApiParam(value = "pass") @QueryParam("pass") @DefaultValue("") String pass
 
     ) {
 
@@ -272,6 +274,7 @@ public class RegionWSServer extends CNVSWSServer {
         Iterable<CNV> variantes = qm.getCNVsByFilters(qpa, count);
 
         QueryResponse qr = createQueryResponse(variantes);
+        qr.setNumTotalResults(count.getValue());
         //  qr.setNumTotalResults(count.getValue());
         // qr.addQueryOption("regions", regionList);
         // qr.addQueryOption("doses", dosesaux);

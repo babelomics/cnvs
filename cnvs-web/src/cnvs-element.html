@@ -6,6 +6,9 @@
 
 <link rel="import" href="cnvs-search-element.html">
 <link rel="import" href="formentrada.html">
+<link rel="icon" type="image/png" href="images/favicon.png" />
+
+<script src="cnvs-renderer.js"></script>
 
 
 <dom-module id="cnvs-element">
@@ -70,38 +73,38 @@
             <cnvs-search-element></cnvs-search-element>
 
             <!--<susi-entrada></susi-entrada>-->
-         </div>
+        </div>
 
-         <jso-opencga-header id="jsoHeader"
-                             selected-option="{{selectedOption}}">
-             <div class="icon">
-                 <img src="images/gotaCS.png" style="height: 50px;margin: 5px 0px 0 0;">
-             </div>
-             <span class="title">CIBERER <b>C</b>opy <b>N</b>umber <b>V</b>ariation <b>S</b>erver</span>
-             <span class="description"></span>
+        <jso-opencga-header id="jsoHeader"
+                            selected-option="{{selectedOption}}">
+            <div class="icon">
+                <img src="images/gotaCS.png" style="height: 50px;margin: 5px 0px 0 0;">
+            </div>
+            <span class="title">CIBERER <b>C</b>opy <b>N</b>umber <b>V</b>ariation <b>S</b>erver</span>
+            <span class="description"></span>
 
-             <div id="menu" class="menu horizontal layout flex">
-                 <div style="margin-left:4vw;"></div>
-             </div>
+            <div id="menu" class="menu horizontal layout flex">
+                <div style="margin-left:4vw;"></div>
+            </div>
 
-             <button onclick="https://github.com/babelomics/cnvs">Upload</button>
-             <jso-help-menu class="helpmenu" selectedOption="{{selectedOption}}">
-                 <a href="https://github.com/babelomics/cnvs" target="_blank">
-                     <i class="fa fa-book"></i>
-                     &nbsp; Documentation
-                 </a>
-                 <a href="https://github.com/babelomics/cnvs/tutorial" target="_blank">
-                     <i class="fa fa-compass"></i>
-                     &nbsp; Tutorial
-                 </a>
-                 <a href="https://github.com/babelomics/cnvs/" target="_blank">
-                     <i class="fa fa-github"></i>
-                     &nbsp; Source code
-                 </a>
-             </jso-help-menu>
-         </jso-opencga-header>
+            <button onclick="https://github.com/babelomics/cnvs">Upload</button>
+            <jso-help-menu class="helpmenu" selectedOption="{{selectedOption}}">
+                <a href="https://github.com/babelomics/cnvs" target="_blank">
+                    <i class="fa fa-book"></i>
+                    &nbsp; Documentation
+                </a>
+                <a href="https://github.com/babelomics/cnvs/tutorial" target="_blank">
+                    <i class="fa fa-compass"></i>
+                    &nbsp; Tutorial
+                </a>
+                <a href="https://github.com/babelomics/cnvs/" target="_blank">
+                    <i class="fa fa-github"></i>
+                    &nbsp; Source code
+                </a>
+            </jso-help-menu>
+        </jso-opencga-header>
 
-         <!--<jso-opencga-footer hidden$="{{computeSelectedOption(selectedOption, 'home')}}" menu-option="home">-->
+        <!--<jso-opencga-footer hidden$="{{computeSelectedOption(selectedOption, 'home')}}" menu-option="home">-->
         <!--CNVS: created by Computational Genomics Department-->
         <!--<br>-->
         <!--Principe Felipe Research Center-->

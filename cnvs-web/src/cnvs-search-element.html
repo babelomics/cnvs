@@ -40,18 +40,20 @@
             margin-left: 10px;
         }
 
-        #bandaocultar{
-            border-bottom:1px solid #225e71;
-            font-family: 'Lato', 'Helvetica Neue', Helvetica, Arial, 'sans-serif' ;
-            padding:  2px  2px 2px 8px;
-            font-size:13px;
+        #bandaocultar {
+            border-bottom: 1px solid #225e71;
+            font-family: 'Lato', 'Helvetica Neue', Helvetica, Arial, 'sans-serif';
+            padding: 2px 2px 2px 8px;
+            font-size: 13px;
             background-color: #83aec0;
-           color:white;
+            color: white;
 
         }
-        #bandaocultar button{
-            float:right;
+
+        #bandaocultar button {
+            float: right;
         }
+
         #menu > div {
             font-size: 17px;
             padding: 5px 5px;
@@ -121,8 +123,6 @@
             transition: all 0.2s ease-in;
 
         }
-
-
 
         .toggleElement {
             display: block;
@@ -571,8 +571,11 @@
                     <button on-click="cerrartabla"><i id="iconoexpan" class="fa fa-expand"></i></button>
 
                 </div>
-                <jso-table id="tablaresultados" enable-paging enable-remote enable-select enable-resize request="{{request}}"
-                           columns="{{columns}}"></jso-table>
+                <jso-table id="tablaresultados" enable-paging enable-remote enable-select enable-resize
+                           request="{{request}}"
+                           columns="{{columns}}"
+                           on-rowclick="handleRowClick"
+                        ></jso-table>
                 <div id="tools">
                     <jso-genome-viewer-element id="gv"
                                                on-created="handleGenomeViewerCreated"></jso-genome-viewer-element>
@@ -656,16 +659,16 @@
             }
 
         },
-        cerrartabla: function(){
+        cerrartabla: function () {
             var elem = this.$.tablaresultados;
 
             if (elem.style.display == "" || elem.style.display == "block") {
                 elem.style.display = "none";
-               // this.$.iconoexpan.className = this.$.iconoexpan.className.replace(/(?:|\s)fa-expan(?!\S)/g ,'')
+                // this.$.iconoexpan.className = this.$.iconoexpan.className.replace(/(?:|\s)fa-expan(?!\S)/g ,'')
                 document.getElementById("iconoexpan").classList.remove('fa-expand');
                 document.getElementById("iconoexpan").classList.add('fa-compress');
-            }else{
-                elem.style.display="block";
+            } else {
+                elem.style.display = "block";
                 document.getElementById("iconoexpan").classList.remove('fa-compress');
                 document.getElementById("iconoexpan").classList.add('fa-expand');
             }
@@ -674,51 +677,81 @@
         ready: function () {
             this.species = 'Homo sapiens';
 
-            this.$.gv.createGenomeViewer();
-            this.$.gv.genomeViewer.draw();
-            this.$.gv.genomeViewer.toggleAutoHeight(true);
+            this.async(function () {
+                this.$.gv.createGenomeViewer();
+                this.$.gv.genomeViewer.draw();
+                this.$.gv.genomeViewer.toggleAutoHeight(true);
+                var r = new Region("1:1-2000");
+                this.$.gv.genomeViewer.setRegion(r);
+            });
 
-            var r = new Region("1:1-2000");
-            this.$.gv.genomeViewer.setRegion(r);
+
             this.columns = [
-                {name: 'Code', title: "Code", width: 60},
-                {name: 'DecipherId', title: 'DecipherId', width: 80},
+                {
+                    name: 'position', title: 'Position', width: 280, columns: [
+                    {
+                        name: 'chromosome', title: 'Chr', width: 60, formula: function (row) {
+                        return row.chromosome;
+                    }
+                    },
+                    {
+                        name: 'start', title: 'Start', width: 60, formula: function (row) {
+                        return row.start;
+                    }
+                    },
+                    {
+                        name: 'end', title: 'End', width: 60, formula: function (row) {
+                        return row.end;
+                    }
+                    },
+                    {
+                        name: 'size', title: 'Size', width: 100, formula: function (row) {
+                        return row.end - row.start;
+                    }
+                    }
+                ]
+                },
+                {name: 'ref', title: "Code", width: 60},
+                {name: 'decipherId', title: 'DecipherId', width: 80},
                 {
                     name: 'LocalID', title: 'Local ID', width: 180, columns: [
-                    {name: 'ID1', title: 'ID 1', width: 60},
-                    {name: 'ID2', title: 'ID 2', width: 60},
-                    {name: 'ID3', title: 'ID 3', width: 60}
+                    {
+                        name: 'centerId1', title: 'ID 1', width: 60, formula: function (row) {
+                        return row.centerId1;
+                    }
+                    },
+                    {
+                        name: 'centerId2', title: 'ID 2', width: 60, formula: function (row) {
+                        return row.centerId2;
+                    }
+                    },
+                    {
+                        name: 'centerId3', title: 'ID 3', width: 60, formula: function (row) {
+                        return row.centerId3;
+                    }
+                    }
                 ]
                 },
-                {
-                    name: 'Position', title: 'Position', width: 180, columns: [
-                    {name: 'Chromosome', title: 'Chr', width: 60},
-                    {name: 'Start', title: 'Start', width: 60},
-                    {name: 'End', title: 'End', width: 60}
-                ]
-                },
-
-                {name: 'Assembly', title: 'Assembly', width: 80},
-                {name: 'Genes', title: 'Genes', width: 60},
-                {name: 'Band', title: 'Band', width: 60},
-                {name: 'Size(Kb)', title: 'Size(Kb)', width: 60},
-                {name: 'Type', title: 'Type', width: 60},
-                {name: 'Doses', title: 'Doses', width: 60},
-                {name: 'ClinicalSignificance', title: 'Clinical Significance', width: 150},
-                {name: 'Inheritance', title: 'Inheritance', width: 80},
-                {name: 'N_of_variants', title: 'Nº of variants', width: 90},
-                {name: 'CellLine', title: 'Cell Line', width: 80},
-                {name: 'Chr_gender', title: 'Chr gender', width: 80},
-                {name: 'Status', title: 'Status', width: 80},
-                {name: 'TypeofSample', title: 'Type of Sample', width: 120},
-                {name: 'RefDiagnosis', title: 'Referal Diagnosis', width: 120},
-                {name: 'HPO', title: 'Phenotype', width: 120},
-                {name: 'year', title: 'Year', width: 60},
-                {name: 'EthnicGroup', title: 'Ethnic Group', width: 120},
-                {name: 'GeographicOrigin', title: 'Greographic Origin', width: 120},
-                {name: 'ArrayPlatform', title: 'Array Platform', width: 120},
-                {name: 'ArrayId', title: 'Array ID', width: 80},
-                {name: 'Comments', title: 'Comments', width: 120}
+                {name: 'assembly', title: 'Assembly', width: 80},
+                {name: 'genes', title: 'Genes', width: 60},
+                {name: 'locus', title: 'Band', width: 60},
+                {name: 'type', title: 'Type', width: 60},
+                {name: 'doses', title: 'Doses', width: 60},
+                {name: 'clinicalSig', title: 'Clinical Significance', width: 150},
+                {name: 'inheritance', title: 'Inheritance', width: 120},
+                {name: 'nv', title: 'Nº of variants', width: 90},
+                {name: 'cellLine', title: 'Cell Line', width: 80},
+                {name: 'chromoGender', title: 'Chr gender', width: 80},
+                {name: 'status', title: 'Status', width: 80},
+                {name: 'typeSample', title: 'Type of Sample', width: 120},
+                {name: 'referalDiag', title: 'Referal Diagnosis', width: 120},
+                {name: 'phenotype', title: 'Phenotype', width: 120},
+                {name: 'yearOfBirth', title: 'Year', width: 60},
+                {name: 'ethnicGroup', title: 'Ethnic Group', width: 120},
+                {name: 'origin', title: 'Greographic Origin', width: 120},
+                {name: 'arrayPlatform', title: 'Array Platform', width: 120},
+                {name: 'arrayId', title: 'Array ID', width: 80},
+                {name: 'comments', title: 'Comments', width: 120}
 
 
             ]
@@ -732,6 +765,49 @@
         clearForm: function () {
             this.$.filter_form.reset();
 
+        },
+        _parse: function (response) {
+            var data = response.result;
+
+            var positions = [];
+            for (var i = 0; i < data.length; i++) {
+                var row = data[i];
+
+                var variant = row.chromosome + ":" + row.start + "-" + row.end;
+                positions.push(variant);
+
+            }
+
+            // Annotate
+            var query = positions.join(",");
+            if (positions.length > 0) {
+
+                CellBaseManager.get({
+                    host: CELLBASE_HOST,
+                    version: CELLBASE_VERSION,
+                    species: 'hsapiens',
+                    category: 'genomic',
+                    subCategory: 'region',
+                    resource: 'gene',
+                    query: query,
+                    params: {
+                        exclude: "transcripts,chunkIds,expressionValues,_chunkIds,mirna"
+                    },
+                    async: false,
+                    success: function (response) {
+                        try {
+                            debugger
+                        } catch (e) {
+                        }
+                    }
+                });
+            }
+
+
+            return data;
+        },
+        _parseTotal: function (response) {
+            return response.numTotalResults;
         },
         urlChanged: function (neo, old) {
             var me = this;
@@ -822,7 +898,7 @@
                 minHistogramRegionSize: 12000,
                 maxLabelRegionSize: 3000,
                 height: 120,
-                renderer: new FeatureRenderer(args),
+                renderer: new CNVSRenderer(args),
                 dataAdapter: this.adapter
             });
 //
@@ -992,11 +1068,13 @@
 
 
                 var url = CNVSManager.regions.fetch({
+                    id: region,
                     query: query,
                     request: {
                         url: true
                     }
                 });
+                this.formURL = url;
                 console.log(url);
 
 
@@ -1011,6 +1089,12 @@
             }
 
         },
+        handleRowClick: function (e) {
+            var row = e.detail.row;
+
+            this.$.gv.genomeViewer.setRegion(row);
+
+        }
     });
 
 </script>
