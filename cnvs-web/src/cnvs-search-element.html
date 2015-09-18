@@ -592,7 +592,7 @@
         properties: {
             regionValue: {
                 type: String,
-                value: "1:1022-1022"
+                value: "1:5000-10000"
             },
             columns: {
                 type: Array,
@@ -796,7 +796,17 @@
                     async: false,
                     success: function (response) {
                         try {
-                            debugger
+                            for (var i = 0; response != null && i < response.response.length; i++) {
+                                var result = response.response[i].result;
+
+                                var genes = [];
+                                for (var j = 0; j < result.length; j++) {
+                                    var gene = result[j];
+                                    genes.push(gene.name);
+                                }
+
+                                data[i].genes = genes.join(",");
+                            }
                         } catch (e) {
                         }
                     }
