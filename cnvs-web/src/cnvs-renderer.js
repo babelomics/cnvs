@@ -122,7 +122,9 @@ for (var j = 0; j < histo3.length; j++) {
         var proba = args.pixelBase;
         var proba2 = args.pixelPosition;
 
-        var x = args.pixelPosition +35+ ((i+1)  * args.pixelBase);
+       // var x = args.pixelPosition +35+ ((i+1)  * args.pixelBase);
+        var x = args.pixelPosition +35+ (i  * args.pixelBase);
+        //var x = args.pixelPosition +35+ (i  * 10);
         var height = histogramaactual[i] * this.multiplier;
         points += (x + (width / 2)).toFixed(1) + "," + (this.histogramHeight - height).toFixed(1) + " ";
     }
