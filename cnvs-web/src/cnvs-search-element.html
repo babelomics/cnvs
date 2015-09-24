@@ -567,7 +567,7 @@
                 <div id="bandaocultar">
                     Results Table
                     <!-- font awesome icons: expand y compress-->
-                    <button on-click="cerrartabla"><i id="iconoexpan" class="fa fa-expand"></i></button>
+                    <button on-click="cerrartabla"><i id="iconoexpan" class="fa fa-compress"></i></button>
 
                 </div>
                 <jso-table id="tablaresultados" enable-paging enable-remote enable-select enable-resize
@@ -664,12 +664,13 @@
             if (elem.style.display == "" || elem.style.display == "block") {
                 elem.style.display = "none";
                 // this.$.iconoexpan.className = this.$.iconoexpan.className.replace(/(?:|\s)fa-expan(?!\S)/g ,'')
-                document.getElementById("iconoexpan").classList.remove('fa-expand');
-                document.getElementById("iconoexpan").classList.add('fa-compress');
-            } else {
-                elem.style.display = "block";
                 document.getElementById("iconoexpan").classList.remove('fa-compress');
                 document.getElementById("iconoexpan").classList.add('fa-expand');
+            } else {
+                elem.style.display = "block";
+                document.getElementById("iconoexpan").classList.remove('fa-expand');
+                document.getElementById("iconoexpan").classList.add('fa-compress');
+
             }
 
         },
@@ -855,7 +856,7 @@
                 parse: function (response, dataType) {
 
                     var itemsArray = [];
-
+debugger
                     if (dataType == "histogram") {
                         for (var i = 0; i < response.result.length; i++) {
                             var r = response.result[i]
@@ -927,34 +928,33 @@
                     region = new Region(this.regionValue);
                 }
 
-//                if (this.geneValue) {
-//                    var gene = this.geneValue.toUpperCase();
-//                    CellBaseManager.get({
-//                        species: 'hsapiens',
-//                        category: 'feature',
-//                        subCategory: 'gene',
-//                        query: gene,
-//                        resource: "info",
-//                        async: false,
-//                        params: {
-//                            include: 'chromosome,start,end'
-//                        },
-//                        success: function (data) {
-//                            for (var i = 0; i < data.response.length; i++) {
-//                                var queryResult = data.response[i];
-//
-//                                if (queryResult.result.length > 0) {
-//                                    var region = new Region(queryResult.result[0]);
-//                                    regions.push(region.toString());
-//
-//                                } else {
-//                                    alert("Wrong gene: " + gene);
-//                                }
-//                            }
-//                        }
-//                    });
-//                }
+                if (this.geneValue) {
+                    var gene = this.geneValue.toUpperCase();
+                    CellBaseManager.get({
+                        species: 'hsapiens',
+                        category: 'feature',
+                        subCategory: 'gene',
+                        query: gene,
+                        resource: "info",
+                        async: false,
+                        params: {
+                            include: 'chromosome,start,end'
+                        },
+                        success: function (data) {
+                            for (var i = 0; i < data.response.length; i++) {
+                                var queryResult = data.response[i];
 
+                                if (queryResult.result.length > 0) {
+                                    region = new Region(queryResult.result[0]);
+                                    //regions.push(region.toString());
+
+                                } else {
+                                    alert("Wrong gene: " + gene);
+                                }
+                            }
+                        }
+                    });
+                }
 
                 var inputs = this.$.type.querySelectorAll("input");
                 var typev = [];
