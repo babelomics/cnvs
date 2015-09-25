@@ -25,7 +25,6 @@ import com.mongodb.MongoClient;
 public class CNVSQueryManager {
     final Datastore datastore;
     static final int DECIMAL_POSITIONS = 3;
-    QueryCommandLine q;
 
     public CNVSQueryManager(String host, String dbName) {
         Morphia morphia = new Morphia();
@@ -40,93 +39,6 @@ public class CNVSQueryManager {
 
     public CNVSQueryManager(Datastore datastore) {
         this.datastore = datastore;
-    }
-
-    @Deprecated
-    public CNVSQueryManager(Datastore datastore, QueryCommandLine q) {
-        this.datastore = datastore;
-        this.q = q;
-    }
-
-
-    @Deprecated
-    public Iterable<CNV> getCNVsByFilters(MutableLong count) {
-
-        Query<CNV> query = this.datastore.createQuery(CNV.class);
-
-
-        if (q.getCode() != null) {
-            query.filter("ref =", q.getCode());
-        }
-        if (q.getDecipId() != null) {
-            this.addTypeLongToQuery(q.getDecipId(), query, "decipherId");
-        }
-
-        if (q.getRegionList() != null) {
-            this.addRegionsToQuery(q.getRegionList(), query);
-        }
-        if (q.getAssembly() != null) {
-            query.filter("assembly =", q.getAssembly());
-        }
-        if (q.getBand() != null) {
-            this.addTypeStringToQuery(q.getBand(), query, "band");
-        }
-
-
-        if (q.getType() != null) {
-            this.addTypeIntToQuery(q.getType(), query, "type");
-        }
-        if (q.getDoses() != null) {
-            this.addTypeIntToQuery(q.getDoses(), query, "doses");
-        }
-        if (q.getCli() != null) {
-            this.addTypeIntToQuery(q.getCli(), query, "clinicalSig");
-        }
-
-        if (q.getInhe() != null) {
-            this.addTypeIntToQuery(q.getInhe(), query, "inheritance");
-        }
-        if (q.getCl() != -1) {
-            query.filter("cellLine =", q.getCl());
-        }
-        if (q.getGender() != -1) {
-            query.filter("chromGender =", q.getGender());
-        }
-
-        if (q.getStatus() != null) {
-            this.addTypeIntToQuery(q.getStatus(), query, "status");
-        }
-
-        if (q.getTypeSample() != null) {
-            this.addTypeIntToQuery(q.getTypeSample(), query, "typeSample");
-        }
-
-        if (q.getHpo().isEmpty()) {
-            this.addTypeStringToQuery(q.getHpo(), query, "phenotype");
-        }
-
-        if (q.getYear() != null) {
-            this.addTypeIntToQuery(q.getYear(), query, "yearOfBirth");
-        }
-
-        if (q.getEthic() != null) {
-            this.addTypeStringToQuery(q.getEthic(), query, "ethnicGroup");
-        }
-        if (q.getOrigin().isEmpty()) {
-            this.addTypeStringToQuery(q.getOrigin(), query, "origin");
-        }
-
-        if ((q.getSkip() != -1) && (q.getLimit() != -1)) {
-
-            query.offset(q.getSkip()).limit(q.getLimit());
-        }
-
-        System.out.println(query);
-
-        Iterable<CNV> aux = query.fetch();
-        count.setValue(query.countAll());
-
-        return aux;
     }
 
     public Iterable<CNV> getCNVsByFilters(QueryCommandLine q, MutableLong count) {
@@ -208,6 +120,14 @@ public class CNVSQueryManager {
         return aux;
     }
 
+    public List<String> getAllEthnicGroup() {
+
+        List auxQuery = this.datastore.getCollection(CNV.class).distinct("eg");
+
+        List<String> res = getListOfString(auxQuery);
+
+        return res;
+    }
 
     private void addTypeIntToQuery(List<Integer> l, Query<CNV> query, String name) {
         if (l != null && !l.isEmpty()) {
@@ -242,92 +162,43 @@ public class CNVSQueryManager {
             List<String> chunkIds = this.getChunkIds(region);
             Query<CNV> auxQuery = this.datastore.createQuery(CNV.class);
 
-            Criteria[] auxOr = new Criteria[3];
+            List<Criteria> andList = new ArrayList<>();
+            andList.add(auxQuery.criteria("_at.chIds").in(chunkIds));
+            andList.add(auxQuery.criteria("end").greaterThanOrEq(region.getStart()));
+            andList.add(auxQuery.criteria("start").lessThanOrEq(region.getEnd()));
 
-            // Rs < Fe && Re > Fs
-
-            List<Criteria> and1 = new ArrayList<>();
-            and1.add(auxQuery.criteria("_at.chIds").in(chunkIds));
-            and1.add(auxQuery.criteria("chromosome").equal(region.getChromosome()));
-            and1.add(auxQuery.criteria("start").greaterThanOrEq(region.getStart()));
-            and1.add(auxQuery.criteria("end").lessThanOrEq(region.getEnd()));
-
-            List<Criteria> and2 = new ArrayList<>();
-            and2.add(auxQuery.criteria("_at.chIds").in(chunkIds));
-            and2.add(auxQuery.criteria("chromosome").equal(region.getChromosome()));
-            and2.add(auxQuery.criteria("start").lessThanOrEq(region.getStart()));
-            and2.add(auxQuery.criteria("end").greaterThanOrEq(region.getStart()));
-
-            List<Criteria> and3 = new ArrayList<>();
-            and3.add(auxQuery.criteria("_at.chIds").in(chunkIds));
-            and3.add(auxQuery.criteria("chromosome").equal(region.getChromosome()));
-            and3.add(auxQuery.criteria("start").lessThanOrEq(region.getEnd()));
-            and3.add(auxQuery.criteria("end").greaterThanOrEq(region.getEnd()));
-
-            auxOr[0] = auxQuery.and(and1.toArray(new Criteria[and1.size()]));
-            auxOr[1] = auxQuery.and(and2.toArray(new Criteria[and2.size()]));
-            auxOr[2] = auxQuery.and(and3.toArray(new Criteria[and3.size()]));
-
-
-//            or[i++] = auxQuery.and(and.toArray(new Criteria[and.size()]));
-            or[i++] = auxQuery.or(auxOr);
+            or[i++] = auxQuery.and(andList.toArray(new Criteria[andList.size()]));
+//
+//            Criteria[] auxOr = new Criteria[3];
+//
+//            // Rs < Fe && Re > Fs
+//
+//            List<Criteria> and1 = new ArrayList<>();
+//            and1.add(auxQuery.criteria("_at.chIds").in(chunkIds));
+//            and1.add(auxQuery.criteria("chromosome").equal(region.getChromosome()));
+//            and1.add(auxQuery.criteria("start").greaterThanOrEq(region.getStart()));
+//            and1.add(auxQuery.criteria("end").lessThanOrEq(region.getEnd()));
+//
+//            List<Criteria> and2 = new ArrayList<>();
+//            and2.add(auxQuery.criteria("_at.chIds").in(chunkIds));
+//            and2.add(auxQuery.criteria("chromosome").equal(region.getChromosome()));
+//            and2.add(auxQuery.criteria("start").lessThanOrEq(region.getStart()));
+//            and2.add(auxQuery.criteria("end").greaterThanOrEq(region.getStart()));
+//
+//            List<Criteria> and3 = new ArrayList<>();
+//            and3.add(auxQuery.criteria("_at.chIds").in(chunkIds));
+//            and3.add(auxQuery.criteria("chromosome").equal(region.getChromosome()));
+//            and3.add(auxQuery.criteria("start").lessThanOrEq(region.getEnd()));
+//            and3.add(auxQuery.criteria("end").greaterThanOrEq(region.getEnd()));
+//
+//            auxOr[0] = auxQuery.and(and1.toArray(new Criteria[and1.size()]));
+//            auxOr[1] = auxQuery.and(and2.toArray(new Criteria[and2.size()]));
+//            auxOr[2] = auxQuery.and(and3.toArray(new Criteria[and3.size()]));
+//            or[i++] = auxQuery.or(auxOr);
         }
         query.or(or);
         System.out.println(query);
 
-    }
-
-    public Iterable<CNV> getCNVsByRegionList(List<Region> regions, Integer skip, Integer limit, MutableLong count) {
-
-        Query<CNV> query = this.datastore.createQuery(CNV.class);
-        Criteria[] or = new Criteria[regions.size()];
-
-        int i = 0;
-        for (Region region : regions) {
-            List<String> chunkIds = this.getChunkIds(region);
-            Query<CNV> auxQuery = this.datastore.createQuery(CNV.class);
-
-            Criteria[] auxOr = new Criteria[3];
-
-            List<Criteria> and1 = new ArrayList<>();
-            and1.add(auxQuery.criteria("_at.chIds").in(chunkIds));
-            and1.add(auxQuery.criteria("chromosome").equal(region.getChromosome()));
-            and1.add(auxQuery.criteria("start").greaterThanOrEq(region.getStart()));
-            and1.add(auxQuery.criteria("end").lessThanOrEq(region.getEnd()));
-
-            List<Criteria> and2 = new ArrayList<>();
-            and2.add(auxQuery.criteria("_at.chIds").in(chunkIds));
-            and2.add(auxQuery.criteria("chromosome").equal(region.getChromosome()));
-            and2.add(auxQuery.criteria("start").lessThanOrEq(region.getStart()));
-            and2.add(auxQuery.criteria("end").greaterThanOrEq(region.getStart()));
-
-            List<Criteria> and3 = new ArrayList<>();
-            and3.add(auxQuery.criteria("_at.chIds").in(chunkIds));
-            and3.add(auxQuery.criteria("chromosome").equal(region.getChromosome()));
-            and3.add(auxQuery.criteria("start").lessThanOrEq(region.getEnd()));
-            and3.add(auxQuery.criteria("end").greaterThanOrEq(region.getEnd()));
-
-            auxOr[0] = auxQuery.and(and1.toArray(new Criteria[and1.size()]));
-            auxOr[1] = auxQuery.and(and2.toArray(new Criteria[and2.size()]));
-            auxOr[2] = auxQuery.and(and3.toArray(new Criteria[and3.size()]));
-
-
-//            or[i++] = auxQuery.and(and.toArray(new Criteria[and.size()]));
-            or[i++] = auxQuery.or(auxOr);
-        }
-        query.or(or);
-        System.out.println(query);
-
-        if (skip != null && limit != null) {
-            query.offset(skip).limit(limit);
-        }
-
-        Iterable<CNV> aux = query.fetch();
-        count.setValue(query.countAll());
-
-        System.out.println("count = " + count.getValue());
-
-        return aux;
     }
 
     private List<String> getChunkIds(Region region) {
@@ -380,11 +251,11 @@ public class CNVSQueryManager {
     }
 
 
-    public List<String> getAllEthnicGroup(){
-
-        List auxQuery = this.datastore.getCollection(CNV.class).distinct("eg");
-
-        return null;
-
+    private List<String> getListOfString(List auxQuery) {
+        List<String> res = new ArrayList<>(auxQuery.size());
+        for (Object obj : auxQuery) {
+            res.add(obj.toString());
+        }
+        return res;
     }
 }

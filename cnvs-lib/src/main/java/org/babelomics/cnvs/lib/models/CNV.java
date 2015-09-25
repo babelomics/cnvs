@@ -197,7 +197,7 @@ public class CNV {
             case "likely pathogenic":
                 this.clinicalSig = 3;
                 break;
-            case "uncertain":
+            case "vous":
                 this.clinicalSig = 4;
                 break;
             default:

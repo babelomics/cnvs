@@ -856,7 +856,7 @@
                 parse: function (response, dataType) {
 
                     var itemsArray = [];
-debugger
+
                     if (dataType == "histogram") {
                         for (var i = 0; i < response.result.length; i++) {
                             var r = response.result[i]
@@ -887,6 +887,7 @@ debugger
                     return FEATURE_TYPES.getTipTitleCommons(f);
                 },
                 tooltipText: function (f) {
+                    // start-end + strand
                     return FEATURE_TYPES.getTipCommons(f) + FEATURE_TYPES._getSimpleKeys(f);
                 },
                 color: function (f) {
@@ -929,6 +930,7 @@ debugger
                 }
 
                 if (this.geneValue) {
+
                     var gene = this.geneValue.toUpperCase();
                     CellBaseManager.get({
                         species: 'hsapiens',
