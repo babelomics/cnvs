@@ -4,6 +4,7 @@ package org.babelomics.cnvs.server;
  * Created by sgallego on 8/31/15.
  */
 
+import com.google.common.base.Splitter;
 import com.wordnik.swagger.annotations.Api;
 import com.wordnik.swagger.annotations.ApiOperation;
 import com.wordnik.swagger.annotations.ApiParam;
@@ -11,7 +12,6 @@ import org.apache.commons.lang3.mutable.MutableLong;
 import org.babelomics.cnvs.lib.cli.QueryCommandLine;
 import org.babelomics.cnvs.lib.models.CNV;
 import org.babelomics.cnvs.lib.ws.QueryResponse;
-import org.opencb.biodata.models.feature.Region;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.*;
@@ -61,7 +61,31 @@ public class RegionWSServer extends CNVSWSServer {
                                         @ApiParam(value = "pass") @QueryParam("pass") @DefaultValue("") String pass
 
     ) {
-        return getCNVs(regions, code, decipherId, assembly, band, type, doses, clis, inheritance, cl, gender, status, typeS, hpo, year, ethic, geo, limit, skip, host, user, pass);
+
+        List<String> regionList = Splitter.on(",").splitToList(regions);
+
+        List<Iterable<CNV>> res = new ArrayList<>();
+        int totalcount = 0;
+        MutableLong count = new MutableLong(-1);
+
+        for (String regionElem : regionList) {
+            List<CNV> auxList = new ArrayList<>();
+            Iterable<CNV> variantes = getCNVs(regionElem, code, decipherId, assembly, band, type, doses, clis, inheritance, cl, gender, status, typeS, hpo, year, ethic, geo, limit, skip, host, user, pass, count);
+            for (CNV c : variantes) {
+                auxList.add(c);
+
+            }
+
+            res.add(auxList);
+            totalcount += count.getValue();
+
+        }
+
+        QueryResponse qr = createQueryResponse(res);
+        qr.setNumTotalResults(totalcount);
+
+        return createOkResponse(qr);
+
     }
 
     @GET
@@ -95,10 +119,19 @@ public class RegionWSServer extends CNVSWSServer {
     ) {
 
 
-        return getCNVs(regions, code, decipherId, assembly, band, type, doses, clis, inheritance, cl, gender, status, typeS, hpo, year, ethic, geo, limit, skip, host, user, pass);
+        MutableLong count = new MutableLong(-1);
+
+        Iterable<CNV> variantes = getCNVs(regions, code, decipherId, assembly, band, type, doses, clis, inheritance, cl, gender, status, typeS, hpo, year, ethic, geo, limit, skip, host, user, pass, count);
+        QueryResponse qr = createQueryResponse(variantes);
+        qr.setNumTotalResults(count.getValue());
+
+        return createOkResponse(qr);
     }
 
-    private Response getCNVs(@ApiParam(value = "regions") @QueryParam("regions") @DefaultValue("") String regions, @ApiParam(value = "code") @QueryParam("code") @DefaultValue("") String code, @ApiParam(value = "decipherId") @QueryParam("decipherId") @DefaultValue("") String decipherId, @ApiParam(value = "assembly") @QueryParam("assembly") @DefaultValue("") String assembly, @ApiParam(value = "band") @QueryParam("band") @DefaultValue("") String band, @ApiParam(value = "type") @QueryParam("type") @DefaultValue("") String type, @ApiParam(value = "doses") @QueryParam("doses") @DefaultValue("") String doses, @ApiParam(value = "clis") @QueryParam("clis") @DefaultValue("") String clis, @ApiParam(value = "inheritance") @QueryParam("inheritance") @DefaultValue("") String inheritance, @ApiParam(value = "cl") @QueryParam("cl") @DefaultValue("-1") int cl, @ApiParam(value = "gender") @QueryParam("gender") @DefaultValue("-1") int gender, @ApiParam(value = "status") @QueryParam("status") @DefaultValue("") String status, @ApiParam(value = "typeS") @QueryParam("typeS") @DefaultValue("") String typeS, @ApiParam(value = "hpo") @QueryParam("hpo") @DefaultValue("") String hpo, @ApiParam(value = "year") @QueryParam("year") @DefaultValue("") String year, @ApiParam(value = "ethic") @QueryParam("ethic") @DefaultValue("") String ethic, @ApiParam(value = "geo") @QueryParam("geo") @DefaultValue("") String geo, @ApiParam(value = "limit") @QueryParam("limit") @DefaultValue("10") int limit, @ApiParam(value = "skip") @QueryParam("skip") @DefaultValue("0") int skip, @ApiParam(value = "host") @QueryParam("host") @DefaultValue("") String host, @ApiParam(value = "user") @QueryParam("user") @DefaultValue("") String user, @ApiParam(value = "pass") @QueryParam("pass") @DefaultValue("") String pass) {
+    private Iterable<CNV> getCNVs(@ApiParam(value = "regions") @QueryParam("regions") @DefaultValue("") String regions, @ApiParam(value = "code") @QueryParam("code") @DefaultValue("") String code, @ApiParam(value = "decipherId") @QueryParam("decipherId") @DefaultValue("") String decipherId, @ApiParam(value = "assembly") @QueryParam("assembly") @DefaultValue("") String assembly, @ApiParam(value = "band") @QueryParam("band") @DefaultValue("") String band, @ApiParam(value = "type") @QueryParam("type") @DefaultValue("") String type, @ApiParam(value = "doses") @QueryParam("doses") @DefaultValue("") String doses, @ApiParam(value = "clis") @QueryParam("clis") @DefaultValue("") String clis, @ApiParam(value = "inheritance") @QueryParam("inheritance") @DefaultValue("") String inheritance, @ApiParam(value = "cl") @QueryParam("cl") @DefaultValue("-1") int cl, @ApiParam(value = "gender") @QueryParam("gender") @DefaultValue("-1") int gender, @ApiParam(value = "status") @QueryParam("status") @DefaultValue("") String status, @ApiParam(value = "typeS") @QueryParam("typeS") @DefaultValue("") String typeS, @ApiParam(value = "hpo") @QueryParam("hpo") @DefaultValue("") String hpo, @ApiParam(value = "year") @QueryParam("year") @DefaultValue("") String year, @ApiParam(value = "ethic") @QueryParam("ethic") @DefaultValue("") String ethic, @ApiParam(value = "geo") @QueryParam("geo") @DefaultValue("") String geo, @ApiParam(value = "limit") @QueryParam("limit") @DefaultValue("10") int limit, @ApiParam(value = "skip") @QueryParam("skip") @DefaultValue("0") int skip, @ApiParam(value = "host") @QueryParam("host") @DefaultValue("") String host, @ApiParam(value = "user") @QueryParam("user") @DefaultValue("") String user, @ApiParam(value = "pass") @QueryParam("pass") @DefaultValue("") String pass, MutableLong count) {
+        //List<Region> regions = Region.parseRegions(chregionId);
+
+
         List<Long> decipherIdaux = new ArrayList<>();
         if (decipherId.length() > 0) {
             String[] decipherIdSplits = decipherId.split(",");
@@ -156,20 +189,12 @@ public class RegionWSServer extends CNVSWSServer {
             }
         }
 
-
         QueryCommandLine qpa = new QueryCommandLine(false, code, decipherIdaux, regions, assembly, bandaux, typeaux, dosesaux, clisaux, inheritanceaux, cl, gender, statusaux, typeSaux, hpoaux,
                 yearaux, ethicaux, geoaux, skip, limit, host, user, pass);
-        MutableLong count = new MutableLong(-1);
 
-        System.out.println("empieza QM");
         Iterable<CNV> variantes = qm.getCNVsByFilters(qpa, count);
-        System.out.println("Termina QM");
 
-        QueryResponse qr = createQueryResponse(variantes);
-        qr.setNumTotalResults(count.getValue());
-
-
-        return createOkResponse(qr);
+        return variantes;
     }
 
     private List<Integer> parsearListaInt(String c) {

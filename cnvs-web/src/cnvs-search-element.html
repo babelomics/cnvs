@@ -302,7 +302,8 @@
                                             <input type="checkbox" name="clis" value="1" id="clis1" checked/><span>Pathogenic</span>
                                         </label>
                                         <label for="clis4" class="jso-control flex">
-                                            <input type="checkbox" name="clis" value="4" id="clis4" checked/><span>VOUS</span>
+                                            <input type="checkbox" name="clis" value="4" id="clis4"
+                                                   checked/><span>VOUS</span>
                                         </label>
 
                                         <label for="clis2" class="jso-control flex">
@@ -331,19 +332,23 @@
                                     <div class="input_container vertical layout">
 
                                         <label for="inhe0" class="jso-control flex">
-                                            <input type="checkbox" name="inheritance" value="0" id="inhe0" checked/><span>De novo constitutive</span>
+                                            <input type="checkbox" name="inheritance" value="0" id="inhe0"
+                                                   checked/><span>De novo constitutive</span>
                                         </label>
                                         <label
                                                 for="inhe1" class="jso-control flex">
-                                            <input type="checkbox" name="inheritance" value="1" id="inhe1" checked/><span>Maternally inherited</span>
+                                            <input type="checkbox" name="inheritance" value="1" id="inhe1"
+                                                   checked/><span>Maternally inherited</span>
                                         </label>
 
 
                                         <label for="inhe2" class="jso-control flex">
-                                            <input type="checkbox" name="inheritance" value="2" id="inhe2" checked/><span>Parternally inherited</span>
+                                            <input type="checkbox" name="inheritance" value="2" id="inhe2"
+                                                   checked/><span>Parternally inherited</span>
                                         </label>
                                         <label for="inhe3" class="jso-control flex">
-                                            <input type="checkbox" name="inheritance" value="3" id="inhe3" checked/><span>Unknown</span>
+                                            <input type="checkbox" name="inheritance" value="3" id="inhe3"
+                                                   checked/><span>Unknown</span>
                                         </label>
 
 
@@ -591,7 +596,7 @@
         properties: {
             regionValue: {
                 type: String,
-                value: "1:5000-10000"
+                value: ""
             },
             columns: {
                 type: Array,
@@ -834,14 +839,14 @@
             var me = this;
 
             this.adapter = new FeatureTemplateAdapter({
-                uriTemplate: CNVS_HOST + '/regions/{region}/fetch?limit=1000',
+
+
+                uriTemplate: CNVS_HOST + '/regions/{region}/fetch',
                 // templateVariables: {
 //                    customVar: 'info',
 //                },
                 species: this.$.gv.genomeViewer.species,
                 getRegionsFromIntervals: function (response) {
-
-
                     var regions = [];
                     for (var i = 0; i < response.result.length; i++) {
                         var r = response.result[i];
@@ -854,26 +859,29 @@
                     return regions;
                 },
                 parse: function (response, dataType) {
-
+//                    var itemsArray = [];
+//                    for (var i = 0; i < response.result.length; i++) {
+//                        var r = response.result[i];
+//                        itemsArray.push(r);
+//                    }
+//                    return [itemsArray];
+                    return response.result;
+                },
+                parseHistogram: function (response) {
                     var itemsArray = [];
 
-                    if (dataType == "histogram") {
-                        for (var i = 0; i < response.result.length; i++) {
-                            var r = response.result[i]
-                            for (var j = 0; j < r.length; j++) {
-                                var interval = r[j];
-                                interval.features_count = interval.featuresCount;
-                                itemsArray.push(interval);
-                            }
-                        }
-                    } else {
-                        for (var i = 0; i < response.result.length; i++) {
-                            var r = response.result[i];
-                            itemsArray.push(r);
+                    for (var i = 0; i < response.result.length; i++) {
+                        var r = response.result[i]
+                        for (var j = 0; j < r.length; j++) {
+                            var interval = r[j];
+                            interval.features_count = interval.featuresCount;
+                            itemsArray.push(interval);
                         }
                     }
-
-                    return [itemsArray];
+                    return itemsArray;
+                },
+                cacheConfig : {
+                    chunkSize: 50000
                 }
             });
 
@@ -906,8 +914,8 @@
             var track = new FeatureTrack({
                 title: 'CNVS',
                 featureType: 'cnvs',
-                minHistogramRegionSize: 12000,
-                maxLabelRegionSize: 3000,
+                minHistogramRegionSize: 20000000,
+                maxLabelRegionSize: 10000000,
                 height: 120,
                 renderer: new CNVSRenderer(args),
                 dataAdapter: this.adapter
@@ -967,7 +975,7 @@
                         typev.push(inputtype.value);
                     }
                 }
-                if (typev.length > 0 && typev.length <3) {
+                if (typev.length > 0 && typev.length < 3) {
                     query.type = typev.join(",");
                 }
 
@@ -1024,7 +1032,7 @@
                         clv.push(inputcl.value);
                     }
                 }
-                if (clv.length > 0 && clv.length< 2) {
+                if (clv.length > 0 && clv.length < 2) {
                     query.cl = clv.join(",");
                 }
 
@@ -1050,7 +1058,7 @@
                         statusv.push(inputstatus.value);
                     }
                 }
-                if (statusv.length > 0 && statusv.length <4 ) {
+                if (statusv.length > 0 && statusv.length < 4) {
                     query.status = statusv.join(",");
                 }
 
@@ -1077,10 +1085,11 @@
                 //query.gene = this.geneValue;
                 query.ethic = this.ethicValue;
                 query.geo = this.geoValue;
+                query.regions = region;
 
 
                 var url = CNVSManager.regions.fetch({
-                    id: region,
+//                    id: region,
                     query: query,
                     request: {
                         url: true

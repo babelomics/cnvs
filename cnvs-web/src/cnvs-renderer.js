@@ -68,9 +68,9 @@ CNVSRenderer.prototype.render = function (features, args) {
     var start = features[0].start;
     var end = features[features.length - 1].end;
 
-    var histogram_gain = new Array(end - start +1);
-    var histogram_loss = new Array(end - start +1);
-    var histogram_loh = new Array(end - start +1);
+    var histogram_gain = new Array(end - start + 1);
+    var histogram_loss = new Array(end - start + 1);
+    var histogram_loh = new Array(end - start + 1);
     histogram_gain.fill(0);
     histogram_loss.fill(0);
     histogram_loh.fill(0);
@@ -100,61 +100,58 @@ CNVSRenderer.prototype.render = function (features, args) {
     }
 
 
+    var colors = ['blue', 'red', 'green'];
+    var width = 1 * args.pixelBase;
+    var histo3 = new Array(histogram_gain, histogram_loss, histogram_loh);
+    var histoGroup = SVG.create('g');
 
-var colors = ['blue', 'red', 'green'];
-var width = 1 * args.pixelBase;
-var histo3 = new Array(histogram_gain, histogram_loss, histogram_loh);
+    for (var j = 0; j < histo3.length; j++) {
+        var histogramaactual = histo3[j];
+        var points = '';
 
-for (var j = 0; j < histo3.length; j++) {
-    var histogramaactual = histo3[j];
-    var points = '';
+        //Antes de que empiece las features
+        /* for (i = 0; i < start; i++) {
+         // var x = args.pixelPosition + i * args.pixelBase;
+         var x = i * args.pixelBase;
+         points += (x + (width / 2)).toFixed(1) + "," + (this.histogramHeight ).toFixed(1) + " ";
+         }*/
+        //Datos donde tengo las features
+        for (var i = 0; i < histogramaactual.length; i++) {
 
-    //Antes de que empiece las features
-   /* for (i = 0; i < start; i++) {
-       // var x = args.pixelPosition + i * args.pixelBase;
-        var x = i * args.pixelBase;
-        points += (x + (width / 2)).toFixed(1) + "," + (this.histogramHeight ).toFixed(1) + " ";
-    }*/
-    //Datos donde tengo las features
-    for (var i = 0; i < histogramaactual.length ;  i++) {
+            //var x = args.pixelPosition + ((i + start) * args.pixelBase);
 
-        //var x = args.pixelPosition + ((i + start) * args.pixelBase);
-        var proba = args.pixelBase;
-        var proba2 = args.pixelPosition;
+            // var x = args.pixelPosition +35+ ((i+1)  * args.pixelBase);
+            var x =this.getFeatureX(i+start,args);
 
-       // var x = args.pixelPosition +35+ ((i+1)  * args.pixelBase);
-        var x = args.pixelPosition +35+ (i  * args.pixelBase);
-        //var x = args.pixelPosition +35+ (i  * 10);
-        var height = histogramaactual[i] * this.multiplier;
-        points += (x + (width / 2)).toFixed(1) + "," + (this.histogramHeight - height).toFixed(1) + " ";
+            var height = histogramaactual[i] * this.multiplier;
+            points += (x + (width / 2)).toFixed(1) + "," + (this.histogramHeight - height).toFixed(1) + " ";
+        }
+
+        //Crear el SVG con cada linea
+        if (points !== '') {
+            SVG.addChild(histoGroup, "polyline", {
+                "points": points,
+                fill: "none",
+                "stroke": colors[j],
+                "cursor": "pointer"
+            });
+
+        }
     }
-    //Datos posteriores de las features. Mirar si tengo la posicion final donde quiero la region yponer si es así
+    args.svgCanvasFeatures.appendChild(histoGroup);
 
-    //Crear el SVG con cada linea
-    if (points !== '') {
-        SVG.addChild(args.svgCanvasFeatures, "polyline", {
-            "points": points,
-            fill: "none",
-            "stroke": colors[j],
-            "cursor": "pointer"
-        });
 
+    var svgGroup = SVG.create('g');
+    for (var i = 0, leni = features.length; i < leni; i++) {
+        this.draw(features[i], svgGroup, i, args);
     }
-}
+    args.svgCanvasFeatures.appendChild(svgGroup);
 
 
-var svgGroup = SVG.create('g');
-for (var i = 0, leni = features.length; i < leni; i++) {
-    this.draw(features[i], svgGroup, i, args);
-}
-args.svgCanvasFeatures.appendChild(svgGroup);
-
-
-/****/
-console.timeEnd(timeId);
-/****/
-}
-;
+    /****/
+    console.timeEnd(timeId);
+    /****/
+};
 
 CNVSRenderer.prototype.draw = function (feature, svgGroup, i, args) {
     var _this = this;
