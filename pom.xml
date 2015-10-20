@@ -16,16 +16,16 @@
     </modules>
 
     <properties>
-        <biodata.version>0.5-SNAPSHOT</biodata.version>
+        <biodata.version>0.5.1</biodata.version>
         <cellbase.version>3.1.1</cellbase.version>
-        <jcl.version>3.0-SNAPSHOT</jcl.version>
+        <jcl.version>3.0.0</jcl.version>
         <compileSource>1.8</compileSource>
         <cnvs.version>0.1.0</cnvs.version>
     </properties>
 
     <dependencyManagement>
         <dependencies>
-           <dependency>
+            <dependency>
                 <groupId>org.opencb.biodata</groupId>
                 <artifactId>biodata-models</artifactId>
                 <version>${biodata.version}</version>
@@ -170,10 +170,10 @@
                 <version>1.0.1</version>
             </dependency>
             <dependency>
-			<groupId>org.apache.poi</groupId>
-			<artifactId>poi-ooxml</artifactId>
-			<version>3.7</version>
-		</dependency>
+                <groupId>org.apache.poi</groupId>
+                <artifactId>poi-ooxml</artifactId>
+                <version>3.7</version>
+            </dependency>
         </dependencies>
     </dependencyManagement>
 
