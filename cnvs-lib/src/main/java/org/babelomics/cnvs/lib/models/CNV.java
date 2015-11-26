@@ -520,7 +520,18 @@ public class CNV {
     }
 
     public void setChromosome(String chromosome) {
-        this.chromosome = chromosome;
+        if(chromosome != null && chromosome.length() != 0) {
+            if(!chromosome.startsWith("chrom") && !chromosome.startsWith("chrm") && !chromosome.startsWith("chr") && !chromosome.startsWith("ch")) {
+                this.chromosome = chromosome;
+            } else {
+                this.chromosome = chromosome.replaceFirst("chrom|chrm|chr|ch", "");
+            }
+
+        } else {
+            throw new IllegalArgumentException("Chromosome must not be empty");
+        }
+
+
     }
 
     public long getStart() {
