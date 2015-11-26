@@ -50,96 +50,22 @@ function CNVSRenderer(args) {
 CNVSRenderer.prototype.render = function (features, args) {
     var _this = this;
 
+
     /****/
     var timeId = "write dom " + Utils.randomString(4);
     console.time(timeId);
     console.log(features.length);
     /****/
 
-    if (features.length == 0) {
-        return;
-    }
-
-
-    features.sort(function (a, b) {
-        return a.start - b.start;
-    });
-
-    var start = features[0].start;
-    var end = features[features.length - 1].end;
-
-    var histogram_gain = new Array(end - start + 1);
-    var histogram_loss = new Array(end - start + 1);
-    var histogram_loh = new Array(end - start + 1);
-    histogram_gain.fill(0);
-    histogram_loss.fill(0);
-    histogram_loh.fill(0);
-
-    for (var i = 0; i < features.length; i++) {
-        var feature = features[i];
-
-        if (feature.type === "gain") {
-            for (var j = feature.start; j <= feature.end; j++) {
-                var pos_array = (j - start);
-                histogram_gain[pos_array]++;
-            }
-        } else if (feature.type === "loss") {
-            for (var j = feature.start; j <= feature.end; j++) {
-                var pos_array = (j - start);
-                histogram_loss[pos_array]++;
-            }
-        } else if (feature.type === "LOH neutral") {
-            for (var j = feature.start; j <= feature.end; j++) {
-                var pos_array = (j - start);
-
-                histogram_loh[pos_array]++;
-            }
-        }
-
-
-    }
-
-
-    var colors = ['blue', 'red', 'green'];
-    var width = 1 * args.pixelBase;
-    var histo3 = new Array(histogram_gain, histogram_loss, histogram_loh);
+    /**/
+    /**/
     var histoGroup = SVG.create('g');
-
-    for (var j = 0; j < histo3.length; j++) {
-        var histogramaactual = histo3[j];
-        var points = '';
-
-        //Antes de que empiece las features
-        /* for (i = 0; i < start; i++) {
-         // var x = args.pixelPosition + i * args.pixelBase;
-         var x = i * args.pixelBase;
-         points += (x + (width / 2)).toFixed(1) + "," + (this.histogramHeight ).toFixed(1) + " ";
-         }*/
-        //Datos donde tengo las features
-        for (var i = 0; i < histogramaactual.length; i++) {
-
-            //var x = args.pixelPosition + ((i + start) * args.pixelBase);
-
-            // var x = args.pixelPosition +35+ ((i+1)  * args.pixelBase);
-            var x =this.getFeatureX(i+start,args);
-
-            var height = histogramaactual[i] * this.multiplier;
-            points += (x + (width / 2)).toFixed(1) + "," + (this.histogramHeight - height).toFixed(1) + " ";
-        }
-
-        //Crear el SVG con cada linea
-        if (points !== '') {
-            SVG.addChild(histoGroup, "polyline", {
-                "points": points,
-                fill: "none",
-                "stroke": colors[j],
-                "cursor": "pointer"
-            });
-
-        }
+    for (var i = 0, leni = args.cacheItems.length; i < leni; i++) {
+        this.drawHistogram(args.cacheItems[i], histoGroup, i, args);
     }
     args.svgCanvasFeatures.appendChild(histoGroup);
-
+    /**/
+    /**/
 
     var svgGroup = SVG.create('g');
     for (var i = 0, leni = features.length; i < leni; i++) {
@@ -288,4 +214,96 @@ CNVSRenderer.prototype.draw = function (feature, svgGroup, i, args) {
         textY += rowHeight;
     }
 
-}
+};
+
+
+CNVSRenderer.prototype.drawHistogram = function (cacheItem, svgGroup, i, args) {
+
+    var features = cacheItem.value;
+    var region = cacheItem.region;
+    var start = region.start;
+    var end = region.end;
+
+
+
+    if (features.length == 0) {
+        return;
+    }
+
+
+    features.sort(function (a, b) {
+        return a.start - b.start;
+    });
+
+
+    var histogram_gain = new Array(end - start + 1);
+    var histogram_loss = new Array(end - start + 1);
+    var histogram_loh = new Array(end - start + 1);
+    histogram_gain.fill(0);
+    histogram_loss.fill(0);
+    histogram_loh.fill(0);
+
+    for (var i = 0; i < features.length; i++) {
+        var feature = features[i];
+
+        if (feature.type === "gain") {
+            for (var j = feature.start; j <= feature.end, j <= end; j++) {
+                var pos_array = (j - start);
+                histogram_gain[pos_array]++;
+            }
+        } else if (feature.type === "loss") {
+            for (var j = feature.start; j <= feature.end,j <= end; j++) {
+                var pos_array = (j - start);
+                histogram_loss[pos_array]++;
+            }
+        } else if (feature.type === "LOH neutral") {
+            for (var j = feature.start; j <= feature.end,j <= end; j++) {
+                var pos_array = (j - start);
+
+                histogram_loh[pos_array]++;
+            }
+        }
+
+
+    }
+
+
+    var colors = ['blue', 'red', 'green'];
+    var width = 1 * args.pixelBase;
+    var histo3 = new Array(histogram_gain, histogram_loss, histogram_loh);
+
+
+    for (var j = 0; j < histo3.length; j++) {
+        var histogramaactual = histo3[j];
+        var points = '';
+
+        //Antes de que empiece las features
+        /* for (i = 0; i < start; i++) {
+         // var x = args.pixelPosition + i * args.pixelBase;
+         var x = i * args.pixelBase;
+         points += (x + (width / 2)).toFixed(1) + "," + (this.histogramHeight ).toFixed(1) + " ";
+         }*/
+        //Datos donde tengo las features
+        for (var i = 0; i < histogramaactual.length; i++) {
+
+            //var x = args.pixelPosition + ((i + start) * args.pixelBase);
+
+            // var x = args.pixelPosition +35+ ((i+1)  * args.pixelBase);
+            var x =this.getFeatureX(i+start,args);
+
+            var height = histogramaactual[i] * this.multiplier;
+            points += (x + (width / 2)).toFixed(1) + "," + (this.histogramHeight - height).toFixed(1) + " ";
+        }
+
+        //Crear el SVG con cada linea
+        if (points !== '') {
+            SVG.addChild(svgGroup, "polyline", {
+                "points": points,
+                fill: "none",
+                "stroke": colors[j],
+                "cursor": "pointer"
+            });
+
+        }
+    }
+};

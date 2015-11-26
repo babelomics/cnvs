@@ -1,5 +1,6 @@
 <link rel="import" href="../lib/jsorolla/src/lib/components/jso-genome-viewer-element.html">
 <link rel="import" href="../lib/jsorolla/src/lib/components/table/jso-table.html">
+<link rel="import" href="../lib/jsorolla/src/lib/components/jso-panel.html">
 <link rel="import" href="../lib/jsorolla/src/lib/components/variant/jso-variant-phenotype-grid.html">
 <dom-module id="cnvs-search-element">
 
@@ -8,10 +9,11 @@
             display: block;
             box-sizing: border-box;
             position: relative;
+            /*background-color: var(--default-primary-color);*/
+            background-color: var(--text-primary-color);
         }
 
         #filter-form-element {
-            background-color: #FFFFFF;
             width: 250px;
             margin-top: 20px;
             margin-left: 20px;
@@ -32,7 +34,7 @@
         #dataGridElement {
             border-radius: 0px !important;
             margin: 20px 20px 20px 0px;
-            background-color: #FFFFFF;
+
             width: calc(100% - 290px);
         }
 
@@ -76,13 +78,17 @@
         }
 
         jso-genome-viewer-element,
-        .jso-formbox
-        #datatable {
-            box-shadow: 0px 0px 2px 0px rgba(0, 0, 0, 0.2);
+        .jso-formbox,
+        #tablaresultadosPanel {
+            box-shadow: 0px 0px 3px 1px rgba(0, 0, 0, 0.2);
         }
 
-        #dataTable {
-            border: 1px solid var(--divider-color)
+        #tablaresultados{
+            border-top: 1px solid #d3d3d3;
+        }
+
+        #tablaresultadosPanel {
+            border: 1px solid #d3d3d3;
         }
 
         .jso-formcontent {
@@ -569,17 +575,23 @@
                 <!--<div on-click="handleMenuClick" data-option="phenotype">Phenotype</div>-->
                 <!--<div on-click="handleMenuClick" data-option="effect">Effect</div>-->
                 <!--</div>-->
-                <div id="bandaocultar">
+                <!--<div id="bandaocultar">
                     Results Table
-                    <!-- font awesome icons: expand y compress-->
+                    &lt;!&ndash; font awesome icons: expand y compress&ndash;&gt;
                     <button on-click="cerrartabla"><i id="iconoexpan" class="fa fa-compress"></i></button>
+                </div>-->
+                <jso-panel collapsible id="tablaresultadosPanel">
+                    <div class="header">
+                        Results Table
+                    </div>
+                    <jso-table id="tablaresultados" class="container" enable-paging enable-remote enable-select
+                               enable-resize
+                               request="{{request}}"
+                               columns="{{columns}}"
+                               on-rowclick="handleRowClick"
+                            ></jso-table>
+                </jso-panel>
 
-                </div>
-                <jso-table id="tablaresultados" enable-paging enable-remote enable-select enable-resize
-                           request="{{request}}"
-                           columns="{{columns}}"
-                           on-rowclick="handleRowClick"
-                        ></jso-table>
                 <div id="tools">
                     <jso-genome-viewer-element id="gv"
                                                on-created="handleGenomeViewerCreated"></jso-genome-viewer-element>
@@ -880,7 +892,7 @@
                     }
                     return itemsArray;
                 },
-                cacheConfig : {
+                cacheConfig: {
                     chunkSize: 50000
                 }
             });
@@ -934,7 +946,7 @@
                 if (this.regionValue == "") {
                     region = new Region(this.$.gv.genomeViewer.region);
                 } else {
-                    region = new Region(this.regionValue);
+                    region = new Region(this.regionValue.trim());
                 }
 
                 if (this.geneValue) {
