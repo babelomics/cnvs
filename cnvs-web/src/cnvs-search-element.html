@@ -297,6 +297,7 @@
                                         Clinical Significance
                                         <img src="images/flechaizquierdaazul.png" id="clisfoto"/>
                                     </div>
+
                                 </label>
 
                                 <div class="jso-formcontent" id="clis">
@@ -482,7 +483,7 @@
 
                                 </div>
                             </div>
-                        </div>
+
                         <div class="jso-formbox">
                             <label on-click="toggleElement" data-option="hpoid">
                                 <div class="jso-formtitle">
@@ -559,11 +560,24 @@
                                 </div>
                             </div>
                         </div>
+                        <!--<div class="jso-formbox">
+                            <label on-click="mostrardiagnosis" data-option="diagnosis">
+                                <div class="jso-formtitle">
+                                    Referral diagnosis
+
+                                </div>
+
+                            </label>
+                        </div>!-->
                     </div>
 
-
+                    </div>
                 </form>
             </div>
+          <!--  <div id="selectordeEnfermedades" >
+                <jso-table ></jso-table>
+                <jso-table></jso-table>
+            </div>!-->
             <div id="dataGridElement" class="vertical layout">
                 <!--<jso-table id="dataTable" enable-paging enable-remote enable-select enable-resize request="{{request}}"-->
                 <!--columns="{{columns}}" on-rowclick="handleRowClick">-->
@@ -608,7 +622,7 @@
         properties: {
             regionValue: {
                 type: String,
-                value: ""
+                value: "1:766600-800000"
             },
             columns: {
                 type: Array,
@@ -689,6 +703,9 @@
                 document.getElementById("iconoexpan").classList.add('fa-compress');
 
             }
+
+        },
+        mostrardiagnosis:function(){
 
         },
         ready: function () {
@@ -773,7 +790,7 @@
 
             ]
 
-
+            // Llamar a el distint para hacer el referal
         },
         created: function () {
             this.selectedSpecies = DEFAULT_SPECIES;

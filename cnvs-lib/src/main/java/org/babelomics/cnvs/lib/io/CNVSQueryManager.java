@@ -107,10 +107,10 @@ public class CNVSQueryManager {
             this.addTypeStringToQuery(q.getOrigin(), query, "origin");
         }
 
-//        if ((q.getSkip() != -1) && (q.getLimit() != -1)) {
-//
-//            query.offset(q.getSkip()).limit(q.getLimit());
-//        }
+        if ((q.getSkip() != -1) && (q.getLimit() != -1)) {
+
+            query.offset(q.getSkip()).limit(q.getLimit());
+        }
 
         System.out.println(query);
 
@@ -164,6 +164,7 @@ public class CNVSQueryManager {
 
             List<Criteria> andList = new ArrayList<>();
 //            andList.add(auxQuery.criteria("_at.chIds").in(chunkIds));
+            andList.add(auxQuery.criteria("chromosome").equal(region.getChromosome()));
             andList.add(auxQuery.criteria("end").greaterThanOrEq(region.getStart()));
             andList.add(auxQuery.criteria("start").lessThanOrEq(region.getEnd()));
 
