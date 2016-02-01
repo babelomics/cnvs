@@ -49,7 +49,7 @@ function CNVSRenderer(args) {
 
 CNVSRenderer.prototype.render = function (features, args) {
 
-    console.log("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA")
+   /*Cuando hay un cambio se llama al render solo una vez, este tiene todas las regiones
 
     /****/
     var timeId = "write dom " + Utils.randomString(4);
@@ -60,7 +60,7 @@ CNVSRenderer.prototype.render = function (features, args) {
     /**/
     /**/
     var histoGroup = SVG.create('g');
-        //debugger
+
 
     var lastRegion = null;
     for (var i = 0, leni = args.cacheItems.length; i < leni; i++) {
@@ -70,12 +70,8 @@ CNVSRenderer.prototype.render = function (features, args) {
 
         //this.drawHistogram(args.cacheItems[i], histoGroup, i, args, ultimospuntos);
 
-        //if(args.cacheItem.start - lastRegion.end > 0){
-        //    drawSingleLine();
-        //}
         console.log(args.cacheItems[i])
         this.drawHistogram(args.cacheItems[i], histoGroup, i, args);
-        //lastRegion = args.cacheItems[i];
     }
     args.svgCanvasFeatures.appendChild(histoGroup);
     /**/
@@ -230,24 +226,17 @@ CNVSRenderer.prototype.draw = function (feature, svgGroup, i, args) {
 };
 
 
-CNVSRenderer.prototype.drawHistogram = function (cacheItem, svgGroup, i, args, ultimospuntos) {
+CNVSRenderer.prototype.drawHistogram = function (cacheItem, svgGroup, i, args) {
 
     var features = cacheItem.value;
     var region = cacheItem.region;
     var start = region.start;
     var end = region.end;
 
+    var colors = ['blue', 'red', 'green'];
+    var width = 1 * args.pixelBase;
 
-    //if (features.length == 0) {
-    //    return;
-    //}
-
-
-    features.sort(function (a, b) {
-        return a.start - b.start;
-    });
-
-
+    //Creo los tres histogramas que contienen los datos en coordenadas genómicas
     var histogram_gain = new Array(end - start + 1);
     var histogram_loss = new Array(end - start + 1);
     var histogram_loh = new Array(end - start + 1);
@@ -256,114 +245,141 @@ CNVSRenderer.prototype.drawHistogram = function (cacheItem, svgGroup, i, args, u
     histogram_loss.fill(0);
     histogram_loh.fill(0);
 
-    //console.log(features.length);
-    for (var i = 0; i < features.length; i++) {
-        var feature = features[i];
-        var inicio;
-        var fin;
-        if (feature.start < start) {
-            inicio = start;
-        } else {
-            inicio = feature.start;
-        }
-        if (feature.end > end) {
-            fin = end;
-        } else {
-            fin = feature.end
-        }
-        if (feature.type === "gain") {
-            //   for (var j = feature.start; j <= feature.end, j <= end; j++) {
-            for (var j = inicio; j <= fin; j++) {
-                var pos_array = (j - start);
-                histogram_gain[pos_array]++;
-            }
-        } else if (feature.type === "loss") {
-            for (var j = inicio; j <= fin; j++) {
-                //for (var j = feature.start; j <= feature.end,j <= end; j++) {
-                var pos_array = (j - start);
-                histogram_loss[pos_array]++;
-            }
-        } else if (feature.type === "LOH neutral") {
-            for (var j = inicio; j <= fin; j++) {
-                //for (var j = feature.start; j <= feature.end,j <= end; j++) {
-                var pos_array = (j - start);
+    //Si no hay datos solo pinto los puntos inicial y final de cada histograma
+    if (features.length == 0) {
+        var xini = this.getFeatureX(start, args);
+        var xfin = this.getFeatureX(start, args);
+        var height = (this.histogramHeight).toFixed(1);
+        var points =(xini + (width / 2)).toFixed(1) + "," + height+ " " +(xfin + (width / 2)).toFixed(1) + "," + height;
 
-                histogram_loh[pos_array]++;
-            }
+        for ( var i=0; i< color.length; i++) {
+                if (points !== '') {
+                    SVG.addChild(svgGroup, "polyline", {
+                        "points": points,
+                        "fill": "none",
+                        "stroke": colors[j],
+                        "cursor": "pointer"
+                    });
+
+                }
         }
 
+    }else {
 
-    }
-
-
-    var colors = ['blue', 'red', 'green'];
-    var width = 1 * args.pixelBase;
-    var histo3 = new Array(histogram_gain, histogram_loss, histogram_loh);
-
-
-    for (var j = 0; j < histo3.length; j++) {
-        var histogramaactual = histo3[j];
+        //Ordenar las features
+        features.sort(function (a, b) {
+            return a.start - b.start;
+        });
 
 
-        var pointsArray = [];
-        //if (ultimospuntos[j] != null) {
-        //    pointsArray.push(ultimospuntos[j]);
-        //}else{
-        //    console.log("paso por aqui!");
-        //}
-
-        var ultimovalorx = 0;
-        var ultimovalory = 0;
-        //Datos donde tengo las features
-        var numpoints = 0;
-
-
-        //Añado el primer punto a la linea
-        var x = this.getFeatureX(start, args);
-        var height = histogramaactual[0] * this.multiplier;
-        pointsArray.push((x + (width / 2)).toFixed(1) + "," + (this.histogramHeight - height).toFixed(1));
-
-        ultimovalory = this.histogramHeight - height;
-        ultimovalorx = (x + (width / 2)).toFixed(1);
-
-        for (var i = 1; i < histogramaactual.length - 1; i++) {
-            x = this.getFeatureX(i + start, args);
-
-            height = histogramaactual[i] * this.multiplier;
-            if (ultimovalory != (this.histogramHeight - height)) {
-
-                pointsArray.push(ultimovalorx + "," + ultimovalory.toFixed(1));
-                pointsArray.push((x + (width / 2)).toFixed(1) + "," + (this.histogramHeight - height).toFixed(1));
-
+        //console.log(features.length);
+        //Crear los arrays con los datos a pintar
+        for (var i = 0; i < features.length; i++) {
+            var feature = features[i];
+            var inicio;
+            var fin;
+            if (feature.start < start) {
+                inicio = start;
             } else {
-                numpoints++;
+                inicio = feature.start;
             }
+            if (feature.end > end) {
+                fin = end;
+            } else {
+                fin = feature.end
+            }
+            if (feature.type === "gain") {
+                //   for (var j = feature.start; j <= feature.end, j <= end; j++) {
+                for (var j = inicio; j <= fin; j++) {
+                    var pos_array = (j - start);
+                    histogram_gain[pos_array]++;
+                }
+            } else if (feature.type === "loss") {
+                for (var j = inicio; j <= fin; j++) {
+                    //for (var j = feature.start; j <= feature.end,j <= end; j++) {
+                    var pos_array = (j - start);
+                    histogram_loss[pos_array]++;
+                }
+            } else if (feature.type === "LOH neutral") {
+                for (var j = inicio; j <= fin; j++) {
+                    //for (var j = feature.start; j <= feature.end,j <= end; j++) {
+                    var pos_array = (j - start);
+
+                    histogram_loh[pos_array]++;
+                }
+            }
+
+
+        }
+
+
+        var histo3 = new Array(histogram_gain, histogram_loss, histogram_loh);
+
+        //Pintar los datos
+        for (var j = 0; j < histo3.length; j++) {
+            var histogramaactual = histo3[j];
+
+
+            var pointsArray = [];
+            //if (ultimospuntos[j] != null) {
+            //    pointsArray.push(ultimospuntos[j]);
+            //}else{
+            //    console.log("paso por aqui!");
+            //}
+
+            var ultimovalorx = 0;
+            var ultimovalory = 0;
+            //Datos donde tengo las features
+            var numpoints = 0;
+
+
+            //Añado el primer punto a la linea
+            var x = this.getFeatureX(start, args);
+            var height = histogramaactual[0] * this.multiplier;
+            pointsArray.push((x + (width / 2)).toFixed(1) + "," + (this.histogramHeight - height).toFixed(1));
+
             ultimovalory = this.histogramHeight - height;
             ultimovalorx = (x + (width / 2)).toFixed(1);
 
-            // console.log("el del histograma es"+(this.histogramHeight - height).toFixed(1));
-        }
-        //pinto el ultimo valor
-        var x = this.getFeatureX(histogramaactual.length - 1 + start, args);
-        var height = histogramaactual[histogramaactual.length - 1] * this.multiplier;
-        pointsArray.push((x + (width / 2)).toFixed(1) + "," + (this.histogramHeight - height).toFixed(1));
+            for (var i = 1; i < histogramaactual.length - 1; i++) {
+                x = this.getFeatureX(i + start, args);
 
-        //guardo este ultimo punto para el siguiente histograma
-        //ultimospuntos[j] = (x + (width / 2)).toFixed(1) + "," + (this.histogramHeight - height).toFixed(1);
+                height = histogramaactual[i] * this.multiplier;
+                if (ultimovalory != (this.histogramHeight - height)) {
+
+                    pointsArray.push(ultimovalorx + "," + ultimovalory.toFixed(1));
+                    pointsArray.push((x + (width / 2)).toFixed(1) + "," + (this.histogramHeight - height).toFixed(1));
+
+                } else {
+                    numpoints++;
+                }
+                ultimovalory = this.histogramHeight - height;
+                ultimovalorx = (x + (width / 2)).toFixed(1);
+
+                // console.log("el del histograma es"+(this.histogramHeight - height).toFixed(1));
+            }
+            //pinto el ultimo valor
+            var x = this.getFeatureX(histogramaactual.length - 1 + start, args);
+            var height = histogramaactual[histogramaactual.length - 1] * this.multiplier;
+            pointsArray.push((x + (width / 2)).toFixed(1) + "," + (this.histogramHeight - height).toFixed(1));
+
+            //guardo este ultimo punto para el siguiente histograma
+            //ultimospuntos[j] = (x + (width / 2)).toFixed(1) + "," + (this.histogramHeight - height).toFixed(1);
 
 
-        var points = pointsArray.join(" ");
-        //console.log(numpoints);
+            var points = pointsArray.join(" ");
+            //console.log(numpoints);
 
-        //Añado al grupo de histogramas las lineas con los puntos calculados
-        if (points !== '') {
-            SVG.addChild(svgGroup, "polyline", {
-                "points": points,
-                "fill": "none",
-                "stroke": colors[j],
-                "cursor": "pointer"
-            });
+            //Añado al grupo de histogramas las lineas con los puntos calculados
+            if (points !== '') {
+                SVG.addChild(svgGroup, "polyline", {
+                    "points": points,
+                    "fill": "none",
+                    "stroke": colors[j],
+                    "cursor": "pointer"
+                });
 
+            }
         }
     }
 };
