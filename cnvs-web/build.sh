@@ -12,6 +12,7 @@ vulcanize --inline-scripts --inline-css --strip-comments $ELEMENT.html > $BP/$EL
 
 cp -r $NAME-index.html $BP/index.html
 cp -r conf/ $BP/
+cp -r images/ $BP/
 cp -r bower_components/stevia-elements/fonts/ $BP/
 cp -r bower_components/stevia-elements/css/ $BP/
 cp -r bower_components/fontawesome/css $BP/fontawesome/
