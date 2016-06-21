@@ -1,52 +1,36 @@
 #!/bin/sh
-rm -rf build
-mkdir -p build
-mkdir -p build/tmp
-#mkdir -p build/css
-mkdir -p build/fonts
-mkdir -p build/fontawesome
-mkdir -p build/images
+NAME="cnvs"
+ELEMENT="cnvs-element"
+BP=build
 
-vulcanize \
-    --inline-scripts \
-    --inline-css \
-    --strip-comments \
-    --exclude "conf/config.js" \
-    --exclude "conf/theme.html" \
-    cnvs.html \
-    | crisper \
-    --html build/tmp/index.html \
-    --js build/tmp/index.js
+rm -rf $BP
+mkdir -p $BP
+mkdir -p $BP/fontawesome
+mkdir -p $BP/webcomponentsjs
 
-uglifyjs build/tmp/index.js > build/tmp/index.min.js
+vulcanize --inline-scripts --inline-css --strip-comments $ELEMENT.html > $BP/$ELEMENT.html
 
-#sed -i s@index.js@index.min.js@g build/tmp/index.html
+cp -r $NAME-index.html $BP/index.html
+cp -r conf/ $BP/
+cp -r bower_components/stevia-elements/fonts/ $BP/
+cp -r bower_components/stevia-elements/css/ $BP/
+cp -r bower_components/fontawesome/css $BP/fontawesome/
+cp -r bower_components/fontawesome/fonts $BP/fontawesome/
+cp -r bower_components/webcomponentsjs/*.min.js $BP/webcomponentsjs/
 
-#fix paths
-sed -i s@lib/jsorolla/styles/fonts/@fonts/@g build/tmp/index.html
-cp -r lib/jsorolla/styles/fonts/* build/fonts/
+# GV deps
+cp -r bower_components/underscore $BP/
+cp -r bower_components/backbone $BP/
+cp -r bower_components/jquery $BP/
+cp -r bower_components/qtip2 $BP/
+cp -r bower_components/uri.js $BP/
+cp -r bower_components/uri.js $BP/
+mkdir -p $BP/bower_components/jsorolla
+cp -r bower_components/jsorolla/styles $BP/bower_components/jsorolla
 
-sed -i s@lib/jsorolla/bower_components/fontawesome/fonts/@fontawesome/fonts/@g build/tmp/index.html
-sed -i s@bower_components/fontawesome/fonts/@fontawesome/fonts/@g build/tmp/index.html
-
-cp -r bower_components/fontawesome/css build/fontawesome/
-cp -r bower_components/fontawesome/fonts build/fontawesome/
-
-sed -i s@lib/jsorolla/styles/img/@images/@g build/tmp/index.html
-cp -r lib/jsorolla/styles/img/* build/images/
-
-
-sed -i s@src/images/@images/@g build/tmp/index.html
-cp -r src/images/* build/images/
-
-# end fix paths
-
-#cp LICENSE build/
-cp README.md build/
-
-mv build/tmp/index.html build/
-mv build/tmp/index.js build/
-mv build/tmp/index.min.js build/
-cp -r conf build/
-
-rm -rf build/tmp
+#
+# fix index.html css paths
+#
+sed -i s@'bower_components/stevia-elements/'@@g $BP/index.html
+sed -i s@'bower_components/'@@g $BP/index.html
+## end fix paths
