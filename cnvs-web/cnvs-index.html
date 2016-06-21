@@ -68,35 +68,39 @@
                 getSpecies(function(s) {
                     AVAILABLE_SPECIES = s;
                     DEFAULT_SPECIES = AVAILABLE_SPECIES.vertebrates[0];
+                    run();
+                });
+
+                function getSpecies(callback) {
+                    CellBaseManager.get({
+                        host: CELLBASE_HOST,
+                        category: "meta",
+                        subCategory: "species",
+                        success: function(r) {
+                            var taxonomies = r.response[0].result[0];
+                            for (var taxonomy in taxonomies) {
+                                var newSpecies = [];
+                                for (var i = 0; i < taxonomies[taxonomy].length; i++) {
+                                    var species = taxonomies[taxonomy][i];
+                                    for (var j = 0; j < species.assemblies.length; j++) {
+                                        var s = Utils.clone(species)
+                                        s.assembly = species.assemblies[j];
+                                        delete s.assemblies;
+                                        newSpecies.push(s)
+                                    }
+                                }
+                                taxonomies[taxonomy] = newSpecies;
+                            }
+                            callback(taxonomies);
+                        }
+                    });
+                }
+
+                function run() {
                     cnvs = document.createElement('cnvs-element');
                     document.body.appendChild(cnvs);
-                });
+                }
             });
-
-            function getSpecies(callback) {
-                CellBaseManager.get({
-                    host: CELLBASE_HOST,
-                    category: "meta",
-                    subCategory: "species",
-                    success: function(r) {
-                        var taxonomies = r.response[0].result[0];
-                        for (var taxonomy in taxonomies) {
-                            var newSpecies = [];
-                            for (var i = 0; i < taxonomies[taxonomy].length; i++) {
-                                var species = taxonomies[taxonomy][i];
-                                for (var j = 0; j < species.assemblies.length; j++) {
-                                    var s = Utils.clone(species)
-                                    s.assembly = species.assemblies[j];
-                                    delete s.assemblies;
-                                    newSpecies.push(s)
-                                }
-                            }
-                            taxonomies[taxonomy] = newSpecies;
-                        }
-                        callback(taxonomies);
-                    }
-                });
-            }
         </script>
 
     </body>
