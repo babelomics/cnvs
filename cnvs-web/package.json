@@ -1,16 +1,15 @@
 {
-  "name": "CopyNumberVariationServer",
-  "version": "1.0.0",
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/babelomics/cnvs.git"
-  },
-  "scripts": {
-    "build": "./build.sh"
-  },
-  "devDependencies": {
-    "crisper": "^1.0.7",
-    "uglify-js": "^2.4.24",
-    "vulcanize": "1.10.4"
-  }
+    "name": "CopyNumberVariationServer",
+    "version": "1.0.0",
+    "license": "GPL-3.0",
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/babelomics/cnvs.git"
+    },
+    "scripts": {
+        "build": "./build.sh"
+    },
+    "devDependencies": {
+        "vulcanize": "1.14.8"
+    }
 }

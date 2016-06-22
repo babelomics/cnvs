@@ -1,30 +1,73 @@
-<style>
-    html, body {
-        font-family: 'Lato', 'Helvetica Neue', Helvetica, Arial, 'sans-serif' !important;
-    }
-
-    a {
-        transition: color 0.1s linear;
-        text-decoration: none;
-    }
-
-    jso-opencga-header > .main {
-        font-weight: 300;
-    }
-</style>
 <style is="custom-style">
     :root {
         --dark-primary-color: #204854;
         --default-primary-color: #225e71;
         --light-primary-color: #fafafa;
-        --light-secondary-color: #f0f0f0;
-
+        --light-secondary-color: #EDEDED;
         --text-primary-color: #FFFFFF;
-
         --accent-color: #13DEFC;
-
+        --light-button-color: #47dcf2;
+        --dark-button-color: #21bad1;
         --primary-text-color: #212121;
-        --secondary-text-color: #727272;
-        --divider-color: #bababa;
+        --secondary-text-color: #555;
+        --divider-color: #ccc;
+        --hover-color: #eee;
+        --selected-color: #bbb;
+    }
+</style>
+
+<style>
+    [hidden] {
+        display: none !important;
+    }
+
+    html,
+    body {
+        font-family: 'Lato', 'Helvetica Neue', Helvetica, Arial, 'sans-serif' !important;
+        overflow-y: hidden;
+    }
+
+    body.fullbleed {
+        margin: 0;
+        height: 100vh;
+    }
+
+    body[unresolved] {
+        opacity: 0;
+        display: block;
+        overflow: hidden;
+        position: relative;
+    }
+
+    body {
+        transition: opacity ease-in 0.2s;
+    }
+
+    a {
+        transition: color 0.1s linear;
+        text-decoration: none;
+        color: var(--text-primary-color);
+    }
+
+    a:hover {
+        text-decoration: underline;
+    }
+
+    stv-header > .main {
+        font-weight: 300;
+    }
+
+    .pathact-note {
+        border-left-color: #ffb877;
+        background-color: #fae7d7;
+    }
+
+    .pathact-note::after {
+        content: '\f024';
+        color: #d75a00;
+    }
+
+    .qtip {
+        max-width: 350px;
     }
 </style>

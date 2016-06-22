@@ -1,26 +1,31 @@
-<link rel="import" href="../lib/jsorolla/src/lib/components/jso-genome-viewer-element.html">
-<link rel="import" href="../lib/jsorolla/src/lib/components/table/jso-table.html">
-<link rel="import" href="../lib/jsorolla/src/lib/components/jso-panel.html">
-<link rel="import" href="../lib/jsorolla/src/lib/components/variant/jso-variant-phenotype-grid.html">
-<dom-module id="cnvs-search-element">
+<link rel="import" href="../bower_components/polymer/polymer.html">
+<link rel="import" href="../bower_components/iron-flex-layout/iron-flex-layout.html">
+<link rel="import" href="../bower_components/jsorolla/src/lib/components/jso-genome-viewer-element.html">
+<link rel="import" href="../bower_components/stevia-elements/src/table/stv-table.html">
 
-    <style>
+<dom-module id="cnvs-search-element">
+    <style is="custom-style" include="iron-flex iron-flex-reverse iron-flex-alignment iron-flex-factors iron-positioning">
         :host {
             display: block;
-            box-sizing: border-box;
             position: relative;
-            /*background-color: var(--default-primary-color);*/
-            background-color: var(--text-primary-color);
+            box-sizing: border-box;
+            background-color: var(--light-secondary-color);
+            @apply(--layout-horizontal);
+            overflow-y: scroll;
         }
 
-        #filter-form-element {
+        .right,
+        .left {
+            position: relative;
+            box-sizing: border-box;
+            padding: 10px;
             width: 250px;
-            margin-top: 20px;
-            margin-left: 20px;
-            margin-right: 10px;
-            margin-bottom: 20px;
+            min-width: 250px;
+        }
 
-            min-height: 900px;
+        .right {
+            @apply(--layout-flex);
+            padding-left: 0;
         }
 
         textarea {
@@ -31,46 +36,8 @@
             margin-top: 5px;
         }
 
-        #dataGridElement {
-            border-radius: 0px !important;
-            margin: 20px 20px 20px 0px;
-
-            width: calc(100% - 290px);
-        }
-
         .container > span {
             margin-left: 10px;
-        }
-
-        #bandaocultar {
-            border-bottom: 1px solid #225e71;
-            font-family: 'Lato', 'Helvetica Neue', Helvetica, Arial, 'sans-serif';
-            padding: 2px 2px 2px 8px;
-            font-size: 13px;
-            background-color: #83aec0;
-            color: white;
-
-        }
-
-        #bandaocultar button {
-            float: right;
-        }
-
-        #menu > div {
-            font-size: 17px;
-            padding: 5px 5px;
-            margin: 0 20px;
-            border-bottom: 2px solid transparent;
-            transition: all 0.1s;
-            cursor: pointer;
-        }
-
-        #menu > div:hover {
-            border-bottom-color: rgba(125, 125, 125, 0.4);
-        }
-
-        #menu > div[selected] {
-            border-bottom-color: rgba(125, 125, 125, 0.7);
         }
 
         #tools {
@@ -78,12 +45,12 @@
         }
 
         jso-genome-viewer-element,
-        .jso-formbox,
+        .stv-formbox,
         #tablaresultadosPanel {
             box-shadow: 0px 0px 3px 1px rgba(0, 0, 0, 0.2);
         }
 
-        #tablaresultados{
+        #tablaresultados {
             border-top: 1px solid #d3d3d3;
         }
 
@@ -91,43 +58,36 @@
             border: 1px solid #d3d3d3;
         }
 
-        .jso-formcontent {
+        .stv-formcontent {
             display: none;
-
         }
 
-        #dataTable {
-            font-size: 11px;
-        }
-
-        jso-table {
+        stv-table {
             overflow-y: auto;
         }
 
-        jso-table::shadow .table-header-field > .name.jso-table {
+        stv-table::shadow .table-header-field > .name.stv-table {
             padding: 4px 0;
         }
 
-        jso-table::shadow #list {
+        stv-table::shadow #list {
             height: 300px;
             overflow-x: auto
         }
-
-        /*.jso-formbox  img{
+        /*.stv-formbox  img{
 
 
         }*/
 
-        .jso-formtitle img {
+        .stv-formtitle img {
             float: right;
-        / / background : #006699;
+            / / background: #006699;
             height: 20px;
             width: 20px;
             -moz-transition: all 0.2s ease-in-out;
             -webkit-transition: all 0.2s ease-in-out;
             -o-transition: all 0.2s ease-in-out;
             transition: all 0.2s ease-in;
-
         }
 
         .toggleElement {
@@ -135,488 +95,450 @@
         }
     </style>
     <template>
-
-        <div class="horizontal layout">
-            <div id="filter-form-element">
-                <form id="filter_form" class="vertical layout">
-                    <div vertical layout>
-                        <div id="buttons_container" class="horizontal layout end-justified" style="margin:10px 5px;">
-                            <div class="jso-btn jso-btn-shdw flex" on-click="clearForm" style="margin-right: 3px;">
-                                Clear
-                            </div>
-                            <div class="jso-btn jso-btn-shdw flex" on-click="submitForm">Search</div>
-                        </div>
-                        <div class="form_block positionBlock">
-
-                            <div class="jso-formbox">
-                                <label on-click="toggleElement" data-option="positions">
-                                    <div class="jso-formtitle ">
-                                        Position
-                                        <img src="images/flechaizquierdaazul.png" id="positionsfoto"/>
-                                    </div>
-
-                                </label>
-
-                                <div class="jso-formcontent" id="positions">
-                                    <div class="input_container vertical layout">
-                                        <label class="jso">Chromosomal Location:</label>
-                                        <textarea id="region" name="region" placeholder="1:1-100000,2:1-100000"
-                                                  value="{{regionValue::change}}" rows="3"></textarea>
-                                    </div>
-                                    <div class="input_container vertical layout">
-                                        <label class="jso">Gene:</label>
-                                        <textarea id="gene" name="gene" placeholder="BRCA2,PPL"
-                                                  value="{{geneValue::change}}" rows="3"></textarea>
-
-                                        <div class="searchGene horizontal layout end-justified" hidden>
-                                            <input id="searchField" list="searchDataList" placeholder="Search gene"
-                                                   type="text"
-                                                   style="width: 100px;">
-                                            <datalist id="searchDataList"></datalist>
-                                            <div id="quickSearchButton" class="button" style="border-left: none;">
-                                                <font-awesome icon="search"></font-awesome>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                </div>
-                            </div>
-                            <div class="jso-formbox">
-                                <label on-click="toggleElement" data-option="identifiers">
-                                    <div class="jso-formtitle">
-                                        Identifiers
-                                        <img src="images/flechaizquierdaazul.png" id="identifiersfoto"/>
-                                    </div>
-                                </label>
-
-                                <div class="jso-formcontent" id="identifiers">
-                                    <div class="input_container vertical layout">
-                                        <label class="jso"> Code</label>
-                                    <textarea id="code" name="code" placeholder="ING-01,ING-02"
-                                              value="{{codeValue::change}}" rows="3">
-
-                                    </textarea>
-                                    </div>
-                                    <div class="input_container vertical layout">
-                                        <label class="jso"> Decipher ID</label>
-                                    <textarea id="decipherId" name="decipherId" placeholder="12840,25600"
-                                              value="{{decipherIdValue::change}}" rows="3">
-
-                                    </textarea>
-                                    </div>
-
-                                </div>
-                            </div>
-                            <div class="jso-formbox">
-                                <label on-click="toggleElement" data-option="type">
-                                    <div class="jso-formtitle">
-                                        Type of variant
-                                        <img src="images/flechaizquierdaazul.png" id="typefoto"/>
-                                    </div>
-                                </label>
-
-                                <div class="jso-formcontent" id="type">
-
-                                    <div class="input_container vertical layout">
-                                        <label for="type0" class="jso-control flex">
-                                            <input type="checkbox" name="type" id="type0" value="0" checked/>
-                                            <span>Gain</span>
-                                        </label>
-                                        <label for="type1" class="jso-control flex">
-                                            <input type="checkbox" name="type" id="type1" value="1" checked/>
-                                            <span>Loss</span>
-                                        </label>
-                                        <label for="type2" class="jso-control flex">
-                                            <input type="checkbox" name="type" id="type2" value="2" checked/>
-                                            <span>LOH neutral</span>
-                                        </label>
-
-
-                                    </div>
-                                </div>
-                            </div>
-                            <!--<div class="jso-formbox">
-                                <label on-click="toggleElement" data-option="assembly">
-                                    <div class="jso-formtitle">
-                                        Assembly
-                                        <img src="images/flechaizquierdaazul.png" id="assemblyfoto"/>
-                                    </div>
-                                </label>
-
-                                <div class="jso-formcontent" id="assembly">
-                                    <div class="input_container vertical layout">
-
-                                        <div class="horizontal layout">
-                                            <input type="checkbox" name="assembly" value="0" id="hg18"/><label
-                                                for="hg18">hg18</label>
-                                            <input type="checkbox" name="assembly" value="1" id="hg19"/><label
-                                                for="hg19">hg19</label>
-                                        </div>
-
-
-                                    </div>
-                                </div>
-                            </div>!-->
-                            <div class="jso-formbox">
-                                <label on-click="toggleElement" data-option="doses">
-                                    <div class="jso-formtitle">
-                                        Doses
-                                        <img src="images/flechaizquierdaazul.png" id="dosesfoto"/>
-                                    </div>
-                                </label>
-
-                                <div class="jso-formcontent" id="doses">
-                                    <div class="input_container vertical layout">
-                                        <div class="horizontal layout">
-                                            <label for="x0" class="jso-control flex">
-                                                <input type="checkbox" name="doses" value="0" id="x0" checked/>
-                                                <span>x0</span>
-                                            </label>
-                                            <label for="x1" class="jso-control flex">
-                                                <input type="checkbox" name="doses" value="1" id="x1" checked/>
-                                                <span>x1</span>
-                                            </label>
-                                        </div>
-                                        <div class="horizontal layout">
-                                            <label for="x2" class="jso-control flex">
-                                                <input type="checkbox" name="doses" value="2" id="x2" checked/>
-                                                <span>x2(XY)</span>
-                                            </label>
-                                            <label for="x3" class="jso-control flex">
-                                                <input type="checkbox" name="doses" value="3" id="x3" checked/>
-                                                <span>x3</span>
-                                            </label>
-                                        </div>
-                                    </div>
-
-                                </div>
-                            </div>
-                            <div class="jso-formbox">
-                                <label on-click="toggleElement" data-option="clis">
-                                    <div class="jso-formtitle">
-                                        Clinical Significance
-                                        <img src="images/flechaizquierdaazul.png" id="clisfoto"/>
-                                    </div>
-
-                                </label>
-
-                                <div class="jso-formcontent" id="clis">
-                                    <div class="input_container vertical layout">
-                                        <label for="clis0" class="jso-control flex">
-                                            <input type="checkbox" name="clis" value="0" id="clis0" checked/><span>Benign</span>
-                                        </label>
-                                        <label for="clis1" class="jso-control flex">
-                                            <input type="checkbox" name="clis" value="1" id="clis1" checked/><span>Pathogenic</span>
-                                        </label>
-                                        <label for="clis4" class="jso-control flex">
-                                            <input type="checkbox" name="clis" value="4" id="clis4"
-                                                   checked/><span>VOUS</span>
-                                        </label>
-
-                                        <label for="clis2" class="jso-control flex">
-                                            <input type="checkbox" name="clis" value="2" id="clis2" checked/><span>Likely
-                                            Benign</span>
-                                        </label>
-                                        <label for="clis3" class="jso-control flex">
-                                            <input type="checkbox" name="clis" value="3" id="clis3" checked/><span>Likely
-                                            Pathogenic</span>
-                                        </label>
-
-
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="jso-formbox">
-                                <label on-click="toggleElement" data-option="inheritance">
-                                    <div class="jso-formtitle">
-                                        Inheritance
-                                        <img src="images/flechaizquierdaazul.png" id="inheritancefoto"/>
-                                    </div>
-                                </label>
-
-                                <div class="jso-formcontent" id="inheritance">
-                                    <div class="input_container vertical layout">
-
-                                        <label for="inhe0" class="jso-control flex">
-                                            <input type="checkbox" name="inheritance" value="0" id="inhe0"
-                                                   checked/><span>De novo constitutive</span>
-                                        </label>
-                                        <label
-                                                for="inhe1" class="jso-control flex">
-                                            <input type="checkbox" name="inheritance" value="1" id="inhe1"
-                                                   checked/><span>Maternally inherited</span>
-                                        </label>
-
-
-                                        <label for="inhe2" class="jso-control flex">
-                                            <input type="checkbox" name="inheritance" value="2" id="inhe2"
-                                                   checked/><span>Parternally inherited</span>
-                                        </label>
-                                        <label for="inhe3" class="jso-control flex">
-                                            <input type="checkbox" name="inheritance" value="3" id="inhe3"
-                                                   checked/><span>Unknown</span>
-                                        </label>
-
-
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="jso-formbox">
-                                <label on-click="toggleElement" data-option="cl">
-                                    <div class="jso-formtitle">
-                                        Cell line
-                                        <img src="images/flechaizquierdaazul.png" id="clfoto"/>
-                                    </div>
-                                </label>
-
-                                <div class="jso-formcontent" id="cl">
-                                    <div class="input_container horizontal layout flex">
-
-                                        <label for="cl0" class="jso-control flex">
-                                            <input type="checkbox" name="cl" value="0" id="cl0" checked/>
-
-                                            <span>Germline</span>
-                                        </label>
-                                        <label for="cl1" class="jso-control flex">
-                                            <input type="checkbox" name="cl" value="1" id="cl1" checked/>
-                                            <span>Somatic</span>
-                                        </label>
-
-
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="jso-formbox">
-                                <label on-click="toggleElement" data-option="gender">
-                                    <div class="jso-formtitle ">
-                                        Chromosomal Gender
-                                        <img src="images/flechaizquierdaazul.png" id="genderfoto"/>
-                                    </div>
-                                </label>
-
-                                <div class="jso-formcontent" id="gender">
-                                    <div class="input_container horizontal layout flex">
-
-                                        <label for="gender0" class="jso-control flex">
-                                            <input type="checkbox" name="gender" value="0" id="gender0" checked/>
-                                            <span>XX </span>
-                                        </label>
-                                        <label for="gender1" class="jso-control flex">
-                                            <input type="checkbox" name="gender" value="1" id="gender1" checked/>
-                                            <span>XY </span>
-                                        </label>
-
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="jso-formbox">
-                                <label on-click="toggleElement" data-option="status">
-                                    <div class="jso-formtitle">
-                                        Status
-                                        <img src="images/flechaizquierdaazul.png" id="statusfoto"/>
-                                    </div>
-                                </label>
-
-                                <div class="jso-formcontent" id="status">
-                                    <div class="input_container vertical layout">
-                                        <div class="horizontal layout">
-                                            <label for="status0" class="jso-control flex">
-                                                <input type="checkbox" name="status" value="0" id="status0" checked/>
-                                                <span>Proband</span>
-                                            </label>
-                                            <label for="status1" class="jso-control flex">
-                                                <input type="checkbox" name="status" value="1" id="status1" checked/>
-                                                <span>Father</span>
-                                            </label>
-                                        </div>
-                                        <div class="horizontal layout">
-                                            <label for="status2" class="jso-control flex">
-                                                <input type="checkbox" name="status" value="2" id="status2" checked/>
-                                                <span>Mother </span>
-                                            </label>
-                                            <label for="status3" class="jso-control flex">
-                                                <input type="checkbox" name="status" value="3" id="status3" checked/>
-                                                <span>Control</span>
-                                            </label>
-
-                                        </div>
-
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="jso-formbox">
-                                <label on-click="toggleElement" data-option="typeS">
-                                    <div class="jso-formtitle">
-                                        Type of Sample
-                                        <img src="images/flechaizquierdaazul.png" id="typeSfoto"/>
-                                    </div>
-                                </label>
-
-                                <div class="jso-formcontent" id="typeS">
-                                    <div class="input_container vertical layout">
-                                        <label for="typeS0" class="jso-control flex">
-                                            <input type="checkbox" name="typeS" value="0" id="typeS0" checked/>
-                                            <span>Blood</span>
-                                        </label>
-                                        <label for="typeS1" class="jso-control flex">
-                                            <input type="checkbox" name="typeS" value="1" id="typeS1" checked/>
-                                            <span>Amniotic fluid</span>
-                                        </label>
-
-                                        <label for="typeS2" class="jso-control flex">
-                                            <input type="checkbox" name="typeS" value="2" id="typeS2" checked/>
-                                            <span>Chorionic villi</span>
-                                        </label>
-                                        <label for="typeS3" class="jso-control flex">
-                                            <input type="checkbox" name="typeS" value="3" id="typeS3" checked/>
-                                            <span>Tumour</span>
-                                        </label>
-                                        <label for="typeS4" class="jso-control flex">
-                                            <input type="checkbox" name="typeS" value="4" id="typeS4" checked/>
-                                            <span>Etc</span>
-                                        </label>
-
-
-                                    </div>
-
-                                </div>
-                            </div>
-
-                        <div class="jso-formbox">
-                            <label on-click="toggleElement" data-option="hpoid">
-                                <div class="jso-formtitle">
-                                    Phenotype(HPO)
-                                    <img src="images/flechaizquierdaazul.png" id="hpoidfoto"/>
-                                </div>
-                            </label>
-
-                            <div class="jso-formcontent" id="hpoid">
-
-                                <div class="input_container vertical layout">
-
-                                        <textarea id="hpo" name="hpo" placeholder="HP:0001249,HP:0001290"
-                                                  value="{{hpoValue::change}}" rows="3">
-
-                                        </textarea>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="jso-formbox">
-                            <label on-click="toggleElement" data-option="yearid">
-                                <div class="jso-formtitle">
-                                    Year of Birth
-                                    <img src="images/flechaizquierdaazul.png" id="yearidfoto"/>
-                                </div>
-                            </label>
-
-                            <div class="jso-formcontent" id="yearid">
-                                <div class="input_container vertical layout">
-
-                                    <textarea id="year" name="year" placeholder="2004,2003"
-                                              value="{{yearIdValue::change}}" rows="3">
-
-                                    </textarea>
-                                </div>
-                            </div>
-                        </div>
-
-
-                        <div class="jso-formbox">
-                            <label on-click="toggleElement" data-option="ethnicid">
-                                <div class="jso-formtitle">
-                                    Ethnic Group
-                                    <img src="images/flechaizquierdaazul.png" id="ethnicidfoto"/>
-                                </div>
-                            </label>
-
-                            <div class="jso-formcontent" id="ethnicid">
-
-                                <div class="input_container vertical layout">
-
-                                        <textarea id="ethnic" name="ethnic" placeholder="White Mediterranean,Amerindian"
-                                                  value="{{ethicValue::change}}" rows="3">
-
-                                        </textarea>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="jso-formbox">
-                            <label on-click="toggleElement" data-option="geoid">
-                                <div class="jso-formtitle">
-                                    Geographic Origin
-                                    <img src="images/flechaizquierdaazul.png" id="geoidfoto"/>
-                                </div>
-                            </label>
-
-                            <div class="jso-formcontent" id="geoid">
-                                <div class="input_container vertical layout">
-
-                                        <textarea id="geo" name="geo" placeholder="Spain,Bolivia"
-                                                  value="{{geoValue::change}}" rows="3">
-
-                                        </textarea>
-                                </div>
-                            </div>
-                        </div>
-                        <!--<div class="jso-formbox">
-                            <label on-click="mostrardiagnosis" data-option="diagnosis">
-                                <div class="jso-formtitle">
-                                    Referral diagnosis
-
-                                </div>
-
-                            </label>
-                        </div>!-->
-                    </div>
-
-                    </div>
-                </form>
-            </div>
-          <!--  <div id="selectordeEnfermedades" >
-                <jso-table ></jso-table>
-                <jso-table></jso-table>
-            </div>!-->
-            <div id="dataGridElement" class="vertical layout">
-                <!--<jso-table id="dataTable" enable-paging enable-remote enable-select enable-resize request="{{request}}"-->
-                <!--columns="{{columns}}" on-rowclick="handleRowClick">-->
-                <!--</jso-table>-->
-
-                <!--<div id="menu" class="color-2 color-hover-2 horizontal layout">-->
-                <!--<div on-click="handleMenuClick" data-option="gv">Genomic context</div>-->
-
-                <!--<div on-click="handleMenuClick" data-option="phenotype">Phenotype</div>-->
-                <!--<div on-click="handleMenuClick" data-option="effect">Effect</div>-->
-                <!--</div>-->
-                <!--<div id="bandaocultar">
-                    Results Table
-                    &lt;!&ndash; font awesome icons: expand y compress&ndash;&gt;
-                    <button on-click="cerrartabla"><i id="iconoexpan" class="fa fa-compress"></i></button>
-                </div>-->
-                <jso-panel collapsible id="tablaresultadosPanel">
-                    <div class="header">
-                        Results Table
-                    </div>
-                    <jso-table id="tablaresultados" class="container" enable-paging enable-remote enable-select
-                               enable-resize
-                               request="{{request}}"
-                               columns="{{columns}}"
-                               on-rowclick="handleRowClick"
-                            ></jso-table>
-                </jso-panel>
-
-                <div id="tools">
-                    <jso-genome-viewer-element id="gv"
-                                               on-created="handleGenomeViewerCreated"></jso-genome-viewer-element>
+        <form id="form" class="left">
+            <div id="buttons_container" class="horizontal layout end-justified" style="margin:10px 5px;">
+                <div class="stv-btn stv-btn-shdw flex" on-click="clearForm" style="margin-right: 3px;">
+                    Clear
                 </div>
+                <div class="stv-btn stv-btn-shdw flex" on-click="submitForm">Search</div>
+            </div>
+            <div class="form_block positionBlock">
+
+                <div class="stv-formbox">
+                    <label on-click="toggleElement" data-option="positions">
+                        <div class="stv-formtitle ">
+                            Position
+                            <img src="../images/flechaizquierdaazul.png" id="positionsfoto" />
+                        </div>
+
+                    </label>
+
+                    <div class="stv-formcontent" id="positions">
+                        <div class="input_container vertical layout">
+                            <label class="stv">Chromosomal Location:</label>
+                            <textarea class="stv" id="region" name="region" placeholder="1:1-100000,2:1-100000" value="{{regionValue::change}}" rows="3"></textarea>
+                        </div>
+                        <div class="input_container vertical layout">
+                            <label class="stv">Gene:</label>
+                            <textarea class="stv" id="gene" name="gene" placeholder="BRCA2,PPL" value="{{geneValue::change}}" rows="3"></textarea>
+
+                            <div class="searchGene horizontal layout end-justified" hidden>
+                                <input id="searchField" list="searchDataList" placeholder="Search gene" type="text" style="width: 100px;">
+                                <datalist id="searchDataList"></datalist>
+                                <div id="quickSearchButton" class="button" style="border-left: none;">
+                                    <font-awesome icon="search"></font-awesome>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+                <div class="stv-formbox">
+                    <label on-click="toggleElement" data-option="identifiers">
+                        <div class="stv-formtitle">
+                            Identifiers
+                            <img src="../images/flechaizquierdaazul.png" id="identifiersfoto" />
+                        </div>
+                    </label>
+
+                    <div class="stv-formcontent" id="identifiers">
+                        <div class="input_container vertical layout">
+                            <label class="stv"> Code</label>
+                            <textarea class="stv" id="code" name="code" placeholder="ING-01,ING-02" value="{{codeValue::change}}" rows="3">
+
+                            </textarea>
+                        </div>
+                        <div class="input_container vertical layout">
+                            <label class="stv"> Decipher ID</label>
+                            <textarea class="stv" id="decipherId" name="decipherId" placeholder="12840,25600" value="{{decipherIdValue::change}}" rows="3">
+
+                            </textarea>
+                        </div>
+
+                    </div>
+                </div>
+                <div class="stv-formbox">
+                    <label on-click="toggleElement" data-option="type">
+                        <div class="stv-formtitle">
+                            Type of variant
+                            <img src="../images/flechaizquierdaazul.png" id="typefoto" />
+                        </div>
+                    </label>
+
+                    <div class="stv-formcontent" id="type">
+
+                        <div class="input_container vertical layout">
+                            <label for="type0" class="stv-control flex">
+                                <input type="checkbox" name="type" id="type0" value="0" checked/>
+                                <span>Gain</span>
+                            </label>
+                            <label for="type1" class="stv-control flex">
+                                <input type="checkbox" name="type" id="type1" value="1" checked/>
+                                <span>Loss</span>
+                            </label>
+                            <label for="type2" class="stv-control flex">
+                                <input type="checkbox" name="type" id="type2" value="2" checked/>
+                                <span>LOH neutral</span>
+                            </label>
+
+
+                        </div>
+                    </div>
+                </div>
+                <!--<div class="stv-formbox">
+                    <label on-click="toggleElement" data-option="assembly">
+                        <div class="stv-formtitle">
+                            Assembly
+                            <img src="../images/flechaizquierdaazul.png" id="assemblyfoto"/>
+                        </div>
+                    </label>
+
+                    <div class="stv-formcontent" id="assembly">
+                        <div class="input_container vertical layout">
+
+                            <div class="horizontal layout">
+                                <input type="checkbox" name="assembly" value="0" id="hg18"/><label
+                                    for="hg18">hg18</label>
+                                <input type="checkbox" name="assembly" value="1" id="hg19"/><label
+                                    for="hg19">hg19</label>
+                            </div>
+
+
+                        </div>
+                    </div>
+                </div>!-->
+                <div class="stv-formbox">
+                    <label on-click="toggleElement" data-option="doses">
+                        <div class="stv-formtitle">
+                            Doses
+                            <img src="../images/flechaizquierdaazul.png" id="dosesfoto" />
+                        </div>
+                    </label>
+
+                    <div class="stv-formcontent" id="doses">
+                        <div class="input_container vertical layout">
+                            <div class="horizontal layout">
+                                <label for="x0" class="stv-control flex">
+                                    <input type="checkbox" name="doses" value="0" id="x0" checked/>
+                                    <span>x0</span>
+                                </label>
+                                <label for="x1" class="stv-control flex">
+                                    <input type="checkbox" name="doses" value="1" id="x1" checked/>
+                                    <span>x1</span>
+                                </label>
+                            </div>
+                            <div class="horizontal layout">
+                                <label for="x2" class="stv-control flex">
+                                    <input type="checkbox" name="doses" value="2" id="x2" checked/>
+                                    <span>x2(XY)</span>
+                                </label>
+                                <label for="x3" class="stv-control flex">
+                                    <input type="checkbox" name="doses" value="3" id="x3" checked/>
+                                    <span>x3</span>
+                                </label>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+                <div class="stv-formbox">
+                    <label on-click="toggleElement" data-option="clis">
+                        <div class="stv-formtitle">
+                            Clinical Significance
+                            <img src="../images/flechaizquierdaazul.png" id="clisfoto" />
+                        </div>
+
+                    </label>
+
+                    <div class="stv-formcontent" id="clis">
+                        <div class="input_container vertical layout">
+                            <label for="clis0" class="stv-control flex">
+                                <input type="checkbox" name="clis" value="0" id="clis0" checked/>
+                                <span>Benign</span>
+                            </label>
+                            <label for="clis1" class="stv-control flex">
+                                <input type="checkbox" name="clis" value="1" id="clis1" checked/>
+                                <span>Pathogenic</span>
+                            </label>
+                            <label for="clis4" class="stv-control flex">
+                                <input type="checkbox" name="clis" value="4" id="clis4" checked/>
+                                <span>VOUS</span>
+                            </label>
+
+                            <label for="clis2" class="stv-control flex">
+                                <input type="checkbox" name="clis" value="2" id="clis2" checked/>
+                                <span>Likely Benign
+                                </span>
+                            </label>
+                            <label for="clis3" class="stv-control flex">
+                                <input type="checkbox" name="clis" value="3" id="clis3" checked/>
+                                <span>Likely Pathogenic
+                                </span>
+                            </label>
+
+
+                        </div>
+                    </div>
+                </div>
+
+                <div class="stv-formbox">
+                    <label on-click="toggleElement" data-option="inheritance">
+                        <div class="stv-formtitle">
+                            Inheritance
+                            <img src="../images/flechaizquierdaazul.png" id="inheritancefoto" />
+                        </div>
+                    </label>
+
+                    <div class="stv-formcontent" id="inheritance">
+                        <div class="input_container vertical layout">
+
+                            <label for="inhe0" class="stv-control flex">
+                                <input type="checkbox" name="inheritance" value="0" id="inhe0" checked/>
+                                <span>De novo constitutive</span>
+                            </label>
+                            <label for="inhe1" class="stv-control flex">
+                                <input type="checkbox" name="inheritance" value="1" id="inhe1" checked/>
+                                <span>Maternally inherited</span>
+                            </label>
+
+
+                            <label for="inhe2" class="stv-control flex">
+                                <input type="checkbox" name="inheritance" value="2" id="inhe2" checked/>
+                                <span>Parternally inherited</span>
+                            </label>
+                            <label for="inhe3" class="stv-control flex">
+                                <input type="checkbox" name="inheritance" value="3" id="inhe3" checked/>
+                                <span>Unknown</span>
+                            </label>
+
+
+                        </div>
+                    </div>
+                </div>
+                <div class="stv-formbox">
+                    <label on-click="toggleElement" data-option="cl">
+                        <div class="stv-formtitle">
+                            Cell line
+                            <img src="../images/flechaizquierdaazul.png" id="clfoto" />
+                        </div>
+                    </label>
+
+                    <div class="stv-formcontent" id="cl">
+                        <div class="input_container horizontal layout flex">
+
+                            <label for="cl0" class="stv-control flex">
+                                <input type="checkbox" name="cl" value="0" id="cl0" checked/>
+
+                                <span>Germline</span>
+                            </label>
+                            <label for="cl1" class="stv-control flex">
+                                <input type="checkbox" name="cl" value="1" id="cl1" checked/>
+                                <span>Somatic</span>
+                            </label>
+
+
+                        </div>
+                    </div>
+                </div>
+
+                <div class="stv-formbox">
+                    <label on-click="toggleElement" data-option="gender">
+                        <div class="stv-formtitle ">
+                            Chromosomal Gender
+                            <img src="../images/flechaizquierdaazul.png" id="genderfoto" />
+                        </div>
+                    </label>
+
+                    <div class="stv-formcontent" id="gender">
+                        <div class="input_container horizontal layout flex">
+
+                            <label for="gender0" class="stv-control flex">
+                                <input type="checkbox" name="gender" value="0" id="gender0" checked/>
+                                <span>XX </span>
+                            </label>
+                            <label for="gender1" class="stv-control flex">
+                                <input type="checkbox" name="gender" value="1" id="gender1" checked/>
+                                <span>XY </span>
+                            </label>
+
+                        </div>
+                    </div>
+                </div>
+                <div class="stv-formbox">
+                    <label on-click="toggleElement" data-option="status">
+                        <div class="stv-formtitle">
+                            Status
+                            <img src="../images/flechaizquierdaazul.png" id="statusfoto" />
+                        </div>
+                    </label>
+
+                    <div class="stv-formcontent" id="status">
+                        <div class="input_container vertical layout">
+                            <div class="horizontal layout">
+                                <label for="status0" class="stv-control flex">
+                                    <input type="checkbox" name="status" value="0" id="status0" checked/>
+                                    <span>Proband</span>
+                                </label>
+                                <label for="status1" class="stv-control flex">
+                                    <input type="checkbox" name="status" value="1" id="status1" checked/>
+                                    <span>Father</span>
+                                </label>
+                            </div>
+                            <div class="horizontal layout">
+                                <label for="status2" class="stv-control flex">
+                                    <input type="checkbox" name="status" value="2" id="status2" checked/>
+                                    <span>Mother </span>
+                                </label>
+                                <label for="status3" class="stv-control flex">
+                                    <input type="checkbox" name="status" value="3" id="status3" checked/>
+                                    <span>Control</span>
+                                </label>
+
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+                <div class="stv-formbox">
+                    <label on-click="toggleElement" data-option="typeS">
+                        <div class="stv-formtitle">
+                            Type of Sample
+                            <img src="../images/flechaizquierdaazul.png" id="typeSfoto" />
+                        </div>
+                    </label>
+
+                    <div class="stv-formcontent" id="typeS">
+                        <div class="input_container vertical layout">
+                            <label for="typeS0" class="stv-control flex">
+                                <input type="checkbox" name="typeS" value="0" id="typeS0" checked/>
+                                <span>Blood</span>
+                            </label>
+                            <label for="typeS1" class="stv-control flex">
+                                <input type="checkbox" name="typeS" value="1" id="typeS1" checked/>
+                                <span>Amniotic fluid</span>
+                            </label>
+
+                            <label for="typeS2" class="stv-control flex">
+                                <input type="checkbox" name="typeS" value="2" id="typeS2" checked/>
+                                <span>Chorionic villi</span>
+                            </label>
+                            <label for="typeS3" class="stv-control flex">
+                                <input type="checkbox" name="typeS" value="3" id="typeS3" checked/>
+                                <span>Tumour</span>
+                            </label>
+                            <label for="typeS4" class="stv-control flex">
+                                <input type="checkbox" name="typeS" value="4" id="typeS4" checked/>
+                                <span>Etc</span>
+                            </label>
+
+
+                        </div>
+
+                    </div>
+                </div>
+
+                <div class="stv-formbox">
+                    <label on-click="toggleElement" data-option="hpoid">
+                        <div class="stv-formtitle">
+                            Phenotype(HPO)
+                            <img src="../images/flechaizquierdaazul.png" id="hpoidfoto" />
+                        </div>
+                    </label>
+
+                    <div class="stv-formcontent" id="hpoid">
+
+                        <div class="input_container vertical layout">
+
+                            <textarea class="stv" id="hpo" name="hpo" placeholder="HP:0001249,HP:0001290" value="{{hpoValue::change}}" rows="3">
+
+                            </textarea>
+                        </div>
+                    </div>
+                </div>
+                <div class="stv-formbox">
+                    <label on-click="toggleElement" data-option="yearid">
+                        <div class="stv-formtitle">
+                            Year of Birth
+                            <img src="../images/flechaizquierdaazul.png" id="yearidfoto" />
+                        </div>
+                    </label>
+
+                    <div class="stv-formcontent" id="yearid">
+                        <div class="input_container vertical layout">
+
+                            <textarea class="stv" id="year" name="year" placeholder="2004,2003" value="{{yearIdValue::change}}" rows="3">
+
+                            </textarea>
+                        </div>
+                    </div>
+                </div>
+
+
+                <div class="stv-formbox">
+                    <label on-click="toggleElement" data-option="ethnicid">
+                        <div class="stv-formtitle">
+                            Ethnic Group
+                            <img src="../images/flechaizquierdaazul.png" id="ethnicidfoto" />
+                        </div>
+                    </label>
+
+                    <div class="stv-formcontent" id="ethnicid">
+
+                        <div class="input_container vertical layout">
+
+                            <textarea class="stv" id="ethnic" name="ethnic" placeholder="White Mediterranean,Amerindian" value="{{ethicValue::change}}" rows="3">
+
+                            </textarea>
+                        </div>
+                    </div>
+                </div>
+                <div class="stv-formbox">
+                    <label on-click="toggleElement" data-option="geoid">
+                        <div class="stv-formtitle">
+                            Geographic Origin
+                            <img src="../images/flechaizquierdaazul.png" id="geoidfoto" />
+                        </div>
+                    </label>
+
+                    <div class="stv-formcontent" id="geoid">
+                        <div class="input_container vertical layout">
+
+                            <textarea class="stv" id="geo" name="geo" placeholder="Spain,Bolivia" value="{{geoValue::change}}" rows="3">
+
+                            </textarea>
+                        </div>
+                    </div>
+                </div>
+                <!--<div class="stv-formbox">
+                <label on-click="mostrardiagnosis" data-option="diagnosis">
+                    <div class="stv-formtitle">
+                        Referral diagnosis
+
+                    </div>
+
+                </label>
+            </div>!-->
+            </div>
+        </form>
+        <div class="right vertical layout">
+            <!--  <div id="selectordeEnfermedades" >
+                <stv-table ></stv-table>
+                <stv-table></stv-table>
+            </div>!-->
+            <stv-panel collapsible id="tablaresultadosPanel">
+                <div class="header">
+                    Results Table
+                </div>
+                <stv-table id="tablaresultados" class="container" enable-paging enable-remote enable-select enable-resize request="{{request}}" columns="{{columns}}" on-rowclick="handleRowClick"></stv-table>
+            </stv-panel>
+
+            <div id="tools">
+                <jso-genome-viewer-element id="gv" on-created="handleGenomeViewerCreated"></jso-genome-viewer-element>
             </div>
         </div>
-
     </template>
 </dom-module>
 <script>
-
     Polymer({
         is: 'cnvs-search-element',
         properties: {
@@ -626,7 +548,7 @@
             },
             columns: {
                 type: Array,
-                value: function () {
+                value: function() {
                     return [];
                 }
             },
@@ -665,7 +587,7 @@
                 value: null
             }
         },
-        toggleElement: function (e) {
+        toggleElement: function(e) {
 
             var me = this;
             var elem = e.currentTarget;
@@ -673,7 +595,7 @@
             var id = this.$[option];
             var idfoto = this.$[option + "foto"];
 
-//            id.classList.toggle("toggleElement");
+            //            id.classList.toggle("toggleElement");
 
             if (id.style.display == "" || id.style.display == "none") {
                 id.style.display = "block";
@@ -685,11 +607,11 @@
                 id.style.display = "none";
                 $(idfoto).css("-moz-transform", "rotate(90deg)");
                 $(idfoto).css("-webkit-transform", "rotate( 0deg)");
-                // idfoto.src = "/cnvs/cnvs-web/src/images/flechaizquierdaazul.png";
+                // idfoto.src = "/cnvs/cnvs-web/src/../images/flechaizquierdaazul.png";
             }
 
         },
-        cerrartabla: function () {
+        cerrartabla: function() {
             var elem = this.$.tablaresultados;
 
             if (elem.style.display == "" || elem.style.display == "block") {
@@ -705,102 +627,182 @@
             }
 
         },
-        mostrardiagnosis:function(){
+        mostrardiagnosis: function() {
 
         },
-        ready: function () {
+        ready: function() {
             this.species = 'Homo sapiens';
 
-            this.async(function () {
+            this.async(function() {
                 this.$.gv.createGenomeViewer();
                 this.$.gv.genomeViewer.draw();
                 this.$.gv.genomeViewer.toggleAutoHeight(true);
                 var r = new Region("1:1-2000");
                 this.$.gv.genomeViewer.setRegion(r);
-            });
+            }, 10);
 
-
-            this.columns = [
-                {
-                    name: 'position', title: 'Position', width: 280, columns: [
-                    {
-                        name: 'chromosome', title: 'Chr', width: 60, formula: function (row) {
-                        return row.chromosome;
-                    }
-                    },
-                    {
-                        name: 'start', title: 'Start', width: 60, formula: function (row) {
-                        return row.start;
-                    }
-                    },
-                    {
-                        name: 'end', title: 'End', width: 60, formula: function (row) {
-                        return row.end;
-                    }
-                    },
-                    {
-                        name: 'size', title: 'Size', width: 100, formula: function (row) {
-                        return row.end - row.start;
-                    }
-                    }
-                ]
-                },
-                {name: 'ref', title: "Code", width: 60},
-                {name: 'decipherId', title: 'DecipherId', width: 80},
-                {
-                    name: 'LocalID', title: 'Local ID', width: 180, columns: [
-                    {
-                        name: 'centerId1', title: 'ID 1', width: 60, formula: function (row) {
-                        return row.centerId1;
-                    }
-                    },
-                    {
-                        name: 'centerId2', title: 'ID 2', width: 60, formula: function (row) {
-                        return row.centerId2;
-                    }
-                    },
-                    {
-                        name: 'centerId3', title: 'ID 3', width: 60, formula: function (row) {
-                        return row.centerId3;
-                    }
-                    }
-                ]
-                },
-                {name: 'assembly', title: 'Assembly', width: 80},
-                {name: 'genes', title: 'Genes', width: 60},
-                {name: 'locus', title: 'Band', width: 60},
-                {name: 'type', title: 'Type', width: 60},
-                {name: 'doses', title: 'Doses', width: 60},
-                {name: 'clinicalSig', title: 'Clinical Significance', width: 150},
-                {name: 'inheritance', title: 'Inheritance', width: 120},
-                {name: 'nv', title: 'Nº of variants', width: 90},
-                {name: 'cellLine', title: 'Cell Line', width: 80},
-                {name: 'chromoGender', title: 'Chr gender', width: 80},
-                {name: 'status', title: 'Status', width: 80},
-                {name: 'typeSample', title: 'Type of Sample', width: 120},
-                {name: 'referalDiag', title: 'Referal Diagnosis', width: 120},
-                {name: 'phenotype', title: 'Phenotype', width: 120},
-                {name: 'yearOfBirth', title: 'Year', width: 60},
-                {name: 'ethnicGroup', title: 'Ethnic Group', width: 120},
-                {name: 'origin', title: 'Greographic Origin', width: 120},
-                {name: 'arrayPlatform', title: 'Array Platform', width: 120},
-                {name: 'arrayId', title: 'Array ID', width: 80},
-                {name: 'comments', title: 'Comments', width: 120}
-
+            this.columns = [{
+                    name: 'position',
+                    title: 'Position',
+                    width: 280,
+                    columns: [{
+                        name: 'chromosome',
+                        title: 'Chr',
+                        width: 60,
+                        formula: function(row) {
+                            return row.chromosome;
+                        }
+                    }, {
+                        name: 'start',
+                        title: 'Start',
+                        width: 60,
+                        formula: function(row) {
+                            return row.start;
+                        }
+                    }, {
+                        name: 'end',
+                        title: 'End',
+                        width: 60,
+                        formula: function(row) {
+                            return row.end;
+                        }
+                    }, {
+                        name: 'size',
+                        title: 'Size',
+                        width: 100,
+                        formula: function(row) {
+                            return row.end - row.start;
+                        }
+                    }]
+                }, {
+                    name: 'ref',
+                    title: "Code",
+                    width: 60
+                }, {
+                    name: 'decipherId',
+                    title: 'DecipherId',
+                    width: 80
+                }, {
+                    name: 'LocalID',
+                    title: 'Local ID',
+                    width: 180,
+                    columns: [{
+                        name: 'centerId1',
+                        title: 'ID 1',
+                        width: 60,
+                        formula: function(row) {
+                            return row.centerId1;
+                        }
+                    }, {
+                        name: 'centerId2',
+                        title: 'ID 2',
+                        width: 60,
+                        formula: function(row) {
+                            return row.centerId2;
+                        }
+                    }, {
+                        name: 'centerId3',
+                        title: 'ID 3',
+                        width: 60,
+                        formula: function(row) {
+                            return row.centerId3;
+                        }
+                    }]
+                }, {
+                    name: 'assembly',
+                    title: 'Assembly',
+                    width: 80
+                }, {
+                    name: 'genes',
+                    title: 'Genes',
+                    width: 60
+                }, {
+                    name: 'locus',
+                    title: 'Band',
+                    width: 60
+                }, {
+                    name: 'type',
+                    title: 'Type',
+                    width: 60
+                }, {
+                    name: 'doses',
+                    title: 'Doses',
+                    width: 60
+                }, {
+                    name: 'clinicalSig',
+                    title: 'Clinical Significance',
+                    width: 150
+                }, {
+                    name: 'inheritance',
+                    title: 'Inheritance',
+                    width: 120
+                }, {
+                    name: 'nv',
+                    title: 'Nº of variants',
+                    width: 90
+                }, {
+                    name: 'cellLine',
+                    title: 'Cell Line',
+                    width: 80
+                }, {
+                    name: 'chromoGender',
+                    title: 'Chr gender',
+                    width: 80
+                }, {
+                    name: 'status',
+                    title: 'Status',
+                    width: 80
+                }, {
+                    name: 'typeSample',
+                    title: 'Type of Sample',
+                    width: 120
+                }, {
+                    name: 'referalDiag',
+                    title: 'Referal Diagnosis',
+                    width: 120
+                }, {
+                    name: 'phenotype',
+                    title: 'Phenotype',
+                    width: 120
+                }, {
+                    name: 'yearOfBirth',
+                    title: 'Year',
+                    width: 60
+                }, {
+                    name: 'ethnicGroup',
+                    title: 'Ethnic Group',
+                    width: 120
+                }, {
+                    name: 'origin',
+                    title: 'Greographic Origin',
+                    width: 120
+                }, {
+                    name: 'arrayPlatform',
+                    title: 'Array Platform',
+                    width: 120
+                }, {
+                    name: 'arrayId',
+                    title: 'Array ID',
+                    width: 80
+                }, {
+                    name: 'comments',
+                    title: 'Comments',
+                    width: 120
+                }
 
             ]
 
             // Llamar a el distint para hacer el referal
         },
-        created: function () {
+        created: function() {
             this.selectedSpecies = DEFAULT_SPECIES;
 
         },
-        clearForm: function () {
-            this.$.filter_form.reset();
+        clearForm: function() {
+            this.$.form.reset();
 
         },
-        _parse: function (response) {
+        _parse: function(response) {
             var data = response.result;
 
             var positions = [];
@@ -828,7 +830,7 @@
                         exclude: "transcripts,chunkIds,expressionValues,_chunkIds,mirna"
                     },
                     async: false,
-                    success: function (response) {
+                    success: function(response) {
                         try {
                             for (var i = 0; response != null && i < response.response.length; i++) {
                                 var result = response.response[i].result;
@@ -841,19 +843,17 @@
 
                                 data[i].genes = genes.join(",");
                             }
-                        } catch (e) {
-                        }
+                        } catch (e) {}
                     }
                 });
             }
 
-
             return data;
         },
-        _parseTotal: function (response) {
+        _parseTotal: function(response) {
             return response.numTotalResults;
         },
-        urlChanged: function (neo, old) {
+        urlChanged: function(neo, old) {
             var me = this;
             if (neo != '') {
                 this.request = {
@@ -864,18 +864,17 @@
                 };
             }
         },
-        handleGenomeViewerCreated: function () {
+        handleGenomeViewerCreated: function() {
             var me = this;
 
             this.adapter = new FeatureTemplateAdapter({
 
-
                 uriTemplate: CNVS_HOST + '/regions/{region}/fetch',
                 // templateVariables: {
-//                    customVar: 'info',
-//                },
+                //                    customVar: 'info',
+                //                },
                 species: this.$.gv.genomeViewer.species,
-                getRegionsFromIntervals: function (response) {
+                getRegionsFromIntervals: function(response) {
                     var regions = [];
                     for (var i = 0; i < response.result.length; i++) {
                         var r = response.result[i];
@@ -887,16 +886,16 @@
                     }
                     return regions;
                 },
-                parse: function (response, dataType) {
-//                    var itemsArray = [];
-//                    for (var i = 0; i < response.result.length; i++) {
-//                        var r = response.result[i];
-//                        itemsArray.push(r);
-//                    }
-//                    return [itemsArray];
+                parse: function(response, dataType) {
+                    //                    var itemsArray = [];
+                    //                    for (var i = 0; i < response.result.length; i++) {
+                    //                        var r = response.result[i];
+                    //                        itemsArray.push(r);
+                    //                    }
+                    //                    return [itemsArray];
                     return response.result;
                 },
-                parseHistogram: function (response) {
+                parseHistogram: function(response) {
                     var itemsArray = [];
 
                     for (var i = 0; i < response.result.length; i++) {
@@ -915,26 +914,26 @@
             });
 
             var args = {
-                label: function (f) {
+                label: function(f) {
                     var str = "";
                     str += f.chromosome + ":" + f.start + "-" + f.end;
                     return str;
                 },
-                tooltipTitle: function (f) {
+                tooltipTitle: function(f) {
                     return FEATURE_TYPES.getTipTitleCommons(f);
                 },
-                tooltipText: function (f) {
+                tooltipText: function(f) {
                     // start-end + strand
                     return FEATURE_TYPES.getTipCommons(f) + FEATURE_TYPES._getSimpleKeys(f);
                 },
-                color: function (f) {
+                color: function(f) {
                     return CNVS_TRACK_TYPE_COLORS[f.type];
                 },
                 infoWidgetId: "id",
                 height: 10,
                 histogramColor: "lightgray",
                 handlers: {
-                    "feature:click": function (e) {
+                    "feature:click": function(e) {
 
                     }
                 }
@@ -949,15 +948,15 @@
                 renderer: new CNVSRenderer(args),
                 dataAdapter: this.adapter
             });
-//
+            //
             this.$.gv.genomeViewer.addTrack(track);
         },
-        submitForm: function () {
+        submitForm: function() {
             var me = this;
             var query = {};
 
-            //  if (this.$.filter_form.checkValidity() && (this.regionValue != '' || this.geneValue != '')) {
-            if (this.$.filter_form.checkValidity()) {
+            //  if (this.$.form.checkValidity() && (this.regionValue != '' || this.geneValue != '')) {
+            if (this.$.form.checkValidity()) {
 
                 var region = null;
                 if (this.regionValue == "") {
@@ -979,7 +978,7 @@
                         params: {
                             include: 'chromosome,start,end'
                         },
-                        success: function (data) {
+                        success: function(data) {
                             for (var i = 0; i < data.response.length; i++) {
                                 var queryResult = data.response[i];
 
@@ -1011,7 +1010,6 @@
                 query.code = this.codeValue;
                 query.decipherId = this.decipherIdValue;
                 //    query.assembly = this.assemblyValue;
-
 
                 inputs = this.$.doses.querySelectorAll("input");
                 var dosesv = [];
@@ -1104,21 +1102,18 @@
                     query.typeS = typeSv.join(",");
                 }
 
-
                 query.hpo = this.hpoValue;
 
                 //Comprobar que todos son números
                 query.year = this.yearIdValue;
-
 
                 //query.gene = this.geneValue;
                 query.ethic = this.ethicValue;
                 query.geo = this.geoValue;
                 query.regions = region;
 
-
                 var url = CNVSManager.regions.fetch({
-//                    id: region,
+                    //                    id: region,
                     query: query,
                     request: {
                         url: true
@@ -1127,24 +1122,21 @@
                 this.formURL = url;
                 console.log(url);
 
-
                 this.adapter.params = query;
 
                 this.$.gv.genomeViewer.setRegion(region);
                 this.forURL = url;
-
 
             } else {
                 alert("Please add a region/gene ");
             }
 
         },
-        handleRowClick: function (e) {
+        handleRowClick: function(e) {
             var row = e.detail.row;
 
             this.$.gv.genomeViewer.setRegion(row);
 
         }
     });
-
 </script>
