@@ -23,7 +23,7 @@
             <groupId>com.beust</groupId>
             <artifactId>jcommander</artifactId>
         </dependency>
-        
+
         <dependency>
             <groupId>org.opencb.biodata</groupId>
             <artifactId>biodata-models</artifactId>
@@ -46,11 +46,16 @@
             <groupId>org.opencb.cellbase</groupId>
             <artifactId>cellbase-core</artifactId>
         </dependency>
-        
+
         <dependency>
-			<groupId>org.apache.poi</groupId>
-			<artifactId>poi-ooxml</artifactId>
-		</dependency>
+            <groupId>org.apache.poi</groupId>
+            <artifactId>poi-ooxml</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+        </dependency>
 
     </dependencies>
 
