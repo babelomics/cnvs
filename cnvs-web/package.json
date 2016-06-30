@@ -7,9 +7,11 @@
         "url": "https://github.com/babelomics/cnvs.git"
     },
     "scripts": {
-        "build": "./build.sh"
+        "build": "node ./build.js"
     },
     "devDependencies": {
+        "async": "^2.0.0-rc.6",
+        "shelljs": "^0.7.0",
         "vulcanize": "1.14.8"
     }
 }
