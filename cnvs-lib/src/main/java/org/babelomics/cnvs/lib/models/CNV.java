@@ -71,15 +71,12 @@ public class CNV {
     private String ethnicGroup;
     @Property("o")
     private String origin;
-
-
     @Property("ap")
     private String arrayPlatform;
     @Property("ai")
     private String arrayId;
     @Property("co")
     private String comments;
-
     @Property("_at")
     private Map<String, Object> attr;
 
@@ -112,14 +109,6 @@ public class CNV {
     public void setLocus(String locus) {
         this.band = locus;
     }
-
-	/*public String getSize() {
-        return size;
-	}
-
-	public void setSize(String size) {
-		this.size = size;
-	}*/
 
     public String getDoses() {
         switch (doses) {
@@ -160,7 +149,6 @@ public class CNV {
                 this.doses = -1;
                 break;
         }
-
     }
 
     public String getClinicalSig() {
@@ -179,7 +167,6 @@ public class CNV {
             default:
                 return "";
         }
-
     }
 
     public void setClinicalSig(String clinicalSig) {
@@ -241,9 +228,7 @@ public class CNV {
             default:
                 this.inheritance = -1;
                 break;
-
         }
-
     }
 
     public int getNv() {
@@ -263,7 +248,6 @@ public class CNV {
             default:
                 return "";
         }
-
     }
 
     public void setCellLine(String cellLine) {
@@ -277,9 +261,7 @@ public class CNV {
             default:
                 this.cellLine = -1;
                 break;
-
         }
-
     }
 
     public String getChromoGender() {
@@ -291,7 +273,6 @@ public class CNV {
             default:
                 return "";
         }
-
     }
 
     public void setChromoGender(String chromGender) {
@@ -305,7 +286,6 @@ public class CNV {
             default:
                 this.chromGender = -1;
                 break;
-
         }
     }
 
@@ -347,7 +327,6 @@ public class CNV {
             default:
                 this.status = -1;
                 break;
-
         }
     }
 
@@ -367,7 +346,6 @@ public class CNV {
             default:
                 return "";
         }
-
     }
 
     public void setTypeSample(String typeSample) {
@@ -390,9 +368,7 @@ public class CNV {
             default:
                 this.typeSample = -1;
                 break;
-
         }
-
     }
 
     public String getPhenotype() {
@@ -460,11 +436,6 @@ public class CNV {
     }
 
 
-	/*
-    public void setType(int type) {
-		this.type = type;
-	} */
-
     @Override
     public String toString() {
         return "CNV [id=" + id + ", ref=" + ref + ", decipherId=" + decipherId
@@ -530,8 +501,6 @@ public class CNV {
         } else {
             throw new IllegalArgumentException("Chromosome must not be empty");
         }
-
-
     }
 
     public long getStart() {
@@ -598,10 +567,5 @@ public class CNV {
         List<String> chunks = Arrays.asList(chunkSmall, chunkBig);
 
         this.attr.put("chIds", chunks);
-
     }
-
-
-
-
 }
