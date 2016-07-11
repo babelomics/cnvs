@@ -10,3 +10,4 @@ As the database is concerned, this contains the following main features:
 
 ## Manual ##
 
+[Wiki](https://github.com/babelomics/cnvs/wiki).
