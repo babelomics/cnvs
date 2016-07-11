@@ -1,0 +1,81 @@
+<dom-module id="cnvs-acordeon">
+    <style>
+        :host {
+            width:300px;
+            min-height: 100px;
+            background-color: red;
+        }
+
+        div.subapartado {
+            width:300px;
+            min-height:50px;
+            background-color: green;
+
+        }
+
+        div.titulo {
+            width:300px;
+            heigth: 50px;
+            background-color: #24c06f;
+            overflow: hidden;
+        }
+        p.titulo{
+            margin:13px;
+            color: white;
+        }
+        div.info {
+            width:300px;
+            height: 0px;
+            background:oldlace;
+            -webinfo-transition: height 0.2s;
+        }
+        p.info{
+            margin:20px;
+            text-align:center;
+            color:#111111;
+        }
+
+        div.subapartado:hover div.info{
+            height:180px;
+        }
+    </style>
+    <template>
+        <div>
+
+            <div class="subapartado">
+                <div class="titulo">
+                    <p class="titulo">{{titulo}}</p>
+                </div>
+                <div class = "info">
+
+                </div>
+            </div>
+        </div>
+    </template>
+    <script>
+        Polymer({
+            is: 'cnvs-acordeon',
+            properties: {
+                titulo: {
+                    type: String,
+                    value: "titulo"
+
+                },
+                info:{
+                    type: String,
+                    value:"lo que sea"
+                }
+            },
+            created: function () {
+            },
+            ready: function () {
+                this.$.jsoHeader.allowLogin = false;
+            },
+            computeSelectedOption: function (selectedOption, option) {
+                return this.selectedOption != option;
+            },
+            selectedOptionChanged: function () {
+
+            }
+        });
+    </script>

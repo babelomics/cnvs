@@ -1,0 +1,125 @@
+<link rel="import" href="bower_components/polymer/polymer.html">
+<link rel="import" href="bower_components/iron-flex-layout/iron-flex-layout-classes.html">
+
+<script src="bower_components/cookies-js/dist/cookies.min.js"></script>
+
+<link rel="import" href="bower_components/stevia-elements/src/stv-header.html">
+<link rel="import" href="bower_components/stevia-elements/src/stv-application-behavior.html">
+<link rel="import" href="bower_components/stevia-elements/src/stv-footer.html">
+<link rel="import" href="bower_components/stevia-elements/src/stv-select.html">
+<link rel="import" href="bower_components/stevia-elements/src/stv-select-box.html">
+<link rel="import" href="bower_components/stevia-elements/src/stv-panel.html">
+<link rel="import" href="bower_components/stevia-elements/src/stv-tooltip.html">
+<link rel="import" href="bower_components/stevia-elements/src/dropdown/stv-dropdown.html">
+
+<link rel="import" href="src/cnvs-search-element.html">
+
+<script src="src/cnvs-manager.js"></script>
+<script src="src/cnvs-renderer.js"></script>
+
+<dom-module id="cnvs-element">
+    <style is="custom-style" include="iron-flex iron-flex-reverse iron-flex-alignment iron-flex-factors iron-positioning">
+        :host {
+            display: block;
+            position: relative;
+            cursor: default;
+            font-size: 13px;
+            background-color: var(--default-primary-color);
+            height: 100%;
+            width: 100%;
+        }
+
+        stv-header {
+            position: absolute;
+            top: 0;
+        }
+
+        stv-footer {
+            position: absolute;
+            bottom: 0;
+        }
+
+        .content {
+            position: absolute;
+            width: 100%;
+            top: 60px;
+            /*height: calc(100vh - 60px);*/
+            /*background-color: transparent;*/
+        }
+
+        @media (max-width: 1100px) {
+            .option-text {
+                display: none;
+            }
+        }
+
+        .userid {
+            color: var(--accent-color);
+            font-size: 16px;
+        }
+
+        #description {
+            color: var(--accent-color);
+            font-weight: normal;
+        }
+
+        cnvs-search-element {
+            height: calc(100vh - 60px);
+        }
+    </style>
+    <template>
+        <div class="content" menu-option="home">
+            <cnvs-search-element></cnvs-search-element>
+        </div>
+
+        <stv-header id="stvHeader" hide-jobs hide-browse hide-login hide-signup selected-option="{{selectedOption}}" user-data="{{userData}}">
+            <div class="icon">
+                <img src="./images/gotaCS.png" style="height: 50px;margin: 5px 0px 0 0;">
+            </div>
+            <span class="title">CIBERER <b>C</b>opy <b>N</b>umber <b>V</b>ariation <b>S</b>erver</span>
+            <span class="description"></span>
+
+            <div id="menu" class="menu horizontal layout center flex">
+                <div style="margin-left:4vw;"></div>
+            </div>
+
+            <stv-dropdown dark class="helpmenu">
+                <div data-button><i class="fa fa-question-circle"></i></div>
+                <ul data-menu>
+                    <a href="https://github.com/babelomics/cnvs/wiki" target="_blank">
+                        <li>
+                            <i class="fa fa-book"></i> &nbsp; Documentation
+                        </li>
+                    </a>
+                    <a href="https://github.com/babelomics/cnvs/wiki/Getting-started" target="_blank">
+                        <li>
+                            <i class="fa fa-compass"></i> &nbsp; Tutorial
+                        </li>
+                    </a>
+                    <a href="https://github.com/babelomics/cnvs/" target="_blank">
+                        <li>
+                            <i class="fa fa-github"></i> &nbsp; Source code
+                        </li>
+                    </a>
+
+                </ul>
+            </stv-dropdown>
+        </stv-header>
+
+        <!--<stv-footer menu-option="home,login,signup,profile,remember">-->
+        <!--CNVS: created by Computational Genomics Department-->
+        <!--<br>-->
+        <!--Principe Felipe Research Center-->
+        <!--<br>-->
+        <!--2016-->
+        <!--</stv-footer>-->
+    </template>
+</dom-module>
+<script>
+    Polymer({
+        is: 'cnvs-element',
+        behaviors: [StvApplicationBehavior],
+        created: function() {},
+        ready: function() {}
+    });
+</script>
