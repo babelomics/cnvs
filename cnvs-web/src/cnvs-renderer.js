@@ -246,25 +246,25 @@ CNVSRenderer.prototype.drawHistogram = function (cacheItem, svgGroup, i, args) {
     histogram_loh.fill(0);
 
     //Si no hay datos solo pinto los puntos inicial y final de cada histograma
-    if (features.length == 0) {
+  /*  if (features.length == 0) {
         var xini = this.getFeatureX(start, args);
         var xfin = this.getFeatureX(start, args);
         var height = (this.histogramHeight).toFixed(1);
         var points =(xini + (width / 2)).toFixed(1) + "," + height+ " " +(xfin + (width / 2)).toFixed(1) + "," + height;
 
-        for ( var i=0; i< color.length; i++) {
+        for ( var i=0; i< colors.length; i++) {
                 if (points !== '') {
                     SVG.addChild(svgGroup, "polyline", {
                         "points": points,
                         "fill": "none",
-                        "stroke": colors[j],
+                        "stroke": colors[i],
                         "cursor": "pointer"
                     });
 
                 }
         }
 
-    }else {
+    }else {*/
 
         //Ordenar las features
         features.sort(function (a, b) {
@@ -381,7 +381,7 @@ CNVSRenderer.prototype.drawHistogram = function (cacheItem, svgGroup, i, args) {
 
             }
         }
-    }
+    //}
 };
 //Antes de que empiece las features
 /*   for (i = 0; i < start; i++) {

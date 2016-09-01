@@ -11,7 +11,7 @@ public class QueryCommandLine {
      @Parameter(names = {"--code"}, description = "Code INGEMM-ING, NIM GENETIICS-NIM, QGENOMICS-QGE, SANTIAGO-USC")
      private String code = null;
 
-     @Parameter(names = {"--decipherId"}, description = "Decipher ID")
+     @Parameter(names = {"--decipher-id"}, description = "Decipher ID")
      private List<Long>  decipId = null;
 
      @Parameter(names = {"--regions"}, description = "Comma-separated list of regions")//HECHO
@@ -46,8 +46,11 @@ public class QueryCommandLine {
     private List<Integer> status;
 
 
-    @Parameter(names = {"--typeS"}, description = "Type of sample: 0 blood, 1 amniotic fluid, 2 chorionic villi, 3 tumour, 4 etc")
+    @Parameter(names = {"--type-sample"}, description = "Type of sample: 0 blood, 1 amniotic fluid, 2 chorionic villi, 3 tumour, 4 etc")
     private List<Integer> typeSample;
+
+	@Parameter(names = {"--ref-diagnosis"}, description = "Referal Diagnosis. Ex.:Control")
+	private List<String> referalDiag;
 
     @Parameter(names = {"--hpo"}, description = "Phenotype (HPO)")
     private List<String> hpo = null;
@@ -76,7 +79,10 @@ public class QueryCommandLine {
     @Parameter(names = {"--pass"}, description = "DB Pass", arity = 1)
     private String pass = "";
 
-	public QueryCommandLine(boolean all, String code, List<Long> decipId, String regionList, String assembly, List<String> band, List<Integer> type, List<Integer> doses, List<Integer> cli, List<Integer> inhe, int cl, int gender, List<Integer> status, List<Integer> typeSample, List<String> hpo, List<Integer> year, List<String> ethic, List<String> origin, int skip, int limit, String host, String user, String pass) {
+	public QueryCommandLine(boolean all, String code, List<Long> decipId, String regionList, String assembly, List<String> band,
+							List<Integer> type, List<Integer> doses, List<Integer> cli, List<Integer> inhe, int cl, int gender,
+							List<Integer> status, List<Integer> typeSample, List<String> referalDiag, List<String> hpo, List<Integer> year, List<String> ethic,
+							List<String> origin, int skip, int limit, String host, String user, String pass) {
 		this.all = all;
 		this.code = code;
 		this.decipId = decipId;
@@ -91,6 +97,7 @@ public class QueryCommandLine {
 		this.gender = gender;
 		this.status = status;
 		this.typeSample = typeSample;
+		this.referalDiag = referalDiag;
 		this.hpo = hpo;
 		this.year = year;
 		this.ethic = ethic;
@@ -129,7 +136,6 @@ public class QueryCommandLine {
 		this.code = code;
 	}
 
-
 	public String getRegionList() {
 		return regionList;
 	}
@@ -146,8 +152,6 @@ public class QueryCommandLine {
 		this.assembly = assembly;
 	}
 
-
-
 	public List<String> getBand() {
 		return band;
 	}
@@ -163,9 +167,6 @@ public class QueryCommandLine {
 	public void setType(List<Integer> type) {
 		this.type = type;
 	}
-
-
-
 
 	public List<Long> getDecipId() {
 		return decipId;
@@ -191,8 +192,6 @@ public class QueryCommandLine {
 		this.cli = cli;
 	}
 
-
-
 	public int getCl() {
 		return cl;
 	}
@@ -208,8 +207,6 @@ public class QueryCommandLine {
 	public void setGender(int gender) {
 		this.gender = gender;
 	}
-
-
 
 	public List<Integer> getStatus() {
 		return status;
@@ -227,17 +224,6 @@ public class QueryCommandLine {
 		this.typeSample = typeSample;
 	}
 
-	public List<Integer> getYear() {
-		return year;
-	}
-
-	public void setYear(List<Integer> year) {
-		this.year = year;
-	}
-
-
-
-
 	public List<String> getHpo() {
 		return hpo;
 	}
@@ -246,6 +232,21 @@ public class QueryCommandLine {
 		this.hpo = hpo;
 	}
 
+	public List<String> getReferalDiag() {
+		return referalDiag;
+	}
+
+	public void setReferalDiag(List<String> referalDiag) {
+		this.referalDiag = referalDiag;
+	}
+
+	public List<Integer> getYear() {
+		return year;
+	}
+
+	public void setYear(List<Integer> year) {
+		this.year = year;
+	}
 
 
 	public List<String> getEthic() {
@@ -303,7 +304,5 @@ public class QueryCommandLine {
 	public void setPass(String pass) {
 		this.pass = pass;
 	}
-
-
 
 }

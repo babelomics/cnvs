@@ -436,7 +436,24 @@
 
                     </div>
                 </div>
+                <div class="stv-formbox">
+                    <label on-click="toggleElement" data-option="rdid">
+                        <div class="stv-formtitle">
+                            Referal Diagnosis
+                            <img src="../images/flechaizquierdaazul.png" id="rdidfoto" />
+                        </div>
+                    </label>
 
+                    <div class="stv-formcontent" id="rdid">
+
+                        <div class="input_container vertical layout">
+
+                            <textarea class="stv" id="rd" name="rd" placeholder="Control" value="{{rdValue::change}}" rows="3">
+
+                            </textarea>
+                        </div>
+                    </div>
+                </div>
                 <div class="stv-formbox">
                     <label on-click="toggleElement" data-option="hpoid">
                         <div class="stv-formtitle">
@@ -569,7 +586,10 @@
                 type: String,
                 value: null
             },
-
+            rdValue: {
+                type: String,
+                value: null
+            },
             hpoValue: {
                 type: String,
                 value: null
@@ -1102,6 +1122,7 @@
                     query.typeS = typeSv.join(",");
                 }
 
+                query.referalDiag = this.rdValue;
                 query.hpo = this.hpoValue;
 
                 //Comprobar que todos son números
@@ -1111,6 +1132,8 @@
                 query.ethic = this.ethicValue;
                 query.geo = this.geoValue;
                 query.regions = region;
+
+
 
                 var url = CNVSManager.regions.fetch({
                     //                    id: region,

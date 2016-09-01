@@ -91,6 +91,9 @@ public class CNVSQueryManager {
         if (q.getTypeSample() != null && (!q.getTypeSample().isEmpty())) {
             this.addTypeIntToQuery(q.getTypeSample(), query, "typeSample");
         }
+        if (q.getReferalDiag() != null && (!q.getReferalDiag().isEmpty())) {
+            this.addTypeStringToQuery(q.getReferalDiag(), query, "referalDiag");
+        }
 
         if (q.getHpo() != null && (!q.getHpo().isEmpty())) {
             this.addTypeStringToQuery(q.getHpo(), query, "phenotype");
