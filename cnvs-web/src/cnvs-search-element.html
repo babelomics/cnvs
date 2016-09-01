@@ -100,6 +100,9 @@
                 <div class="stv-btn stv-btn-shdw flex" on-click="clearForm" style="margin-right: 3px;">
                     Clear
                 </div>
+                <div class="stv-btn stv-btn-shdw flex" on-click="colapseAll">Colapse All</div>
+            </div>
+            <div id="buttons_container2" class="horizontal layout end-justified" style="margin:10px 5px;">
                 <div class="stv-btn stv-btn-shdw flex" on-click="submitForm">Search</div>
             </div>
             <div class="form_block positionBlock">
@@ -630,6 +633,16 @@
                 // idfoto.src = "/cnvs/cnvs-web/src/../images/flechaizquierdaazul.png";
             }
 
+        },
+        colapseAll: function(){
+            var g = this.$.form.querySelectorAll(".stv-formbox > div");
+            for(var i = 0; i< g.length; i++) {
+
+                g[i].style.display = "none";
+                var idfoto = this.$[g[i].id + "foto"];
+                $(idfoto).css("-moz-transform", "rotate(90deg)");
+                $(idfoto).css("-webkit-transform", "rotate( 0deg)");
+            }
         },
         cerrartabla: function() {
             var elem = this.$.tablaresultados;
