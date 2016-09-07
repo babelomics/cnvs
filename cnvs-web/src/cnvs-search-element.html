@@ -2,6 +2,7 @@
 <link rel="import" href="../bower_components/iron-flex-layout/iron-flex-layout.html">
 <link rel="import" href="../bower_components/jsorolla/src/lib/components/jso-genome-viewer-element.html">
 <link rel="import" href="../bower_components/stevia-elements/src/table/stv-table.html">
+<link rel="import" href="../bower_components/stevia-elements/src/stv-search.html">
 
 <dom-module id="cnvs-search-element">
     <style is="custom-style" include="iron-flex iron-flex-reverse iron-flex-alignment iron-flex-factors iron-positioning">
@@ -61,7 +62,11 @@
         .stv-formcontent {
             display: none;
         }
-
+        stv-search{
+            padding: 0px;
+            margin:0px;
+            width:198px;
+        }
         stv-table {
             overflow-y: auto;
         }
@@ -95,15 +100,16 @@
         }
     </style>
     <template>
+
         <form id="form" class="left">
+            <div id="buttons_container2" class="horizontal layout end-justified" style="margin:10px 5px;">
+                <div class="stv-btn stv-btn-shdw flex" on-click="submitForm">Search</div>
+            </div>
             <div id="buttons_container" class="horizontal layout end-justified" style="margin:10px 5px;">
                 <div class="stv-btn stv-btn-shdw flex" on-click="clearForm" style="margin-right: 3px;">
                     Clear
                 </div>
                 <div class="stv-btn stv-btn-shdw flex" on-click="colapseAll">Colapse All</div>
-            </div>
-            <div id="buttons_container2" class="horizontal layout end-justified" style="margin:10px 5px;">
-                <div class="stv-btn stv-btn-shdw flex" on-click="submitForm">Search</div>
             </div>
             <div class="form_block positionBlock">
 
@@ -123,6 +129,7 @@
                         </div>
                         <div class="input_container vertical layout">
                             <label class="stv">Gene:</label>
+                            <stv-search id="geneSearch" placeholder="Search" minQueryLength="3" on-item-select="handleGeneSearchSelect" empty-message="No genes found."></stv-search>
                             <textarea class="stv" id="gene" name="gene" placeholder="BRCA2,PPL" value="{{geneValue::change}}" rows="3"></textarea>
 
                             <div class="searchGene horizontal layout end-justified" hidden>
@@ -433,8 +440,6 @@
                                 <input type="checkbox" name="typeS" value="4" id="typeS4" checked/>
                                 <span>Etc</span>
                             </label>
-
-
                         </div>
 
                     </div>
@@ -446,13 +451,9 @@
                             <img src="../images/flechaizquierdaazul.png" id="rdidfoto" />
                         </div>
                     </label>
-
                     <div class="stv-formcontent" id="rdid">
-
                         <div class="input_container vertical layout">
-
                             <textarea class="stv" id="rd" name="rd" placeholder="Control" value="{{rdValue::change}}" rows="3">
-
                             </textarea>
                         </div>
                     </div>
@@ -466,11 +467,8 @@
                     </label>
 
                     <div class="stv-formcontent" id="hpoid">
-
                         <div class="input_container vertical layout">
-
                             <textarea class="stv" id="hpo" name="hpo" placeholder="HP:0001249,HP:0001290" value="{{hpoValue::change}}" rows="3">
-
                             </textarea>
                         </div>
                     </div>
@@ -487,7 +485,6 @@
                         <div class="input_container vertical layout">
 
                             <textarea class="stv" id="year" name="year" placeholder="2004,2003" value="{{yearIdValue::change}}" rows="3">
-
                             </textarea>
                         </div>
                     </div>
@@ -529,15 +526,7 @@
                         </div>
                     </div>
                 </div>
-                <!--<div class="stv-formbox">
-                <label on-click="mostrardiagnosis" data-option="diagnosis">
-                    <div class="stv-formtitle">
-                        Referral diagnosis
 
-                    </div>
-
-                </label>
-            </div>!-->
             </div>
         </form>
         <div class="right vertical layout">
@@ -545,6 +534,15 @@
                 <stv-table ></stv-table>
                 <stv-table></stv-table>
             </div>!-->
+            <div id="add_cnvs" class="horizontal layout end-justified" style="margin:10px 0px 15px 0px;">
+
+                <!--<div class="stv-btn stv-btn-shdw flex" on-click="handleLoggedOnlyMenuPanel" data-panel="browserPanel">!-->
+                <div class="stv-btn stv-btn-shdw flex" on-click="">
+                    <i class="fa fa-plus" aria-hidden="true"></i>
+                    Add CNV
+                </div>
+            </div>
+            </br>
             <stv-panel collapsible id="tablaresultadosPanel">
                 <div class="header">
                     Results Table
@@ -611,33 +609,26 @@
             }
         },
         toggleElement: function(e) {
-
             var me = this;
             var elem = e.currentTarget;
             var option = elem.dataset.option;
             var id = this.$[option];
             var idfoto = this.$[option + "foto"];
 
-            //            id.classList.toggle("toggleElement");
-
             if (id.style.display == "" || id.style.display == "none") {
                 id.style.display = "block";
-                // idfoto.css("-moz-transform","rotate(" + 90 + "deg)");
                 $(idfoto).css("-moz-transform", "rotate(-90deg)");
                 $(idfoto).css("-webkit-transform", "rotate( -90deg)");
-                // idfoto.src="/cnvs/cnvs-web/src/images/flechaabajoazul.png";
             } else {
                 id.style.display = "none";
                 $(idfoto).css("-moz-transform", "rotate(90deg)");
                 $(idfoto).css("-webkit-transform", "rotate( 0deg)");
-                // idfoto.src = "/cnvs/cnvs-web/src/../images/flechaizquierdaazul.png";
             }
 
         },
         colapseAll: function(){
             var g = this.$.form.querySelectorAll(".stv-formbox > div");
             for(var i = 0; i< g.length; i++) {
-
                 g[i].style.display = "none";
                 var idfoto = this.$[g[i].id + "foto"];
                 $(idfoto).css("-moz-transform", "rotate(90deg)");
@@ -646,7 +637,6 @@
         },
         cerrartabla: function() {
             var elem = this.$.tablaresultados;
-
             if (elem.style.display == "" || elem.style.display == "block") {
                 elem.style.display = "none";
                 // this.$.iconoexpan.className = this.$.iconoexpan.className.replace(/(?:|\s)fa-expan(?!\S)/g ,'')
@@ -656,16 +646,54 @@
                 elem.style.display = "block";
                 document.getElementById("iconoexpan").classList.remove('fa-expand');
                 document.getElementById("iconoexpan").classList.add('fa-compress');
-
             }
-
         },
         mostrardiagnosis: function() {
 
         },
+        //Search Gens in textarea
+        handleGeneSearchSelect: function(e) {
+            var name = e.detail;
+           // if (this.selectedGeneMap[name] == null) {
+                this.addGene(name);
+            //}
+        },
+        addGene: function(name){
+            if(this.$.gene.value == null){
+                this.$.gene.value = name;
+            }else{
+                this.$.gene.value = this.$.gene.value + "," + name;
+            }
+        },
+        _initGeneSearch: function() {
+            var me = this;
+            var search = function(query, cb) {
+                var results = [];
+
+                CellBaseManager.get({
+                    host: CELLBASE_HOST,
+                    version: CELLBASE_VERSION,
+                    species: 'hsapiens',
+                    category: 'feature',
+                    subCategory: 'id',
+                    query: query,
+                    resource: 'starts_with',
+                    params: {
+                        limit: 10
+                    },
+                    async: false,
+                    success: function (data, textStatus, jqXHR) {
+                        results = data.response[0].result;
+//
+                    }
+                });
+                cb(results);
+            };
+            this.$.geneSearch.setSearchFunction(search);
+        },
         ready: function() {
             this.species = 'Homo sapiens';
-
+            this._initGeneSearch();
             this.async(function() {
                 this.$.gv.createGenomeViewer();
                 this.$.gv.genomeViewer.draw();
@@ -824,7 +852,6 @@
                 }
 
             ]
-
             // Llamar a el distint para hacer el referal
         },
         created: function() {
@@ -837,7 +864,6 @@
         },
         _parse: function(response) {
             var data = response.result;
-
             var positions = [];
             for (var i = 0; i < data.length; i++) {
                 var row = data[i];
@@ -880,7 +906,6 @@
                     }
                 });
             }
-
             return data;
         },
         _parseTotal: function(response) {
@@ -1170,9 +1195,7 @@
         },
         handleRowClick: function(e) {
             var row = e.detail.row;
-
             this.$.gv.genomeViewer.setRegion(row);
-
         }
     });
 </script>
