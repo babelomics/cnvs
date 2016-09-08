@@ -646,13 +646,13 @@
         },
         //Search Gens in textarea
         handleGeneSearchSelect: function(e) {
-            var name = e.detail;
+            var name = e.detail.name;
            // if (this.selectedGeneMap[name] == null) {
                 this.addGene(name);
             //}
         },
         addGene: function(name){
-            if(this.$.gene.value == null){
+            if(this.$.gene.value == null || this.$.gene.value == ""){
                 this.$.gene.value = name;
             }else{
                 this.$.gene.value = this.$.gene.value + "," + name;
