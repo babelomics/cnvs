@@ -98,6 +98,17 @@
         .toggleElement {
             display: block;
         }
+        .input_container {
+            margin-bottom: 5px;
+        }
+        .input_container >label{
+            /*color: #225e71;*/
+            color: black;
+        }
+        .stv-control >span{
+            color:gray;
+        }
+
     </style>
     <template>
 
@@ -116,17 +127,16 @@
                 <div class="stv-formbox">
                     <label on-click="toggleElement" data-option="positions">
                         <div class="stv-formtitle ">
-                            Position
+                            Genome Analysis
                             <img src="../images/flechaizquierdaazul.png" id="positionsfoto" />
                         </div>
-
                     </label>
-
                     <div class="stv-formcontent" id="positions">
                         <div class="input_container vertical layout">
                             <label class="stv">Chromosomal Location:</label>
-                            <textarea class="stv" id="region" name="region" placeholder="1:1-100000,2:1-100000" value="{{regionValue::change}}" rows="3"></textarea>
+                            <textarea class="stv" id="region" name="region" placeholder="1:766600-800000" value="{{regionValue::change}}" rows="3"></textarea>
                         </div>
+                        <!--1:1-100000,2:1-100000!-->
                         <div class="input_container vertical layout">
                             <label class="stv">Gene:</label>
                             <stv-search id="geneSearch" placeholder="Search" minQueryLength="3" on-item-select="handleGeneSearchSelect" empty-message="No genes found."></stv-search>
@@ -140,44 +150,8 @@
                                 </div>
                             </div>
                         </div>
-
-                    </div>
-                </div>
-                <div class="stv-formbox">
-                    <label on-click="toggleElement" data-option="identifiers">
-                        <div class="stv-formtitle">
-                            Identifiers
-                            <img src="../images/flechaizquierdaazul.png" id="identifiersfoto" />
-                        </div>
-                    </label>
-
-                    <div class="stv-formcontent" id="identifiers">
-                        <div class="input_container vertical layout">
-                            <label class="stv"> Code</label>
-                            <textarea class="stv" id="code" name="code" placeholder="ING-01,ING-02" value="{{codeValue::change}}" rows="3">
-
-                            </textarea>
-                        </div>
-                        <div class="input_container vertical layout">
-                            <label class="stv"> Decipher ID</label>
-                            <textarea class="stv" id="decipherId" name="decipherId" placeholder="12840,25600" value="{{decipherIdValue::change}}" rows="3">
-
-                            </textarea>
-                        </div>
-
-                    </div>
-                </div>
-                <div class="stv-formbox">
-                    <label on-click="toggleElement" data-option="type">
-                        <div class="stv-formtitle">
-                            Type of variant
-                            <img src="../images/flechaizquierdaazul.png" id="typefoto" />
-                        </div>
-                    </label>
-
-                    <div class="stv-formcontent" id="type">
-
-                        <div class="input_container vertical layout">
+                        <div id= "type" class="input_container vertical layout">
+                            <label class="stv">Type of Variant:</label>
                             <label for="type0" class="stv-control flex">
                                 <input type="checkbox" name="type" id="type0" value="0" checked/>
                                 <span>Gain</span>
@@ -190,235 +164,100 @@
                                 <input type="checkbox" name="type" id="type2" value="2" checked/>
                                 <span>LOH neutral</span>
                             </label>
-
-
                         </div>
-                    </div>
-                </div>
-                <!--<div class="stv-formbox">
-                    <label on-click="toggleElement" data-option="assembly">
-                        <div class="stv-formtitle">
-                            Assembly
-                            <img src="../images/flechaizquierdaazul.png" id="assemblyfoto"/>
-                        </div>
-                    </label>
-
-                    <div class="stv-formcontent" id="assembly">
                         <div class="input_container vertical layout">
+                            <label class="stv">Number of variant:</label>
+                            <textarea class="stv" id="nvariants" name="nvariants" placeholder="Not implemented" value="" rows="3"></textarea>
+                        </div>
 
-                            <div class="horizontal layout">
-                                <input type="checkbox" name="assembly" value="0" id="hg18"/><label
-                                    for="hg18">hg18</label>
-                                <input type="checkbox" name="assembly" value="1" id="hg19"/><label
-                                    for="hg19">hg19</label>
+                            <div class="input_container vertical layout" id="doses">
+                                <label class="stv">Doses:</label>
+                                <div class="horizontal layout">
+                                    <label for="x0" class="stv-control flex">
+                                        <input type="checkbox" name="doses" value="0" id="x0" checked/>
+                                        <span>x0</span>
+                                    </label>
+                                    <label for="x1" class="stv-control flex">
+                                        <input type="checkbox" name="doses" value="1" id="x1" checked/>
+                                        <span>x1</span>
+                                    </label>
+                                </div>
+                                <div class="horizontal layout">
+                                    <label for="x2" class="stv-control flex">
+                                        <input type="checkbox" name="doses" value="2" id="x2" checked/>
+                                        <span>x2(XY)</span>
+                                    </label>
+                                    <label for="x3" class="stv-control flex">
+                                        <input type="checkbox" name="doses" value="3" id="x3" checked/>
+                                        <span>x3</span>
+                                    </label>
+                                </div>
                             </div>
 
-
+                        <div class="input_container vertical layout">
+                            <label class="stv">Size:</label>
+                            <textarea class="stv" id="size" name="size" placeholder="Not implemented" value="" rows="3"></textarea>
                         </div>
+                        <div class="input_container vertical layout">
+                            <label class="stv">Cytoband:</label>
+                            <textarea class="stv" id="cytoband" name="cytoband" placeholder="Not implemented" value="" rows="3"></textarea>
+                        </div>
+
                     </div>
-                </div>!-->
+                </div>
                 <div class="stv-formbox">
-                    <label on-click="toggleElement" data-option="doses">
+                    <label on-click="toggleElement" data-option="sampleChar">
                         <div class="stv-formtitle">
-                            Doses
-                            <img src="../images/flechaizquierdaazul.png" id="dosesfoto" />
+                            Sample Characteristics
+                            <img src="../images/flechaizquierdaazul.png" id="sampleCharfoto" />
                         </div>
                     </label>
 
-                    <div class="stv-formcontent" id="doses">
-                        <div class="input_container vertical layout">
-                            <div class="horizontal layout">
-                                <label for="x0" class="stv-control flex">
-                                    <input type="checkbox" name="doses" value="0" id="x0" checked/>
-                                    <span>x0</span>
-                                </label>
-                                <label for="x1" class="stv-control flex">
-                                    <input type="checkbox" name="doses" value="1" id="x1" checked/>
-                                    <span>x1</span>
-                                </label>
+                    <div class="stv-formcontent" id="sampleChar">
+                        <div class="input_container vertical layout" id="status">
+                            <label class="stv"> Status</label>
+                            <div class="input_container vertical layout">
+                                <div class="horizontal layout">
+                                    <label for="status0" class="stv-control flex">
+                                        <input type="checkbox" name="status" value="0" id="status0" checked/>
+                                        <span>Proband</span>
+                                    </label>
+                                    <label for="status1" class="stv-control flex">
+                                        <input type="checkbox" name="status" value="1" id="status1" checked/>
+                                        <span>Father</span>
+                                    </label>
+                                </div>
+                                <div class="horizontal layout">
+                                    <label for="status2" class="stv-control flex">
+                                        <input type="checkbox" name="status" value="2" id="status2" checked/>
+                                        <span>Mother </span>
+                                    </label>
+                                    <label for="status3" class="stv-control flex">
+                                        <input type="checkbox" name="status" value="3" id="status3" checked/>
+                                        <span>Control</span>
+                                    </label>
+                                </div>
                             </div>
-                            <div class="horizontal layout">
-                                <label for="x2" class="stv-control flex">
-                                    <input type="checkbox" name="doses" value="2" id="x2" checked/>
-                                    <span>x2(XY)</span>
-                                </label>
-                                <label for="x3" class="stv-control flex">
-                                    <input type="checkbox" name="doses" value="3" id="x3" checked/>
-                                    <span>x3</span>
-                                </label>
-                            </div>
                         </div>
 
-                    </div>
-                </div>
-                <div class="stv-formbox">
-                    <label on-click="toggleElement" data-option="clis">
-                        <div class="stv-formtitle">
-                            Clinical Significance
-                            <img src="../images/flechaizquierdaazul.png" id="clisfoto" />
-                        </div>
+                    <!--<div class="stv-formcontent" id="cl">!-->
 
-                    </label>
-
-                    <div class="stv-formcontent" id="clis">
-                        <div class="input_container vertical layout">
-                            <label for="clis0" class="stv-control flex">
-                                <input type="checkbox" name="clis" value="0" id="clis0" checked/>
-                                <span>Benign</span>
-                            </label>
-                            <label for="clis1" class="stv-control flex">
-                                <input type="checkbox" name="clis" value="1" id="clis1" checked/>
-                                <span>Pathogenic</span>
-                            </label>
-                            <label for="clis4" class="stv-control flex">
-                                <input type="checkbox" name="clis" value="4" id="clis4" checked/>
-                                <span>VOUS</span>
-                            </label>
-
-                            <label for="clis2" class="stv-control flex">
-                                <input type="checkbox" name="clis" value="2" id="clis2" checked/>
-                                <span>Likely Benign
-                                </span>
-                            </label>
-                            <label for="clis3" class="stv-control flex">
-                                <input type="checkbox" name="clis" value="3" id="clis3" checked/>
-                                <span>Likely Pathogenic
-                                </span>
-                            </label>
-
-
-                        </div>
-                    </div>
-                </div>
-
-                <div class="stv-formbox">
-                    <label on-click="toggleElement" data-option="inheritance">
-                        <div class="stv-formtitle">
-                            Inheritance
-                            <img src="../images/flechaizquierdaazul.png" id="inheritancefoto" />
-                        </div>
-                    </label>
-
-                    <div class="stv-formcontent" id="inheritance">
-                        <div class="input_container vertical layout">
-
-                            <label for="inhe0" class="stv-control flex">
-                                <input type="checkbox" name="inheritance" value="0" id="inhe0" checked/>
-                                <span>De novo constitutive</span>
-                            </label>
-                            <label for="inhe1" class="stv-control flex">
-                                <input type="checkbox" name="inheritance" value="1" id="inhe1" checked/>
-                                <span>Maternally inherited</span>
-                            </label>
-
-
-                            <label for="inhe2" class="stv-control flex">
-                                <input type="checkbox" name="inheritance" value="2" id="inhe2" checked/>
-                                <span>Parternally inherited</span>
-                            </label>
-                            <label for="inhe3" class="stv-control flex">
-                                <input type="checkbox" name="inheritance" value="3" id="inhe3" checked/>
-                                <span>Unknown</span>
-                            </label>
-
-
-                        </div>
-                    </div>
-                </div>
-                <div class="stv-formbox">
-                    <label on-click="toggleElement" data-option="cl">
-                        <div class="stv-formtitle">
-                            Cell line
-                            <img src="../images/flechaizquierdaazul.png" id="clfoto" />
-                        </div>
-                    </label>
-
-                    <div class="stv-formcontent" id="cl">
-                        <div class="input_container horizontal layout flex">
-
+                        <div class="input_container vertical layout" id="cl">
+                            <label class="stv">Cell line:</label>
                             <label for="cl0" class="stv-control flex">
                                 <input type="checkbox" name="cl" value="0" id="cl0" checked/>
-
                                 <span>Germline</span>
                             </label>
                             <label for="cl1" class="stv-control flex">
                                 <input type="checkbox" name="cl" value="1" id="cl1" checked/>
                                 <span>Somatic</span>
                             </label>
-
-
                         </div>
-                    </div>
-                </div>
+                    <!--</div>!-->
 
-                <div class="stv-formbox">
-                    <label on-click="toggleElement" data-option="gender">
-                        <div class="stv-formtitle ">
-                            Chromosomal Gender
-                            <img src="../images/flechaizquierdaazul.png" id="genderfoto" />
-                        </div>
-                    </label>
-
-                    <div class="stv-formcontent" id="gender">
-                        <div class="input_container horizontal layout flex">
-
-                            <label for="gender0" class="stv-control flex">
-                                <input type="checkbox" name="gender" value="0" id="gender0" checked/>
-                                <span>XX </span>
-                            </label>
-                            <label for="gender1" class="stv-control flex">
-                                <input type="checkbox" name="gender" value="1" id="gender1" checked/>
-                                <span>XY </span>
-                            </label>
-
-                        </div>
-                    </div>
-                </div>
-                <div class="stv-formbox">
-                    <label on-click="toggleElement" data-option="status">
-                        <div class="stv-formtitle">
-                            Status
-                            <img src="../images/flechaizquierdaazul.png" id="statusfoto" />
-                        </div>
-                    </label>
-
-                    <div class="stv-formcontent" id="status">
-                        <div class="input_container vertical layout">
-                            <div class="horizontal layout">
-                                <label for="status0" class="stv-control flex">
-                                    <input type="checkbox" name="status" value="0" id="status0" checked/>
-                                    <span>Proband</span>
-                                </label>
-                                <label for="status1" class="stv-control flex">
-                                    <input type="checkbox" name="status" value="1" id="status1" checked/>
-                                    <span>Father</span>
-                                </label>
-                            </div>
-                            <div class="horizontal layout">
-                                <label for="status2" class="stv-control flex">
-                                    <input type="checkbox" name="status" value="2" id="status2" checked/>
-                                    <span>Mother </span>
-                                </label>
-                                <label for="status3" class="stv-control flex">
-                                    <input type="checkbox" name="status" value="3" id="status3" checked/>
-                                    <span>Control</span>
-                                </label>
-
-                            </div>
-
-                        </div>
-                    </div>
-                </div>
-                <div class="stv-formbox">
-                    <label on-click="toggleElement" data-option="typeS">
-                        <div class="stv-formtitle">
-                            Type of Sample
-                            <img src="../images/flechaizquierdaazul.png" id="typeSfoto" />
-                        </div>
-                    </label>
-
-                    <div class="stv-formcontent" id="typeS">
-                        <div class="input_container vertical layout">
+                    <!--<div class="stv-formcontent" id="typeS">!-->
+                        <div class="input_container vertical layout" id="typeS">
+                            <label class="stv"> Type of Sample</label>
                             <label for="typeS0" class="stv-control flex">
                                 <input type="checkbox" name="typeS" value="0" id="typeS0" checked/>
                                 <span>Blood</span>
@@ -442,88 +281,171 @@
                             </label>
                         </div>
 
+                        <div class="input_container vertical layout" id ="gender">
+                            <label class="stv"> Chromosomal Gender</label>
+                            <div class="horizontal layout">
+                                <label for="gender0" class="stv-control flex">
+                                    <input type="checkbox" name="gender" value="0" id="gender0" checked/>
+                                    <span>XX </span>
+                                </label>
+                                <label for="gender1" class="stv-control flex">
+                                    <input type="checkbox" name="gender" value="1" id="gender1" checked/>
+                                    <span>XY </span>
+                                </label>
+                            </div>
+                        </div>
+
+                        <div class="input_container vertical layout">
+                            <label class="stv">Array Plataform:</label>
+                            <textarea class="stv" id="arrayPlataform" name="arrayPlataform" placeholder="Not implemented" value="{{arrayPlataformValue::change}}" rows="3"></textarea>
+                        </div>
+
+
+                        <div class="input_container vertical layout">
+                            <label class="stv">Array Id:</label>
+                            <textarea class="stv" id="arrayId" name="arrayId" placeholder="Not implemented" value="{{arrayIdValue::change}}" rows="3"></textarea>
+                        </div>
+
+
+                        <div class="input_container vertical layout">
+                            <label class="stv">Assembly:</label>
+                            <label for="hg18" class="stv-control flex">
+                            <input type="checkbox" name="assembly" value="0" id="hg18" checked/>
+                                <span>GRCh36/hg18</span>
+                            </label>
+                            <label for="hg19" class="stv-control flex">
+                            <input type="checkbox" name="assembly" value="1" id="hg19" checked/>
+                                <span>GRCh37/hg19</span>
+                            </label>
+                        </div>
+
+
                     </div>
                 </div>
+
                 <div class="stv-formbox">
-                    <label on-click="toggleElement" data-option="rdid">
+                    <label on-click="toggleElement" data-option="clinicalData">
                         <div class="stv-formtitle">
-                            Referal Diagnosis
-                            <img src="../images/flechaizquierdaazul.png" id="rdidfoto" />
+                            Clinical Data
+                            <img src="../images/flechaizquierdaazul.png" id="clinicalDatafoto" />
                         </div>
                     </label>
-                    <div class="stv-formcontent" id="rdid">
+
+                    <div class="stv-formcontent" id="clinicalData">
                         <div class="input_container vertical layout">
+                            <label class="stv"> Referal Diagnosis</label>
                             <textarea class="stv" id="rd" name="rd" placeholder="Control" value="{{rdValue::change}}" rows="3">
                             </textarea>
                         </div>
-                    </div>
-                </div>
-                <div class="stv-formbox">
-                    <label on-click="toggleElement" data-option="hpoid">
-                        <div class="stv-formtitle">
-                            Phenotype(HPO)
-                            <img src="../images/flechaizquierdaazul.png" id="hpoidfoto" />
-                        </div>
-                    </label>
 
-                    <div class="stv-formcontent" id="hpoid">
+
                         <div class="input_container vertical layout">
+                            <label class="stv">  Phenotype(HPO)</label>
                             <textarea class="stv" id="hpo" name="hpo" placeholder="HP:0001249,HP:0001290" value="{{hpoValue::change}}" rows="3">
                             </textarea>
                         </div>
+
+                        <div class="input_container vertical layout">
+                            <label class="stv">  Aneuploid-Deletion-Duplication Syndrome</label>
+                            <textarea class="stv" id="aneuploid" name="aneuploid" placeholder="Not implemented" value="{{aneuploidValue::change}}" rows="3">
+                            </textarea>
+                        </div>
+
+
+                        <div class="input_container vertical layout" id="inheritance">
+                            <label class="stv">Inheritance</label>
+                            <label for="inhe0" class="stv-control flex">
+                                <input type="checkbox" name="inheritance" value="0" id="inhe0" checked/>
+                                <span>De novo constitutive</span>
+                            </label>
+                            <label for="inhe1" class="stv-control flex">
+                                <input type="checkbox" name="inheritance" value="1" id="inhe1" checked/>
+                                <span>Maternally inherited</span>
+                            </label>
+
+                            <label for="inhe2" class="stv-control flex">
+                                <input type="checkbox" name="inheritance" value="2" id="inhe2" checked/>
+                                <span>Parternally inherited</span>
+                            </label>
+                            <label for="inhe3" class="stv-control flex">
+                                <input type="checkbox" name="inheritance" value="3" id="inhe3" checked/>
+                                <span>Unknown</span>
+                            </label>
+                        </div>
+
+
+                        <div class="input_container vertical layout" id="clis">
+                            <label class="stv">Clinical Significance</label>
+                            <label for="clis0" class="stv-control flex">
+                                <input type="checkbox" name="clis" value="0" id="clis0" checked/>
+                                <span>Benign</span>
+                            </label>
+                            <label for="clis1" class="stv-control flex">
+                                <input type="checkbox" name="clis" value="1" id="clis1" checked/>
+                                <span>Pathogenic</span>
+                            </label>
+                            <label for="clis4" class="stv-control flex">
+                                <input type="checkbox" name="clis" value="4" id="clis4" checked/>
+                                <span>VOUS</span>
+                            </label>
+
+                            <label for="clis2" class="stv-control flex">
+                                <input type="checkbox" name="clis" value="2" id="clis2" checked/>
+                            <span>Likely Benign
+                            </span>
+                            </label>
+                            <label for="clis3" class="stv-control flex">
+                                <input type="checkbox" name="clis" value="3" id="clis3" checked/>
+                            <span>Likely Pathogenic
+                            </span>
+                            </label>
+                        </div>
                     </div>
                 </div>
+
                 <div class="stv-formbox">
-                    <label on-click="toggleElement" data-option="yearid">
+                    <label on-click="toggleElement" data-option="pacients">
                         <div class="stv-formtitle">
-                            Year of Birth
-                            <img src="../images/flechaizquierdaazul.png" id="yearidfoto" />
+                            Patients' Data
+                            <img src="../images/flechaizquierdaazul.png" id="pacientsfoto" />
                         </div>
                     </label>
 
-                    <div class="stv-formcontent" id="yearid">
+                    <div class="stv-formcontent" id="pacients">
                         <div class="input_container vertical layout">
+                            <label class="stv"> Locals id</label>
+                        <textarea class="stv" id="localid" name="localid" placeholder="Not implemented" value="{{localidValue::change}}" rows="3">
+                        </textarea>
 
+                        </div>
+                        <div class="input_container vertical layout">
+                            <label class="stv">Decipher ID</label>
+                            <textarea class="stv" id="decipherId" name="decipherId" placeholder="12840,25600" value="{{decipherIdValue::change}}" rows="3">
+                            </textarea>
+                        </div>
+                        <div class="input_container vertical layout">
+                            <label class="stv">Year of birth</label>
                             <textarea class="stv" id="year" name="year" placeholder="2004,2003" value="{{yearIdValue::change}}" rows="3">
                             </textarea>
                         </div>
-                    </div>
-                </div>
-
-
-                <div class="stv-formbox">
-                    <label on-click="toggleElement" data-option="ethnicid">
-                        <div class="stv-formtitle">
-                            Ethnic Group
-                            <img src="../images/flechaizquierdaazul.png" id="ethnicidfoto" />
+                        <div class="input_container vertical layout">
+                            <label class="stv">Year of test(age)</label>
+                            <textarea class="stv" id="yearTest" name="yearTest" placeholder="2004,2003" value="{{yearTestValue::change}}" rows="3">
+                            </textarea>
                         </div>
-                    </label>
-
-                    <div class="stv-formcontent" id="ethnicid">
 
                         <div class="input_container vertical layout">
-
+                            <label class="stv">Ethnic Group</label>
                             <textarea class="stv" id="ethnic" name="ethnic" placeholder="White Mediterranean,Amerindian" value="{{ethicValue::change}}" rows="3">
-
                             </textarea>
                         </div>
-                    </div>
-                </div>
-                <div class="stv-formbox">
-                    <label on-click="toggleElement" data-option="geoid">
-                        <div class="stv-formtitle">
-                            Geographic Origin
-                            <img src="../images/flechaizquierdaazul.png" id="geoidfoto" />
-                        </div>
-                    </label>
 
-                    <div class="stv-formcontent" id="geoid">
                         <div class="input_container vertical layout">
-
+                            <label class="stv">Geographic Origin</label>
                             <textarea class="stv" id="geo" name="geo" placeholder="Spain,Bolivia" value="{{geoValue::change}}" rows="3">
-
                             </textarea>
                         </div>
+
                     </div>
                 </div>
 
@@ -534,7 +456,14 @@
                 <stv-table ></stv-table>
                 <stv-table></stv-table>
             </div>!-->
-            
+            <div id="add_cnvs" class="horizontal layout end-justified" style="margin:10px 0px 15px 0px;">
+
+                <!--<div class="stv-btn stv-btn-shdw flex" on-click="handleLoggedOnlyMenuPanel" data-panel="browserPanel">!-->
+                <div class="stv-btn stv-btn-shdw flex" on-click="">
+                    <i class="fa fa-plus" aria-hidden="true"></i>
+                    Add CNV
+                </div>
+            </div>
             </br>
             <stv-panel collapsible id="tablaresultadosPanel">
                 <div class="header">
@@ -555,7 +484,7 @@
         properties: {
             regionValue: {
                 type: String,
-                value: "1:766600-800000"
+                value: ""
             },
             columns: {
                 type: Array,
@@ -572,11 +501,11 @@
                 type: String,
                 value: ""
             },
-            codeValue: {
+            arrayPlataformValue: {
                 type: String,
                 value: null
             },
-            decipherIdValue: {
+            arrayIdValue: {
                 type: String,
                 value: null
             },
@@ -588,7 +517,35 @@
                 type: String,
                 value: null
             },
+            aneuploidValue: {
+                type: String,
+                value: null
+            },
+            localidValue: {
+                type: String,
+                value: null
+            },
+            decipherIdValue: {
+                type: String,
+                value: null
+            },
             yearIdValue: {
+                type: String,
+                value: null
+            },
+            yearTestValue: {
+                type: String,
+                value: null
+            },
+            AgeValue: {
+                type: String,
+                value: null
+            },
+            AgePrenatalValue: {
+                type: String,
+                value: null
+            },
+            codeValue: {
                 type: String,
                 value: null
             },
@@ -646,13 +603,13 @@
         },
         //Search Gens in textarea
         handleGeneSearchSelect: function(e) {
-            var name = e.detail;
+            var name = e.detail.name;
            // if (this.selectedGeneMap[name] == null) {
                 this.addGene(name);
             //}
         },
         addGene: function(name){
-            if(this.$.gene.value == null){
+            if(this.$.gene.value == null || this.$.gene.value == ""){
                 this.$.gene.value = name;
             }else{
                 this.$.gene.value = this.$.gene.value + "," + name;
@@ -820,8 +777,20 @@
                     width: 120
                 }, {
                     name: 'yearOfBirth',
-                    title: 'Year',
-                    width: 60
+                    title: 'Year Birth',
+                    width: 80
+                }, {
+                    name: 'yearOfTest',
+                    title: 'Year Test',
+                    width: 80
+                }, {
+                    name: 'age',
+                    title: 'Age',
+                    width: 80
+                }, {
+                    name: 'agePrenatal',
+                    title: 'Age Prenatal',
+                    width: 80
                 }, {
                     name: 'ethnicGroup',
                     title: 'Ethnic Group',
@@ -837,6 +806,10 @@
                 }, {
                     name: 'arrayId',
                     title: 'Array ID',
+                    width: 80
+                }, {
+                    name: 'aneuploidy',
+                    title: 'Aneuploidy',
                     width: 80
                 }, {
                     name: 'comments',
@@ -1163,7 +1136,6 @@
                 query.ethic = this.ethicValue;
                 query.geo = this.geoValue;
                 query.regions = region;
-
 
 
                 var url = CNVSManager.regions.fetch({
