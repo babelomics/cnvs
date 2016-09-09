@@ -336,7 +336,6 @@ public class CNV {
                 return "blood";
             case 1:
                 return "amniotic fluid";
-
             case 2:
                 return "chorionic villi";
             case 3:
@@ -525,7 +524,6 @@ public class CNV {
                 return "gain";
             case 1:
                 return "loss";
-
             case 2:
                 return "LOH neutral";
             default:
@@ -541,7 +539,6 @@ public class CNV {
             case "loss":
                 this.type = 1;
                 break;
-
             case "loh neutral":
                 this.type = 2;
                 break;

@@ -115,7 +115,7 @@ public class CNVSQueryManager {
             query.offset(q.getSkip()).limit(q.getLimit());
         }
 
-        System.out.println(query);
+        System.out.println("En el QueryManager la query es:" + query);
 
         Iterable<CNV> aux = query.fetch();
         count.setValue(query.countAll());

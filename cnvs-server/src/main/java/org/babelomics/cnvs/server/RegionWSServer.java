@@ -224,7 +224,7 @@ public class RegionWSServer extends CNVSWSServer {
 
         QueryCommandLine qpa = new QueryCommandLine(false, code, decipherIdaux, regions, assembly, bandaux, typeaux, dosesaux, clisaux,
                 inheritanceaux, cl, gender, statusaux, typeSaux, rdaux, hpoaux, yearaux, ethicaux, geoaux, skip, limit, host, user, pass);
-
+       
         Iterable<CNV> variantes = qm.getCNVsByFilters(qpa, count);
 
         return variantes;
