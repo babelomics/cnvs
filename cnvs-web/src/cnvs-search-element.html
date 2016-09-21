@@ -353,24 +353,26 @@
 
                             <div class="input_container vertical layout" id="doses">
                                 <label class="stv">Doses:</label>
-                                <div class="horizontal layout">
-                                    <label for="x0" class="stv-control flex">
-                                        <input type="checkbox" name="doses" value="0" id="x0" checked/>
-                                        <span>x0</span>
+                                <div class="vertical layout">
+                                    <label for="doses0" class="stv-control flex">
+                                        <input type="checkbox" name="doses" value="0" id="doses0" checked/>
+                                        <span>Homozygous deletion</span>
                                     </label>
-                                    <label for="x1" class="stv-control flex">
-                                        <input type="checkbox" name="doses" value="1" id="x1" checked/>
-                                        <span>x1</span>
+                                    <label for="doses1" class="stv-control flex">
+                                        <input type="checkbox" name="doses" value="1" id="doses1" checked/>
+                                        <span>Deletion</span>
                                     </label>
-                                </div>
-                                <div class="horizontal layout">
-                                    <label for="x2" class="stv-control flex">
-                                        <input type="checkbox" name="doses" value="2" id="x2" checked/>
-                                        <span>x2(XY)</span>
+                                    <label for="doses2" class="stv-control flex">
+                                        <input type="checkbox" name="doses" value="2" id="doses2" checked/>
+                                        <span>Duplication</span>
                                     </label>
-                                    <label for="x3" class="stv-control flex">
-                                        <input type="checkbox" name="doses" value="3" id="x3" checked/>
-                                        <span>x3</span>
+                                    <label for="doses3" class="stv-control flex">
+                                        <input type="checkbox" name="doses" value="3" id="doses3" checked/>
+                                        <span>Triplication</span>
+                                    </label>
+                                    <label for="doses4" class="stv-control flex">
+                                        <input type="checkbox" name="doses" value="3" id="doses4" checked/>
+                                        <span>Amplification</span>
                                     </label>
                                 </div>
                             </div>
@@ -438,11 +440,11 @@
                             </label>
                             <label for="inhe2" class="stv-control flex">
                                 <input type="checkbox" name="inheritance" value="2" id="inhe2" checked/>
-                                <span>Parternally inherited, constitutive in father.</span>
+                                <span>Paternally inherited, constitutive in father.</span>
                             </label>
                             <label for="inhe3" class="stv-control flex">
                                 <input type="checkbox" name="inheritance" value="3" id="inhe3" checked/>
-                                <span>Parternally inherited, mosaic in father.</span>
+                                <span>Paternally inherited, mosaic in father.</span>
                             </label>
                             <label for="inhe4" class="stv-control flex">
                                 <input type="checkbox" name="inheritance" value="4" id="inhe4" checked/>
@@ -1026,7 +1028,7 @@
             });
             //
             this.$.gv.genomeViewer.addTrack(track);
-            this.$.gv.genomeViewer.setTrackIndex(track, 1);
+            this.$.gv.genomeViewer.setTrackIndex(track, 0);
         },
         submitForm: function() {
             var me = this;

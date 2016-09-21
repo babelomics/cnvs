@@ -49,6 +49,7 @@ public class CNVSQueryManager {
         if (q.getCode() != null && !q.getCode().isEmpty()) {
             query.filter("ref =", q.getCode());
         }
+
         if (q.getDecipId() != null && (!q.getDecipId().isEmpty())) {
             this.addTypeLongToQuery(q.getDecipId(), query, "decipherId");
         }
@@ -56,9 +57,11 @@ public class CNVSQueryManager {
         if (q.getRegionList() != null && !q.getRegionList().isEmpty()) {
             this.addRegionsToQuery(q.getRegionList(), query);
         }
+
         if (q.getAssembly() != null && !q.getAssembly().isEmpty()) {
             query.filter("assembly =", q.getAssembly());
         }
+
         if (q.getBand() != null && !q.getBand().isEmpty()) {
             this.addTypeStringToQuery(q.getBand(), query, "band");
         }
@@ -66,6 +69,7 @@ public class CNVSQueryManager {
         if (q.getType() != null && (!q.getType().isEmpty())) {
             this.addTypeIntToQuery(q.getType(), query, "type");
         }
+
         if (q.getDoses() != null && (q.getDoses().size() > 0)) {
             this.addTypeIntToQuery(q.getDoses(), query, "doses");
         }
@@ -76,6 +80,9 @@ public class CNVSQueryManager {
 
         if (q.getInhe() != null && (!q.getInhe().isEmpty())) {
             this.addTypeIntToQuery(q.getInhe(), query, "inheritance");
+        }
+        if (q.getNv() != -1) {
+            query.filter("nv =", q.getNv());
         }
         if (q.getCl() != -1) {
             query.filter("cellLine =", q.getCl());
@@ -103,15 +110,35 @@ public class CNVSQueryManager {
             this.addTypeIntToQuery(q.getYear(), query, "yearOfBirth");
         }
 
+        if (q.getYearTest() != null && (!q.getYearTest().isEmpty())) {
+            this.addTypeIntToQuery(q.getYearTest(), query, "yearTest");
+        }
+
+        if (q.getAge() != null && (!q.getAge().isEmpty())) {
+            this.addTypeStringToQuery(q.getAge(), query, "age");
+        }
+
+        if (q.getAgePrenatal() != null && (!q.getAgePrenatal().isEmpty())) {
+            this.addTypeIntToQuery(q.getAgePrenatal(), query, "agePrenatal");
+        }
+
         if (q.getEthic() != null && (!q.getEthic().isEmpty())) {
             this.addTypeStringToQuery(q.getEthic(), query, "ethnicGroup");
         }
+
         if (q.getOrigin() != null && (!q.getOrigin().isEmpty())) {
             this.addTypeStringToQuery(q.getOrigin(), query, "origin");
         }
 
-        if ((q.getSkip() != -1) && (q.getLimit() != -1)) {
+        if (q.getArrayPlatform() != null && (!q.getArrayPlatform().isEmpty())) {
+            this.addTypeStringToQuery(q.getArrayPlatform(), query, "arrayPlatform");
+        }
 
+        if (q.getArrayId() != null && (!q.getArrayId().isEmpty())) {
+            this.addTypeStringToQuery(q.getArrayId(), query, "arrayId");
+        }
+
+        if ((q.getSkip() != -1) && (q.getLimit() != -1)) {
             query.offset(q.getSkip()).limit(q.getLimit());
         }
 

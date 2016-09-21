@@ -26,25 +26,26 @@ public class QueryCommandLine {
      @Parameter(names = {"--type"}, description = "Type of variant:0 gain,1 loss or 2 LOH neutral")
      private List<Integer> type = null;
 
-     @Parameter(names = {"--doses"}, description = "Doses: 0 x0,1 x1,2 x2(XY),3 x3")
+     @Parameter(names = {"--doses"}, description = "Doses: 0 homozygous deletion, 1 deletion,2 duplication,3 triplication, 4 amplification")
      private List<Integer>  doses = null;
 
-     @Parameter(names = {"--clis"}, description = "Clinical Significance: 0 Benign, 1 Pathogenic, 2 Likely benign 3 Likely pathogenic 4 VOUS")
+     @Parameter(names = {"--clis"}, description = "Clinical Significance: 0 Definitely pathogenic, 1 Probably pathogenic, 2 Pathogenic, 3 Vous, 4 Likely benign, 5 Benign")
      private List<Integer>  cli = null;
 
      @Parameter(names = {"--inheritance"}, description = " Inheritance: 0 de novo constitutive, 1 maternally inherited, 2 paternally inherited, 3unknown")
      private List<Integer>  inhe = null;
 
+	@Parameter(names = {"--nv"}, description = "Number of variants")
+	private int nv = -1;
+
      @Parameter(names = {"--cl"}, description = "Cell Line: 0 germline, 1 somatic")
      private int cl = -1;
 
-     @Parameter(names = {"--gender"}, description = "Chromosomal gender: 0 XX, 1 XY")
+     @Parameter(names = {"--gender"}, description = "Chromosomal gender: 0 XX, 1 XY , 2 X, 3 XXX, 4 XXY, 5 XYY, 6 Unknown")
      private int gender = -1;
-
 
  	@Parameter(names = {"--status"}, description = "Status: 0 Proband, 1 Father, 2 Mother, 3 Control")
     private List<Integer> status;
-
 
     @Parameter(names = {"--type-sample"}, description = "Type of sample: 0 blood, 1 amniotic fluid, 2 chorionic villi, 3 tumour, 4 etc")
     private List<Integer> typeSample;
@@ -58,11 +59,29 @@ public class QueryCommandLine {
     @Parameter(names = {"--year"}, description = "Year of Birth")
     private List<Integer> year;
 
+	@Parameter(names = {"--year-test"}, description = "Year test performed")
+	private List<Integer> yearTest;
+
+	@Parameter(names = {"--age"}, description = "Age")
+	private List<String> age;
+
+	@Parameter(names = {"--age-prenatal"}, description = "Age Prenatal")
+	private List<Integer> agePrenatal;
+
     @Parameter(names = {"--ethic"}, description = "Ethic Group")
     private List<String> ethic = null;
 
-    @Parameter(names = {"--geo"}, description = "Geographic origin")
-    private List<String> origin = null;
+	@Parameter(names = {"--geo"}, description = "Geographic origin")
+	private List<String> origin = null;
+
+	@Parameter(names = {"--array-platform"}, description = "Array Platform")
+    private List<String> arrayPlatform = null;
+
+	@Parameter(names = {"--array-id"}, description = "Array id")
+	private List<String> arrayId = null;
+
+	@Parameter(names = {"--syndrome"}, description = "Aneuploid-Deletion-Duplication Syndrome")
+	private List<Integer> syndrome = null;
 
     @Parameter(names = {"--skip"}, description = "Skip")
     private int skip = -1;
@@ -79,10 +98,14 @@ public class QueryCommandLine {
     @Parameter(names = {"--pass"}, description = "DB Pass", arity = 1)
     private String pass = "";
 
+
+
 	public QueryCommandLine(boolean all, String code, List<Long> decipId, String regionList, String assembly, List<String> band,
-							List<Integer> type, List<Integer> doses, List<Integer> cli, List<Integer> inhe, int cl, int gender,
-							List<Integer> status, List<Integer> typeSample, List<String> referalDiag, List<String> hpo, List<Integer> year, List<String> ethic,
-							List<String> origin, int skip, int limit, String host, String user, String pass) {
+							List<Integer> type, List<Integer> doses, List<Integer> cli, List<Integer> inhe, int nv, int cl, int gender,
+							List<Integer> status, List<Integer> typeSample, List<String> referalDiag, List<String> hpo, List<Integer> year,
+							List<Integer> yearTest, List<String> age, List<Integer> agePrenatal, List<String> ethic,
+							List<String> arrayPlatform, List<String> arrayId,
+							List<String> origin, List<Integer> syndrome, int skip, int limit, String host, String user, String pass) {
 		this.all = all;
 		this.code = code;
 		this.decipId = decipId;
@@ -93,6 +116,7 @@ public class QueryCommandLine {
 		this.doses = doses;
 		this.cli = cli;
 		this.inhe = inhe;
+		this.nv = nv;
 		this.cl = cl;
 		this.gender = gender;
 		this.status = status;
@@ -100,25 +124,25 @@ public class QueryCommandLine {
 		this.referalDiag = referalDiag;
 		this.hpo = hpo;
 		this.year = year;
+		this.yearTest = yearTest;
+		this.age = age;
+		this.agePrenatal = agePrenatal;
 		this.ethic = ethic;
+		this.arrayPlatform = arrayPlatform;
+		this.arrayId = arrayId;
 		this.origin = origin;
+		this.syndrome = syndrome;
 		this.skip = skip;
 		this.limit = limit;
 		this.host = host;
 		this.user = user;
 		this.pass = pass;
+
 	}
 
 	public QueryCommandLine() {
 	}
 
-	public List<Integer> getInhe() {
-		return inhe;
-	}
-
-	public void setInhe(List<Integer> inhe) {
-		this.inhe = inhe;
-	}
 
 	public boolean isAll() {
 		return all;
@@ -192,6 +216,22 @@ public class QueryCommandLine {
 		this.cli = cli;
 	}
 
+	public List<Integer> getInhe() {
+		return inhe;
+	}
+
+	public void setInhe(List<Integer> inhe) {
+		this.inhe = inhe;
+	}
+
+	public int getNv() {
+		return nv;
+	}
+
+	public void setNv(int nv) {
+		this.nv = nv;
+	}
+
 	public int getCl() {
 		return cl;
 	}
@@ -248,7 +288,29 @@ public class QueryCommandLine {
 		this.year = year;
 	}
 
+	public List<Integer> getYearTest() {
+		return yearTest;
+	}
 
+	public void setYearTest(List<Integer> yearTest) {
+		this.yearTest = yearTest;
+	}
+
+	public List<String> getAge() {
+		return age;
+	}
+
+	public void setAge(List<String> age) {
+		this.age = age;
+	}
+
+	public List<Integer> getAgePrenatal() {
+		return agePrenatal;
+	}
+
+	public void setAgePrenatal(List<Integer> agePrenatal) {
+		this.agePrenatal = agePrenatal;
+	}
 	public List<String> getEthic() {
 		return ethic;
 	}
@@ -257,6 +319,7 @@ public class QueryCommandLine {
 		this.ethic = ethic;
 	}
 
+
 	public List<String> getOrigin() {
 		return origin;
 	}
@@ -264,7 +327,29 @@ public class QueryCommandLine {
 	public void setOrigin(List<String> origin) {
 		this.origin = origin;
 	}
+	public List<String> getArrayPlatform() {
+		return arrayPlatform;
+	}
 
+	public void setArrayPlatform(List<String> arrayPlatform) {
+		this.arrayPlatform = arrayPlatform;
+	}
+
+	public List<String> getArrayId() {
+		return arrayId;
+	}
+
+	public void setArrayId(List<String> arrayId) {
+		this.arrayId = arrayId;
+	}
+
+	public List<Integer> getSyndrome() {
+		return syndrome;
+	}
+
+	public void setSyndrome(List<Integer> syndrome) {
+		this.syndrome = syndrome;
+	}
 	public int getSkip() {
 		return skip;
 	}

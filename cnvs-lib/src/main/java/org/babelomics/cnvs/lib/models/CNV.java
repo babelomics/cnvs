@@ -67,6 +67,11 @@ public class CNV {
     private String phenotype;
     @Property("y")
     private int yearOfBirth;
+    @Property("yt")
+    private int yearTest;
+    private int age;
+    @Property("agep")
+    private int agePrenatal;
     @Property("eg")
     private String ethnicGroup;
     @Property("o")
@@ -75,6 +80,8 @@ public class CNV {
     private String arrayPlatform;
     @Property("ai")
     private String arrayId;
+    @Property("sy")
+    private String syndrome;
     @Property("co")
     private String comments;
     @Property("_at")
@@ -113,16 +120,15 @@ public class CNV {
     public String getDoses() {
         switch (doses) {
             case 0:
-                return "x0";
+                return "Homozygous deletion";
             case 1:
-                return "x1";
-
+                return "Deletion";
             case 2:
-                return "x2(XY)";
+                return "Duplication";
             case 3:
-                return "x3";
+                return "Triplication";
             case 4:
-                return "x4";
+                return "Amplification";
             default:
                 return "";
         }
@@ -130,19 +136,19 @@ public class CNV {
 
     public void setDoses(String doses) {
         switch (doses.toLowerCase().replaceAll(" ", "")) {
-            case "x0":
+            case "homozygous deletion":
                 this.doses = 0;
                 break;
-            case "x1":
+            case "deletion":
                 this.doses = 1;
                 break;
-            case "x2(xy)":
+            case "duplication":
                 this.doses = 2;
                 break;
-            case "x3":
+            case "triplication":
                 this.doses = 3;
                 break;
-            case "x4":
+            case "amplification":
                 this.doses = 4;
                 break;
             default:
@@ -153,7 +159,7 @@ public class CNV {
 
     public String getClinicalSig() {
         switch (clinicalSig) {
-            case 0:
+            /*case 0:
                 return "benign";
             case 1:
                 return "pathogenic";
@@ -163,7 +169,19 @@ public class CNV {
             case 3:
                 return "likely pathogenic";
             case 4:
+                return "vous";*/
+            case 0:
+                return "definitely pathogenic";
+            case 1:
+                return "probably pathogenic";
+            case 2:
+                return "pathogenic";
+            case 3:
                 return "vous";
+            case 4:
+                return "likely benign";
+            case 5:
+                return "benign";
             default:
                 return "";
         }
@@ -172,20 +190,23 @@ public class CNV {
     public void setClinicalSig(String clinicalSig) {
 
         switch (clinicalSig.toLowerCase()) {
-            case "benign":
+            case "definitely pathogenic":
                 this.clinicalSig = 0;
                 break;
-            case "pathogenic":
+            case "probably pathogenic":
                 this.clinicalSig = 1;
                 break;
-            case "likely benign":
+            case "pathogenic":
                 this.clinicalSig = 2;
                 break;
-            case "likely pathogenic":
+            case "vous":
                 this.clinicalSig = 3;
                 break;
-            case "vous":
+            case "likely benign":
                 this.clinicalSig = 4;
+                break;
+            case "benign":
+                this.clinicalSig = 5;
                 break;
             default:
                 this.clinicalSig = -1;
@@ -196,14 +217,19 @@ public class CNV {
     public String getInheritance() {
         switch (inheritance) {
             case 0:
-                return "de novo constitutive";
+                return "de novo, mosaic";
             case 1:
-                return "maternally inherited";
-
+                return "de novo, constitutive";
             case 2:
-                return "paternally inherited";
+                return "paternally inherited, constitutive in father";
             case 3:
-                return "unknown";
+                return "paternally inherited, mosaic in father";
+            case 4:
+                return "maternally inherited, constitutive in mother";
+            case 5:
+                return "maternally inherited, mosaic in mother";
+            case 6:
+                return "biparental";
             default:
                 return "";
         }
@@ -212,18 +238,26 @@ public class CNV {
 
     public void setInheritance(String inheritance) {
         switch (inheritance.toLowerCase()) {
-            case "de novo constitutive":
+            case "de novo, mosaic":
                 this.inheritance = 0;
                 break;
-            case "maternally inherited":
+            case "de novo, constitutive":
                 this.inheritance = 1;
                 break;
-
-            case "paternally inherited":
+            case "paternally inherited, constitutive in father":
                 this.inheritance = 2;
                 break;
-            case "unknown":
+            case "paternally inherited, mosaic in father":
                 this.inheritance = 3;
+                break;
+            case "maternally inherited, constitutive in mother":
+                this.inheritance = 4;
+                break;
+            case "maternally inherited, mosaic in mother":
+                this.inheritance = 5;
+                break;
+            case "biparental":
+                this.inheritance = 6;
                 break;
             default:
                 this.inheritance = -1;
@@ -270,6 +304,16 @@ public class CNV {
                 return "XX";
             case 1:
                 return "XY";
+            case 2:
+                return "X";
+            case 3:
+                return "XXX";
+            case 4:
+                return "XXY";
+            case 5:
+                return "XYY";
+            case 6:
+                return "Unknown";
             default:
                 return "";
         }
@@ -283,6 +327,21 @@ public class CNV {
             case "xy":
                 this.chromGender = 1;
                 break;
+            case "x":
+                this.chromGender = 2;
+                break;
+            case "xxx":
+                this.chromGender = 3;
+                break;
+            case "xxy":
+                this.chromGender = 4;
+                break;
+            case "xyy":
+                this.chromGender = 5;
+                break;
+            case "unknown":
+                this.chromGender = 6;
+                break;
             default:
                 this.chromGender = -1;
                 break;
@@ -295,7 +354,6 @@ public class CNV {
                 return "Proband";
             case 1:
                 return "Father";
-
             case 2:
                 return "Mother";
             case 3:
@@ -336,7 +394,6 @@ public class CNV {
                 return "blood";
             case 1:
                 return "amniotic fluid";
-
             case 2:
                 return "chorionic villi";
             case 3:
@@ -385,6 +442,38 @@ public class CNV {
 
     public void setYearOfBirth(int yearOfBirth) {
         this.yearOfBirth = yearOfBirth;
+    }
+    public int getYearTest() {
+        return yearTest;
+    }
+
+    public void setYearTest(int yearTest) {
+        this.yearTest = yearTest;
+    }
+
+    public String getAge() {
+        switch (age) {
+            case -2:
+                return "Prenatal";
+            default:
+                return "" + age;
+        }
+    }
+
+    public void setAge(String age) {
+        if (age.equals("prenatal")){
+            this.age = -2;
+        }else {
+            this.age = Integer.parseInt(age);
+        }
+    }
+
+    public int getAgePrenatal() {
+        return agePrenatal;
+    }
+
+    public void setAgePrenatal(int agePrenatal) {
+        this.agePrenatal = agePrenatal;
     }
 
     public String getReferalDiag() {
@@ -478,14 +567,6 @@ public class CNV {
         this.centerId3 = centerId3;
     }
 
-    public String getComments() {
-        return comments;
-    }
-
-    public void setComments(String comments) {
-        this.comments = comments;
-    }
-
     public String getChromosome() {
         return chromosome;
     }
@@ -559,6 +640,20 @@ public class CNV {
         this.ref = ref;
     }
 
+    public String getSyndrome() {
+        return syndrome;
+    }
+
+    public void setSyndrome(String syndrome) {
+        this.syndrome = syndrome;
+    }
+    public String getComments() {
+        return comments;
+    }
+
+    public void setComments(String comments) {
+        this.comments = comments;
+    }
     @PrePersist
     private void prePresist() {
 
