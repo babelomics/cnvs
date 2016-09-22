@@ -80,8 +80,8 @@ public class CNV {
     private String arrayPlatform;
     @Property("ai")
     private String arrayId;
-    @Property("sy")
-    private String syndrome;
+    @Reference("sy")
+    private Syndrome syndrome;
     @Property("co")
     private String comments;
     @Property("_at")
@@ -640,11 +640,11 @@ public class CNV {
         this.ref = ref;
     }
 
-    public String getSyndrome() {
+    public Syndrome getSyndrome() {
         return syndrome;
     }
 
-    public void setSyndrome(String syndrome) {
+    public void setSyndrome(Syndrome syndrome) {
         this.syndrome = syndrome;
     }
     public String getComments() {

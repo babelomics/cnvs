@@ -15,13 +15,13 @@ public class OptionsParser {
 
     private final CommandLoad load;
     private final CommandAnnot annot;
-
-
+    private final CommandLoadSyndromes loadsyndrome;
 
     public OptionsParser() {
         jcommander = new JCommander();
         jcommander.addCommand(load = new CommandLoad());
         jcommander.addCommand(annot = new CommandAnnot());
+        jcommander.addCommand(loadsyndrome = new CommandLoadSyndromes());
 
     }
 
@@ -69,6 +69,19 @@ public class OptionsParser {
 
     }
 
+    @Parameters(commandNames = {"loadsyndrome"}, commandDescription = "Upload syndromes in DB")
+    class CommandLoadSyndromes implements Command {
+
+        @Parameter(names = {"--host"}, description = "DB host", arity = 1)
+        String host = "localhost";
+
+        @Parameter(names = {"--user"}, description = "DB User", arity = 1)
+        String user = "";
+
+        @Parameter(names = {"--pass"}, description = "DB Pass", arity = 1)
+        String pass = "";
+    }
+
 
 
     String parse(String[] args) throws ParameterException {
@@ -86,6 +99,9 @@ public class OptionsParser {
         return load;
     }
     CommandAnnot getAnnotCommand() {return annot; }
-   
+
+    public CommandLoadSyndromes getLoadsyndrome() {
+        return loadsyndrome;
+    }
 
 }

@@ -1,8 +1,12 @@
 package org.babelomics.cnvs.lib.cli;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import com.beust.jcommander.Parameter;
+import com.mongodb.DuplicateKeyException;
+import org.babelomics.cnvs.lib.models.Syndrome;
+import org.mongodb.morphia.Datastore;
 
 public class QueryCommandLine {
 	 @Parameter(names = {"--all"}, description = "List all variants", arity = 0) //REVISAR PERO HECHO
@@ -389,5 +393,6 @@ public class QueryCommandLine {
 	public void setPass(String pass) {
 		this.pass = pass;
 	}
+
 
 }
