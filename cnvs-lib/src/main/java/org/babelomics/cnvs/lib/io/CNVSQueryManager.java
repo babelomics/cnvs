@@ -138,6 +138,10 @@ public class CNVSQueryManager {
             this.addTypeStringToQuery(q.getArrayId(), query, "arrayId");
         }
 
+        if (q.getSyndrome() != null && (!q.getSyndrome().isEmpty())) {
+            this.addTypeIntToQuery(q.getSyndrome(), query, "syndrome");
+        }
+
         if ((q.getSkip() != -1) && (q.getLimit() != -1)) {
             query.offset(q.getSkip()).limit(q.getLimit());
         }
@@ -148,6 +152,11 @@ public class CNVSQueryManager {
         count.setValue(query.countAll());
 
         return aux;
+    }
+
+    public int getStatsCount() {
+        List<CNV> res = datastore.createQuery(CNV.class).asList();
+        return res.size();
     }
 
     public List<String> getAllEthnicGroup() {

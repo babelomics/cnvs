@@ -46,6 +46,7 @@ public class RegionWSServer extends CNVSWSServer {
                                         @ApiParam(value = "doses") @QueryParam("doses") @DefaultValue("") String doses,
                                         @ApiParam(value = "clis") @QueryParam("clis") @DefaultValue("") String clis,
                                         @ApiParam(value = "inheritance") @QueryParam("inheritance") @DefaultValue("") String inheritance,
+                                        @ApiParam(value = "nv") @QueryParam("nv") @DefaultValue("-1") int nv,
                                         @ApiParam(value = "cl") @QueryParam("cl") @DefaultValue("-1") int cl,
                                         @ApiParam(value = "gender") @QueryParam("gender") @DefaultValue("-1") int gender,
                                         @ApiParam(value = "status") @QueryParam("status") @DefaultValue("") String status,
@@ -53,8 +54,14 @@ public class RegionWSServer extends CNVSWSServer {
                                         @ApiParam(value = "referalDiag") @QueryParam("referalDiag") @DefaultValue("") String referalDiag,
                                         @ApiParam(value = "hpo") @QueryParam("hpo") @DefaultValue("") String hpo,
                                         @ApiParam(value = "year") @QueryParam("year") @DefaultValue("") String year,
+                                        @ApiParam(value = "yearTest") @QueryParam("yearTest") @DefaultValue("") String yearTest,
+                                        @ApiParam(value = "age") @QueryParam("age") @DefaultValue("") String age,
+                                        @ApiParam(value = "agePrenatal") @QueryParam("agePrenatal") @DefaultValue("") String agePrenatal,
                                         @ApiParam(value = "ethic") @QueryParam("ethic") @DefaultValue("") String ethic,
                                         @ApiParam(value = "geo") @QueryParam("geo") @DefaultValue("") String geo,
+                                        @ApiParam(value = "arrayPlatform") @QueryParam("arrayPlatform") @DefaultValue("") String arrayPlatform,
+                                        @ApiParam(value = "arrayId") @QueryParam("arrayId") @DefaultValue("") String arrayId,
+                                        @ApiParam(value = "syndrome") @QueryParam("syndrome") @DefaultValue("") String syndrome,
                                         @ApiParam(value = "limit") @QueryParam("limit") @DefaultValue("10") int limit,
                                         @ApiParam(value = "skip") @QueryParam("skip") @DefaultValue("0") int skip,
                                         @ApiParam(value = "host") @QueryParam("host") @DefaultValue("") String host,
@@ -71,8 +78,9 @@ public class RegionWSServer extends CNVSWSServer {
 
         for (String regionElem : regionList) {
             List<CNV> auxList = new ArrayList<>();
-            Iterable<CNV> variantes = getCNVs(regionElem, code, decipherId, assembly, band, type, doses, clis, inheritance, cl, gender,
-                    status, typeS, referalDiag, hpo, year, ethic, geo, limit, skip, host, user, pass, count);
+            Iterable<CNV> variantes = getCNVs(regionElem, code, decipherId, assembly, band, type, doses, clis, inheritance, nv, cl, gender,
+                    status, typeS, referalDiag, hpo, year,  yearTest, age, agePrenatal, ethic, geo, arrayPlatform, arrayId, syndrome, limit,
+                    skip, host, user, pass, count);
             for (CNV c : variantes) {
                 auxList.add(c);
 
@@ -104,6 +112,7 @@ public class RegionWSServer extends CNVSWSServer {
             @ApiParam(value = "doses") @QueryParam("doses") @DefaultValue("") String doses,
             @ApiParam(value = "clis") @QueryParam("clis") @DefaultValue("") String clis,
             @ApiParam(value = "inheritance") @QueryParam("inheritance") @DefaultValue("") String inheritance,
+            @ApiParam(value = "nv") @QueryParam("nv") @DefaultValue("-1") int nv,
             @ApiParam(value = "cl") @QueryParam("cl") @DefaultValue("-1") int cl,
             @ApiParam(value = "gender") @QueryParam("gender") @DefaultValue("-1") int gender,
             @ApiParam(value = "status") @QueryParam("status") @DefaultValue("") String status,
@@ -111,8 +120,14 @@ public class RegionWSServer extends CNVSWSServer {
             @ApiParam(value = "referalDiag") @QueryParam("referalDiag") @DefaultValue("") String referalDiag,
             @ApiParam(value = "hpo") @QueryParam("hpo") @DefaultValue("") String hpo,
             @ApiParam(value = "year") @QueryParam("year") @DefaultValue("") String year,
+            @ApiParam(value = "yearTest") @QueryParam("yearTest") @DefaultValue("") String yearTest,
+            @ApiParam(value = "age") @QueryParam("age") @DefaultValue("") String age,
+            @ApiParam(value = "agePrenatal") @QueryParam("agePrenatal") @DefaultValue("") String agePrenatal,
             @ApiParam(value = "ethic") @QueryParam("ethic") @DefaultValue("") String ethic,
             @ApiParam(value = "geo") @QueryParam("geo") @DefaultValue("") String geo,
+            @ApiParam(value = "arrayPlatform") @QueryParam("arrayPlatform") @DefaultValue("") String arrayPlatform,
+            @ApiParam(value = "arrayId") @QueryParam("arrayId") @DefaultValue("") String arrayId,
+            @ApiParam(value = "syndrome") @QueryParam("syndrome") @DefaultValue("") String syndrome,
             @ApiParam(value = "limit") @QueryParam("limit") @DefaultValue("10") int limit,
             @ApiParam(value = "skip") @QueryParam("skip") @DefaultValue("0") int skip,
             @ApiParam(value = "host") @QueryParam("host") @DefaultValue("") String host,
@@ -124,8 +139,9 @@ public class RegionWSServer extends CNVSWSServer {
 
         MutableLong count = new MutableLong(-1);
 
-        Iterable<CNV> variantes = getCNVs(regions, code, decipherId, assembly, band, type, doses, clis, inheritance, cl, gender, status,
-                typeS, referalDiag, hpo, year, ethic, geo, limit, skip, host, user, pass, count);
+        Iterable<CNV> variantes = getCNVs(regions, code, decipherId, assembly, band, type, doses, clis, inheritance, nv, cl, gender, status,
+                typeS, referalDiag, hpo, year, yearTest, age, agePrenatal, ethic, geo, arrayPlatform, arrayId, syndrome, limit, skip, host,
+                user, pass, count);
         QueryResponse qr = createQueryResponse(variantes);
         qr.setNumTotalResults(count.getValue());
 
@@ -141,6 +157,7 @@ public class RegionWSServer extends CNVSWSServer {
                                   @ApiParam(value = "doses") @QueryParam("doses") @DefaultValue("") String doses,
                                   @ApiParam(value = "clis") @QueryParam("clis") @DefaultValue("") String clis,
                                   @ApiParam(value = "inheritance") @QueryParam("inheritance") @DefaultValue("") String inheritance,
+                                  @ApiParam(value = "nv") @QueryParam("nv") @DefaultValue("-1") int nv,
                                   @ApiParam(value = "cl") @QueryParam("cl") @DefaultValue("-1") int cl,
                                   @ApiParam(value = "gender") @QueryParam("gender") @DefaultValue("-1") int gender,
                                   @ApiParam(value = "status") @QueryParam("status") @DefaultValue("") String status,
@@ -148,8 +165,14 @@ public class RegionWSServer extends CNVSWSServer {
                                   @ApiParam(value = "referalDiag") @QueryParam("referalDiag") @DefaultValue("") String referalDiag,
                                   @ApiParam(value = "hpo") @QueryParam("hpo") @DefaultValue("") String hpo,
                                   @ApiParam(value = "year") @QueryParam("year") @DefaultValue("") String year,
+                                  @ApiParam(value = "yearTest") @QueryParam("yearTest") @DefaultValue("") String yearTest,
+                                  @ApiParam(value = "age") @QueryParam("age") @DefaultValue("") String age,
+                                  @ApiParam(value = "agePrenatal") @QueryParam("agePrenatal") @DefaultValue("") String agePrenatal,
                                   @ApiParam(value = "ethic") @QueryParam("ethic") @DefaultValue("") String ethic,
                                   @ApiParam(value = "geo") @QueryParam("geo") @DefaultValue("") String geo,
+                                  @ApiParam(value = "arrayPlatform") @QueryParam("arrayPlatform") @DefaultValue("") String arrayPlatform,
+                                  @ApiParam(value = "arrayId") @QueryParam("arrayId") @DefaultValue("") String arrayId,
+                                  @ApiParam(value = "syndrome") @QueryParam("syndrome") @DefaultValue("") String syndrome,
                                   @ApiParam(value = "limit") @QueryParam("limit") @DefaultValue("10") int limit,
                                   @ApiParam(value = "skip") @QueryParam("skip") @DefaultValue("0") int skip,
                                   @ApiParam(value = "host") @QueryParam("host") @DefaultValue("") String host,
@@ -190,7 +213,6 @@ public class RegionWSServer extends CNVSWSServer {
             String[] referalDiagSplits = referalDiag.split(",");
             for (String s : referalDiagSplits) {
                 rdaux.add(s);
-
             }
         }
         List<String> hpoaux = new ArrayList<>();
@@ -198,32 +220,57 @@ public class RegionWSServer extends CNVSWSServer {
             String[] hpoSplits = hpo.split(",");
             for (String s : hpoSplits) {
                 hpoaux.add(s);
-
+            }
+        }
+        List<Integer> yearaux = parsearListaInt(year);
+        List<Integer> yearTestaux = parsearListaInt(yearTest);
+        List<String> ageaux = new ArrayList<>();
+        if (age.length() > 0) {
+            String[] ageSplits = age.split(",");
+            for (String s : ageSplits) {
+                ageaux.add(s);
             }
         }
 
-        List<Integer> yearaux = parsearListaInt(year);
+        List<Integer> agePrenatalaux = parsearListaInt(agePrenatal);
 
         List<String> ethicaux = new ArrayList<>();
         if (ethic.length() > 0) {
             String[] ethicSplits = ethic.split(",");
             for (String s : ethicSplits) {
                 ethicaux.add(s);
-
             }
         }
         List<String> geoaux = new ArrayList<>();
         if (geo.length() > 0) {
             String[] geoSplits = geo.split(",");
             for (String s : geoSplits) {
-
                 geoaux.add(s);
-
             }
         }
 
+        List<String> arrayPlatformaux = new ArrayList<>();
+        if (arrayPlatform.length() > 0) {
+            String[] arrayPlatformSplits = arrayPlatform.split(",");
+            for (String s : arrayPlatformSplits) {
+                arrayPlatformaux.add(s);
+            }
+        }
+
+        List<String> arrayIdaux = new ArrayList<>();
+        if (arrayId.length() > 0) {
+            String[] arrayIdSplits = arrayId.split(",");
+            for (String s : arrayIdSplits) {
+                arrayIdaux.add(s);
+            }
+        }
+
+        List<Integer> syndromeaux = parsearListaInt(syndrome);
+
+
         QueryCommandLine qpa = new QueryCommandLine(false, code, decipherIdaux, regions, assembly, bandaux, typeaux, dosesaux, clisaux,
-                inheritanceaux, cl, gender, statusaux, typeSaux, rdaux, hpoaux, yearaux, ethicaux, geoaux, skip, limit, host, user, pass);
+                inheritanceaux, nv, cl, gender, statusaux, typeSaux, rdaux, hpoaux, yearaux, yearTestaux, ageaux, agePrenatalaux, ethicaux,
+                geoaux, arrayPlatformaux, arrayIdaux, syndromeaux, skip, limit, host, user, pass);
 
         Iterable<CNV> variantes = qm.getCNVsByFilters(qpa, count);
 

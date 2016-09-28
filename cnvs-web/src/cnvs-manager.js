@@ -8,6 +8,12 @@ var CNVSManager = {
             return CNVSManager._doRequest(args, 'regions', 'fetch');
         }
     },
+    stats: {
+        count: function (args) {
+            return CNVSManager._doRequest(args, 'stats', 'count');
+        }
+
+    },
     _url: function (args, api, action) {
         var host = CNVSManager.host;
         if (typeof args.request.host !== 'undefined' && args.request.host != null) {

@@ -68,7 +68,11 @@
                 getSpecies(function(s) {
                     AVAILABLE_SPECIES = s;
                     DEFAULT_SPECIES = AVAILABLE_SPECIES.vertebrates[0];
-                    run();
+                    getAllcase(function(c){
+                        ALL_CASE = c;
+                        run();
+                    });
+
                 });
 
                 function getSpecies(callback) {
@@ -92,6 +96,20 @@
                                 taxonomies[taxonomy] = newSpecies;
                             }
                             callback(taxonomies);
+                        }
+                    });
+                }
+                function getAllcase(callback){
+                    CNVSManager.stats.count({
+                        //query: query,
+                        request: {
+                            success: function(response) {
+                                callback(response.result[0]);
+                            },
+                            error: function(response) {
+                                console.log("ERROR downloading diseases");
+                                console.log(response);
+                            }
                         }
                     });
                 }

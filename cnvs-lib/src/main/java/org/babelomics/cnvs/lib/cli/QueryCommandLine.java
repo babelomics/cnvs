@@ -107,9 +107,9 @@ public class QueryCommandLine {
 	public QueryCommandLine(boolean all, String code, List<Long> decipId, String regionList, String assembly, List<String> band,
 							List<Integer> type, List<Integer> doses, List<Integer> cli, List<Integer> inhe, int nv, int cl, int gender,
 							List<Integer> status, List<Integer> typeSample, List<String> referalDiag, List<String> hpo, List<Integer> year,
-							List<Integer> yearTest, List<String> age, List<Integer> agePrenatal, List<String> ethic,
-							List<String> arrayPlatform, List<String> arrayId,
-							List<String> origin, List<Integer> syndrome, int skip, int limit, String host, String user, String pass) {
+							List<Integer> yearTest, List<String> age, List<Integer> agePrenatal, List<String> ethic, List<String> origin,
+							List<String> arrayPlatform, List<String> arrayId,  List<Integer> syndrome, int skip,
+							int limit, String host, String user, String pass) {
 		this.all = all;
 		this.code = code;
 		this.decipId = decipId;
@@ -141,13 +141,19 @@ public class QueryCommandLine {
 		this.host = host;
 		this.user = user;
 		this.pass = pass;
-
 	}
+
+	public QueryCommandLine(int skip, int limit, String host, String user, String pass) {
+		this.skip = skip;
+		this.limit = limit;
+		this.host = host;
+		this.user = user;
+		this.pass = pass;
+	}
+
 
 	public QueryCommandLine() {
 	}
-
-
 	public boolean isAll() {
 		return all;
 	}

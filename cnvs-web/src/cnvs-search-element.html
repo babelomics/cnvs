@@ -122,6 +122,7 @@
                 </div>
                 <div class="stv-btn stv-btn-shdw flex" on-click="colapseAll">Colapse All</div>
             </div>
+
             <div class="form_block positionBlock">
                 <div class="stv-formbox">
                     <label on-click="toggleElement" data-option="pacients">
@@ -507,10 +508,12 @@
                 <stv-table ></stv-table>
                 <stv-table></stv-table>
             </div>!-->
-            <div id="add_cnvs" class="horizontal layout end-justified" style="margin:10px 0px 15px 0px;">
-
+            <div id="add_cnvs" class="horizontal layout" style="margin:10px 0px 15px 0px;">
+                <div >
+                    <span style="color: #006699; margin: 10px;" >  Total cases:  {{totalcaseValue}}</span>
+                </div>
                 <!--<div class="stv-btn stv-btn-shdw flex" on-click="handleLoggedOnlyMenuPanel" data-panel="browserPanel">!-->
-                <div class="stv-btn stv-btn-shdw flex" on-click="">
+                <div class="stv-btn stv-btn-shdw" on-click="" style="color: #006699;float: right;">
                     <i class="fa fa-plus" aria-hidden="true"></i>
                     Add CNV
                 </div>
@@ -533,6 +536,10 @@
     Polymer({
         is: 'cnvs-search-element',
         properties: {
+            totalcaseValue: {
+                type: Number,
+                value: 0
+            },
             regionValue: {
                 type: String,
                 value: ""
@@ -693,6 +700,7 @@
             this.$.geneSearch.setSearchFunction(search);
         },
         ready: function() {
+            this.totalcaseValue = ALL_CASE;
             this.species = 'Homo sapiens';
             this._initGeneSearch();
             this.async(function() {
@@ -873,6 +881,7 @@
         },
         created: function() {
             this.selectedSpecies = DEFAULT_SPECIES;
+
 
         },
         clearForm: function() {
