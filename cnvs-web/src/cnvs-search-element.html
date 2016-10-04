@@ -76,7 +76,7 @@
         }
 
         stv-table::shadow #list {
-            height: 300px;
+            max-height: 300px;
             overflow-x: auto
         }
         /*.stv-formbox  img{
@@ -294,13 +294,13 @@
                         </div>
                         <div class="input_container vertical layout">
                             <label class="stv">Array Plataform:</label>
-                            <textarea class="stv" id="arrayPlataform" name="arrayPlataform" placeholder="Not implemented" value="{{arrayPlataformValue::change}}" rows="3"></textarea>
+                            <textarea class="stv" id="arrayPlataform" name="arrayPlataform" placeholder="KA_v3.0" value="{{arrayPlataformValue::change}}" rows="3"></textarea>
                         </div>
 
 
                         <div class="input_container vertical layout">
                             <label class="stv">Array Id:</label>
-                            <textarea class="stv" id="arrayId" name="arrayId" placeholder="Not implemented" value="{{arrayIdValue::change}}" rows="3"></textarea>
+                            <textarea class="stv" id="arrayId" name="arrayId" placeholder="253900010XXX_X_X" value="{{arrayIdValue::change}}" rows="3"></textarea>
                         </div>
 
                     </div>
@@ -424,6 +424,7 @@
 
                         <div class="input_container vertical layout">
                             <label class="stv">  Aneuploid-Deletion-Duplication Syndrome</label>
+                            <stv-search id="syndromesearch"  placeholder="Search" minQueryLength="1" on-item-select="handleSyndromeSearchSelect" empty-message="No syndrome found."></stv-search>
                             <textarea class="stv" id="aneuploid" name="aneuploid" placeholder="Not implemented" value="{{aneuploidValue::change}}" rows="3">
                             </textarea>
                         </div>
@@ -512,11 +513,11 @@
                 <div >
                     <span style="color: #006699; margin: 10px;" >  Total cases:  {{totalcaseValue}}</span>
                 </div>
-                <!--<div class="stv-btn stv-btn-shdw flex" on-click="handleLoggedOnlyMenuPanel" data-panel="browserPanel">!-->
-                <div class="stv-btn stv-btn-shdw" on-click="" style="color: #006699;float: right;">
+
+                <!--<div class="stv-btn stv-btn-shdw" on-click="" style="color: #006699;float: right;">
                     <i class="fa fa-plus" aria-hidden="true"></i>
                     Add CNV
-                </div>
+                </div>-->
             </div>
             </br>
             <stv-panel collapsible id="tablaresultadosPanel">
@@ -614,7 +615,13 @@
             geoValue: {
                 type: String,
                 value: null
-            }
+            },
+            allSyndromes: {
+                type: Array,
+                value: function() {
+                    return [];
+                }
+            },
         },
         toggleElement: function(e) {
             var me = this;
@@ -878,6 +885,16 @@
 
             ]
             // Llamar a el distint para hacer el referal
+
+            var query = {};
+            var url = CNVSManager.regions.fetch({
+                //                    id: region,
+                query: query,
+                request: {
+                    url: true
+                }
+            });
+            this.formURL = url;
         },
         created: function() {
             this.selectedSpecies = DEFAULT_SPECIES;
