@@ -77,6 +77,7 @@
 
         stv-table::shadow #list {
             max-height: 300px;
+            min-height: 50px;
             overflow-x: auto
         }
         /*.stv-formbox  img{
@@ -135,36 +136,32 @@
                     <div class="stv-formcontent" id="pacients">
                         <div class="input_container vertical layout">
                             <label class="stv"> Locals id</label>
-                        <textarea class="stv" id="localid" name="localid" placeholder="Not implemented" value="{{localidValue::change}}" rows="3">
-                        </textarea>
-
+                            <textarea class="stv" id="localid" name="localid" placeholder="Not implemented" value="{{localIdValue::change}}" rows="3"></textarea>
+                            <!--<textarea class="stv" id="localid1" name="localid1" placeholder="Local ID1" value="{{localIdValue1::change}}" rows="1"> </textarea>
+                            <textarea class="stv" id="localid2" name="localid2" placeholder="Local ID2" value="{{localIdValue2::change}}" rows="1"> </textarea>
+                            <textarea class="stv" id="localid3" name="localid3" placeholder="Local ID3" value="{{localIdValue3::change}}" rows="1"> </textarea>-->
                         </div>
                         <div class="input_container vertical layout">
                             <label class="stv">Decipher ID</label>
-                            <textarea class="stv" id="decipherId" name="decipherId" placeholder="12840,25600" value="{{decipherIdValue::change}}" rows="3">
-                            </textarea>
+                            <textarea class="stv" id="decipherId" name="decipherId" placeholder="12840,25600" value="{{decipherIdValue::change}}" rows="3"></textarea>
                         </div>
                         <div class="input_container vertical layout">
                             <label class="stv">Year of birth</label>
-                            <textarea class="stv" id="year" name="year" placeholder="2004,2003" value="{{yearIdValue::change}}" rows="3">
-                            </textarea>
+                            <textarea class="stv" id="year" name="year" placeholder="2004,2003" value="{{yearIdValue::change}}" rows="3"></textarea>
                         </div>
                         <div class="input_container vertical layout">
                             <label class="stv">Year of test(age)</label>
-                            <textarea class="stv" id="yearTest" name="yearTest" placeholder="2004,2003" value="{{yearTestValue::change}}" rows="3">
-                            </textarea>
+                            <textarea class="stv" id="yearTest" name="yearTest" placeholder="2004,2003" value="{{yearTestValue::change}}" rows="3"></textarea>
                         </div>
 
                         <div class="input_container vertical layout">
                             <label class="stv">Ethnic Group</label>
-                            <textarea class="stv" id="ethnic" name="ethnic" placeholder="White Mediterranean,Amerindian" value="{{ethicValue::change}}" rows="3">
-                            </textarea>
+                            <textarea class="stv" id="ethnic" name="ethnic" placeholder="White Mediterranean,Amerindian" value="{{ethicValue::change}}" rows="3"></textarea>
                         </div>
 
                         <div class="input_container vertical layout">
                             <label class="stv">Geographic Origin</label>
-                            <textarea class="stv" id="geo" name="geo" placeholder="Spain,Bolivia" value="{{geoValue::change}}" rows="3">
-                            </textarea>
+                            <textarea class="stv" id="geo" name="geo" placeholder="Spain,Bolivia" value="{{geoValue::change}}" rows="3"></textarea>
                         </div>
 
                     </div>
@@ -349,7 +346,7 @@
                         </div>
                         <div class="input_container vertical layout">
                             <label class="stv">Number of variant:</label>
-                            <textarea class="stv" id="nvariants" name="nvariants" placeholder="Not implemented" value="" rows="3"></textarea>
+                            <textarea class="stv" id="nvariants" name="nvariants" placeholder="0" value="{{nvariantsValue::change}}" rows="3"></textarea>
                         </div>
 
                             <div class="input_container vertical layout" id="doses">
@@ -411,22 +408,19 @@
                     <div class="stv-formcontent" id="clinicalData">
                         <div class="input_container vertical layout">
                             <label class="stv"> Referral Diagnosis</label>
-                            <textarea class="stv" id="rd" name="rd" placeholder="Control" value="{{rdValue::change}}" rows="3">
-                            </textarea>
+                            <textarea class="stv" id="rd" name="rd" placeholder="Control" value="{{rdValue::change}}" rows="3"></textarea>
                         </div>
 
 
                         <div class="input_container vertical layout">
                             <label class="stv">  Phenotype(HPO)</label>
-                            <textarea class="stv" id="hpo" name="hpo" placeholder="HP:0001249,HP:0001290" value="{{hpoValue::change}}" rows="3">
-                            </textarea>
+                            <textarea class="stv" id="hpo" name="hpo" placeholder="HP:0001249,HP:0001290" value="{{hpoValue::change}}" rows="3"></textarea>
                         </div>
 
                         <div class="input_container vertical layout">
                             <label class="stv">  Aneuploid-Deletion-Duplication Syndrome</label>
                             <stv-search id="syndromesearch"  placeholder="Search" minQueryLength="1" on-item-select="handleSyndromeSearchSelect" empty-message="No syndrome found."></stv-search>
-                            <textarea class="stv" id="aneuploid" name="aneuploid" placeholder="Not implemented" value="{{aneuploidValue::change}}" rows="3">
-                            </textarea>
+                            <textarea class="stv" id="aneuploid" name="aneuploid" placeholder="Not implemented" value="{{aneuploidValue::change}}" rows="3"></textarea>
                         </div>
 
 
@@ -530,6 +524,7 @@
             <div id="tools">
                 <jso-genome-viewer-element id="gv" on-created="handleGenomeViewerCreated"></jso-genome-viewer-element>
             </div>
+            <img src="../images/ELIXIR_logo.png" style="height: 50px;margin: 5px 0px 0 0;">
         </div>
     </template>
 </dom-module>
@@ -560,14 +555,7 @@
                 type: String,
                 value: ""
             },
-            arrayPlataformValue: {
-                type: String,
-                value: null
-            },
-            arrayIdValue: {
-                type: String,
-                value: null
-            },
+
             rdValue: {
                 type: String,
                 value: null
@@ -580,11 +568,15 @@
                 type: String,
                 value: null
             },
-            localidValue: {
+            localIdValue: {
                 type: String,
                 value: null
             },
             decipherIdValue: {
+                type: String,
+                value: null
+            },
+            nvariantsValue:{
                 type: String,
                 value: null
             },
@@ -613,6 +605,14 @@
                 value: null
             },
             geoValue: {
+                type: String,
+                value: null
+            },
+            arrayPlataformValue: {
+                type: String,
+                value: null
+            },
+            arrayIdValue: {
                 type: String,
                 value: null
             },
@@ -898,11 +898,25 @@
         },
         created: function() {
             this.selectedSpecies = DEFAULT_SPECIES;
-
-
         },
         clearForm: function() {
             this.$.form.reset();
+            this.regionValue = "";
+            this.geneValue = "";
+            this.arrayPlataformValue = null;
+            this.arrayIdValue = null;
+            this.rdValue = null;
+            this.hpoValue = null;
+            this.aneuploidValue = null;
+            this.localIdValue = null;
+            this.decipherIdValue = null;
+            this.yearIdValue = null;
+            this.yearTestValue = null;
+            this.AgeValue = null;
+            this.AgePrenatalValue = null;
+            this.codeValue = null;
+            this.ethicValue = null;
+            this.geoValue = null;
 
         },
         _parse: function(response) {
@@ -1065,9 +1079,11 @@
 
                 var region = null;
                 if (this.regionValue == "") {
-                    //region = new Region(this.$.gv.genomeViewer.region);
-                    region = "";
+
+                    region = new Region(this.$.gv.genomeViewer.region);
+                    //region = "";
                 } else {
+                    query.regions = region;
                     region = new Region(this.regionValue.trim());
                 }
 
@@ -1156,6 +1172,9 @@
                     query.inheritance = inhev.join(",");
                 }
 
+                if(!this.nvariantsValue == "") {
+                    query.nv = this.nvariantsValue;
+                }
                 inputs = this.$.cl.querySelectorAll("input");
                 var clv = [];
 
@@ -1208,17 +1227,33 @@
                     query.typeS = typeSv.join(",");
                 }
 
-                query.referalDiag = this.rdValue;
-                query.hpo = this.hpoValue;
+                if(!this.rdValue == "") {
+                    query.referalDiag = this.rdValue;
+                }
+                if(!this.hpoValue == "") {
+                    query.hpo = this.hpoValue;
+                }
 
                 //Comprobar que todos son números
-                query.year = this.yearIdValue;
-
+                if(!this.yearIdValue == "") {
+                    query.year = this.yearIdValue;
+                }
                 //query.gene = this.geneValue;
-                query.ethic = this.ethicValue;
-                query.geo = this.geoValue;
-                query.regions = region;
-
+                if(!this.ethicValue == "") {
+                    query.ethic = this.ethicValue;
+                }
+                if(!this.geoValue == "") {
+                    query.geo = this.geoValue;
+                }
+                if(!this.arrayPlataformValue == "") {
+                    query.arrayPlatform = this.arrayPlataformValue;
+                }
+                if(!this.arrayIdValue == "") {
+                    query.arrayId = this.arrayIdValue;
+                }
+                if(!this.localIdValue == "") {
+                    query.localId = this.localIdValue;
+                }
 
                 var url = CNVSManager.regions.fetch({
                     //                    id: region,
