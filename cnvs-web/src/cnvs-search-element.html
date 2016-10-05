@@ -382,11 +382,11 @@
 
                         <div class="input_container vertical layout">
                             <label class="stv">Size(Kb):</label>
-                            <textarea class="stv" id="size" name="size" placeholder="Not implemented" value="" rows="3"></textarea>
+                            <textarea class="stv" id="size" name="size" placeholder="Not implemented" value="{{sizeValue::change}}" rows="3"></textarea>
                         </div>
                         <div class="input_container vertical layout">
                             <label class="stv">Cytoband:</label>
-                            <textarea class="stv" id="cytoband" name="cytoband" placeholder="Not implemented" value="" rows="3"></textarea>
+                            <textarea class="stv" id="cytoband" name="cytoband" placeholder="p36.33" value="{{bandValue::change}}" rows="3"></textarea>
                         </div>
                         <div class="input_container vertical layout">
                             <label class="stv">Assembly:</label>
@@ -571,7 +571,14 @@
                 type: String,
                 value: ""
             },
-
+            sizeValue: {
+                type: String,
+                value: null
+            },
+            bandValue: {
+                type: String,
+                value: null
+            },
             rdValue: {
                 type: String,
                 value: null
@@ -1092,10 +1099,8 @@
 
             //  if (this.$.form.checkValidity() && (this.regionValue != '' || this.geneValue != '')) {
             if (this.$.form.checkValidity()) {
-
                 var region = null;
                 if (this.regionValue == "") {
-
                     region = new Region(this.$.gv.genomeViewer.region);
                     //region = "";
                 } else {
@@ -1161,6 +1166,13 @@
                 if (dosesv.length > 0 && dosesv.length < 4) {
                     query.doses = dosesv.join(",");
                 }
+                if(!this.sizeValue == ""){
+                   // query.size = this.sizeValue; //TODO
+                }
+                if(!this.bandValue == ""){
+                    query.band = this.bandValue;
+                }
+
 
                 inputs = this.$.clis.querySelectorAll("input");
                 var clisv = [];
@@ -1254,7 +1266,7 @@
                 if(!this.yearIdValue == "") {
                     query.year = this.yearIdValue;
                 }
-                //query.gene = this.geneValue;
+
                 if(!this.ethicValue == "") {
                     query.ethic = this.ethicValue;
                 }
@@ -1272,12 +1284,12 @@
                 }
 
                 var url = CNVSManager.regions.fetch({
-                    //                    id: region,
                     query: query,
                     request: {
                         url: true
                     }
                 });
+
                 this.formURL = url;
                 console.log(url);
 
