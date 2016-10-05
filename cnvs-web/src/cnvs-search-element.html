@@ -109,6 +109,11 @@
         .stv-control >span{
             color:gray;
         }
+        .logo{
+            max-height: 40px;
+            max-width: 90px;
+            margin: 10px;
+        }
 
     </style>
     <template>
@@ -524,7 +529,18 @@
             <div id="tools">
                 <jso-genome-viewer-element id="gv" on-created="handleGenomeViewerCreated"></jso-genome-viewer-element>
             </div>
-            <img src="../images/ELIXIR_logo.png" style="height: 50px;margin: 5px 0px 0 0;">
+            <span style="color: #006699;font-size: 14px; margin:10px">Supported by:</span>
+            <div class="layout flex">
+                <img src="../images/ELIXIR_logo.png" class="logo">
+                <img src="../images/logo_Babelomics_negative.svg" class="logo">
+                <img src="../images/logo_inb.png" class="logo">
+                <img src="../images/logo_cipf.png" class="logo">
+                <img src="../images/logo_ciberer.jpg" class="logo">
+                <img src="../images/LOGO_Micinn_Isciii.jpg" class="logo">
+                <img src="../images/logo_ISCIII.jpg" class="logo">
+                <img src="../images/logo_PRB2.jpg" class="logo">
+                <img src="../images/logo_feder.jpg" class="logo">
+            </div>
         </div>
     </template>
 </dom-module>
