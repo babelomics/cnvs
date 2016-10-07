@@ -80,6 +80,9 @@
             min-height: 50px;
             overflow-x: auto
         }
+        stv-table::shadow .table-row {
+            height:30px;
+        }
         /*.stv-formbox  img{
 
 
@@ -139,13 +142,13 @@
                     </label>
 
                     <div class="stv-formcontent" id="pacients">
-                        <div class="input_container vertical layout">
-                            <label class="stv"> Locals id</label>
-                            <textarea class="stv" id="localid" name="localid" placeholder="Not implemented" value="{{localIdValue::change}}" rows="3"></textarea>
-                            <!--<textarea class="stv" id="localid1" name="localid1" placeholder="Local ID1" value="{{localIdValue1::change}}" rows="1"> </textarea>
-                            <textarea class="stv" id="localid2" name="localid2" placeholder="Local ID2" value="{{localIdValue2::change}}" rows="1"> </textarea>
-                            <textarea class="stv" id="localid3" name="localid3" placeholder="Local ID3" value="{{localIdValue3::change}}" rows="1"> </textarea>-->
-                        </div>
+                        <!--<div class="input_container vertical layout">-->
+                            <!--<label class="stv"> Locals id</label>-->
+                            <!--&lt;!&ndash;<textarea class="stv" id="localid" name="localid" placeholder="Not implemented" value="{{localIdValue::change}}" rows="3"></textarea>&ndash;&gt;-->
+                            <!--<textarea class="stv" id="localId1" name="localId1" placeholder="Local ID1" value="{{localIdValue1::change}}" rows="1" style="border-bottom: 0px"></textarea>-->
+                            <!--<textarea class="stv" id="localId2" name="localId2" placeholder="Local ID2" value="{{localIdValue2::change}}" rows="1" style="border-bottom: 0px"></textarea>-->
+                            <!--<textarea class="stv" id="localId3" name="localId3" placeholder="Local ID3" value="{{localIdValue3::change}}" rows="1"></textarea>-->
+                        <!--</div>-->
                         <div class="input_container vertical layout">
                             <label class="stv">Decipher ID</label>
                             <textarea class="stv" id="decipherId" name="decipherId" placeholder="12840,25600" value="{{decipherIdValue::change}}" rows="3"></textarea>
@@ -523,7 +526,7 @@
                 <div class="header">
                     Results Table
                 </div>
-                <stv-table id="tablaresultados" class="container" enable-paging enable-remote enable-select enable-resize request="{{request}}" columns="{{columns}}" on-rowclick="handleRowClick"></stv-table>
+                <stv-table id="tablaresultados" class="container" page-size="10" enable-paging enable-remote enable-select enable-resize request="{{request}}" columns="{{columns}}" on-rowclick="handleRowClick" on-column-visibility-change="handleColumnVisibilityChange"></stv-table>
             </stv-panel>
 
             <div id="tools">
@@ -567,6 +570,18 @@
                 value: "",
                 observer: 'urlChanged'
             },
+//            localIdValue1:{
+//                type: String,
+//                value: null
+//            },
+//            localIdValue2:{
+//                type: String,
+//                value: null
+//            },
+//            localIdValue3:{
+//                type: String,
+//                value: null
+//            },
             geneValue: { //gene de gen
                 type: String,
                 value: ""
@@ -645,6 +660,17 @@
                     return [];
                 }
             },
+        },
+        handleColumnVisibilityChange: function(e){
+            //if(e.currentTarget.name == this.columns[1].checked || this.columns[5].checked){
+            if(this.columns[1].visible){
+                this.$.tablaresultados.set('pageSize',6);
+
+                $(".table-row").css("height","50px");
+            }else{
+                this.$.tablaresultados.set('pageSize',10);
+                $(".table-row").css("height","30px");
+            }
         },
         toggleElement: function(e) {
             var me = this;
@@ -774,7 +800,19 @@
                             return row.end - row.start;
                         }
                     }]
-                }, {
+                },
+                {
+                    name: 'position2',
+                    title: 'Chr, Start, End, Size',
+                    width: 180,
+                    visible:false,
+                    formula: function (row) {
+                        var siz = row.end - row.start;
+                        return  "<span style='font-size:10px'>" +row.chromosome +":" +row.start + "-" + row.end + " (" + siz +"nt) </span>" ;
+                    }
+
+                },
+                {
                     name: 'ref',
                     title: "Code",
                     width: 60
@@ -782,33 +820,43 @@
                     name: 'decipherId',
                     title: 'DecipherId',
                     width: 80
-                }, {
-                    name: 'LocalID',
-                    title: 'Local ID',
-                    width: 180,
-                    columns: [{
-                        name: 'centerId1',
-                        title: 'ID 1',
-                        width: 60,
-                        formula: function(row) {
-                            return row.centerId1;
-                        }
-                    }, {
-                        name: 'centerId2',
-                        title: 'ID 2',
-                        width: 60,
-                        formula: function(row) {
-                            return row.centerId2;
-                        }
-                    }, {
-                        name: 'centerId3',
-                        title: 'ID 3',
-                        width: 60,
-                        formula: function(row) {
-                            return row.centerId3;
-                        }
-                    }]
-                }, {
+//                }, {
+//                    name: 'LocalID',
+//                    title: 'Local ID',
+//                    width: 180,
+//                    columns: [{
+//                        name: 'centerId1',
+//                        title: 'ID 1',
+//                        width: 60,
+//                        formula: function(row) {
+//                            return row.centerId1;
+//                        }
+//                    }, {
+//                        name: 'centerId2',
+//                        title: 'ID 2',
+//                        width: 60,
+//                        formula: function(row) {
+//                            return row.centerId2;
+//                        }
+//                    }, {
+//                        name: 'centerId3',
+//                        title: 'ID 3',
+//                        width: 60,
+//                        formula: function(row) {
+//                            return row.centerId3;
+//                        }
+//                    }]
+//                }, {
+//                    name: 'LocalIDmerge',
+//                    title: 'Local ID(1,2,3)',
+//                    width: 180,
+//                    visible:false,
+//                    formula: function(row) {
+//                        return row.centerId1 +"<br/>"+row.centerId2+"</br>"+row.centerId3;
+//                    }
+//
+                },
+                {
                     name: 'assembly',
                     title: 'Assembly',
                     width: 80
@@ -911,7 +959,6 @@
 
             var query = {};
             var url = CNVSManager.regions.fetch({
-                //                    id: region,
                 query: query,
                 request: {
                     url: true
@@ -924,6 +971,9 @@
         },
         clearForm: function() {
             this.$.form.reset();
+//            this.localIdValue1 = null;
+//            this.localIdValue2 = null;
+//            this.localIdValue3 = null;
             this.regionValue = "";
             this.geneValue = "";
             this.arrayPlataformValue = null;
@@ -1008,9 +1058,6 @@
             this.adapter = new FeatureTemplateAdapter({
 
                 uriTemplate: CNVS_HOST + '/regions/{region}/fetch',
-                // templateVariables: {
-                //                    customVar: 'info',
-                //                },
                 species: this.$.gv.genomeViewer.species,
                 getRegionsFromIntervals: function(response) {
                     var regions = [];
@@ -1104,8 +1151,9 @@
                     region = new Region(this.$.gv.genomeViewer.region);
                     //region = "";
                 } else {
-                    query.regions = region;
+
                     region = new Region(this.regionValue.trim());
+                    query.regions = region;
                 }
 
                 if (this.geneValue) {
@@ -1137,6 +1185,18 @@
                     });
                 }
 
+//                if(!this.localIdValue1 == ""){
+//                    query.centerId1 = this.localIdValue1;
+//                }
+//
+//                if(!this.localIdValue2 == ""){
+//                    query.centerId2 = this.localIdValue2;
+//                }
+//
+//                if(!this.localIdValue3 == ""){
+//                    query.centerId3 = this.localIdValue3;
+//                }
+
                 var inputs = this.$.type.querySelectorAll("input");
                 var typev = [];
 
@@ -1149,9 +1209,13 @@
                 if (typev.length > 0 && typev.length < 3) {
                     query.type = typev.join(",");
                 }
+                if(!this.codeValue == ""){
+                    query.code = this.codeValue;
+                }
+                if(!this.decipherIdValue == ""){
+                    query.decipherId = this.decipherIdValue;
+                }
 
-                query.code = this.codeValue;
-                query.decipherId = this.decipherIdValue;
                 //    query.assembly = this.assemblyValue;
 
                 inputs = this.$.doses.querySelectorAll("input");
