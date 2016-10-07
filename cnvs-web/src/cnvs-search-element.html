@@ -139,13 +139,13 @@
                     </label>
 
                     <div class="stv-formcontent" id="pacients">
-                        <div class="input_container vertical layout">
-                            <label class="stv"> Locals id</label>
-                            <textarea class="stv" id="localid" name="localid" placeholder="Not implemented" value="{{localIdValue::change}}" rows="3"></textarea>
-                            <!--<textarea class="stv" id="localid1" name="localid1" placeholder="Local ID1" value="{{localIdValue1::change}}" rows="1"> </textarea>
-                            <textarea class="stv" id="localid2" name="localid2" placeholder="Local ID2" value="{{localIdValue2::change}}" rows="1"> </textarea>
-                            <textarea class="stv" id="localid3" name="localid3" placeholder="Local ID3" value="{{localIdValue3::change}}" rows="1"> </textarea>-->
-                        </div>
+                        <!--<div class="input_container vertical layout">-->
+                            <!--<label class="stv"> Locals id</label>-->
+                            <!--<textarea class="stv" id="localid" name="localid" placeholder="Not implemented" value="{{localIdValue::change}}" rows="3"></textarea>-->
+                            <!--&lt;!&ndash;<textarea class="stv" id="localid1" name="localid1" placeholder="Local ID1" value="{{localIdValue1::change}}" rows="1"> </textarea>-->
+                            <!--<textarea class="stv" id="localid2" name="localid2" placeholder="Local ID2" value="{{localIdValue2::change}}" rows="1"> </textarea>-->
+                            <!--<textarea class="stv" id="localid3" name="localid3" placeholder="Local ID3" value="{{localIdValue3::change}}" rows="1"> </textarea>&ndash;&gt;-->
+                        <!--</div>-->
                         <div class="input_container vertical layout">
                             <label class="stv">Decipher ID</label>
                             <textarea class="stv" id="decipherId" name="decipherId" placeholder="12840,25600" value="{{decipherIdValue::change}}" rows="3"></textarea>
@@ -783,32 +783,32 @@
                     title: 'DecipherId',
                     width: 80
                 }, {
-                    name: 'LocalID',
-                    title: 'Local ID',
-                    width: 180,
-                    columns: [{
-                        name: 'centerId1',
-                        title: 'ID 1',
-                        width: 60,
-                        formula: function(row) {
-                            return row.centerId1;
-                        }
-                    }, {
-                        name: 'centerId2',
-                        title: 'ID 2',
-                        width: 60,
-                        formula: function(row) {
-                            return row.centerId2;
-                        }
-                    }, {
-                        name: 'centerId3',
-                        title: 'ID 3',
-                        width: 60,
-                        formula: function(row) {
-                            return row.centerId3;
-                        }
-                    }]
-                }, {
+//                    name: 'LocalID',
+//                    title: 'Local ID',
+//                    width: 180,
+//                    columns: [{
+//                        name: 'centerId1',
+//                        title: 'ID 1',
+//                        width: 60,
+//                        formula: function(row) {
+//                            return row.centerId1;
+//                        }
+//                    }, {
+//                        name: 'centerId2',
+//                        title: 'ID 2',
+//                        width: 60,
+//                        formula: function(row) {
+//                            return row.centerId2;
+//                        }
+//                    }, {
+//                        name: 'centerId3',
+//                        title: 'ID 3',
+//                        width: 60,
+//                        formula: function(row) {
+//                            return row.centerId3;
+//                        }
+//                    }]
+//                }, {
                     name: 'assembly',
                     title: 'Assembly',
                     width: 80
@@ -1104,8 +1104,8 @@
                     region = new Region(this.$.gv.genomeViewer.region);
                     //region = "";
                 } else {
-                    query.regions = region;
                     region = new Region(this.regionValue.trim());
+                    query.regions = region;
                 }
 
                 if (this.geneValue) {
@@ -1279,9 +1279,9 @@
                 if(!this.arrayIdValue == "") {
                     query.arrayId = this.arrayIdValue;
                 }
-                if(!this.localIdValue == "") {
-                    query.localId = this.localIdValue;
-                }
+//                if(!this.localIdValue == "") {
+//                    query.localId = this.localIdValue;
+//                }
 
                 var url = CNVSManager.regions.fetch({
                     query: query,
