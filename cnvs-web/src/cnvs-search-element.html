@@ -80,8 +80,12 @@
             min-height: 50px;
             overflow-x: auto
         }
-        stv-table::shadow .table-row {
+        stv-table.small::shadow .table-row {
             height:30px;
+        }
+
+        stv-table.big::shadow .table-row {
+            height:50px;
         }
         /*.stv-formbox  img{
 
@@ -526,7 +530,13 @@
                 <div class="header">
                     Results Table
                 </div>
-                <stv-table id="tablaresultados" class="container" page-size="10" enable-paging enable-remote enable-select enable-resize request="{{request}}" columns="{{columns}}" on-rowclick="handleRowClick" on-column-visibility-change="handleColumnVisibilityChange"></stv-table>
+                <stv-table id="tablaresultados" class="container small" page-size="10" enable-paging enable-remote enable-select enable-resize request="{{request}}" columns="{{columns}}" on-rowclick="handleRowClick" on-column-visibility-change="handleColumnVisibilityChange">
+                    <div class="custom-buttons horizontal layout">
+                        <button style="margin-right: 10px; color: #006699" id="saveTable" class="stv-btn" on-click="saveTable" >save</button>
+                        <button id="spamButtonTable" class="stv-btn" on-click="spamTable" disabled>spam</button>
+                        <button id="compressButtonTable"class="stv-btn" on-click="compressTable">compress</button>
+                    </div>
+                </stv-table>
             </stv-panel>
 
             <div id="tools">
@@ -661,15 +671,25 @@
                 }
             },
         },
-        handleColumnVisibilityChange: function(e){
+        handleColumnVisibilityChange: function(){
             //if(e.currentTarget.name == this.columns[1].checked || this.columns[5].checked){
-            if(this.columns[1].visible){
-                this.$.tablaresultados.set('pageSize',6);
-
-                $(".table-row").css("height","50px");
-            }else{
+            var small = true;
+            for ( var i = 27; i < this.columns.length; i++){
+                if ( this.columns[i].visible){
+                    small = false;
+                }
+            }
+            if(small){
                 this.$.tablaresultados.set('pageSize',10);
-                $(".table-row").css("height","30px");
+                this.$.tablaresultados.classList.remove('big');
+                this.$.tablaresultados.classList.add('small');
+                //$(".table-row").css("height","30px");
+            }else{
+                this.$.tablaresultados.set('pageSize',6);
+                this.$.tablaresultados.classList.remove('small');
+                this.$.tablaresultados.classList.add('big');
+                //$(".table-row").css("height","50px");
+
             }
         },
         toggleElement: function(e) {
@@ -712,6 +732,31 @@
                 document.getElementById("iconoexpan").classList.add('fa-compress');
             }
         },
+        compressTable: function(){
+            for ( var i = 0; i < 27; i++){
+                this.columns[i].visible = false;
+            }
+            for ( var i = 27; i < this.columns.length; i++){
+                this.columns[i].visible = true;
+            }
+            this.$.tablaresultados.refresh();
+            this.$.compressButtonTable.setAttribute('disabled',"");
+            this.$.spamButtonTable.removeAttribute('disabled');
+            this.handleColumnVisibilityChange();
+        },
+        spamTable: function(){
+            for ( var i = 0; i < 27; i++){
+                this.columns[i].visible = true;
+            }
+            for ( var i = 27; i < this.columns.length; i++){
+                this.columns[i].visible = false;
+            }
+            this.$.tablaresultados.refresh();
+            this.$.spamButtonTable.setAttribute('disabled',"");
+            this.$.compressButtonTable.removeAttribute('disabled');
+            this.handleColumnVisibilityChange();
+        },
+
         mostrardiagnosis: function() {
 
         },
@@ -794,25 +839,13 @@
                         }
                     }, {
                         name: 'size',
-                        title: 'Size',
+                        title: 'Size(nt)',
                         width: 100,
                         formula: function(row) {
                             return row.end - row.start;
                         }
                     }]
-                },
-                {
-                    name: 'position2',
-                    title: 'Chr, Start, End, Size',
-                    width: 180,
-                    visible:false,
-                    formula: function (row) {
-                        var siz = row.end - row.start;
-                        return  "<span style='font-size:10px'>" +row.chromosome +":" +row.start + "-" + row.end + " (" + siz +"nt) </span>" ;
-                    }
-
-                },
-                {
+                }, {
                     name: 'ref',
                     title: "Code",
                     width: 60
@@ -820,6 +853,8 @@
                     name: 'decipherId',
                     title: 'DecipherId',
                     width: 80
+
+
 //                }, {
 //                    name: 'LocalID',
 //                    title: 'Local ID',
@@ -910,7 +945,7 @@
                     width: 120
                 }, {
                     name: 'phenotype',
-                    title: 'Phenotype',
+                    title: 'Phenotype(HPO)',
                     width: 120
                 }, {
                     name: 'yearOfBirth',
@@ -952,6 +987,184 @@
                     name: 'comments',
                     title: 'Comments',
                     width: 120
+
+                },{
+                    name: 'codeDecipher',
+                    title: 'Code',
+                    width: 90,
+                    visible:false,
+                    columns: [{
+                        name: 'decipher',
+                        title: 'Decipher',
+                        width: 90,
+                        formula: function (row) {
+                            return row.ref + "</br>" + row.decipherId;
+                        }
+                    }]
+                },{
+                    name: 'position2',
+                    title: 'Chr',
+                    width: 100,
+                    visible:false,
+                    columns: [{
+                        name: 'start',
+                        title: 'Start',
+                        width: 100,
+                        columns: [{
+                            name: 'end',
+                            title: 'End',
+                            width: 100,
+                            formula: function (row) {
+                                //var siz = row.end - row.start;
+                                return row.chromosome + "</br>" + row.start + "</br>" + row.end;
+                            }
+                        }]
+                    }]
+                },{
+                    name: 'statTypeCell',
+                    title: 'Status',
+                    width: 100,
+                    visible:false,
+                    columns: [{
+                        name: 'typeSample',
+                        title: 'Type of Sample',
+                        width: 100,
+                        columns: [{
+                            name: 'cellLine',
+                            title: 'Cell Line',
+                            width: 100,
+                            formula: function (row) {
+                                return row.status + "</br>" + row.typeSample + "</br>" + row.cellLine;
+                            }
+                        }]
+                    }]
+                },{
+                    name: 'genderCytoAssem',
+                    title: 'Chr Gender',
+                    width: 100,
+                    visible:false,
+                    columns: [{
+                        name: 'band',
+                        title: 'Cytoband',
+                        width: 100,
+                        columns: [{
+                            name: 'assembly',
+                            title: 'Assembly',
+                            width: 100,
+                            formula: function (row) {
+                                return row.chromoGender + "</br>" + row.locus + "</br>" + row.assembly;
+                            }
+                        }]
+                    }]
+                },{
+                    name: 'nvTypeCopy',
+                    title: 'Nº of variants',
+                    width: 120,
+                    visible:false,
+                    columns: [{
+                        name: 'type',
+                        title: 'Type variant',
+                        width: 120,
+                        columns: [{
+                            name: 'dosis',
+                            title: 'Copy Number',
+                            width: 120,
+                            formula: function (row) {
+                                return row.nv + "</br>" + row.type + "</br>" + row.doses;
+                            }
+                        }]
+                    }]
+                }, {
+                    name: 'size',
+                    title: 'Size(nt)',
+                    width: 100,
+                    visible:false,
+                    formula: function(row) {
+                        return row.end - row.start;
+                    }
+                }, {
+                    name: 'genes',
+                    title: 'Genes',
+                    width: 100,
+                    visible:false,
+                },{
+                    name: 'refDiagnosis',
+                    title: 'Ref Diagnosis',
+                    width: 120,
+                    visible:false,
+                    columns: [{
+                        name: 'syndrome',
+                        title: 'Aneuploidy Sindrome',
+                        width: 120,
+                        formula: function (row) {
+                            return  row.referalDiag +"</br>" +row.syndrome;
+                        }
+                    }]
+                },{
+
+                    name: 'phenotype',
+                    title: 'Phenotype(HPO)',
+                    width: 120,
+                    visible:false,
+                },{
+                    name: 'cliSInheri',
+                    title: 'Clinical Significance',
+                    width: 140,
+                    visible:false,
+                    columns: [{
+                        name: 'inheritance',
+                        title: 'Inheritance',
+                        width: 140,
+                        formula: function (row) {
+                            return row.clinicalSig + "</br>" + row.inheritance;
+                        }
+                    }]
+                },{
+                    name: 'birthTestAge',
+                    title: 'Birth year', //Birth year, Test year, Age Age(pr)
+                    width: 100,
+                    visible:false,
+                    columns: [{
+                        name: 'yearTest',
+                        title: 'Test year',
+                        width: 100,
+                        columns: [{
+                            name: 'ageAgePrenatal',
+                            title: 'Age Age(pr)',
+                            width: 100,
+                            formula: function(row) {
+                                return  row.yearOfBirth +"</br>" + row.yearTest + "</br>" + row.age + " "+ row.agePrenatal;
+                            }
+                        }]
+                    }]
+                },{
+
+                    name: 'ethnicGeo',
+                    title: 'Ethinic Group',
+                    width: 100,
+                    visible:false,
+                    columns: [{
+                        name: 'origin',
+                        title: 'Geog Origin',
+                        width: 100,
+                        formula: function (row) {
+                            return row.ethnicGroup + "</br>" + row.origin;
+                        }
+                    }]
+                },{
+                    name: 'arrays',
+                    title: 'Array Platf',
+                    width: 100,
+                    visible:false,
+                    columns: [{
+                        name: 'arrayID',
+                        title: 'Array ID',
+                        width: 100,
+                        formula: function(row) {
+                            return  row.arrayPlatform +"</br>" +row.arrayId;
+                        }
+                    }]
+
                 }
 
             ]
@@ -1151,7 +1364,6 @@
                     region = new Region(this.$.gv.genomeViewer.region);
                     //region = "";
                 } else {
-
                     region = new Region(this.regionValue.trim());
                     query.regions = region;
                 }
@@ -1176,7 +1388,7 @@
                                 if (queryResult.result.length > 0) {
                                     region = new Region(queryResult.result[0]);
                                     //regions.push(region.toString());
-
+                                    query.regions = region;
                                 } else {
                                     alert("Wrong gene: " + gene);
                                 }
