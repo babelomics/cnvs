@@ -532,7 +532,7 @@
                 </div>
                 <stv-table id="tablaresultados" class="container small" page-size="10" enable-paging enable-remote enable-select enable-resize request="{{request}}" columns="{{columns}}" on-rowclick="handleRowClick" on-column-visibility-change="handleColumnVisibilityChange">
                     <div class="custom-buttons horizontal layout">
-                        <button style="margin-right: 10px; color: #006699" id="saveTable" class="stv-btn" on-click="saveTable" >save</button>
+                        <button style="margin-right: 10px; color: #006699" id="saveTable" class="stv-btn down" on-click="downloadFiles" data-file="{{cnv}}"><i class="fa fa-cloud-download"></i> save</button>
                         <button id="spamButtonTable" class="stv-btn" on-click="spamTable" disabled>spam</button>
                         <button id="compressButtonTable"class="stv-btn" on-click="compressTable">compress</button>
                     </div>
@@ -573,6 +573,12 @@
                 type: Array,
                 value: function() {
                     return [];
+                }
+            },
+            query:{
+                type: Object,
+                value: function() {
+                    return {}
                 }
             },
             formURL: {
@@ -669,7 +675,7 @@
                 value: function() {
                     return [];
                 }
-            },
+            }
         },
         handleColumnVisibilityChange: function(){
             //if(e.currentTarget.name == this.columns[1].checked || this.columns[5].checked){
@@ -734,10 +740,12 @@
         },
         compressTable: function(){
             for ( var i = 0; i < 27; i++){
-                this.columns[i].visible = false;
+//                this.columns[i].visible = false;
+                this.set('columns.'+i+'.visible', false);
             }
             for ( var i = 27; i < this.columns.length; i++){
-                this.columns[i].visible = true;
+//                this.columns[i].visible = true;
+                this.set('columns.'+i+'.visible', true);
             }
             this.$.tablaresultados.refresh();
             this.$.compressButtonTable.setAttribute('disabled',"");
@@ -746,16 +754,56 @@
         },
         spamTable: function(){
             for ( var i = 0; i < 27; i++){
-                this.columns[i].visible = true;
+                //this.columns[i].visible = true;
+                this.set('columns.'+i+'.visible', true);
             }
             for ( var i = 27; i < this.columns.length; i++){
-                this.columns[i].visible = false;
+                this.set('columns.'+i+'.visible', false);
+                //this.columns[i].visible = false;
             }
             this.$.tablaresultados.refresh();
             this.$.spamButtonTable.setAttribute('disabled',"");
             this.$.compressButtonTable.removeAttribute('disabled');
             this.handleColumnVisibilityChange();
         },
+        downloadFiles: function(e) {
+            this.query.limit = 0;
+            var me = this;
+            var url = CNVSManager.regions.fetch({
+                query: this.query,
+                request: {
+                    success: function(r) {
+                        var stringToSave = "";
+                        //me.parseJson(r.result);
+                        for( var i = 0; i < r.result.length; i++){
+                            stringToSave = stringToSave + me.cnvToString(r.result[i]);
+                        }
+                        console.log(stringToSave);
+                    },
+                    error:function(r){
+                        console.log("error in save");
+                    }
+                },
+
+            });
+            debugger
+        },
+        cnvToString: function(o){
+            return o.ref + "\t" + o.decipherId + "\t" + o.chromosome + "\t" + o.start + "\t" + o.end + "\t" + o.status + "\t" + o.typeSample
+                    + "\t" + o.cellLine + "\t" + o.chromoGender + "\t" + o.locus + "\t" + o.assembly + "\t" + o.nv + "\t" + o.type + "\t" +
+                    o.doses + "\t" + size + "\t" + o.genes + "\t" + o.referalDiag + "\t" + o.syndrome + "\t" + o.phenotype + "\t" +
+                    o.clinicalSig + "\t" + o.inheritance + "\t" + o.yearOfBirth + "\t" + o.yearTest + "\t" + o.age + "\t" + o.agePrenatal
+                    + "\t" + o.ethnicGroup + "\t" + o.origin + "\t" + o.arrayPlatform + "\t" + o.arrayId + "\t" + o.comments +"\n";
+        },
+        /*parseJson: function(array){
+            if((array[1]).isArray){
+                this.parseJson(array[1]);
+            }else{
+                for (var i= 0; i < array.length; i++){
+                    this.stringToSave.concat(array[i].toString());
+                }
+            }
+        },*/
 
         mostrardiagnosis: function() {
 
@@ -922,7 +970,15 @@
                 }, {
                     name: 'nv',
                     title: 'Nº of variants',
-                    width: 90
+                    width: 90,
+                    formula: function(row){
+                        var n = "."
+                        if(row.nv == 0){
+                           return n;
+                        }else{
+                            return row.nv;
+                        }
+                    }
                 }, {
                     name: 'cellLine',
                     title: 'Cell Line',
@@ -980,9 +1036,18 @@
                     title: 'Array ID',
                     width: 80
                 }, {
-                    name: 'aneuploidy',
+                    name: 'syndrome',
                     title: 'Aneuploidy',
-                    width: 80
+                    width: 80,
+                    formula: function (row) {
+                        var syndromeParse;
+                        if (row.syndrome == null) {
+                            syndromeParse = "."
+                        } else {
+                            syndromeParse = row.syndrome;
+                        }
+                        return syndromeParse;
+                    }
                 }, {
                     name: 'comments',
                     title: 'Comments',
@@ -1097,7 +1162,13 @@
                         title: 'Aneuploidy Sindrome',
                         width: 120,
                         formula: function (row) {
-                            return  row.referalDiag +"</br>" +row.syndrome;
+                            var syndromeParse;
+                            if(row.syndrome == null){
+                                syndromeParse = "."
+                            }else{
+                                syndromeParse = row.syndrome;
+                            }
+                            return  row.referalDiag +"</br>" +syndromeParse;
                         }
                     }]
                 },{
@@ -1164,6 +1235,10 @@
                             return  row.arrayPlatform +"</br>" +row.arrayId;
                         }
                     }]
+                },{
+                    name: 'comments2',
+                    title: 'Comments',
+                    width: 90
 
                 }
 
@@ -1572,12 +1647,12 @@
                 this.adapter.params = query;
 
                 this.$.gv.genomeViewer.setRegion(region);
-                this.forURL = url;
+                //this.forURL = url;
 
             } else {
                 alert("Please add a region/gene ");
             }
-
+            this.query = query;
         },
         handleRowClick: function(e) {
             var row = e.detail.row;
