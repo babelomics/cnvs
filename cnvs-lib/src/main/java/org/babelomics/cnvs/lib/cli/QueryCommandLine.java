@@ -9,44 +9,53 @@ import org.babelomics.cnvs.lib.models.Syndrome;
 import org.mongodb.morphia.Datastore;
 
 public class QueryCommandLine {
-	 @Parameter(names = {"--all"}, description = "List all variants", arity = 0) //REVISAR PERO HECHO
-     private boolean all = false;
+    @Parameter(names = {"--all"}, description = "List all variants", arity = 0) //REVISAR PERO HECHO
+    private boolean all = false;
 
-     @Parameter(names = {"--code"}, description = "Code INGEMM-ING, NIM GENETIICS-NIM, QGENOMICS-QGE, SANTIAGO-USC")
-     private String code = null;
+	@Parameter(names = {"--code"}, description = "Code INGEMM-ING, NIM GENETIICS-NIM, QGENOMICS-QGE, SANTIAGO-USC")
+    private String code = null;
 
-     @Parameter(names = {"--decipher-id"}, description = "Decipher ID")
-     private List<Long>  decipId = null;
+    @Parameter(names = {"--decipher-id"}, description = "Decipher ID")
+    private List<Long>  decipId = null;
 
-     @Parameter(names = {"--regions"}, description = "Comma-separated list of regions")//HECHO
-     private String regionList = null;
+	/*@Parameter(names = {"--centerId1"}, description = "Local Id1")
+	private List<String> centerId1 = null;
 
-     @Parameter(names = {"--assembly"}, description = "Assembly hg18, hg19")
-     private String assembly = null;
+	@Parameter(names = {"--centerId2"}, description = "Local Id2")
+	private List<String> centerId2 = null;
 
-     @Parameter(names = {"--band"}, description = "Band")
-     private List<String> band = null;
+	@Parameter(names = {"--centerId3"}, description = "Local Id3")
+	private List<String> centerId3 = null;*/
 
-     @Parameter(names = {"--type"}, description = "Type of variant:0 gain,1 loss or 2 LOH neutral")
-     private List<Integer> type = null;
+    @Parameter(names = {"--regions"}, description = "Comma-separated list of regions")//HECHO
+    private String regionList = null;
 
-     @Parameter(names = {"--doses"}, description = "Doses: 0 homozygous deletion, 1 deletion,2 duplication,3 triplication, 4 amplification")
-     private List<Integer>  doses = null;
+    @Parameter(names = {"--assembly"}, description = "Assembly hg18, hg19")
+    private String assembly = null;
 
-     @Parameter(names = {"--clis"}, description = "Clinical Significance: 0 Definitely pathogenic, 1 Probably pathogenic, 2 Pathogenic, 3 Vous, 4 Likely benign, 5 Benign")
-     private List<Integer>  cli = null;
+    @Parameter(names = {"--band"}, description = "Band")
+    private List<String> band = null;
 
-     @Parameter(names = {"--inheritance"}, description = " Inheritance: 0 de novo constitutive, 1 maternally inherited, 2 paternally inherited, 3unknown")
-     private List<Integer>  inhe = null;
+    @Parameter(names = {"--type"}, description = "Type of variant:0 gain,1 loss or 2 LOH neutral")
+    private List<Integer> type = null;
+
+    @Parameter(names = {"--doses"}, description = "Doses: 0 homozygous deletion, 1 deletion,2 duplication,3 triplication, 4 amplification")
+    private List<Integer>  doses = null;
+
+    @Parameter(names = {"--clis"}, description = "Clinical Significance: 0 Definitely pathogenic, 1 Probably pathogenic, 2 Pathogenic, 3 Vous, 4 Likely benign, 5 Benign")
+    private List<Integer>  cli = null;
+
+    @Parameter(names = {"--inheritance"}, description = " Inheritance: 0 de novo constitutive, 1 maternally inherited, 2 paternally inherited, 3unknown")
+    private List<Integer>  inhe = null;
 
 	@Parameter(names = {"--nv"}, description = "Number of variants")
 	private int nv = -1;
 
-     @Parameter(names = {"--cl"}, description = "Cell Line: 0 germline, 1 somatic")
-     private int cl = -1;
+    @Parameter(names = {"--cl"}, description = "Cell Line: 0 germline, 1 somatic")
+    private int cl = -1;
 
-     @Parameter(names = {"--gender"}, description = "Chromosomal gender: 0 XX, 1 XY , 2 X, 3 XXX, 4 XXY, 5 XYY, 6 Unknown")
-     private int gender = -1;
+    @Parameter(names = {"--gender"}, description = "Chromosomal gender: 0 XX, 1 XY , 2 X, 3 XXX, 4 XXY, 5 XYY, 6 Unknown")
+    private int gender = -1;
 
  	@Parameter(names = {"--status"}, description = "Status: 0 Proband, 1 Father, 2 Mother, 3 Control")
     private List<Integer> status;
@@ -102,17 +111,26 @@ public class QueryCommandLine {
     @Parameter(names = {"--pass"}, description = "DB Pass", arity = 1)
     private String pass = "";
 
+//	public QueryCommandLine(boolean all, String code, List<Long> decipId, List<String> centerId1, List<String> centerId2, List<String> centerId3,
+//							String regionList, String assembly, List<String> band, List<Integer> type, List<Integer> doses,
+//							List<Integer> cli, List<Integer> inhe, int nv, int cl, int gender, List<Integer> status,
+//							List<Integer> typeSample, List<String> referalDiag, List<String> hpo, List<Integer> year,
+//							List<Integer> yearTest, List<String> age, List<Integer> agePrenatal, List<String> ethic, List<String> origin,
+//							List<String> arrayPlatform, List<String> arrayId,  List<Integer> syndrome, int skip,
+//							int limit, String host, String user, String pass) {
 
-
-	public QueryCommandLine(boolean all, String code, List<Long> decipId, String regionList, String assembly, List<String> band,
-							List<Integer> type, List<Integer> doses, List<Integer> cli, List<Integer> inhe, int nv, int cl, int gender,
-							List<Integer> status, List<Integer> typeSample, List<String> referalDiag, List<String> hpo, List<Integer> year,
+	public QueryCommandLine(boolean all, String code, List<Long> decipId, String regionList, String assembly, List<String> band, List<Integer> type,
+							List<Integer> doses, List<Integer> cli, List<Integer> inhe, int nv, int cl, int gender, List<Integer> status,
+							List<Integer> typeSample, List<String> referalDiag, List<String> hpo, List<Integer> year,
 							List<Integer> yearTest, List<String> age, List<Integer> agePrenatal, List<String> ethic, List<String> origin,
 							List<String> arrayPlatform, List<String> arrayId,  List<Integer> syndrome, int skip,
 							int limit, String host, String user, String pass) {
 		this.all = all;
 		this.code = code;
 		this.decipId = decipId;
+//		this.centerId1 = centerId1;
+//		this.centerId2 = centerId2;
+//		this.centerId3 = centerId3;
 		this.regionList = regionList;
 		this.assembly = assembly;
 		this.band = band;
@@ -151,7 +169,6 @@ public class QueryCommandLine {
 		this.pass = pass;
 	}
 
-
 	public QueryCommandLine() {
 	}
 	public boolean isAll() {
@@ -169,6 +186,38 @@ public class QueryCommandLine {
 	public void setCode(String code) {
 		this.code = code;
 	}
+
+	public List<Long> getDecipId() {
+		return decipId;
+	}
+
+	public void setDecipId(List<Long> decipId) {
+		this.decipId = decipId;
+	}
+
+	/*public List<String> getcenterId1() {
+		return centerId1;
+	}
+
+	public void setcenterId1(List<String> centerId1) {
+		this.centerId1 = centerId1;
+	}
+
+	public List<String> getcenterId2() {
+		return centerId2;
+	}
+
+	public void setcenterId2(List<String> centerId2) {
+		this.centerId2 = centerId2;
+	}
+
+	public List<String> getcenterId3() {
+		return centerId3;
+	}
+
+	public void setcenterId3(List<String> centerId3) {
+		this.centerId3 = centerId3;
+	}*/
 
 	public String getRegionList() {
 		return regionList;
@@ -200,14 +249,6 @@ public class QueryCommandLine {
 
 	public void setType(List<Integer> type) {
 		this.type = type;
-	}
-
-	public List<Long> getDecipId() {
-		return decipId;
-	}
-
-	public void setDecipId(List<Long> decipId) {
-		this.decipId = decipId;
 	}
 
 	public List<Integer> getDoses() {
@@ -360,6 +401,7 @@ public class QueryCommandLine {
 	public void setSyndrome(List<Integer> syndrome) {
 		this.syndrome = syndrome;
 	}
+
 	public int getSkip() {
 		return skip;
 	}
@@ -399,6 +441,5 @@ public class QueryCommandLine {
 	public void setPass(String pass) {
 		this.pass = pass;
 	}
-
 
 }
