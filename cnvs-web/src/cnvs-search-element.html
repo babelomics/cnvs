@@ -386,6 +386,7 @@
                                     </label>
                                 </div>
                             </div>
+                        <textarea class="stv" id="dosesnum" name="dosesnum" placeholder="Numeric doses, Not implemented" value="{{dosesValue::change}}" rows="1"></textarea>
 
                         <div class="input_container vertical layout">
                             <label class="stv">Size(Kb):</label>
@@ -632,6 +633,10 @@
             },
             nvariantsValue:{
                 type: String,
+                value: null
+            },
+            dosesValue:{
+                type:String,
                 value: null
             },
             yearIdValue: {

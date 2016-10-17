@@ -7,6 +7,7 @@ import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.ss.usermodel.WorkbookFactory;
 import org.babelomics.cnvs.lib.models.CNV;
+import org.babelomics.cnvs.lib.models.Syndrome;
 import org.opencb.commons.io.DataReader;
 
 import java.io.FileInputStream;
@@ -95,7 +96,7 @@ public class CNVSCopyNumberVariationXLSDataReader implements DataReader<CNV> {
     	*/
     	System.out.println(this.header);
     	
-    	String[] columnas = {"#","01-Code", "02-Decipher ID","03-Local ID","03-Local ID","03-Local ID","04-Chromosome", "05-Start", "06-End", "07-Assembly", "08-Genes", "09-Band" , "10-Size (Kb)", "11-Type of variant" , "12-Doses", "13-Clinical significance", "14-Inheritance", "15-Number of variants", "16-Cell line", "17-Chromosomal gender", "18-Status", "19-Type of sample", "20-Referral diagnosis", "21-Phenotype (HPO)", "22-Year of Birth", "23-Ethnic group", "24-Geographic origin", "25-Array platform", "26-array ID", "27-Comments"};
+    	String[] columnas = {"#","01-Code", "02-Decipher ID","03-Local ID","03-Local ID","03-Local ID","04-Chromosome", "05-Start", "06-End", "07-Assembly", "08-Genes", "09-Band" , "10-Size (Kb)", "11-Type of variant" , "12-Doses (Mean ratio)", "13-Clinical significance", "14-Inheritance", "15-Number of variants", "16-Cell line", "17-Chromosomal gender", "18-Status", "19-Type of sample", "20-Referral diagnosis", "21-Phenotype (HPO)", "22-Year of Birth", "23-Ethnic group", "24-Geographic origin", "25-Array platform", "26-array ID", "28-Aneuploidy-Deletion/Duplication Syndrome", "27-Comments"};
     	Row headerRow= this.it.next();
     	nc = headerRow.getLastCellNum();
     	for(int i = 0; i < columnas.length; i++){
@@ -174,7 +175,8 @@ public class CNVSCopyNumberVariationXLSDataReader implements DataReader<CNV> {
     		//String size = r.getCell(12, Row.CREATE_NULL_AS_BLANK).getNumericCellValue() + "";ME SALTO EL SIZE
     		
     		String type = r.getCell(13, Row.CREATE_NULL_AS_BLANK).getStringCellValue();
-    		String doses = r.getCell(14, Row.CREATE_NULL_AS_BLANK).getStringCellValue();
+    		//String doses = r.getCell(14, Row.CREATE_NULL_AS_BLANK).getStringCellValue();
+			float doses = (float)r.getCell(14, Row.CREATE_NULL_AS_BLANK).getNumericCellValue();
     		String clisig = r.getCell(15, Row.CREATE_NULL_AS_BLANK).getStringCellValue();
     		String inhe = r.getCell(16, Row.CREATE_NULL_AS_BLANK).getStringCellValue();
     		int nv = (int)r.getCell(17, Row.CREATE_NULL_AS_BLANK).getNumericCellValue();
@@ -189,10 +191,9 @@ public class CNVSCopyNumberVariationXLSDataReader implements DataReader<CNV> {
     		String geo = r.getCell(26, Row.CREATE_NULL_AS_BLANK).getStringCellValue();
     		String arrayPlat = r.getCell(27, Row.CREATE_NULL_AS_BLANK).getStringCellValue();
     		String arrayId = r.getCell(28, Row.CREATE_NULL_AS_BLANK).getStringCellValue();
-    		String comments = r.getCell(29, Row.CREATE_NULL_AS_BLANK).getStringCellValue();
-	    		
-	    		
-    		
+			String syndrome = r.getCell(29,Row.CREATE_NULL_AS_BLANK).getStringCellValue();
+    		String comments = r.getCell(30, Row.CREATE_NULL_AS_BLANK).getStringCellValue();
+
     		
     		cnv.setRef(ref);
     		cnv.setDecipherId(deciId);
@@ -222,17 +223,20 @@ public class CNVSCopyNumberVariationXLSDataReader implements DataReader<CNV> {
     		cnv.setOrigin(geo);
     		cnv.setArrayPlatform(arrayPlat);
     		cnv.setArrayId(arrayId);
+			if (syndrome != null || syndrome != "") {
+				//TODO buscar syndrome que haya en la base de datos y ponerlo.
+				Syndrome s = new Syndrome();
+				cnv.setSyndrome(s);
+			}
     		cnv.setComments(comments);
-    		
-    		
+
     		list.add(cnv);
     		
     		return list;
     	}else{
     		return null;	
     	}
-    	
-        
+
     }
 
     @Override

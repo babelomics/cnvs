@@ -47,7 +47,7 @@ public class CNV {
     @Property("t")
     private int type;
     @Property("d")
-    private int doses;
+    private float doses;
     @Property("cs")
     private int clinicalSig;
     @Property("i")
@@ -118,7 +118,7 @@ public class CNV {
     }
 
     public String getDoses() {
-        switch (doses) {
+       /* switch (doses) {
             case 0:
                 return "Homozygous deletion";
             case 1:
@@ -130,11 +130,27 @@ public class CNV {
             case 4:
                 return "Amplification";
             default:
-                return "";
+                return ""+doses;
+        }*/
+        if(doses <= -1)
+            return "Homozygous deletion("+doses+")";
+        else if(doses > -1 && doses < -0.35){
+            return "deletion("+doses+")";
+        }else if(doses == 1){
+            return "(X duplication in males)";
+        }else if(0.35 < doses && doses < 0.6){
+            return "duplication("+doses+")";
+        }else if(0.61 < doses && doses < 1){
+            return "triplication("+doses+")";
+        }else if(doses > 1){
+            return "amplification("+doses+")";
         }
+        return ""+doses;
     }
 
     public void setDoses(String doses) {
+
+        //TODO revisar si esto va a cambiar si es con los nuevos valores o que
         switch (doses.toLowerCase().replaceAll(" ", "")) {
             case "homozygous deletion":
                 this.doses = 0;
@@ -155,6 +171,9 @@ public class CNV {
                 this.doses = -1;
                 break;
         }
+    }
+    public void setDoses(float doses){
+        this.doses = doses;
     }
 
     public String getClinicalSig() {
