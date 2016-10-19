@@ -374,20 +374,32 @@
                                     </label>
                                     <label for="doses2" class="stv-control flex">
                                         <input type="checkbox" name="doses" value="2" id="doses2" checked/>
-                                        <span>Duplication</span>
+                                        <span>X duplication in males</span>
                                     </label>
                                     <label for="doses3" class="stv-control flex">
                                         <input type="checkbox" name="doses" value="3" id="doses3" checked/>
-                                        <span>Triplication</span>
+                                        <span>Duplication</span>
                                     </label>
                                     <label for="doses4" class="stv-control flex">
-                                        <input type="checkbox" name="doses" value="3" id="doses4" checked/>
+                                        <input type="checkbox" name="doses" value="4" id="doses4" checked/>
+                                        <span>Triplication</span>
+                                    </label>
+                                    <label for="doses5" class="stv-control flex">
+                                        <input type="checkbox" name="doses" value="5" id="doses5" checked/>
                                         <span>Amplification</span>
                                     </label>
                                 </div>
                             </div>
-                        <textarea class="stv" id="dosesnum" name="dosesnum" placeholder="Numeric doses, Not implemented" value="{{dosesValue::change}}" rows="1"></textarea>
-
+                        <div class="horizontal layout">
+                            <stv-select  id ="dosessigno" value="=">
+                                <stv-option value="=">=</stv-option>
+                                <stv-option value="<"><</stv-option>
+                                <stv-option value=">">></stv-option>
+                                <stv-option value=">=">>=</stv-option>
+                                <stv-option value="<="><=</stv-option>
+                            </stv-select>
+                            <input type="text" class="stv flex" id="dosesnum" name="dosesnum" placeholder="Numeric doses, Not implemented" value="{{dosesValue::change}}"/>
+                        </div>
                         <div class="input_container vertical layout">
                             <label class="stv">Size(Kb):</label>
                             <textarea class="stv" id="size" name="size" placeholder="Not implemented" value="{{sizeValue::change}}" rows="3"></textarea>
@@ -1433,12 +1445,21 @@
             this.$.gv.genomeViewer.addTrack(track);
             this.$.gv.genomeViewer.setTrackIndex(track, 0);
         },
+        dosesNumValidity: function(){
+            if(this.dosesValue != null){
+                if(isNaN(this.dosesValue)) {
+                    alert("doses Number is not a number, check the form");
+                        return (false);
+                }
+            }
+            return true;
+        },
         submitForm: function() {
             var me = this;
             var query = {};
 
             //  if (this.$.form.checkValidity() && (this.regionValue != '' || this.geneValue != '')) {
-            if (this.$.form.checkValidity()) {
+            if (this.$.form.checkValidity() && this.dosesNumValidity()) {
                 var region = null;
                 if (this.regionValue == "") {
                     region = new Region(this.$.gv.genomeViewer.region);
@@ -1638,6 +1659,10 @@
                 if(!this.localIdValue == "") {
                     query.localId = this.localIdValue;
                 }
+                if( this.dosesValue!= null && !this.dosesValue == "" ){
+                    query.dosesnum = this.dosesValue;
+                    query.dosessigno = this.$.dosessigno.value;
+                }
 
                 var url = CNVSManager.regions.fetch({
                     query: query,
@@ -1653,11 +1678,10 @@
 
                 this.$.gv.genomeViewer.setRegion(region);
                 //this.forURL = url;
-
+                this.query = query;
             } else {
-                alert("Please add a region/gene ");
+                alert("Please check the form");
             }
-            this.query = query;
         },
         handleRowClick: function(e) {
             var row = e.detail.row;

@@ -47,6 +47,8 @@ public class RegionWSServer extends CNVSWSServer {
                                         @ApiParam(value = "band") @QueryParam("band") @DefaultValue("") String band,
                                         @ApiParam(value = "type") @QueryParam("type") @DefaultValue("") String type,
                                         @ApiParam(value = "doses") @QueryParam("doses") @DefaultValue("") String doses,
+                                        @ApiParam(value = "dosessigno") @QueryParam("dosessigno") @DefaultValue("") String dosessigno,
+                                        @ApiParam(value = "dosesnum") @QueryParam("dosesnum") @DefaultValue("-10") double dosesnum,
                                         @ApiParam(value = "clis") @QueryParam("clis") @DefaultValue("") String clis,
                                         @ApiParam(value = "inheritance") @QueryParam("inheritance") @DefaultValue("") String inheritance,
                                         @ApiParam(value = "nv") @QueryParam("nv") @DefaultValue("-1") int nv,
@@ -84,7 +86,7 @@ public class RegionWSServer extends CNVSWSServer {
 //            Iterable<CNV> variantes = getCNVs(centerId1, centerId2, centerId3, regionElem, code, decipherId, assembly, band, type, doses, clis, inheritance, nv, cl, gender,
 //                    status, typeS, referalDiag, hpo, year,  yearTest, age, agePrenatal, ethic, geo, arrayPlatform, arrayId, syndrome, limit,
 //                    skip, host, user, pass, count);
-            Iterable<CNV> variantes = getCNVs(regionElem, code, decipherId, assembly, band, type, doses, clis, inheritance, nv, cl, gender,
+            Iterable<CNV> variantes = getCNVs(regionElem, code, decipherId, assembly, band, type, doses, dosessigno, dosesnum, clis, inheritance, nv, cl, gender,
                     status, typeS, referalDiag, hpo, year,  yearTest, age, agePrenatal, ethic, geo, arrayPlatform, arrayId, syndrome, limit,
                     skip, host, user, pass, count);
             for (CNV c : variantes) {
@@ -118,6 +120,8 @@ public class RegionWSServer extends CNVSWSServer {
                                      @ApiParam(value = "band") @QueryParam("band") @DefaultValue("") String band,
                                      @ApiParam(value = "type") @QueryParam("type") @DefaultValue("") String type,
                                      @ApiParam(value = "doses") @QueryParam("doses") @DefaultValue("") String doses,
+                                     @ApiParam(value = "dosessigno") @QueryParam("dosessigno") @DefaultValue("") String dosessigno,
+                                     @ApiParam(value = "dosesnum") @QueryParam("dosesnum") @DefaultValue("-10") double dosesnum,
                                      @ApiParam(value = "clis") @QueryParam("clis") @DefaultValue("") String clis,
                                      @ApiParam(value = "inheritance") @QueryParam("inheritance") @DefaultValue("") String inheritance,
                                      @ApiParam(value = "nv") @QueryParam("nv") @DefaultValue("-1") int nv,
@@ -148,7 +152,7 @@ public class RegionWSServer extends CNVSWSServer {
 //                typeS, referalDiag, hpo, year, yearTest, age, agePrenatal, ethic, geo, arrayPlatform, arrayId, syndrome, limit, skip, host,
 //                user, pass, count);
 
-        Iterable<CNV> variantes = getCNVs(regions, code, decipherId, assembly, band, type, doses, clis, inheritance, nv, cl, gender, status,
+        Iterable<CNV> variantes = getCNVs(regions, code, decipherId, assembly, band, type, doses, dosessigno, dosesnum, clis, inheritance, nv, cl, gender, status,
                 typeS, referalDiag, hpo, year, yearTest, age, agePrenatal, ethic, geo, arrayPlatform, arrayId, syndrome, limit, skip, host,
                 user, pass, count);
         QueryResponse qr = createQueryResponse(variantes);
@@ -167,6 +171,8 @@ public class RegionWSServer extends CNVSWSServer {
                                   @ApiParam(value = "band") @QueryParam("band") @DefaultValue("") String band,
                                   @ApiParam(value = "type") @QueryParam("type") @DefaultValue("") String type,
                                   @ApiParam(value = "doses") @QueryParam("doses") @DefaultValue("") String doses,
+                                  @ApiParam(value = "dosessigno") @QueryParam("dosessigno") @DefaultValue("") String dosessigno,
+                                  @ApiParam(value = "dosesnum") @QueryParam("dosesnum") @DefaultValue("-10") double dosesnum,
                                   @ApiParam(value = "clis") @QueryParam("clis") @DefaultValue("") String clis,
                                   @ApiParam(value = "inheritance") @QueryParam("inheritance") @DefaultValue("") String inheritance,
                                   @ApiParam(value = "nv") @QueryParam("nv") @DefaultValue("-1") int nv,
@@ -306,7 +312,7 @@ public class RegionWSServer extends CNVSWSServer {
 //                inheritanceaux, nv, cl, gender, statusaux, typeSaux, rdaux, hpoaux, yearaux, yearTestaux, ageaux, agePrenatalaux, ethicaux,
 //                geoaux, arrayPlatformaux, arrayIdaux, syndromeaux, skip, limit, host, user, pass);
 
-        QueryCommandLine qpa = new QueryCommandLine(false, code, decipherIdaux, regions, assembly, bandaux, typeaux, dosesaux, clisaux,
+        QueryCommandLine qpa = new QueryCommandLine(false, code, decipherIdaux, regions, assembly, bandaux, typeaux, dosesaux, dosessigno, dosesnum, clisaux,
                 inheritanceaux, nv, cl, gender, statusaux, typeSaux, rdaux, hpoaux, yearaux, yearTestaux, ageaux, agePrenatalaux, ethicaux,
                 geoaux, arrayPlatformaux, arrayIdaux, syndromeaux, skip, limit, host, user, pass);
 

@@ -47,7 +47,7 @@ public class CNV {
     @Property("t")
     private int type;
     @Property("d")
-    private float doses;
+    private double doses;
     @Property("cs")
     private int clinicalSig;
     @Property("i")

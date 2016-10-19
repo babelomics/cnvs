@@ -42,6 +42,12 @@ public class QueryCommandLine {
     @Parameter(names = {"--doses"}, description = "Doses: 0 homozygous deletion, 1 deletion,2 duplication,3 triplication, 4 amplification")
     private List<Integer>  doses = null;
 
+	@Parameter(names = {"--dosessigno"}, description = "Doses: sign for use together 'dosesnum'")
+	private String  dosessigno = "=";
+
+	@Parameter(names = {"--dosesnum"}, description = "Doses: unic value for search")
+	private double  dosesnum = -1;
+
     @Parameter(names = {"--clis"}, description = "Clinical Significance: 0 Definitely pathogenic, 1 Probably pathogenic, 2 Pathogenic, 3 Vous, 4 Likely benign, 5 Benign")
     private List<Integer>  cli = null;
 
@@ -119,8 +125,24 @@ public class QueryCommandLine {
 //							List<String> arrayPlatform, List<String> arrayId,  List<Integer> syndrome, int skip,
 //							int limit, String host, String user, String pass) {
 
+	public String getDosessigno() {
+		return dosessigno;
+	}
+
+	public void setDosessigno(String dosessigno) {
+		this.dosessigno = dosessigno;
+	}
+
+	public double getDosesnum() {
+		return dosesnum;
+	}
+
+	public void setDosesnum(double dosesnum) {
+		this.dosesnum = dosesnum;
+	}
+
 	public QueryCommandLine(boolean all, String code, List<Long> decipId, String regionList, String assembly, List<String> band, List<Integer> type,
-							List<Integer> doses, List<Integer> cli, List<Integer> inhe, int nv, int cl, int gender, List<Integer> status,
+							List<Integer> doses, String dosessigno, double dosesnum, List<Integer> cli, List<Integer> inhe, int nv, int cl, int gender, List<Integer> status,
 							List<Integer> typeSample, List<String> referalDiag, List<String> hpo, List<Integer> year,
 							List<Integer> yearTest, List<String> age, List<Integer> agePrenatal, List<String> ethic, List<String> origin,
 							List<String> arrayPlatform, List<String> arrayId,  List<Integer> syndrome, int skip,
@@ -136,6 +158,8 @@ public class QueryCommandLine {
 		this.band = band;
 		this.type = type;
 		this.doses = doses;
+		this.dosessigno = dosessigno;
+		this.dosesnum = dosesnum;
 		this.cli = cli;
 		this.inhe = inhe;
 		this.nv = nv;

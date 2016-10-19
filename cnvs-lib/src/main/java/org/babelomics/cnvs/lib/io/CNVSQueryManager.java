@@ -71,7 +71,9 @@ public class CNVSQueryManager {
         }
 
         if (q.getDoses() != null && (q.getDoses().size() > 0)) {
-            this.addTypeIntToQuery(q.getDoses(), query, "doses");
+            this.addDosesToQuery(q.getDoses(),q.getDosesnum(),q.getDosessigno(), query);
+        }else if(q.getDosesnum() != -10) {
+            this.addDNumericDosesToQuery(q.getDosesnum(), q.getDosessigno(), query);
         }
 
         if (q.getCli() != null && (!q.getCli().isEmpty())) {
@@ -98,6 +100,8 @@ public class CNVSQueryManager {
         if (q.getTypeSample() != null && (!q.getTypeSample().isEmpty())) {
             this.addTypeIntToQuery(q.getTypeSample(), query, "typeSample");
         }
+
+
         if (q.getReferalDiag() != null && (!q.getReferalDiag().isEmpty())) {
             this.addTypeStringToQuery(q.getReferalDiag(), query, "referalDiag");
         }
@@ -174,7 +178,77 @@ public class CNVSQueryManager {
         }
 
     }
+    private void addDosesToQuery(List<Integer> doses, double dosesnum, String op, Query<CNV> query){
+        int criteriaSize = doses.size();
+        if(dosesnum != -10) {
+            criteriaSize++;
+        }
+        Criteria[] or = new Criteria[criteriaSize];
 
+        int i = 0;
+        for (int dos: doses) {
+            Query<CNV> auxQuery = this.datastore.createQuery(CNV.class);
+            List<Criteria> andList = new ArrayList<>();
+            switch (dos) {
+                case 0:
+                    andList.add(auxQuery.criteria("doses").lessThanOrEq(-1));
+                    break;
+                case 1:
+                    andList.add(auxQuery.criteria("doses").greaterThan(-1));
+                    andList.add(auxQuery.criteria("doses").lessThan(-0.35));
+                    break;
+                case 2:
+                    andList.add(auxQuery.criteria("doses").equal(1));
+                    break;
+                case 3:
+                    andList.add(auxQuery.criteria("doses").greaterThan(0.35));
+                    andList.add(auxQuery.criteria("doses").lessThanOrEq(0.6));
+                    break;
+                case 4:
+                    andList.add(auxQuery.criteria("doses").greaterThanOrEq(0.61));
+                    andList.add(auxQuery.criteria("doses").lessThan(1));
+                    break;
+                case 5:
+                    andList.add(auxQuery.criteria("doses").greaterThanOrEq(1));
+                    break;
+
+            }
+            or[i++] = auxQuery.and(andList.toArray(new Criteria[andList.size()]));
+        }
+        if(dosesnum != -10) {
+            Query<CNV> auxQuery = this.datastore.createQuery(CNV.class);
+            List<Criteria> andList = new ArrayList<>();
+            if (op.equals("=")){
+                andList.add(auxQuery.criteria("doses").equal(dosesnum));
+            }else if (op.equals(">")){
+                andList.add(auxQuery.criteria("doses").greaterThan(dosesnum));
+            } else if (op.equals(">=")){
+                andList.add(auxQuery.criteria("doses").greaterThanOrEq(dosesnum));
+            }else if(op.equals("<=")){
+                andList.add(auxQuery.criteria("doses").lessThanOrEq(dosesnum));
+            }else if(op.equals("<")){
+                andList.add(auxQuery.criteria("doses").lessThan(dosesnum));
+            }
+            or[i++] = auxQuery.and(andList.toArray(new Criteria[andList.size()]));
+        }
+
+        query.or(or);
+        System.out.println("La doses es:"+ doses.size());
+
+    }
+    private void addDNumericDosesToQuery(double doses, String op, Query<CNV> query){
+        if (op.equals("=")){
+            query.field("doses").equal(doses);
+        }else if (op.equals(">")){
+            query.field("doses").greaterThan(doses);
+        } else if (op.equals(">=")){
+            query.field("doses").greaterThanOrEq(doses);
+        }else if(op.equals("<=")){
+            query.field("doses").lessThanOrEq(doses);
+        }else if(op.equals("<")){
+            query.field("doses").lessThan(doses);
+        }
+    }
     private void addTypeLongToQuery(List<Long> l, Query<CNV> query, String name) {
         if (l != null && !l.isEmpty()) {
             query.field(name).in(l);
@@ -237,7 +311,6 @@ public class CNVSQueryManager {
 //            or[i++] = auxQuery.or(auxOr);
         }
         query.or(or);
-        System.out.println(query);
 
     }
 
