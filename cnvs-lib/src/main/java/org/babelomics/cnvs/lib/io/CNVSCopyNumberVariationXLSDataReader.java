@@ -195,7 +195,7 @@ public class CNVSCopyNumberVariationXLSDataReader implements DataReader<CNV> {
     		String comments = r.getCell(30, Row.CREATE_NULL_AS_BLANK).getStringCellValue();
 
     		
-    		cnv.setRef(ref);
+    		cnv.setCode(ref);
     		cnv.setDecipherId(deciId);
     		cnv.setCenterId1(centerId1);
     		cnv.setCenterId2(centerId2);

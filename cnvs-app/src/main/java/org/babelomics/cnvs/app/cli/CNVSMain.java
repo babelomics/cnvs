@@ -30,9 +30,7 @@ import java.util.Arrays;
 import java.util.Iterator;
 import java.util.List;
 
-/**
- * @author Alejandro Alemán Ramos <alejandro.aleman.ramos@gmail.com>
- */
+
 public class CNVSMain {
 
     private static Datastore getDatastore(String host, String user, String pass) {

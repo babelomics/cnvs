@@ -46,6 +46,25 @@ function CNVSRenderer(args) {
     //this.maxValue = 10;
 };
 
+CNVSRenderer.prototype.init = function () {
+    console.log(this.track.main);
+
+    //var width = 5 * args.pixelBase;
+
+    //var rect = SVG.addChild(this.track.main, "rect", {
+    //    'x': 0,
+    //    'y': 0,
+    //    'width': 5,
+    //    'height': 75,
+    //    'stroke': '#3B0B0B',
+    //    'stroke-width': 1,
+    //    'stroke-opacity': 0.7,
+    //    'fill': "blue",
+    //    'cursor': 'pointer'
+    //});
+
+
+};
 
 CNVSRenderer.prototype.render = function (features, args) {
 

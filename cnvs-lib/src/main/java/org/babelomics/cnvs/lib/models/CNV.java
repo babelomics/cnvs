@@ -1,5 +1,6 @@
 package org.babelomics.cnvs.lib.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.babelomics.cnvs.lib.io.CNVSCopyNumberVariationMongoDataWriter;
 import org.bson.types.ObjectId;
 import org.mongodb.morphia.annotations.*;
@@ -21,13 +22,16 @@ public class CNV {
     private ObjectId id;
 
     @Property("r")
-    private String ref;
+    private String code;
     @Property("di")
     private long decipherId;
+    @JsonIgnore
     @Property("ci1")
     private String centerId1;
+    @JsonIgnore
     @Property("ci2")
     private String centerId2;
+    @JsonIgnore
     @Property("ci3")
     private String centerId3;
     @Property("c")
@@ -194,9 +198,9 @@ public class CNV {
             case 1:
                 return "probably pathogenic";
             case 2:
-                return "pathogenic";
+                return " possibly pathogenic";
             case 3:
-                return "vous";
+                return "uncertain/vous";
             case 4:
                 return "likely benign";
             case 5:
@@ -219,6 +223,7 @@ public class CNV {
                 this.clinicalSig = 2;
                 break;
             case "vous":
+            case "uncertain":
                 this.clinicalSig = 3;
                 break;
             case "likely benign":
@@ -248,7 +253,11 @@ public class CNV {
             case 5:
                 return "maternally inherited, mosaic in mother";
             case 6:
+                return "Imbalance arising from a balanced parental rearrangement";
+            case 7:
                 return "biparental";
+            case 8:
+                return "unknown";
             default:
                 return "";
         }
@@ -275,8 +284,14 @@ public class CNV {
             case "maternally inherited, mosaic in mother":
                 this.inheritance = 5;
                 break;
-            case "biparental":
+            case "Imbalance arising from a balanced parental rearrangement":
                 this.inheritance = 6;
+                break;
+            case "biparental":
+                this.inheritance = 7;
+                break;
+            case "unknown":
+                this.inheritance = 8;
                 break;
             default:
                 this.inheritance = -1;
@@ -418,7 +433,11 @@ public class CNV {
             case 3:
                 return "tumour";
             case 4:
+                return "bone marrow";
+            case 5:
                 return "others";
+            case 6:
+                return "unknown";
             default:
                 return "";
         }
@@ -438,8 +457,14 @@ public class CNV {
             case "tumour":
                 this.typeSample = 3;
                 break;
-            case "others":
+            case "bone marrow":
                 this.typeSample = 4;
+                break;
+            case "others":
+                this.typeSample = 5;
+                break;
+            case "unknown":
+                this.typeSample = 6;
                 break;
             default:
                 this.typeSample = -1;
@@ -546,7 +571,7 @@ public class CNV {
 
     @Override
     public String toString() {
-        return "CNV [id=" + id + ", ref=" + ref + ", decipherId=" + decipherId
+        return "CNV [id=" + id + ", code=" + code + ", decipherId=" + decipherId
                 + ", centerId1=" + centerId1 + ", centerId2=" + centerId2
                 + ", centerId3=" + centerId3 + ", chromosome=" + chromosome
                 + ", start=" + start + ", end=" + end + ", assembly="
@@ -651,12 +676,12 @@ public class CNV {
         }
     }
 
-    public String getRef() {
-        return ref;
+    public String getCode() {
+        return code;
     }
 
-    public void setRef(String ref) {
-        this.ref = ref;
+    public void setCode(String code) {
+        this.code = code;
     }
 
     public Syndrome getSyndrome() {

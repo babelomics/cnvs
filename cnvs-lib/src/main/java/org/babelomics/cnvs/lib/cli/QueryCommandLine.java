@@ -1,12 +1,8 @@
 package org.babelomics.cnvs.lib.cli;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import com.beust.jcommander.Parameter;
-import com.mongodb.DuplicateKeyException;
-import org.babelomics.cnvs.lib.models.Syndrome;
-import org.mongodb.morphia.Datastore;
 
 public class QueryCommandLine {
     @Parameter(names = {"--all"}, description = "List all variants", arity = 0) //REVISAR PERO HECHO
@@ -30,8 +26,14 @@ public class QueryCommandLine {
     @Parameter(names = {"--regions"}, description = "Comma-separated list of regions")//HECHO
     private String regionList = null;
 
+	@Parameter(names = {"--sizeOp"}, description = "Size: sign for use together 'sigNum'. Default: '=' ")
+	private String sizeOp = "=";
+
+	@Parameter(names = {"--sizeNum"}, description = "Size: single value for search")
+	private double sizeNum = -1;
+
     @Parameter(names = {"--assembly"}, description = "Assembly hg18, hg19")
-    private String assembly = null;
+    private List<String> assembly = null;
 
     @Parameter(names = {"--band"}, description = "Band")
     private List<String> band = null;
@@ -42,11 +44,11 @@ public class QueryCommandLine {
     @Parameter(names = {"--doses"}, description = "Doses: 0 homozygous deletion, 1 deletion,2 duplication,3 triplication, 4 amplification")
     private List<Integer>  doses = null;
 
-	@Parameter(names = {"--dosessigno"}, description = "Doses: sign for use together 'dosesnum'")
-	private String  dosessigno = "=";
+	@Parameter(names = {"--dosesOp"}, description = "Doses: sign for use together 'dosesNum'")
+	private String dosesOp = "=";
 
-	@Parameter(names = {"--dosesnum"}, description = "Doses: unic value for search")
-	private double  dosesnum = -1;
+	@Parameter(names = {"--dosesNum"}, description = "Doses: single value for search")
+	private double dosesNum = -1;
 
     @Parameter(names = {"--clis"}, description = "Clinical Significance: 0 Definitely pathogenic, 1 Probably pathogenic, 2 Pathogenic, 3 Vous, 4 Likely benign, 5 Benign")
     private List<Integer>  cli = null;
@@ -125,24 +127,24 @@ public class QueryCommandLine {
 //							List<String> arrayPlatform, List<String> arrayId,  List<Integer> syndrome, int skip,
 //							int limit, String host, String user, String pass) {
 
-	public String getDosessigno() {
-		return dosessigno;
+	public String getDosesOp() {
+		return dosesOp;
 	}
 
-	public void setDosessigno(String dosessigno) {
-		this.dosessigno = dosessigno;
+	public void setDosesOp(String dosesOp) {
+		this.dosesOp = dosesOp;
 	}
 
-	public double getDosesnum() {
-		return dosesnum;
+	public double getDosesNum() {
+		return dosesNum;
 	}
 
-	public void setDosesnum(double dosesnum) {
-		this.dosesnum = dosesnum;
+	public void setDosesNum(double dosesNum) {
+		this.dosesNum = dosesNum;
 	}
 
-	public QueryCommandLine(boolean all, String code, List<Long> decipId, String regionList, String assembly, List<String> band, List<Integer> type,
-							List<Integer> doses, String dosessigno, double dosesnum, List<Integer> cli, List<Integer> inhe, int nv, int cl, int gender, List<Integer> status,
+	public QueryCommandLine(boolean all, String code, List<Long> decipId, String regionList, String sizeOp, int sizeNum, List<String> assembly, List<String> band, List<Integer> type,
+							List<Integer> doses, String dosesOp, double dosesNum, List<Integer> cli, List<Integer> inhe, int nv, int cl, int gender, List<Integer> status,
 							List<Integer> typeSample, List<String> referalDiag, List<String> hpo, List<Integer> year,
 							List<Integer> yearTest, List<String> age, List<Integer> agePrenatal, List<String> ethic, List<String> origin,
 							List<String> arrayPlatform, List<String> arrayId,  List<Integer> syndrome, int skip,
@@ -154,12 +156,14 @@ public class QueryCommandLine {
 //		this.centerId2 = centerId2;
 //		this.centerId3 = centerId3;
 		this.regionList = regionList;
+		this.sizeOp = sizeOp;
+		this.sizeNum = sizeNum;
 		this.assembly = assembly;
 		this.band = band;
 		this.type = type;
 		this.doses = doses;
-		this.dosessigno = dosessigno;
-		this.dosesnum = dosesnum;
+		this.dosesOp = dosesOp;
+		this.dosesNum = dosesNum;
 		this.cli = cli;
 		this.inhe = inhe;
 		this.nv = nv;
@@ -251,11 +255,11 @@ public class QueryCommandLine {
 		this.regionList = regionList;
 	}
 
-	public String getAssembly() {
+	public List<String> getAssembly() {
 		return assembly;
 	}
 
-	public void setAssembly(String assembly) {
+	public void setAssembly(List<String> assembly) {
 		this.assembly = assembly;
 	}
 

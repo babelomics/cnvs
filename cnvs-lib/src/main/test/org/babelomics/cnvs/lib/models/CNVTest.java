@@ -2,7 +2,6 @@ package org.babelomics.cnvs.lib.models;
 
 import org.junit.After;
 import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.Test;
 
 import static org.junit.Assert.*;
@@ -18,7 +17,7 @@ public class CNVTest {
     @Before
     public void setUp() throws Exception {
         this.cnv = new CNV();
-        this.cnv.setRef("C");
+        this.cnv.setCode("C");
     }
 
     @After
@@ -303,13 +302,13 @@ public class CNVTest {
 
     @org.junit.Test
     public void testGetRef() throws Exception {
-        assertEquals(this.cnv.getRef(), "C");
+        assertEquals(this.cnv.getCode(), "C");
 
     }
 
     @org.junit.Test
     public void testSetRef() {
-        this.cnv.setRef("A");
-        assertEquals(this.cnv.getRef(), "A");
+        this.cnv.setCode("A");
+        assertEquals(this.cnv.getCode(), "A");
     }
 }

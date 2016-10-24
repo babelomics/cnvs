@@ -59,7 +59,7 @@ public class CNVSQueryManager {
         }
 
         if (q.getAssembly() != null && !q.getAssembly().isEmpty()) {
-            query.filter("assembly =", q.getAssembly());
+            this.addTypeStringToQuery(q.getAssembly(), query, "assembly");
         }
 
         if (q.getBand() != null && !q.getBand().isEmpty()) {
@@ -71,9 +71,9 @@ public class CNVSQueryManager {
         }
 
         if (q.getDoses() != null && (q.getDoses().size() > 0)) {
-            this.addDosesToQuery(q.getDoses(),q.getDosesnum(),q.getDosessigno(), query);
-        }else if(q.getDosesnum() != -10) {
-            this.addDNumericDosesToQuery(q.getDosesnum(), q.getDosessigno(), query);
+            this.addDosesToQuery(q.getDoses(),q.getDosesNum(),q.getDosesOp(), query);
+        }else if(q.getDosesNum() != -10) {
+            this.addDNumericDosesToQuery(q.getDosesNum(), q.getDosesOp(), query);
         }
 
         if (q.getCli() != null && (!q.getCli().isEmpty())) {
@@ -100,7 +100,6 @@ public class CNVSQueryManager {
         if (q.getTypeSample() != null && (!q.getTypeSample().isEmpty())) {
             this.addTypeIntToQuery(q.getTypeSample(), query, "typeSample");
         }
-
 
         if (q.getReferalDiag() != null && (!q.getReferalDiag().isEmpty())) {
             this.addTypeStringToQuery(q.getReferalDiag(), query, "referalDiag");
