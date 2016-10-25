@@ -4,6 +4,7 @@
 <link rel="import" href="../bower_components/stevia-elements/src/ontology/stv-hpo.html">
 <link rel="import" href="../bower_components/stevia-elements/src/table/stv-table.html">
 <link rel="import" href="../bower_components/stevia-elements/src/stv-search.html">
+<link rel="import" href="cnvs-syndrome.html">
 
 
 <dom-module id="cnvs-search-element">
@@ -589,6 +590,15 @@
                 <stv-hpo hpo-value="{{hpoValue}}" on-added="showHPO"></stv-hpo>
             </div>
         </stv-panel>
+
+        <stv-panel id="syndromePanel" style="height:700px" modal closable hidden>
+            <div class="header">
+                <i class="fa fa-search" aria-hidden="true"></i> Aneuploid Deletion Duplication Syndrome
+            </div>
+            <div class="container" style="width:100%">
+                <cnvs-syndrome syndrome-value="{{syndromeValue}}" on-added="showSyndrome"></cnvs-syndrome>
+            </div>
+        </stv-panel>
         <div class="right vertical layout">
             <!--  <div id="selectordeEnfermedades" >
                 <stv-table ></stv-table>
@@ -707,6 +717,23 @@
                 value: '',
             },
             hpoToQuery: {
+                type: String,
+                value: "",
+            },
+            syndromeValue: {
+                type: Array,
+                notify: true,
+                value: function() {
+                    return [];
+                },
+                observer: 'syndromeValueChanged'
+            },
+            syndromeSearch: {
+                type: String,
+                notify: true,
+                value: '',
+            },
+            syndromeToQuery: {
                 type: String,
                 value: "",
             },
@@ -893,9 +920,21 @@
                 this.hpoSearch = hpoName.join(",");
             }
         },
+        syndromeValueChanged: function(neo, old) {
+            if (neo) {
+                var syndromeName = [];
+                for (var i = 0; i < neo.length; i++) {
+                    syndromeName.push(neo[i].n);
+                }
+                this.syndromeSearch = syndromeName.join(",");
+            }
+        },
         clearHPO: function(){
             this.hpoSearch = "";
             this.hpoValue = [];
+        },
+        showSyndrome: function() {
+            this.$.syndromePanel.hidden = !this.$.syndromePanel.hidden;
         },
         cnvToString: function(o){
             return o.code + "\t" + o.decipherId + "\t" + o.chromosome + "\t" + o.start + "\t" + o.end + "\t" + o.status + "\t" + o.typeSample
