@@ -46,6 +46,7 @@ public class CNVSMain {
             mongoClient = new MongoClient(new ServerAddress(host), Arrays.asList(credential));
         }
         Datastore datastore = morphia.createDatastore(mongoClient, "cnvs");
+
         datastore.ensureIndexes();
 
         return datastore;
@@ -53,7 +54,6 @@ public class CNVSMain {
     }
 
     public static void main(String[] args) throws IOException {
-
 
         OptionsParser parser = new OptionsParser();
 
@@ -107,7 +107,6 @@ public class CNVSMain {
                 JCommander cmd1 = new JCommander(cmdLine);
 
                 try {
-
                     cmd1.parse(newArgs);
                 } catch (Exception e) {
                     cmd1.usage();
@@ -125,7 +124,6 @@ public class CNVSMain {
                 for (CNV cnv : res) {
                     System.out.println(cnv);
                 }
-
 
             } else if (cmd.equalsIgnoreCase("annot")) {
                 parser.parse(args);
@@ -148,7 +146,6 @@ public class CNVSMain {
                     batch.clear();
                 }
 
-
             } else if (cmd.equalsIgnoreCase("loadsyndrome")){
                 parser.parse(args);
                 OptionsParser.CommandLoadSyndromes c = parser.getLoadsyndrome();
@@ -165,9 +162,7 @@ public class CNVSMain {
             System.exit(1);
         }
 
-
     }
-
 
     public static void syndromes(Datastore datastore){
 

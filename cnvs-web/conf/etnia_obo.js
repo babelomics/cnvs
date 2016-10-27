@@ -1,0 +1,11 @@
+ETHNICS=[{'id':'1', 'n':"Blanco mediterráneo"},
+    {'id':'2', 'n':'Blanco caucásico'},
+    {'id':'3', 'n':'Negro)'},
+    {'id':'4', 'n':'Oriental/Asiático'},
+    {'id':'5', 'n':'Amerindio'},
+    {'id':'6', 'n':'Gitano'},
+    {'id':'7', 'n':'Arábico'},
+    {'id':'8', 'n':'Hindú'},
+    {'id':'9', 'n':'Indígena Australiano'},
+    {'id':'10', 'n':'Judío Askenazi'},
+    {'id':'11', 'n':'Judío sefardí'}]

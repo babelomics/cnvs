@@ -5,6 +5,7 @@
 <link rel="import" href="../bower_components/stevia-elements/src/table/stv-table.html">
 <link rel="import" href="../bower_components/stevia-elements/src/stv-search.html">
 <link rel="import" href="cnvs-syndrome.html">
+<link rel="import" href="cnvs-ethnic.html">
 
 
 <dom-module id="cnvs-search-element">
@@ -183,8 +184,18 @@
                         </div>
 
                         <div class="input_container vertical layout">
-                            <label class="stv">Ethnic Group</label>
-                            <textarea class="stv" id="ethnic" name="ethnic" placeholder="White Mediterranean,Amerindian" value="{{ethicValue::change}}" rows="3"></textarea>
+
+                        </div>
+                        <div class="input_container vertical layout">
+                            <div class="horizontal layout">
+                                <label style="color: black" class="stv flex">Ethnic Group</label>
+                                <div class="horizontal layout" style="color: #006699;margin-top:2px;line-height:28px;">
+                                    <div class="stv-btn stv-btn-shdw searchBut" on-click="showEthnic" title="Search Ethnic" ><i class="fa fa-search" aria-hidden="true"></i></div>
+                                    <div class="stv-btn stv-btn-shdw" title="Clean Ethnic form" on-click="clearEthnic"><img style="height: 16px; padding:2px" src="../images/escoba.ico"></div>
+                                </div>
+                            </div>
+                            <textarea class="stv" id="ethnic" name="ethnic" value="{{ethnicSearch::change}}" rows="3" placeholder="White Mediterranean,Amerindian" disabled></textarea>
+
                         </div>
 
                         <div class="input_container vertical layout">
@@ -498,7 +509,7 @@
                                 </div>
                             </div>
                                 <!--<stv-search id="syndromesearch"  placeholder="Search" minQueryLength="1" on-item-select="handleSyndromeSearchSelect" empty-message="No syndrome found."></stv-search>-->
-                            <textarea class="stv" id="aneuploid" name="aneuploid" placeholder="Not implemented" value="{{syndromeSearch::change}}" rows="3" disabled></textarea>
+                            <textarea class="stv" id="aneuploid" name="aneuploid" placeholder="1p36 microdeletion syndrome" value="{{syndromeSearch::change}}" rows="3" disabled></textarea>
                         </div>
 
 
@@ -597,6 +608,15 @@
             </div>
             <div class="container" style="width:100%">
                 <cnvs-syndrome syndrome-value="{{syndromeValue}}" on-added="showSyndrome"></cnvs-syndrome>
+            </div>
+        </stv-panel>
+
+        <stv-panel id="ethnicPanel" style="height:700px" modal closable hidden>
+            <div class="header">
+                <i class="fa fa-search" aria-hidden="true"></i> Ethnic Group
+            </div>
+            <div class="container" style="width:100%">
+                <cnvs-ethnic ethnic-value="{{ethnicValue}}" on-added="showEthnic"></cnvs-ethnic>
             </div>
         </stv-panel>
         <div class="right vertical layout">
@@ -734,6 +754,23 @@
                 value: '',
             },
             syndromeToQuery: {
+                type: String,
+                value: "",
+            },
+            ethnicValue: {
+                type: Array,
+                notify: true,
+                value: function() {
+                    return [];
+                },
+                observer: 'ethnicValueChanged'
+            },
+            ethnicSearch: {
+                type: String,
+                notify: true,
+                value: '',
+            },
+            ethnicToQuery: {
                 type: String,
                 value: "",
             },
@@ -920,6 +957,13 @@
                 this.hpoSearch = hpoName.join(",");
             }
         },
+        clearHPO: function(){
+            this.hpoSearch = "";
+            this.hpoValue = [];
+        },
+        showSyndrome: function() {
+            this.$.syndromePanel.hidden = !this.$.syndromePanel.hidden;
+        },
         syndromeValueChanged: function(neo, old) {
             if (neo) {
                 var syndromeName = [];
@@ -929,12 +973,25 @@
                 this.syndromeSearch = syndromeName.join(",");
             }
         },
-        clearHPO: function(){
-            this.hpoSearch = "";
-            this.hpoValue = [];
+        clearSyndrome: function(){
+            this.syndromeSearch = "";
+            this.syndromeValue = [];
         },
-        showSyndrome: function() {
-            this.$.syndromePanel.hidden = !this.$.syndromePanel.hidden;
+        showEthnic: function() {
+            this.$.ethnicPanel.hidden = !this.$.ethnicPanel.hidden;
+        },
+        ethnicValueChanged: function(neo, old) {
+            if (neo) {
+                var ethnicName = [];
+                for (var i = 0; i < neo.length; i++) {
+                    ethnicName.push(neo[i].n);
+                }
+                this.ethnicSearch = ethnicName.join(",");
+            }
+        },
+        clearEthnic: function(){
+            this.ethnicSearch = "";
+            this.ethnicValue = [];
         },
         cnvToString: function(o){
             return o.code + "\t" + o.decipherId + "\t" + o.chromosome + "\t" + o.start + "\t" + o.end + "\t" + o.status + "\t" + o.typeSample
@@ -1156,7 +1213,7 @@
                     title: 'Year Birth',
                     width: 80
                 }, {
-                    name: 'yearOfTest',
+                    name: 'yearTest',
                     title: 'Year Test',
                     width: 80
                 }, {

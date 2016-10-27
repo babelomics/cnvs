@@ -96,7 +96,7 @@ public class CNVSCopyNumberVariationXLSDataReader implements DataReader<CNV> {
     	*/
     	System.out.println(this.header);
     	
-    	String[] columnas = {"#","01-Code", "02-Decipher ID","03-Local ID","03-Local ID","03-Local ID","04-Chromosome", "05-Start", "06-End", "07-Assembly", "08-Genes", "09-Band" , "10-Size (Kb)", "11-Type of variant" , "12-Doses (Mean ratio)", "13-Clinical significance", "14-Inheritance", "15-Number of variants", "16-Cell line", "17-Chromosomal gender", "18-Status", "19-Type of sample", "20-Referral diagnosis", "21-Phenotype (HPO)", "22-Year of Birth", "23-Ethnic group", "24-Geographic origin", "25-Array platform", "26-array ID", "28-Aneuploidy-Deletion/Duplication Syndrome", "27-Comments"};
+    	String[] columnas = {"#","01-Code", "02-Decipher ID","03-Local ID","03-Local ID","03-Local ID","04-Chromosome", "05-Start", "06-End", "07-Assembly", "08-Genes", "09-Band" , "10-Size (Kb)", "11-Type of variant" , "12-Doses (Mean ratio)", "13-Clinical significance", "14-Inheritance", "15-Number of variants", "16-Cell line", "17-Chromosomal gender", "18-Status", "19-Type of sample", "20-Referral diagnosis", "21-Phenotype (HPO)", "22-Year of Birth", "22-bis Year test performed", "Age", "Age in weeks (only for prenatal)", "23-Ethnic group", "24-Geographic origin", "25-Array platform", "26-array ID", "28-Aneuploidy-Deletion/Duplication Syndrome", "27-Comments"};
     	Row headerRow= this.it.next();
     	nc = headerRow.getLastCellNum();
     	for(int i = 0; i < columnas.length; i++){
@@ -146,8 +146,9 @@ public class CNVSCopyNumberVariationXLSDataReader implements DataReader<CNV> {
    
     public List<CNV> read() {
     	CNV cnv = new CNV();
-    	
-    	if(this.it.hasNext() && vacio <3){
+		System.out.println(cnv);
+
+		if(this.it.hasNext() && vacio <3){
 
     		List<CNV> list = new ArrayList<>();
     		Row r = this.it.next();
@@ -176,6 +177,7 @@ public class CNVSCopyNumberVariationXLSDataReader implements DataReader<CNV> {
     		
     		String type = r.getCell(13, Row.CREATE_NULL_AS_BLANK).getStringCellValue();
     		//String doses = r.getCell(14, Row.CREATE_NULL_AS_BLANK).getStringCellValue();
+
 			float doses = (float)r.getCell(14, Row.CREATE_NULL_AS_BLANK).getNumericCellValue();
     		String clisig = r.getCell(15, Row.CREATE_NULL_AS_BLANK).getStringCellValue();
     		String inhe = r.getCell(16, Row.CREATE_NULL_AS_BLANK).getStringCellValue();
@@ -187,12 +189,19 @@ public class CNVSCopyNumberVariationXLSDataReader implements DataReader<CNV> {
     		String refediag = r.getCell(22, Row.CREATE_NULL_AS_BLANK).getStringCellValue();// HABRA QUE RETOCARLO
     		String hpo = r.getCell(23, Row.CREATE_NULL_AS_BLANK).getStringCellValue();
     		int yearB = (int)r.getCell(24, Row.CREATE_NULL_AS_BLANK).getNumericCellValue();
-    		String ehnic = r.getCell(25, Row.CREATE_NULL_AS_BLANK).getStringCellValue();
-    		String geo = r.getCell(26, Row.CREATE_NULL_AS_BLANK).getStringCellValue();
-    		String arrayPlat = r.getCell(27, Row.CREATE_NULL_AS_BLANK).getStringCellValue();
-    		String arrayId = r.getCell(28, Row.CREATE_NULL_AS_BLANK).getStringCellValue();
-			String syndrome = r.getCell(29,Row.CREATE_NULL_AS_BLANK).getStringCellValue();
-    		String comments = r.getCell(30, Row.CREATE_NULL_AS_BLANK).getStringCellValue();
+    		int yeartest = (int)r.getCell(25, Row.CREATE_NULL_AS_BLANK).getNumericCellValue();
+			System.out.println("antes de la edad");
+			String age = readAge(r);
+			System.out.println("age = " + age);
+			int ageweek = (int)r.getCell(27, Row.CREATE_NULL_AS_BLANK).getNumericCellValue();
+			System.out.println("ageweek = " + ageweek);
+			String ehnic = r.getCell(28, Row.CREATE_NULL_AS_BLANK).getStringCellValue();
+    		String geo = r.getCell(29, Row.CREATE_NULL_AS_BLANK).getStringCellValue();
+    		String arrayPlat = r.getCell(30, Row.CREATE_NULL_AS_BLANK).getStringCellValue();
+    		String arrayId = r.getCell(31, Row.CREATE_NULL_AS_BLANK).getStringCellValue();
+
+			String syndrome = r.getCell(32,Row.CREATE_NULL_AS_BLANK).getStringCellValue();
+    		String comments = r.getCell(33, Row.CREATE_NULL_AS_BLANK).getStringCellValue();
 
     		
     		cnv.setCode(ref);
@@ -219,26 +228,38 @@ public class CNVSCopyNumberVariationXLSDataReader implements DataReader<CNV> {
     		cnv.setReferalDiag(refediag);
     		cnv.setPhenotype(hpo);
     		cnv.setYearOfBirth(yearB);
+			cnv.setYearTest(yeartest);
+			cnv.setAge(age);
+			cnv.setAgePrenatal(ageweek);
     		cnv.setEthnicGroup(ehnic);
     		cnv.setOrigin(geo);
     		cnv.setArrayPlatform(arrayPlat);
     		cnv.setArrayId(arrayId);
-			if (syndrome != null || syndrome != "") {
-				//TODO buscar syndrome que haya en la base de datos y ponerlo.
-				Syndrome s = new Syndrome();
-				cnv.setSyndrome(s);
-			}
+//			if (syndrome != null || syndrome != "") {
+//				//TODO buscar syndrome que haya en la base de datos y ponerlo.
+//				Syndrome s = new Syndrome();
+//				cnv.setSyndrome(s);
+//			}
     		cnv.setComments(comments);
 
     		list.add(cnv);
     		
     		return list;
     	}else{
-    		return null;	
+			System.out.println("HOLA");
+			return null;
     	}
 
     }
-
+	public String readAge(Row r){
+		String age;
+		try {
+			age = ""+ r.getCell(26, Row.CREATE_NULL_AS_BLANK).getNumericCellValue();
+		}catch(Exception e){
+			age =r.getCell(26, Row.CREATE_NULL_AS_BLANK).getStringCellValue();
+		}
+		return age;
+	}
     @Override
     public List<CNV> read(int batchSize) {
     	

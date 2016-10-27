@@ -5,10 +5,7 @@ import org.babelomics.cnvs.lib.io.CNVSCopyNumberVariationMongoDataWriter;
 import org.bson.types.ObjectId;
 import org.mongodb.morphia.annotations.*;
 
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @Entity(noClassnameStored = true)
 @Indexes({
@@ -84,17 +81,20 @@ public class CNV {
     private String arrayPlatform;
     @Property("ai")
     private String arrayId;
+    //@Embedded("sy")
     @Reference("sy")
-    private Syndrome syndrome;
+    private List<Syndrome> syndrome;
     @Property("co")
     private String comments;
     @Property("_at")
     private Map<String, Object> attr;
 
 
+
+
     public CNV() {
         this.attr = new HashMap<>();
-
+        this.syndrome = new ArrayList<>();
     }
 
     public String getAssembly() {
@@ -154,7 +154,7 @@ public class CNV {
 
     public void setDoses(String doses) {
 
-        //TODO revisar si esto va a cambiar si es con los nuevos valores o que
+        //TODO revisar si esto va a cambiar si es con los nuevos valores o que PARECE QUE CORRECTO.
         switch (doses.toLowerCase().replaceAll(" ", "")) {
             case "homozygous deletion":
                 this.doses = 0;
@@ -198,7 +198,7 @@ public class CNV {
             case 1:
                 return "probably pathogenic";
             case 2:
-                return " possibly pathogenic";
+                return "possibly pathogenic";
             case 3:
                 return "uncertain/vous";
             case 4:
@@ -505,10 +505,11 @@ public class CNV {
     }
 
     public void setAge(String age) {
+        age = age.toLowerCase();
         if (age.equals("prenatal")){
             this.age = -2;
         }else {
-            this.age = Integer.parseInt(age);
+            this.age = new Double(age).intValue();
         }
     }
 
@@ -684,13 +685,13 @@ public class CNV {
         this.code = code;
     }
 
-    public Syndrome getSyndrome() {
+    public List<Syndrome> getSyndrome() {
         return syndrome;
     }
-
-    public void setSyndrome(Syndrome syndrome) {
+    public void setSyndrome(List<Syndrome> syndrome) {
         this.syndrome = syndrome;
     }
+
     public String getComments() {
         return comments;
     }
