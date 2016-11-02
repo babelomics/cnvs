@@ -177,9 +177,9 @@
                             <label class="stv">Age at diagnosis</label>
                             <label for="prenatal" class="stv-control flex">
                                 <input type="checkbox" name="prenatal" value="0" id="prenatal"/>
-                                <span>Prenatal(in months)</span>
+                                <span>Prenatal(in weeks)</span>
                             </label>
-                            <input type="text" class="stv" id="age" name="age" placeholder="Age: 1, Not implemented" value="{{ageValue::change}}" />
+                            <input type="text" class="stv" id="age" name="age" placeholder="Age: in years, Prenatal in weeks Not implemented" value="{{ageValue::change}}" />
 
                         </div>
 
@@ -500,9 +500,9 @@
                         </div>
 
                         <div class="input_container vertical layout">
-                            <label style="color: black; word-break: keep-all" class="stv flex">  Aneuploid-Deletion-Duplication</label>
+                            <!--<label style="color: black; word-break: keep-all" class="stv flex">  Aneuploid-Deletion-Duplication</label>-->
                                 <div class="horizontal layout">
-                                <label style="color: black; " class="stv flex">  Syndrome</label>
+                                <label style="color: black; " class="stv flex">  Genomic Disorders</label>
                                 <div class="horizontal layout" style="color: #006699;margin-top:2px;line-height:28px;">
                                     <div class="stv-btn stv-btn-shdw searchBut" on-click="showSyndrome" title="Search Syndrome" ><i class="fa fa-search" aria-hidden="true"></i></div>
                                     <div class="stv-btn stv-btn-shdw" title="Clean Syndrome form" on-click="clearSyndrome"><img style="height: 16px; padding:2px" src="../images/escoba.ico"></div>

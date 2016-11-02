@@ -20,19 +20,30 @@ public class Syndrome {
     @Property("sid")
     private int syndromeId;
 
+    @Property("c")
+    private String chromosome;
+
     @Property("n")
     private String name;
 
 
-
-
-    public Syndrome(int syndromeId, String name) {
+    public Syndrome(int syndromeId, String chromosome, String name) {
         this.name = name;
+        this.chromosome = chromosome;
         this.syndromeId = syndromeId;
     }
 
     public Syndrome() {
-        this(-1, "");
+        this(-1, "-1","");
+    }
+
+    public String getChromosome() {
+        return chromosome;
+    }
+
+
+    public void setChromosome(String chromosome) {
+        this.chromosome = chromosome;
     }
 
     public String getName() {
@@ -56,7 +67,9 @@ public class Syndrome {
         return "Syndrome{" +
                 "id=" + id +
                 ", syndromeId=" + syndromeId +
+                ", chromosome='" + chromosome + '\'' +
                 ", name='" + name + '\'' +
                 '}';
     }
+
 }
