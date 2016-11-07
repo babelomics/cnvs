@@ -1,0 +1,188 @@
+<link rel="import" href="../bower_components/polymer/polymer.html">
+<link rel="import" href="../bower_components/iron-flex-layout/iron-flex-layout.html">
+<link rel="import" href="add-unique-cnv.html">
+<link rel="import" href="add-multiple-cnv.html">
+<link rel="import" href="see-cnv-added.html">
+
+
+<dom-module id="add-cnv">
+    <style is="custom-style" include="iron-flex iron-flex-reverse iron-flex-alignment iron-flex-factors iron-positioning">
+        :host {
+            display: block;
+            position: relative;
+            box-sizing: border-box;
+            background-color: var(--light-secondary-color);
+            @apply(--layout-horizontal);
+        }
+
+        .right,
+        .left {
+            position: relative;
+            box-sizing: border-box;
+            width: 250px;
+            min-width: 250px;
+        }
+
+        .left {
+            padding:10px;
+        }
+
+        .right {
+            @apply(--layout-flex);
+            padding-left: 0;
+        }
+
+        textarea {
+            resize: none;
+        }
+
+        .searchGene {
+            margin-top: 5px;
+        }
+
+        .container > span {
+            margin-left: 10px;
+        }
+
+        #tools {
+            margin-top: 10px;
+        }
+
+
+        .stv-formbox,
+        #tablaresultadosPanel {
+            box-shadow: 0px 0px 3px 1px rgba(0, 0, 0, 0.2);
+        }
+
+        #tablaresultados {
+            border-top: 1px solid #d3d3d3;
+        }
+
+        #tablaresultadosPanel {
+            border: 1px solid #d3d3d3;
+        }
+
+        .stv-formcontent {
+            display: none;
+        }
+        stv-search{
+            padding: 0px;
+            margin:0px;
+            width:198px;
+        }
+        stv-table {
+            overflow-y: auto;
+        }
+
+        stv-table::shadow .table-header-field > .name.stv-table {
+            padding: 4px 0;
+        }
+
+        stv-table::shadow #list {
+            max-height: 300px;
+            min-height: 50px;
+            overflow-x: auto
+        }
+        stv-table.small::shadow .table-row {
+            height:30px;
+        }
+
+        stv-table.big::shadow .table-row {
+            height:50px;
+        }
+        /*.stv-formbox  img{
+
+
+        }*/
+
+        .stv-formtitle img {
+            float: right;
+            /* background: #006699;*/
+            height: 20px;
+            width: 20px;
+            -moz-transition: all 0.2s ease-in-out;
+            -webkit-transition: all 0.2s ease-in-out;
+            -o-transition: all 0.2s ease-in-out;
+            transition: all 0.2s ease-in;
+        }
+
+        .toggleElement {
+            display: block;
+        }
+        .input_container {
+            margin-bottom: 5px;
+        }
+        .input_container >label{
+            /*color: #225e71;*/
+            color: black;
+        }
+        .stv-control >span{
+            color:gray;
+        }
+        .logo{
+            max-height: 40px;
+            max-width: 90px;
+            margin: 10px;
+        }
+        #inheritance span{
+            font-size: 12px;
+        }
+
+    </style>
+    <template>
+        <form id="form" class="left">
+            <div class="form_block positionBlock">
+                <div class="stv-formbox">
+                    <label on-click="showAddUnique">
+                        <div class="stv-formtitle">
+                            ADD CNV
+                            <img src="../images/flechaizquierdaazul.png" id="addfoto" />
+                        </div>
+                    </label>
+                    </div>
+                </div>
+                <div class="stv-formbox">
+                    <label on-click="showAddMultiple">
+                        <div class="stv-formtitle">
+                            ADD MULTIPLE CNV
+                            <img src="../images/flechaizquierdaazul.png" id="addMultifoto" />
+                        </div>
+                    </label>
+                </div>
+                <div class="stv-formbox">
+                    <label on-click="showCNVs">
+                        <div class="stv-formtitle">
+                            SEE CNV ADDED
+                            <img src="../images/flechaizquierdaazul.png" id="seefoto" />
+                        </div>
+                    </label>
+                </div>
+            </div>
+        </form>
+
+        <div class="right vertical layout">
+            <add-unique-cnv style="padding: 10px 0"></add-unique-cnv>
+            <!--<add-multiple-cnv ></add-multiple-cnv>-->
+            <!--<see-cnv-added></see-cnv-added>-->
+
+            <span style="color: #006699;font-size: 14px; margin:10px">Supported by:</span>
+            <div class="layout flex">
+                <img src="../images/ELIXIR_logo.png" class="logo">
+                <img src="../images/logo_Babelomics_negative.svg" class="logo">
+                <img src="../images/logo_inb.png" class="logo">
+                <img src="../images/logo_cipf.png" class="logo">
+                <img src="../images/logo_ciberer.jpg" class="logo">
+                <img src="../images/LOGO_Micinn_Isciii.jpg" class="logo">
+                <img src="../images/logo_ISCIII.jpg" class="logo">
+                <img src="../images/logo_PRB2.jpg" class="logo">
+                <img src="../images/logo_feder.jpg" class="logo">
+            </div>
+        </div>
+    </template>
+</dom-module>
+<script>
+    Polymer({
+        is: 'add-cnv',
+        properties: { }
+    });
+</script>

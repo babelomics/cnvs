@@ -13,6 +13,7 @@
 <link rel="import" href="bower_components/stevia-elements/src/dropdown/stv-dropdown.html">
 
 <link rel="import" href="src/cnvs-search-element.html">
+<link rel="import" href="src/add-cnv.html">
 
 <script src="src/cnvs-manager.js"></script>
 <script src="src/cnvs-renderer.js"></script>
@@ -63,7 +64,8 @@
             font-weight: normal;
         }
 
-        cnvs-search-element {
+        cnvs-search-element,
+        add-cnv {
             height: calc(100vh - 60px);
         }
 
@@ -71,6 +73,11 @@
     <template>
         <div class="content" menu-option="home">
             <cnvs-search-element></cnvs-search-element>
+
+        </div>
+        <div class="content" menu-option="add">
+
+            <add-cnv></add-cnv>
         </div>
 
         <stv-header id="stvHeader" hide-jobs hide-browse hide-signup selected-option="{{selectedOption}}" user-data="{{userData}}">
@@ -82,6 +89,11 @@
 
             <div id="menu" class="menu horizontal layout center flex">
                 <div style="margin-left:4vw;"></div>
+
+                <div title="" class="option" on-click="handleMenuOption" data-option="add">
+                    <i class="fa fa-magic"></i>
+                    <span class="option-text">Add</span>
+                </div>
             </div>
 
             <stv-dropdown dark class="helpmenu">
@@ -121,7 +133,8 @@
     Polymer({
         is: 'cnvs-element',
         behaviors: [StvApplicationBehavior],
-        created: function() {},
-        ready: function() {}
+        ready: function() {
+            this.setMenu('add');
+        }
     });
 </script>

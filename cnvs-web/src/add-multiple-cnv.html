@@ -1,14 +1,13 @@
 <link rel="import" href="../bower_components/polymer/polymer.html">
 <link rel="import" href="../bower_components/iron-flex-layout/iron-flex-layout.html">
-<link rel="import" href="../bower_components/jsorolla/src/lib/components/jso-genome-viewer-element.html">
-<link rel="import" href="../bower_components/stevia-elements/src/ontology/stv-hpo.html">
+<!--<link rel="import" href="../bower_components/stevia-elements/src/ontology/stv-hpo.html">-->
 <link rel="import" href="../bower_components/stevia-elements/src/table/stv-table.html">
 <link rel="import" href="../bower_components/stevia-elements/src/stv-search.html">
 <link rel="import" href="cnvs-syndrome.html">
 <link rel="import" href="cnvs-ethnic.html">
 
 
-<dom-module id="cnvs-search-element">
+<dom-module id="add-multiple-cnv">
     <style is="custom-style" include="iron-flex iron-flex-reverse iron-flex-alignment iron-flex-factors iron-positioning">
         :host {
             display: block;
@@ -49,7 +48,7 @@
             margin-top: 10px;
         }
 
-        jso-genome-viewer-element,
+
         .stv-formbox,
         #tablaresultadosPanel {
             box-shadow: 0px 0px 3px 1px rgba(0, 0, 0, 0.2);
@@ -132,17 +131,7 @@
     </style>
     <template>
 
-        <form id="form" class="left">
-            <div id="buttons_container2" class="horizontal layout end-justified" style="margin:10px 5px;">
-                <div class="stv-btn stv-btn-shdw flex" on-click="submitForm">Search</div>
-            </div>
-            <div id="buttons_container" class="horizontal layout end-justified" style="margin:10px 5px;">
-                <div class="stv-btn stv-btn-shdw flex" on-click="clearForm" style="margin-right: 3px;">
-                    Clear
-                </div>
-                <div class="stv-btn stv-btn-shdw flex" on-click="colapseAll">Colapse All</div>
-            </div>
-
+        <form>
             <div class="form_block positionBlock">
                 <div class="stv-formbox">
                     <label on-click="toggleElement" data-option="pacients">
@@ -589,6 +578,8 @@
                     </div>
                 </div>
 
+
+
             </div>
         </form>
         <stv-panel id="hpoPanel" style="height:700px" modal closable hidden>
@@ -596,7 +587,7 @@
                 <i class="fa fa-search" aria-hidden="true"></i> Human Phenotype Ontology
             </div>
             <div class="container" style="width:100%">
-                <stv-hpo hpo-value="{{hpoValue}}" on-added="showHPO"></stv-hpo>
+                <!--<stv-hpo hpo-value="{{hpoValue}}" on-added="showHPO"></stv-hpo>-->
             </div>
         </stv-panel>
 
@@ -646,9 +637,7 @@
                 </stv-table>
             </stv-panel>
 
-            <div id="tools">
-                <jso-genome-viewer-element id="gv" on-created="handleGenomeViewerCreated"></jso-genome-viewer-element>
-            </div>
+
             <span style="color: #006699;font-size: 14px; margin:10px">Supported by:</span>
             <div class="layout flex">
                 <img src="../images/ELIXIR_logo.png" class="logo">
@@ -666,7 +655,7 @@
 </dom-module>
 <script>
     Polymer({
-        is: 'cnvs-search-element',
+        is: 'add-multiple-cnv',
         properties: {
             totalcaseValue: {
                 type: Number,
@@ -1056,17 +1045,11 @@
         },
         ready: function() {
             var me = this;
-            //this.mantenimiento();
+
             this.totalcaseValue = ALL_CASE;
             this.species = 'Homo sapiens';
             this._initGeneSearch();
-            this.async(function() {
-                this.$.gv.createGenomeViewer();
-                this.$.gv.genomeViewer.draw();
-                this.$.gv.genomeViewer.toggleAutoHeight(true);
-                var r = new Region("1:1-2000");
-                this.$.gv.genomeViewer.setRegion(r);
-            }, 10);
+
 
             this.columns = [{
                     name: 'position',
@@ -1641,94 +1624,6 @@
                 };
             }
         },
-        handleGenomeViewerCreated: function() {
-            var me = this;
-
-            this.adapter = new FeatureTemplateAdapter({
-
-                uriTemplate: CNVS_HOST + '/regions/{region}/fetch',
-                species: this.$.gv.genomeViewer.species,
-                getRegionsFromIntervals: function(response) {
-                    var regions = [];
-                    for (var i = 0; i < response.result.length; i++) {
-                        var r = response.result[i];
-                        for (var j = 0; j < r.length; j++) {
-                            var interval = r[j];
-                            var region = new Region(interval);
-                            regions.push(region);
-                        }
-                    }
-                    return regions;
-                },
-                parse: function(response, dataType) {
-                    //                    var itemsArray = [];
-                    //                    for (var i = 0; i < response.result.length; i++) {
-                    //                        var r = response.result[i];
-                    //                        itemsArray.push(r);
-                    //                    }
-                    //                    return [itemsArray];
-                    return response.result;
-                },
-                parseHistogram: function(response) {
-                    var itemsArray = [];
-
-                    for (var i = 0; i < response.result.length; i++) {
-                        var r = response.result[i]
-                        for (var j = 0; j < r.length; j++) {
-                            var interval = r[j];
-                            interval.features_count = interval.featuresCount;
-                            itemsArray.push(interval);
-                        }
-                    }
-                    return itemsArray;
-                },
-                cacheConfig: {
-                    chunkSize: 50000
-                }
-            });
-
-            var args = {
-                label: function(f) {
-                    var str = "";
-                    str += f.chromosome + ":" + f.start + "-" + f.end;
-                    return str;
-                },
-                tooltipTitle: function(f) {
-                    var str = "";
-                    str += f.chromosome + ":" + f.start + "-" + f.end;
-                    return str;
-                    //return FEATURE_TYPES.getTipTitleCommons(f);
-                },
-                tooltipText: function(f) {
-                    // start-end + strand
-                    return FEATURE_TYPES.getTipCommons(f) + FEATURE_TYPES._getSimpleKeys(f);
-                },
-                color: function(f) {
-                    return CNVS_TRACK_TYPE_COLORS[f.type];
-                },
-                infoWidgetId: "id",
-                height: 10,
-                histogramColor: "lightgray",
-                handlers: {
-                    "feature:click": function(e) {
-
-                    }
-                }
-            };
-
-            var track = new FeatureTrack({
-                title: 'CNVS',
-                featureType: 'cnvs',
-                minHistogramRegionSize: 20000000,
-                maxLabelRegionSize: 10000000,
-                height: 120,
-                renderer: new CNVSRenderer(args),
-                dataAdapter: this.adapter
-            });
-            //
-            this.$.gv.genomeViewer.addTrack(track);
-            this.$.gv.genomeViewer.setTrackIndex(track, 0);
-        },
         dosesAndSizeNumValidity: function(){
             if(this.dosesValue != null){
                 if(isNaN(this.dosesValue)) {
@@ -1752,8 +1647,7 @@
             if (this.$.form.checkValidity() && this.dosesAndSizeNumValidity()) {
                 var region = null;
                 if (this.regionValue == "") {
-                    region = new Region(this.$.gv.genomeViewer.region);
-                    //region = "";
+                  region = "";
                 } else {
                     region = new Region(this.regionValue.trim());
                     query.regions = region;
@@ -2018,16 +1912,10 @@
 
                 this.adapter.params = query;
 
-                this.$.gv.genomeViewer.setRegion(region);
-                //this.forURL = url;
                 this.query = query;
             } else {
                 alert("Please check the form");
             }
-        },
-        handleRowClick: function(e) {
-            var row = e.detail.row;
-            this.$.gv.genomeViewer.setRegion(row);
         }
     });
 </script>

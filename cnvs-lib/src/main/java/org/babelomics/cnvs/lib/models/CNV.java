@@ -214,6 +214,7 @@ public class CNV {
 
         switch (clinicalSig.toLowerCase()) {
             case "definitely pathogenic":
+            case "definitively pathogenic":
                 this.clinicalSig = 0;
                 break;
             case "probably pathogenic":
@@ -253,7 +254,7 @@ public class CNV {
             case 5:
                 return "maternally inherited, mosaic in mother";
             case 6:
-                return "Imbalance arising from a balanced parental rearrangement";
+                return "imbalance arising from a balanced parental rearrangement";
             case 7:
                 return "biparental";
             case 8:
@@ -284,7 +285,7 @@ public class CNV {
             case "maternally inherited, mosaic in mother":
                 this.inheritance = 5;
                 break;
-            case "Imbalance arising from a balanced parental rearrangement":
+            case "imbalance arising from a balanced parental rearrangement":
                 this.inheritance = 6;
                 break;
             case "biparental":
@@ -499,6 +500,8 @@ public class CNV {
         switch (age) {
             case -2:
                 return "Prenatal";
+            case -1:
+                return "";
             default:
                 return "" + age;
         }
@@ -508,6 +511,8 @@ public class CNV {
         age = age.toLowerCase();
         if (age.equals("prenatal")){
             this.age = -2;
+        }else if(age.equals("")){
+            this.age = -1;
         }else {
             this.age = new Double(age).intValue();
         }
