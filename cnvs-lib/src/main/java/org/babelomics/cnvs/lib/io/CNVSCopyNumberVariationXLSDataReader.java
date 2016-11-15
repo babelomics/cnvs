@@ -77,7 +77,6 @@ public class CNVSCopyNumberVariationXLSDataReader implements DataReader<CNV> {
 			
 			this.it = this.sheet.rowIterator();
 			
-			
 		} catch (InvalidFormatException | IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -256,7 +255,7 @@ public class CNVSCopyNumberVariationXLSDataReader implements DataReader<CNV> {
 		try {
 			age = ""+ r.getCell(26, Row.CREATE_NULL_AS_BLANK).getNumericCellValue();
 		}catch(Exception e){
-			age =r.getCell(26, Row.CREATE_NULL_AS_BLANK).getStringCellValue();
+			age = r.getCell(26, Row.CREATE_NULL_AS_BLANK).getStringCellValue();
 		}
 		return age;
 	}

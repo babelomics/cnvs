@@ -134,7 +134,10 @@
         <div class="right vertical layout">
             <div id="add_cnvs" class="horizontal layout" style="margin:10px 0px 15px 0px;">
                 <div>
-                    <span style="color: #006699; margin: 10px;" >  Total cases:  {{totalcaseValue}}</span>
+                    <span style="color: #006699; margin: 10px;" >  Total cnvs added by you:  {{totalcaseValue}}</span>
+                </div>
+                <div>
+                    <span style="color: #006699; margin: 10px;" >  Total cnvs added by you:  {{totalcaseValue}}</span>
                 </div>
             </div>
             </br>
@@ -150,20 +153,6 @@
                     </div>
                 </stv-table>
             </stv-panel>
-
-
-            <span style="color: #006699;font-size: 14px; margin:10px">Supported by:</span>
-            <div class="layout flex">
-                <img src="../images/ELIXIR_logo.png" class="logo">
-                <img src="../images/logo_Babelomics_negative.svg" class="logo">
-                <img src="../images/logo_inb.png" class="logo">
-                <img src="../images/logo_cipf.png" class="logo">
-                <img src="../images/logo_ciberer.jpg" class="logo">
-                <img src="../images/LOGO_Micinn_Isciii.jpg" class="logo">
-                <img src="../images/logo_ISCIII.jpg" class="logo">
-                <img src="../images/logo_PRB2.jpg" class="logo">
-                <img src="../images/logo_feder.jpg" class="logo">
-            </div>
         </div>
     </template>
 </dom-module>
@@ -555,7 +544,7 @@
                 });
                 cb(results);
             };
-            this.$.geneSearch.setSearchFunction(search);
+//            this.$.geneSearch.setSearchFunction(search);
         },
         ready: function() {
             var me = this;

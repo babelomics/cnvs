@@ -127,14 +127,24 @@
         #inheritance span{
             font-size: 12px;
         }
+        .stv-formtitle[data-checked]{
+            background-color: #C4F1BE;
+        }
+        .stv-formtitle:hover {
+            background-color: #A2C3A4;
+        }
+
 
     </style>
     <template>
+
+
+
         <form id="form" class="left">
             <div class="form_block positionBlock">
                 <div class="stv-formbox">
-                    <label on-click="showAddUnique">
-                        <div class="stv-formtitle">
+                    <label>
+                        <div class="stv-formtitle" data-value="add" data-checked$="{{isChecked('add', menu)}}" on-click="handleMenu">
                             ADD CNV
                             <img src="../images/flechaizquierdaazul.png" id="addfoto" />
                         </div>
@@ -142,16 +152,16 @@
                     </div>
                 </div>
                 <div class="stv-formbox">
-                    <label on-click="showAddMultiple">
-                        <div class="stv-formtitle">
+                    <label>
+                        <div class="stv-formtitle" data-value="addmult" data-checked$="{{isChecked('addmult', menu)}}" on-click="handleMenu">
                             ADD MULTIPLE CNV
                             <img src="../images/flechaizquierdaazul.png" id="addMultifoto" />
                         </div>
                     </label>
                 </div>
                 <div class="stv-formbox">
-                    <label on-click="showCNVs">
-                        <div class="stv-formtitle">
+                    <label>
+                        <div class="stv-formtitle" data-value="see" data-checked$="{{isChecked('see', menu)}}" on-click="handleMenu">
                             SEE CNV ADDED
                             <img src="../images/flechaizquierdaazul.png" id="seefoto" />
                         </div>
@@ -161,9 +171,9 @@
         </form>
 
         <div class="right vertical layout">
-            <add-unique-cnv style="padding: 10px 0"></add-unique-cnv>
-            <!--<add-multiple-cnv ></add-multiple-cnv>-->
-            <!--<see-cnv-added></see-cnv-added>-->
+            <add-unique-cnv style="padding: 10px 0" hidden$="{{!isChecked('add', menu)}}" user-data="{{userData}}></add-unique-cnv>
+            <add-multiple-cnv style="padding: 10px 0" hidden$="{{!isChecked('addmult', menu)}}"></add-multiple-cnv>
+            <see-cnv-added style="padding: 10px 0" hidden$="{{!isChecked('see', menu)}}"></see-cnv-added>
 
             <span style="color: #006699;font-size: 14px; margin:10px">Supported by:</span>
             <div class="layout flex">
@@ -183,6 +193,23 @@
 <script>
     Polymer({
         is: 'add-cnv',
-        properties: { }
+        properties: {
+            menu:{
+                type:String,
+                value:'add'
+            },
+            userData:{
+                type:Object
+            }
+        },
+        isChecked:function(v, menu){ // al cambiar la variable menu salta automaticamente el evento de cambio de variable por polymer,
+                                    //lo que hace es poner o quitar el atributo en función si si o si no.
+            return v==menu;
+        },
+        handleMenu:function(e){
+            var value = e.currentTarget.dataset.value;// cualquier atributo precedido con data se guarda en dataset.
+            this.set('menu',value);
+        }
+
     });
 </script>

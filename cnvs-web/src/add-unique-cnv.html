@@ -1,6 +1,6 @@
 <link rel="import" href="../bower_components/polymer/polymer.html">
 <link rel="import" href="../bower_components/iron-flex-layout/iron-flex-layout.html">
-<!--<link rel="import" href="../bower_components/stevia-elements/src/ontology/stv-hpo.html">-->
+<link rel="import" href="../bower_components/stevia-elements/src/ontology/stv-hpo.html">
 <link rel="import" href="../bower_components/stevia-elements/src/table/stv-table.html">
 <link rel="import" href="../bower_components/stevia-elements/src/stv-search.html">
 <link rel="import" href="cnvs-syndrome.html">
@@ -129,444 +129,442 @@
         }
 
         .stv-formtitle{
-            background-color: #006699;
+            /*background-color: #006699;*/
+            /*background-color: #4F7CAC;*/
+            background-color: #80A1C1;
             color: white;
         }
+        input:disabled{
+            color:black;
+        }
+
 
     </style>
     <template>
 
-        <div class="vertical layout">
-
-            <div class="stv-formtitle">
-                Patients' Data
-            </div>
-            <div  id="pacients">
-                <div class="input_container vertical layout">
-                    <label class="stv"> Locals id</label>
-                    <div class="horizontal layout" style="margin: 0px 10px 0px 0px">
-                        <input type="text" class="stv" id="localId1" name="localId1" placeholder="Local ID1" value="{{localIdValue1::change}}" rows="1" style="border-bottom: 0px"/>
-                        <input type="text" class="stv" id="localId2" name="localId2" placeholder="Local ID2" value="{{localIdValue2::change}}" rows="1" style="border-bottom: 0px"/>
-                        <input type="text" class="stv" id="localId3" name="localId3" placeholder="Local ID3" value="{{localIdValue3::change}}" rows="1"/>
-                    </div>
+            <form id = "formAdd" class="vertical layout">
+                <div class="stv-formtitle">
+                    Patients' Data
                 </div>
-                <div class="input_container vertical layout">
-                    <label class="stv">Decipher ID</label>
-                    <input type="text" class="stv" id="decipherId" name="decipherId" placeholder="12840,25600" value="{{decipherIdValue::change}}" rows="3"/>
-                </div>
-                <div class="horizontal layout">
+                <div  id="pacientsAdd">
                     <div class="input_container vertical layout">
-                        <label class="stv">Year of birth</label>
-                        <input type="text" class="stv" id="year" name="year" placeholder="2004,2003" value="{{yearIdValue::change}}" rows="3"/>
-                    </div>
-                    <div class="input_container vertical layout">
-                        <label class="stv">Year of test</label>
-                        <input type="text" class="stv" id="yearTest" name="yearTest" placeholder="2004,2003" value="{{yearTestValue::change}}" rows="3"/>
-                    </div>
-                </div>
-                <div class="horizontal layout">
-                    <div class="input_container vertical layout">
-                        <label class="stv">Age at diagnosis</label>
-                        <label for="prenatal" class="stv-control flex">
-                            <input type="checkbox" name="prenatal" value="0" id="prenatal"/>
-                            <span>Prenatal(in weeks)</span>
-                        </label>
-                        <input type="text" class="stv" id="age" name="age" placeholder="Age: in years." value="{{ageValue::change}}"/>
-                    </div>
-                    <div class="input_container vertical layout">
-                        <label class="stv">Age in weeks (only for prenatal)</label>
-                        <input type="text" class="stv" id="agePrenatal" name="agePrenatal" placeholder="Age Prenatal: in weeks Not implemented" value="{{ageValue::change}}"/>
-                    </div>
-                </div>
-
-                <div class="input_container vertical layout">
-                    <div class="horizontal layout">
-                        <label style="color: black" class="stv flex">Ethnic Group</label>
-                        <div class="horizontal layout" style="color: #006699;margin-top:2px;line-height:28px;">
-                            <div class="stv-btn stv-btn-shdw searchBut" on-click="showEthnic" title="Search Ethnic" ><i class="fa fa-search" aria-hidden="true"></i></div>
-                            <div class="stv-btn stv-btn-shdw" title="Clean Ethnic form" on-click="clearEthnic"><img style="height: 16px; padding:2px" src="../images/escoba.ico"></div>
+                        <label class="stv"> Locals id</label>
+                        <div class="horizontal layout" style="margin: 0px 10px 0px 0px">
+                            <input type="text" class="stv" id="localId1Add" name="localId1Add" placeholder="Local ID1" value="{{localIdValue1::change}}" rows="1" style="border-bottom: 0px"/>
+                            <input type="text" class="stv" id="localId2Add" name="localId2Add" placeholder="Local ID2" value="{{localIdValue2::change}}" rows="1" style="border-bottom: 0px"/>
+                            <input type="text" class="stv" id="localId3Add" name="localId3Add" placeholder="Local ID3" value="{{localIdValue3::change}}" rows="1"/>
                         </div>
                     </div>
-                    <input type="text" class="stv" id="ethnic" name="ethnic" value="{{ethnicSearch::change}}" rows="3" placeholder="White Mediterranean,Amerindian" disabled/>
-                </div>
-            </div>
-            <div class="stv-formtitle">
-                Sample Characteristics
-            </div>
-            <div id="sampleChar">
-                <div class="input_container vertical layout" id="status">
-                    <label class="stv"> Status</label>
+                    <div class="input_container vertical layout">
+                        <!--<label class="stv">Code</label>-->
+                        <!--<input type="text" class="stv" id="codeAdd" name="codeAdd" placeholder="" value="{{codeAdd::change}}" rows="3" disabled/>-->
+                        <label class="stv">Decipher ID</label>
+                        <input type="number" class="stv" id="decipherIdAdd" name="decipherIdAdd" placeholder="12840,25600" value="{{decipherIdValue::change}}" rows="3"/>
+
+                    </div>
+                    <div class="horizontal layout">
+                        <div class="input_container vertical layout">
+                            <label class="stv">Year of birth</label>
+                            <input type="number" class="stv" id="yearAdd" name="yearAdd" placeholder="2004,2003" value="{{yearIdValue::change}}" rows="3"/>
+                        </div>
+                        <div class="input_container vertical layout">
+                            <label class="stv">Year of test</label>
+                            <input type="number" class="stv" id="yearTestAdd" name="yearTestAdd" placeholder="2004,2003" value="{{yearTestValue::change}}" rows="3"/>
+                        </div>
+                    </div>
+                    <div class="horizontal layout">
+                        <div class="input_container vertical layout">
+                            <label class="stv">Age at diagnosis</label>
+                            <label class="stv-control flex">
+                                <input type="checkbox" name="prenatalAdd" value="0" id="prenatalAdd" on-click="enablePrenatal">
+                                <span>Prenatal(in weeks)</span>
+                            </label>
+
+                            <input type="text" class="stv" id="ageAdd" name="ageAdd" placeholder="Age: in years." value="{{ageValue::change}}"/>
+                        </div>
+                        <div class="input_container vertical layout" id="agePrenatalForm">
+                            <label class="stv" id="labelageprenatal" style="color:gray;">Age in weeks (only for prenatal)</label>
+                            <input type="text" class="stv" id="agePrenatalAdd" name="agePrenatalAdd" placeholder="Age Prenatal: in weeks Not implemented" value="{{agePreValue::change}}" disabled/>
+                        </div>
+                    </div>
+
                     <div class="input_container vertical layout">
                         <div class="horizontal layout">
-                            <label for="status0" class="stv-control flex">
-                                <input type="checkbox" name="status" value="0" id="status0" checked/>
-                                <span>Proband</span>
-                            </label>
-                            <label for="status1" class="stv-control flex">
-                                <input type="checkbox" name="status" value="1" id="status1" checked/>
-                                <span>Father</span>
-                            </label>
-                            <label for="status2" class="stv-control flex">
-                                <input type="checkbox" name="status" value="2" id="status2" checked/>
-                                <span>Mother </span>
-                            </label>
-                            <label for="status3" class="stv-control flex">
-                                <input type="checkbox" name="status" value="3" id="status3" checked/>
-                                <span>Control</span>
-                            </label>
-                        <label for="status5" class="stv-control flex">
-                            <input type="checkbox" name="status" value="1" id="status5" checked/>
-                            <span>Others</span>
-                        </label>
+                            <label style="color: black" class="stv flex">Ethnic Group</label>
+                            <div class="horizontal layout" style="color: #006699;margin-top:2px;line-height:28px;">
+                                <div class="stv-btn stv-btn-shdw searchBut" on-click="showEthnic" title="Search Ethnic" ><i class="fa fa-search" aria-hidden="true"></i></div>
+                                <div class="stv-btn stv-btn-shdw" title="Clean Ethnic form" on-click="clearEthnic"><img style="height: 16px; padding:2px" src="../images/escoba.ico"></div>
+                            </div>
+                        </div>
+                        <input type="text" class="stv" id="ethnicAdd" name="ethnicAdd" value="{{ethnicSearch::change}}" rows="3" placeholder="White Mediterranean,Amerindian" disabled/>
                     </div>
                 </div>
+                <div class="stv-formtitle">
+                    Sample Characteristics
+                </div>
+                <div id="sampleCharAdd">
+                    <div class="input_container vertical layout" id="statusAdd">
+                        <label class="stv"> Status</label>
+                        <div class="input_container vertical layout">
+                            <div class="horizontal layout">
+                                <label for="status0Add" class="stv-control flex">
+                                    <input type="radio" name="statusAdd" value="0" id="status0Add" />
+                                    <span>Proband</span>
+                                </label>
+                                <label for="status1Add" class="stv-control flex">
+                                    <input type="radio" name="statusAdd" value="1" id="status1Add" />
+                                    <span>Father</span>
+                                </label>
+                                <label for="status2Add" class="stv-control flex">
+                                    <input type="radio" name="statusAdd" value="2" id="status2Add" />
+                                    <span>Mother </span>
+                                </label>
+                                <label for="status3Add" class="stv-control flex">
+                                    <input type="radio" name="statusAdd" value="3" id="status3Add" />
+                                    <span>Control</span>
+                                </label>
+                                <label for="status5Add" class="stv-control flex">
+                                    <input type="radio" name="statusAdd" value="1" id="status5Add" />
+                                    <span>Others</span>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
 
-                <div class="input_container vertical layout" id="cl">
-                    <label class="stv">Cell line:</label>
-                    <div class="horizontal layout">
-                        <label for="cl0" class="stv-control flex">
-                            <input type="checkbox" name="cl" value="0" id="cl0" checked/>
-                            <span>Germline</span>
-                        </label>
-                        <label for="cl1" class="stv-control flex">
-                            <input type="checkbox" name="cl" value="1" id="cl1" checked/>
-                            <span>Somatic</span>
-                        </label>
+                    <div class="input_container vertical layout" id="clAdd">
+                        <label class="stv">Cell line:</label>
+                        <div class="horizontal layout">
+                            <label for="cl0Add" class="stv-control flex">
+                                <input type="radio" name="clAdd" value="0" id="cl0Add" />
+                                <span>Germline</span>
+                            </label>
+                            <label for="cl1Add" class="stv-control flex">
+                                <input type="radio" name="clAdd" value="1" id="cl1Add" />
+                                <span>Somatic</span>
+                            </label>
+                        </div>
+                    </div>
+
+                    <div class="input_container vertical layout" id="typeSAdd">
+                        <label class="stv"> Type of Sample</label>
+                        <div class="horizontal layout">
+                            <label for="typeS0Add" class="stv-control flex">
+                                <input type="radio" name="typeSAdd" value="0" id="typeS0Add" />
+                                <span>Blood</span>
+                            </label>
+                            <label for="typeS1Add" class="stv-control flex">
+                                <input type="radio" name="typeSAdd" value="1" id="typeS1Add" />
+                                <span>Amniotic fluid</span>
+                            </label>
+
+                            <label for="typeS2Add" class="stv-control flex">
+                                <input type="radio" name="typeSAdd" value="2" id="typeS2Add" />
+                                <span>Chorionic villi</span>
+                            </label>
+                        </div>
+                        <div class="horizontal layout">
+                            <label for="typeS3Add" class="stv-control flex">
+                                <input type="radio" name="typeSAdd" value="3" id="typeS3Add" />
+                                <span>Tumour</span>
+                            </label>
+                            <label for="typeS4Add" class="stv-control flex">
+                                <input type="radio" name="typeSAdd" value="4" id="typeS4Add" />
+                                <span>Bone marrow</span>
+                            </label>
+                            <label for="typeS5Add" class="stv-control flex">
+                                <input type="radio" name="typeSAdd" value="3" id="typeS5Add" />
+                                <span>Others</span>
+                            </label>
+                        </div>
+                        <div class="horizontal layout">
+                            <label for="typeS6Add" class="stv-control flex">
+                                <input type="radio" name="typeSAdd" value="4" id="typeS6Add" />
+                                <span>Unknown</span>
+                            </label>
+                        </div>
+                    </div>
+
+                    <div class="input_container vertical layout" id ="genderAdd">
+                        <label class="stv"> Chromosomal Gender</label>
+                        <div class="horizontal layout">
+                            <label for="gender3Add" class="stv-control flex">
+                                <input type="radio" name="genderAdd" value="2" id="gender3Add" />
+                                <span>XXX</span>
+                            </label>
+                            <label for="gender0Add" class="stv-control flex">
+                                <input type="radio" name="genderAdd" value="0" id="gender0Add" />
+                                <span>XX</span>
+                            </label>
+                            <label for="gender4Add" class="stv-control flex">
+                                <input type="radio" name="genderAdd" value="3" id="gender4Add" />
+                                <span>XXY</span>
+                            </label>
+                        </div>
+                        <div class="horizontal layout">
+                            <label for="gender1Add" class="stv-control flex">
+                                <input type="radio" name="genderAdd" value="1" id="gender1Add" />
+                                <span>XY</span>
+                            </label>
+
+                            <label for="gender5Add" class="stv-control flex">
+                                <input type="radio" name="genderAdd" value="4" id="gender5Add" />
+                                <span>XYY</span>
+                            </label>
+                            <label for="gender2Add" class="stv-control flex">
+                                <input type="radio" name="genderAdd" value="1" id="gender2Add" />
+                                <span>X</span>
+                            </label>
+                        </div>
+                        <div class="horizontal layout">
+                            <label for="gender6Add" class="stv-control flex">
+                                <input type="radio" name="genderAdd" value="4" id="gender6Add" />
+                                <span>Unknown</span>
+                            </label>
+                        </div>
+                    </div>
+                    <div class="input_container vertical layout">
+                        <label class="stv">Array Plataform:</label>
+                        <input type="text" class="stv" id="arrayPlataformAdd" name="arrayPlataformAdd" placeholder="KA_v3.0" value="{{arrayPlataformValue::change}}" rows="3"/>
+                    </div>
+
+                    <div class="input_container vertical layout">
+                        <label class="stv">Array Id:</label>
+                        <input type="text" class="stv" id="arrayIdAdd" name="arrayIdAdd" placeholder="253900010XXX_X_X" value="{{arrayIdValue::change}}" rows="3"/>
                     </div>
                 </div>
+                <div class="stv-formtitle">
+                    Genome Analysis
+                </div>
+                <div id="genomeAnalysis">
+                    <div class="input_container vertical layout">
+                        <label class="stv">Chromosomal Location:</label>
+                        <div class="horizontal layout" id="positionsAdd">
+                            <label class="stv">Chromosome:</label>
+                            <input type="text" class="stv" id="regionCAdd" name="regionCAdd" placeholder="1" value="{{regionValueC::change}}" rows="3"/>
+                            <label class="stv">Start:</label>
+                            <input type="text" class="stv" id="regionSAdd" name="regionSAdd" placeholder="766600" value="{{regionValueS::change}}" rows="3"/>
+                            <label class="stv">End:</label>
+                            <input type="text" class="stv" id="regionEAdd" name="regionEAdd" placeholder="766600" value="{{regionValueE::change}}" rows="3"/>
 
-                <div class="input_container vertical layout" id="typeS">
-                    <label class="stv"> Type of Sample</label>
-                    <div class="horizontal layout">
-                        <label for="typeS0" class="stv-control flex">
-                            <input type="checkbox" name="typeS" value="0" id="typeS0" checked/>
-                            <span>Blood</span>
-                        </label>
-                        <label for="typeS1" class="stv-control flex">
-                            <input type="checkbox" name="typeS" value="1" id="typeS1" checked/>
-                            <span>Amniotic fluid</span>
-                        </label>
-
-                        <label for="typeS2" class="stv-control flex">
-                            <input type="checkbox" name="typeS" value="2" id="typeS2" checked/>
-                            <span>Chorionic villi</span>
-                        </label>
+                        </div>
+                    </div>
+                    <div class="input_container vertical layout">
+                        <div  class="stv-btn" on-click="calculateGenes">Show Genes:</div>
+                        <input type="text" class="stv" id="geneAdd" name="geneAdd" placeholder="BRCA2,PPL" value="{{geneValue::change}}" rows="3" disabled/>
+                    </div>
+                    <div id="typeAdd" class="input_container vertical layout">
+                        <label class="stv">Type of Variant:</label>
+                        <div class="horizontal layout">
+                            <label for="type0Add" class="stv-control flex">
+                                <input type="radio" name="type" id="type0Add" value="0" />
+                                <span>Gain</span>
+                            </label>
+                            <label for="type1Add" class="stv-control flex">
+                                <input type="radio" name="type" id="type1Add" value="1" />
+                                <span>Loss</span>
+                            </label>
+                            <label for="type2Add" class="stv-control flex">
+                                <input type="radio" name="type" id="type2Add" value="2" />
+                                <span>LOH neutral</span>
+                            </label>
+                        </div>
+                    </div>
+                    <div class="input_container vertical layout">
+                        <label class="stv">Number of variant:</label>
+                        <input type="number" class="stv" id="nvariantsAdd" name="nvariantsAdd" placeholder="0" value="{{nvariantsValue::change}}" rows="3"/>
+                    </div>
+                    <!-- The dosis' numbers are corrects. This are linked with DB -->
+                    <div class="input_container vertical layout" id="dosesAdd">
+                        <label class="stv">Copy Number(Doses):</label>
+                        <div class="vertical layout">
+                            <div class="horizontal layout">
+                                <label for="doses0Add" class="stv-control flex">
+                                    <input type="radio" name="dosesAdd" value="0" id="doses0Add" />
+                                    <span>Homozygous deletion</span>
+                                </label>
+                                <label for="doses2Add" class="stv-control flex">
+                                    <input type="radio" name="dosesAdd" value="2" id="doses2Add" />
+                                    <span>Hemyzygous deletion</span>
+                                </label>
+                                <label for="doses1Add" class="stv-control flex">
+                                    <input type="radio" name="dosesAdd" value="1" id="doses1Add" />
+                                    <span>Deletion</span>
+                                </label>
+                            </div>
+                            <div class="horizontal layout">
+                                <label for="doses3Add" class="stv-control flex">
+                                    <input type="radio" name="dosesAdd" value="3" id="doses3Add" />
+                                    <span>Duplication</span>
+                                </label>
+                                <label for="doses4Add" class="stv-control flex">
+                                    <input type="radio" name="dosesAdd" value="4" id="doses4Add" />
+                                    <span>Triplication</span>
+                                </label>
+                                <label for="doses5Add" class="stv-control flex">
+                                    <input type="radio" name="dosesAdd" value="5" id="doses5Add" />
+                                    <span>Amplification</span>
+                                </label>
+                            </div>
+                        </div>
                     </div>
                     <div class="horizontal layout">
-                        <label for="typeS3" class="stv-control flex">
-                            <input type="checkbox" name="typeS" value="3" id="typeS3" checked/>
-                            <span>Tumour</span>
-                        </label>
-                        <label for="typeS4" class="stv-control flex">
-                            <input type="checkbox" name="typeS" value="4" id="typeS4" checked/>
-                            <span>Bone marrow</span>
-                        </label>
-                        <label for="typeS5" class="stv-control flex">
-                            <input type="checkbox" name="typeS" value="3" id="typeS5" checked/>
-                            <span>Others</span>
-                        </label>
+                        <input type="number" class="stv flex" id="dosesNumAdd" name="dosesNumAdd" placeholder="Numeric doses,Ex:-0.5" value="{{dosesValue::change}}"/>
                     </div>
-                    <div class="horizontal layout">
-                        <label for="typeS6" class="stv-control flex">
-                            <input type="checkbox" name="typeS" value="4" id="typeS6" checked/>
+                    <div class="input_container vertical layout">
+                        <label class="stv">Size(Kb):</label>
+                        <div class="horizontal layout">
+                            <input type="text" class="stv flex" id="size" name="size" placeholder="Size, Not implemented" value="{{sizeValue::change}}" disabled/>
+                        </div>
+                    </div>
+                    <div class="input_container vertical layout">
+                        <label class="stv">Cytoband:</label>
+                        <input type="text" class="stv" id="cytobandAdd" name="cytobandAdd" placeholder="p36.33" value="{{bandValue::change}}" rows="3"/>
+                    </div>
+                    <div class="input_container vertical layout" id = "assemblyAdd">
+                        <label class="stv">Assembly:</label>
+                        <div class="horizontal layout">
+                            <label for="hg18Add" class="stv-control flex">
+                                <input type="radio" name="assemblyAdd" value="hg18" id="hg18Add" />
+                                <span>GRCh36/hg18</span>
+                            </label>
+                            <label for="hg19Add" class="stv-control flex">
+                                <input type="radio" name="assemblyAdd" value="hg19" id="hg19Add" />
+                                <span>GRCh37/hg19</span>
+                            </label>
+                            <label for="hg19Add" class="stv-control flex">
+                                <input type="radio" name="assemblyAdd" value="hg38" id="hg38Add" />
+                                <span>GRCh38/hg38</span>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+                <div class="stv-formtitle">
+                    Clinical Data
+                </div>
+                <div id="clinicalData">
+                    <div class="input_container vertical layout">
+                        <label class="stv"> Referral Diagnosis</label>
+                        <input type="text" class="stv" id="rdAdd" name="rdAdd" placeholder="Control" value="{{rdValue::change}}" rows="3"/>
+                    </div>
+
+
+                    <div class="input_container vertical layout">
+                        <div class="horizontal layout">
+                            <label style="color: black" class="stv flex">  Phenotype(HPO)</label>
+                            <div class="horizontal layout" style="color: #006699;margin-top:2px;line-height:28px;">
+                                <div class="stv-btn stv-btn-shdw searchBut" on-click="showHPO" title="Search HPO" ><i class="fa fa-search" aria-hidden="true"></i></div>
+                                <div class="stv-btn stv-btn-shdw" title="Clean HPO form" on-click="clearHPO"><img style="height: 16px; padding:2px" src="../images/escoba.ico"></div>
+                            </div>
+                        </div>
+                        <input type="text" class="stv" id="hpoAdd" name="hpoAdd" value="{{hpoSearch::change}}" rows="3" placeholder="HP:0000001,HP:3000079" disabled/>
+                    </div>
+
+                    <div class="input_container vertical layout">
+                        <div class="horizontal layout">
+                            <label style="color: black; " class="stv flex">  Genomic Disorders</label>
+                            <div class="horizontal layout" style="color: #006699;margin-top:2px;line-height:28px;">
+                                <div class="stv-btn stv-btn-shdw searchBut" on-click="showSyndrome" title="Search Syndrome" ><i class="fa fa-search" aria-hidden="true"></i></div>
+                                <div class="stv-btn stv-btn-shdw" title="Clean Syndrome form" on-click="clearSyndrome"><img style="height: 16px; padding:2px" src="../images/escoba.ico"></div>
+                            </div>
+                        </div>
+                        <input type="text" class="stv" id="aneuploidAdd" name="aneuploidAdd" placeholder="1p36 microdeletion syndrome" value="{{syndromeSearch::change}}" rows="3" disabled/>
+                    </div>
+
+
+                    <div class="input_container vertical layout" id="inheritanceAdd">
+                        <label class="stv">Inheritance</label>
+                        <label for="inhe0Add" class="stv-control flex">
+                            <input type="radio" name="inheritanceAdd" value="0" id="inhe0Add" />
+                            <span>De novo, mosaic.</span>
+                        </label>
+                        <label for="inhe1Add" class="stv-control flex">
+                            <input type="radio" name="inheritanceAdd" value="1" id="inhe1Add" />
+                            <span>De novo, constitutive.</span>
+                        </label>
+                        <label for="inhe2Add" class="stv-control flex">
+                            <input type="radio" name="inheritanceAdd" value="2" id="inhe2Add" />
+                            <span>Paternally inherited, constitutive in father.</span>
+                        </label>
+                        <label for="inhe3Add" class="stv-control flex">
+                            <input type="radio" name="inheritanceAdd" value="3" id="inhe3Add" />
+                            <span>Paternally inherited, mosaic in father.</span>
+                        </label>
+                        <label for="inhe4Add" class="stv-control flex">
+                            <input type="radio" name="inheritanceAdd" value="4" id="inhe4Add" />
+                            <span>Maternally inherited, constitutive in mother.</span>
+                        </label>
+                        <label for="inhe5Add" class="stv-control flex">
+                            <input type="radio" name="inheritanceAdd" value="5" id="inhe5Add" />
+                            <span>Maternally inherited, mosaic in mother.</span>
+                        </label>
+
+                        <label for="inhe6Add" class="stv-control flex">
+                            <input type="radio" name="inheritanceAdd" value="6" id="inhe6Add" />
+                            <span>Imbalance arising from a balanced parental rearrangement.</span>
+                        </label>
+
+                        <label for="inhe7Add" class="stv-control flex">
+                            <input type="radio" name="inheritanceAdd" value="7" id="inhe7Add" />
+                            <span>Biparental</span>
+                        </label>
+
+                        <label for="inhe8Add" class="stv-control flex">
+                            <input type="radio" name="inheritanceAdd" value="8" id="inhe8Add" />
                             <span>Unknown</span>
                         </label>
                     </div>
-                </div>
 
-                <div class="input_container vertical layout" id ="gender">
-                    <label class="stv"> Chromosomal Gender</label>
-                    <div class="horizontal layout">
-                        <label for="gender3" class="stv-control flex">
-                            <input type="checkbox" name="gender" value="2" id="gender3" checked/>
-                            <span>XXX</span>
-                        </label>
-                        <label for="gender0" class="stv-control flex">
-                            <input type="checkbox" name="gender" value="0" id="gender0" checked/>
-                            <span>XX</span>
-                        </label>
-                        <label for="gender4" class="stv-control flex">
-                            <input type="checkbox" name="gender" value="3" id="gender4" checked/>
-                            <span>XXY</span>
-                        </label>
-                    </div>
-                    <div class="horizontal layout">
-                        <label for="gender1" class="stv-control flex">
-                            <input type="checkbox" name="gender" value="1" id="gender1" checked/>
-                            <span>XY</span>
-                        </label>
 
-                        <label for="gender5" class="stv-control flex">
-                            <input type="checkbox" name="gender" value="4" id="gender5" checked/>
-                            <span>XYY</span>
-                        </label>
-                        <label for="gender2" class="stv-control flex">
-                            <input type="checkbox" name="gender" value="1" id="gender2" checked/>
-                            <span>X</span>
-                        </label>
-                    </div>
-                    <div class="horizontal layout">
-                        <label for="gender6" class="stv-control flex">
-                            <input type="checkbox" name="gender" value="4" id="gender6" checked/>
-                            <span>Unknown</span>
-                        </label>
-                    </div>
-                </div>
-                <div class="input_container vertical layout">
-                    <label class="stv">Array Plataform:</label>
-                    <input type="text" class="stv" id="arrayPlataform" name="arrayPlataform" placeholder="KA_v3.0" value="{{arrayPlataformValue::change}}" rows="3"/>
-                </div>
-
-                <div class="input_container vertical layout">
-                    <label class="stv">Array Id:</label>
-                    <input type="text" class="stv" id="arrayId" name="arrayId" placeholder="253900010XXX_X_X" value="{{arrayIdValue::change}}" rows="3"/>
-                </div>
-
-            </div>
-            <div class="stv-formtitle">
-                Genome Analysis
-            </div>
-            <div id="positions">
-                <div class="input_container vertical layout">
-                    <label class="stv">Chromosomal Location:</label>
-                    <div class="horizontal layout">
-                        <label class="stv">Chromosome:</label>
-                        <input type="text" class="stv" id="regionC" name="regionC" placeholder="1" value="{{regionValueC::change}}" rows="3"/>
-                        <label class="stv">Start:</label>
-                        <input type="text" class="stv" id="regionS" name="regionS" placeholder="766600" value="{{regionValueS::change}}" rows="3"/>
-                        <label class="stv">End:</label>
-                        <input type="text" class="stv" id="regionE" name="regionE" placeholder="766600" value="{{regionValueE::change}}" rows="3"/>
-                    </div>
-                </div>
-                <div class="input_container vertical layout">
-                    <label class="stv">Gene:</label>
-                    <stv-search id="geneSearch" placeholder="Search" minQueryLength="3" on-item-select="handleGeneSearchSelect" empty-message="No genes found."></stv-search>
-                    <input type="text" class="stv" id="gene" name="gene" placeholder="BRCA2,PPL" value="{{geneValue::change}}" rows="3"/>
-
-                    <div class="searchGene horizontal layout end-justified" hidden>
-                        <input id="searchField" list="searchDataList" placeholder="Search gene" type="text" style="width: 100px;">
-                        <datalist id="searchDataList"></datalist>
-                        <div id="quickSearchButton" class="button" style="border-left: none;">
-                            <font-awesome icon="search"></font-awesome>
-                        </div>
-                    </div>
-                </div>
-                <div id= "type" class="input_container vertical layout">
-                    <label class="stv">Type of Variant:</label>
-                    <div class="horizontal layout">
-                        <label for="type0" class="stv-control flex">
-                            <input type="checkbox" name="type" id="type0" value="0" checked/>
-                            <span>Gain</span>
-                        </label>
-                        <label for="type1" class="stv-control flex">
-                            <input type="checkbox" name="type" id="type1" value="1" checked/>
-                            <span>Loss</span>
-                        </label>
-                        <label for="type2" class="stv-control flex">
-                            <input type="checkbox" name="type" id="type2" value="2" checked/>
-                            <span>LOH neutral</span>
-                        </label>
-                    </div>
-                </div>
-                <div class="input_container vertical layout">
-                    <label class="stv">Number of variant:</label>
-                    <input type="text" class="stv" id="nvariants" name="nvariants" placeholder="0" value="{{nvariantsValue::change}}" rows="3"/>
-                </div>
-                <!-- The dosis' numbers are corrects. This are linked with DB -->
-                <div class="input_container vertical layout" id="doses">
-                    <label class="stv">Copy Number(Doses):</label>
-                    <div class="vertical layout">
-                        <div class="horizontal layout">
-                        <label for="doses0" class="stv-control flex">
-                                <input type="checkbox" name="doses" value="0" id="doses0" checked/>
-                                <span>Homozygous deletion</span>
+                    <div class="input_container vertical layout" id="clisAdd">
+                        <label class="stv">Clinical Significance</label>
+                        <div class ="horizontal layout">
+                            <label for="clis0Add" class="stv-control flex">
+                                <input type="radio" name="clisAdd" value="0" id="clis0Add" />
+                                <span>Definitely Pathogenic</span>
                             </label>
-                            <label for="doses2" class="stv-control flex">
-                                <input type="checkbox" name="doses" value="2" id="doses2" checked/>
-                                <span>Hemyzygous deletion</span>
+                            <label for="clis1Add" class="stv-control flex">
+                                <input type="radio" name="clisAdd" value="1" id="clis1Add" />
+                                <span>Probably Pathogenic</span>
                             </label>
-                            <label for="doses1" class="stv-control flex">
-                                <input type="checkbox" name="doses" value="1" id="doses1" checked/>
-                                <span>Deletion</span>
+                            <label for="clis2Add" class="stv-control flex">
+                                <input type="radio" name="clisAdd" value="2" id="clis2Add" />
+                                <span>PossibilyPathogenic</span>
                             </label>
                         </div>
-                        <div class="horizontal layout">
-                            <label for="doses3" class="stv-control flex">
-                                <input type="checkbox" name="doses" value="3" id="doses3" checked/>
-                                <span>Duplication</span>
+                        <div class ="horizontal layout">
+                            <label for="clis3Add" class="stv-control flex">
+                                <input type="radio" name="clisAdd" value="3" id="clis3Add" />
+                                <span>Uncertain/VOUS</span>
                             </label>
-                            <label for="doses4" class="stv-control flex">
-                                <input type="checkbox" name="doses" value="4" id="doses4" checked/>
-                                <span>Triplication</span>
+                            <label for="clis4Add" class="stv-control flex">
+                                <input type="radio" name="clisAdd" value="4" id="clis4Add" />
+                                <span>Likely Benign </span>
                             </label>
-                            <label for="doses5" class="stv-control flex">
-                                <input type="checkbox" name="doses" value="5" id="doses5" checked/>
-                                <span>Amplification</span>
+                            <label for="clis5Add" class="stv-control flex">
+                                <input type="radio" name="clisAdd" value="5" id="clis5Add" />
+                                <span>Benign</span>
                             </label>
                         </div>
                     </div>
+                    <div class="stv-btn stv-btn-shdw" on-click="addCNV" title="ADD CNV IN TABLE" >ADD CNV NOW</div>
                 </div>
-                <div class="horizontal layout">
-                    <stv-select  id="dosesOp" value="=">
-                        <stv-option value="=">=</stv-option>
-                        <stv-option value="<"><</stv-option>
-                        <stv-option value=">">></stv-option>
-                        <stv-option value=">=">>=</stv-option>
-                        <stv-option value="<="><=</stv-option>
-                    </stv-select>
-                    <input type="text" class="stv flex" id="dosesNum" name="dosesNum" placeholder="Numeric doses,Ex:-0.5" value="{{dosesValue::change}}"/>
+            </form>
+        <div class="right vertical layout">
+            <stv-panel collapsible id="tablaresultadosPanel">
+                <div class="header">
+                    Results Table
                 </div>
-                <div class="input_container vertical layout">
-                    <label class="stv">Size(Kb):</label>
-                    <div class="horizontal layout">
-                        <stv-select  id="sizeOp" value="=">
-                            <stv-option value="=">=</stv-option>
-                            <stv-option value="<"><</stv-option>
-                            <stv-option value=">">></stv-option>
-                            <stv-option value=">=">>=</stv-option>
-                            <stv-option value="<="><=</stv-option>
-                        </stv-select>
-                        <input type="text" class="stv flex" id="size" name="size" placeholder="Size, Not implemented" value="{{sizeValue::change}}"/>
+                <stv-table id="tablaresultados" class="container small" page-size="10" enable-paging enable-select enable-resize data="{{data}}" columns="{{columns}}" on-rowclick="handleRowClick" on-column-visibility-change="handleColumnVisibilityChange">
+                    <div class="custom-buttons horizontal layout">
+                        <button style="margin-right: 10px; color: #006699" id="saveTable" class="stv-btn down" on-click="downloadFiles" data-file="{{cnv}}"><i class="fa fa-cloud-download"></i> save</button>
+                        <button id="spamButtonTable" class="stv-btn" on-click="spamTable" disabled>expand</button>
+                        <button id="compressButtonTable"class="stv-btn" on-click="compressTable">compress</button>
                     </div>
+                </stv-table>
+            </stv-panel>
 
-                </div>
-                <div class="input_container vertical layout">
-                    <label class="stv">Cytoband:</label>
-                    <input type="text" class="stv" id="cytoband" name="cytoband" placeholder="p36.33" value="{{bandValue::change}}" rows="3"/>
-                </div>
-                <div class="input_container vertical layout" id = "assembly">
-                    <label class="stv">Assembly:</label>
-                    <div class="horizontal layout">
-                        <label for="hg18" class="stv-control flex">
-                            <input type="checkbox" name="assembly" value="hg18" id="hg18" checked/>
-                            <span>GRCh36/hg18</span>
-                        </label>
-                        <label for="hg19" class="stv-control flex">
-                            <input type="checkbox" name="assembly" value="hg19" id="hg19" checked/>
-                            <span>GRCh37/hg19</span>
-                        </label>
-                        <label for="hg19" class="stv-control flex">
-                            <input type="checkbox" name="assembly" value="hg38" id="hg38" checked/>
-                            <span>GRCh38/hg38</span>
-                        </label>
-                    </div>
-                </div>
-            </div>
-            <div class="stv-formtitle">
-                Clinical Data
-            </div>
-            <div id="clinicalData">
-                <div class="input_container vertical layout">
-                    <label class="stv"> Referral Diagnosis</label>
-                    <input type="text" class="stv" id="rd" name="rd" placeholder="Control" value="{{rdValue::change}}" rows="3"/>
-                </div>
-
-
-                <div class="input_container vertical layout">
-                    <div class="horizontal layout">
-                        <label style="color: black" class="stv flex">  Phenotype(HPO)</label>
-                        <div class="horizontal layout" style="color: #006699;margin-top:2px;line-height:28px;">
-                            <div class="stv-btn stv-btn-shdw searchBut" on-click="showHPO" title="Search HPO" ><i class="fa fa-search" aria-hidden="true"></i></div>
-                            <div class="stv-btn stv-btn-shdw" title="Clean HPO form" on-click="clearHPO"><img style="height: 16px; padding:2px" src="../images/escoba.ico"></div>
-                        </div>
-                    </div>
-                    <input type="text" class="stv" id="hpo" name="hpo" value="{{hpoSearch::change}}" rows="3" placeholder="HP:0000001,HP:3000079" disabled/>
-
-
-                </div>
-
-                <div class="input_container vertical layout">
-                    <div class="horizontal layout">
-                        <label style="color: black; " class="stv flex">  Genomic Disorders</label>
-                        <div class="horizontal layout" style="color: #006699;margin-top:2px;line-height:28px;">
-                            <div class="stv-btn stv-btn-shdw searchBut" on-click="showSyndrome" title="Search Syndrome" ><i class="fa fa-search" aria-hidden="true"></i></div>
-                            <div class="stv-btn stv-btn-shdw" title="Clean Syndrome form" on-click="clearSyndrome"><img style="height: 16px; padding:2px" src="../images/escoba.ico"></div>
-                        </div>
-                    </div>
-                    <input type="text" class="stv" id="aneuploid" name="aneuploid" placeholder="1p36 microdeletion syndrome" value="{{syndromeSearch::change}}" rows="3" disabled/>
-                </div>
-
-
-                <div class="input_container vertical layout" id="inheritance">
-                    <label class="stv">Inheritance</label>
-                    <label for="inhe0" class="stv-control flex">
-                        <input type="checkbox" name="inheritance" value="0" id="inhe0" checked/>
-                        <span>De novo, mosaic.</span>
-                    </label>
-                    <label for="inhe1" class="stv-control flex">
-                        <input type="checkbox" name="inheritance" value="1" id="inhe1" checked/>
-                        <span>De novo, constitutive.</span>
-                    </label>
-                    <label for="inhe2" class="stv-control flex">
-                        <input type="checkbox" name="inheritance" value="2" id="inhe2" checked/>
-                        <span>Paternally inherited, constitutive in father.</span>
-                    </label>
-                    <label for="inhe3" class="stv-control flex">
-                        <input type="checkbox" name="inheritance" value="3" id="inhe3" checked/>
-                        <span>Paternally inherited, mosaic in father.</span>
-                    </label>
-                    <label for="inhe4" class="stv-control flex">
-                        <input type="checkbox" name="inheritance" value="4" id="inhe4" checked/>
-                        <span>Maternally inherited, constitutive in mother.</span>
-                    </label>
-                    <label for="inhe5" class="stv-control flex">
-                        <input type="checkbox" name="inheritance" value="5" id="inhe5" checked/>
-                        <span>Maternally inherited, mosaic in mother.</span>
-                    </label>
-
-                    <label for="inhe6" class="stv-control flex">
-                        <input type="checkbox" name="inheritance" value="6" id="inhe6" checked/>
-                        <span>Imbalance arising from a balanced parental rearrangement.</span>
-                    </label>
-
-                    <label for="inhe7" class="stv-control flex">
-                        <input type="checkbox" name="inheritance" value="7" id="inhe7" checked/>
-                        <span>Biparental</span>
-                    </label>
-
-                    <label for="inhe8" class="stv-control flex">
-                        <input type="checkbox" name="inheritance" value="8" id="inhe8" checked/>
-                        <span>Unknown</span>
-                    </label>
-                </div>
-
-
-                <div class="input_container vertical layout" id="clis">
-                    <label class="stv">Clinical Significance</label>
-                    <div class ="horizontal layout">
-                        <label for="clis0" class="stv-control flex">
-                            <input type="checkbox" name="clis" value="0" id="clis0" checked/>
-                            <span>Definitely Pathogenic</span>
-                        </label>
-                        <label for="clis1" class="stv-control flex">
-                            <input type="checkbox" name="clis" value="1" id="clis1" checked/>
-                            <span>Probably Pathogenic</span>
-                        </label>
-                        <label for="clis2" class="stv-control flex">
-                            <input type="checkbox" name="clis" value="2" id="clis2" checked/>
-                            <span>PossibilyPathogenic</span>
-                        </label>
-                    </div>
-                    <div class ="horizontal layout">
-                        <label for="clis3" class="stv-control flex">
-                            <input type="checkbox" name="clis" value="3" id="clis3" checked/>
-                            <span>Uncertain/VOUS</span>
-                        </label>
-
-                        <label for="clis4" class="stv-control flex">
-                            <input type="checkbox" name="clis" value="4" id="clis4" checked/>
-                            <span>Likely Benign </span>
-                        </label>
-                        <label for="clis5" class="stv-control flex">
-                            <input type="checkbox" name="clis" value="5" id="clis5" checked/>
-                            <span>Benign</span>
-                        </label>
-                    </div>
-                </div>
-            </div>
         </div>
-
-        <stv-panel id="hpoPanel" style="height:700px" modal closable hidden>
+        <stv-panel id="hpoPanelAdd" style="height:700px" modal closable hidden>
             <div class="header">
                 <i class="fa fa-search" aria-hidden="true"></i> Human Phenotype Ontology
             </div>
@@ -575,7 +573,7 @@
             </div>
         </stv-panel>
 
-        <stv-panel id="syndromePanel" style="height:700px" modal closable hidden>
+        <stv-panel id="syndromePanelAdd" style="height:700px" modal closable hidden>
             <div class="header">
                 <i class="fa fa-search" aria-hidden="true"></i> Genomic Disorders
             </div>
@@ -584,7 +582,7 @@
             </div>
         </stv-panel>
 
-        <stv-panel id="ethnicPanel" style="height:700px" modal closable hidden>
+        <stv-panel id="ethnicPanelAdd" style="height:700px" modal closable hidden>
             <div class="header">
                 <i class="fa fa-search" aria-hidden="true"></i> Ethnic Group
             </div>
@@ -592,35 +590,19 @@
                 <cnvs-ethnic ethnic-value="{{ethnicValue}}" on-added="showEthnic"></cnvs-ethnic>
             </div>
         </stv-panel>
-        <!--<div class="right vertical layout">-->
 
-            <!--<div id="add_cnvs" class="horizontal layout" style="margin:10px 0px 15px 0px;">-->
-                <!--<div >-->
-                    <!--<span style="color: #006699; margin: 10px;" >  Total cases:  {{totalcaseValue}}</span>-->
-                <!--</div>-->
 
-            <!--</div>-->
-            <!--</br>-->
-            <!--<stv-panel collapsible id="tablaresultadosPanel">-->
-                <!--<div class="header">-->
-                    <!--Results Table-->
-                <!--</div>-->
-                <!--<stv-table id="tablaresultados" class="container small" page-size="10" enable-paging enable-remote enable-select enable-resize request="{{request}}" columns="{{columns}}" on-rowclick="handleRowClick" on-column-visibility-change="handleColumnVisibilityChange">-->
-                    <!--<div class="custom-buttons horizontal layout">-->
-                        <!--<button style="margin-right: 10px; color: #006699" id="saveTable" class="stv-btn down" on-click="downloadFiles" data-file="{{cnv}}"><i class="fa fa-cloud-download"></i> save</button>-->
-                        <!--<button id="spamButtonTable" class="stv-btn" on-click="spamTable" disabled>expand</button>-->
-                        <!--<button id="compressButtonTable"class="stv-btn" on-click="compressTable">compress</button>-->
-                    <!--</div>-->
-                <!--</stv-table>-->
-            <!--</stv-panel>-->
 
-        <!--</div>-->
+
     </template>
 </dom-module>
 <script>
     Polymer({
         is: 'add-unique-cnv',
         properties: {
+            userData:{
+                type:Object
+            },
             totalcaseValue: {
                 type: Number,
                 value: 0
@@ -643,6 +625,12 @@
                     return [];
                 }
             },
+            data:{
+                type: Array,
+                value: function() {
+                    return [];
+                }
+            },
             query:{
                 type: Object,
                 value: function() {
@@ -656,15 +644,15 @@
             },
             localIdValue1:{
                 type: String,
-                value: null
+                value: ""
             },
             localIdValue2:{
                 type: String,
-                value: null
+                value: ""
             },
             localIdValue3:{
                 type: String,
-                value: null
+                value: ""
             },
             geneValue: { //gene de gen
                 type: String,
@@ -737,14 +725,15 @@
                 type: String,
                 value: null
             },
-            localIdValue: {
-                type: String,
-                value: null
-            },
+
             decipherIdValue: {
                 type: String,
                 value: null
             },
+//            codeAdd: {
+//                type: String,
+//                value: null
+//            },
             nvariantsValue:{
                 type: String,
                 value: null
@@ -764,6 +753,10 @@
             ageValue: {
                 type: String,
                 value: null
+            },
+            agePreValue:{
+                type:String,
+                value:null
             },
             codeValue: {
                 type: String,
@@ -792,122 +785,238 @@
                 }
             }
         },
-        mantenimiento: function(){
-            alert("This site will be closed on November 8 from 10:30 to 11:30. Regreted");
+        enablePrenatal: function(){
+            if(this.$.prenatalAdd.checked){
+                this.$.agePrenatalAdd.disabled = false;
+                this.$.labelageprenatal.style.color = "black";
+                this.ageValue = "Prenatal";
+            }else{
+                this.$.agePrenatalAdd.disabled = true;
+                this.$.labelageprenatal.style.color = "gray";
+            }
+
         },
-        handleColumnVisibilityChange: function(){
-            //if(e.currentTarget.name == this.columns[1].checked || this.columns[5].checked){
-            var small = true;
-            for ( var i = 27; i < this.columns.length; i++){
-                if ( this.columns[i].visible){
-                    small = false;
+        addCNV: function(){
+            var validateForm = true;
+            var newRow = {};
+
+            if(!this.localIdValue1 == ""){
+                newRow.centerId1 = this.localIdValue1;
+            }else{
+                alert("Insert Local Id, please")
+                validateForm = false;
+            }
+
+            if(!this.localIdValue2 == ""){
+                newRow.centerId2 = this.localIdValue2;
+            }
+
+            if(!this.localIdValue3 == ""){
+                newRow.centerId3 = this.localIdValue3;
+            }
+
+            if(this.decipherIdValue != null){
+                newRow.decipherId = this.decipherIdValue;
+            }
+
+            if(this.yearIdValue != null){
+                newRow.yearOfBirth = this.yearIdValue;
+            }else{
+                alert("Insert year of birt, please")
+                validateForm = false;
+            }
+
+            if(this.$.this.yearTestValue != null){
+                newRow.yearTest = this.yearTestValue;
+            }else{
+                alert("Insert year of Test, please")
+                validateForm = false;
+            }
+
+
+            if(this.ageValue != null){
+                newRow.age = this.ageValue;
+            }else{
+                alert("Insert year of birt, please")
+                validateForm = false;
+            }
+
+            if(this.agePreValue != null){
+                newRow.agePrenatal = this.agePreValue;
+            }else{
+                alert("Insert year of Test, please")
+                validateForm = false;
+            }
+
+            if(this.ethnicSearch != null){
+                newRow.ethnicGroup = this.ethnicSearch;
+            }else{
+                alert("Insert Ethnic, please")
+                validateForm = false;
+            }
+
+            var inputs = this.$.statusAdd.querySelectorAll("input");
+            var statusv = [];
+
+            for (var i = 0; i < inputs.length; i++) {
+                var inputstatus = inputs[i];
+                if (inputstatus.checked) {
+                    statusv.push(inputstatus.value);
                 }
             }
-            if(small){
-                this.$.tablaresultados.set('pageSize',10);
-                this.$.tablaresultados.classList.remove('big');
-                this.$.tablaresultados.classList.add('small');
-                //$(".table-row").css("height","30px");
+            if (statusv.length > 0) {
+                newRow.status = statusv.join(",");
             }else{
-                this.$.tablaresultados.set('pageSize',6);
-                this.$.tablaresultados.classList.remove('small');
-                this.$.tablaresultados.classList.add('big');
-                //$(".table-row").css("height","50px");
-
-            }
-        },
-        toggleElement: function(e) {
-            var me = this;
-            var elem = e.currentTarget;
-            var option = elem.dataset.option;
-            var id = this.$[option];
-            var idfoto = this.$[option + "foto"];
-
-            if (id.style.display == "" || id.style.display == "none") {
-                id.style.display = "block";
-                $(idfoto).css("-moz-transform", "rotate(-90deg)");
-                $(idfoto).css("-webkit-transform", "rotate( -90deg)");
-            } else {
-                id.style.display = "none";
-                $(idfoto).css("-moz-transform", "rotate(90deg)");
-                $(idfoto).css("-webkit-transform", "rotate( 0deg)");
+                validateForm = false;
+                alert("Insert Status, please")
             }
 
-        },
-        colapseAll: function(){
-            var g = this.$.form.querySelectorAll(".stv-formbox > div");
-            for(var i = 0; i< g.length; i++) {
-                g[i].style.display = "none";
-                var idfoto = this.$[g[i].id + "foto"];
-                $(idfoto).css("-moz-transform", "rotate(90deg)");
-                $(idfoto).css("-webkit-transform", "rotate( 0deg)");
-            }
-        },
-        cerrartabla: function() {
-            var elem = this.$.tablaresultados;
-            if (elem.style.display == "" || elem.style.display == "block") {
-                elem.style.display = "none";
-                // this.$.iconoexpan.className = this.$.iconoexpan.className.replace(/(?:|\s)fa-expan(?!\S)/g ,'')
-                document.getElementById("iconoexpan").classList.remove('fa-compress');
-                document.getElementById("iconoexpan").classList.add('fa-expand');
-            } else {
-                elem.style.display = "block";
-                document.getElementById("iconoexpan").classList.remove('fa-expand');
-                document.getElementById("iconoexpan").classList.add('fa-compress');
-            }
-        },
-        compressTable: function(){
-            for ( var i = 0; i < 27; i++){
-//                this.columns[i].visible = false;
-                this.set('columns.'+i+'.visible', false);
-            }
-            for ( var i = 27; i < this.columns.length; i++){
-//                this.columns[i].visible = true;
-                this.set('columns.'+i+'.visible', true);
-            }
-            this.$.tablaresultados.refresh();
-            this.$.compressButtonTable.setAttribute('disabled',"");
-            this.$.spamButtonTable.removeAttribute('disabled');
-            this.handleColumnVisibilityChange();
-        },
-        spamTable: function(){
-            for ( var i = 0; i < 27; i++){
-                //this.columns[i].visible = true;
-                this.set('columns.'+i+'.visible', true);
-            }
-            for ( var i = 27; i < this.columns.length; i++){
-                this.set('columns.'+i+'.visible', false);
-                //this.columns[i].visible = false;
-            }
-            this.$.tablaresultados.refresh();
-            this.$.spamButtonTable.setAttribute('disabled',"");
-            this.$.compressButtonTable.removeAttribute('disabled');
-            this.handleColumnVisibilityChange();
-        },
-        downloadFiles: function(e) {
-            this.query.limit = 0;
-            var me = this;
-            var url = CNVSManager.regions.fetch({
-                query: this.query,
-                request: {
-                    success: function(r) {
-                        var stringToSave = "";
-                        //me.parseJson(r.result);
-                        for( var i = 0; i < r.result.length; i++){
-                            stringToSave = stringToSave + me.cnvToString(r.result[i]);
-                        }
-                        console.log(stringToSave);
-                    },
-                    error:function(r){
-                        console.log("error in save");
-                    }
-                },
 
-            });
-            debugger
+            inputs = this.$.clAdd.querySelectorAll("input");
+            var clv = [];
+
+            for (var i = 0; i < inputs.length; i++) {
+                var inputcl = inputs[i];
+                if (inputcl.checked) {
+                    clv.push(inputcl.value);
+                }
+            }
+            if (clv.length > 0) {
+                newRow.cl = clv.join(",");
+            }else{
+                validateForm = false;
+                alert("Insert Cell line, please")
+            }
+
+            inputs = this.$.typeSAdd.querySelectorAll("input");
+            var typeSv = [];
+
+            for (var i = 0; i < inputs.length; i++) {
+                var inputtypeS = inputs[i];
+                if (inputtypeS.checked) {
+                    typeSv.push(inputtypeS.value);
+                }
+            }
+            if (typeSv.length > 0) {
+                newRow.typeS = typeSv.join(",");
+            }else{
+                validateForm = false;
+                alert("Insert Type of Sample, please")
+            }
+
+            inputs = this.$.genderAdd.querySelectorAll("input");
+            var genderv = [];
+
+            for (var i = 0; i < inputs.length; i++) {
+                var inputgender = inputs[i];
+                if (inputgender.checked) {
+                    genderv.push(inputgender.value);
+                }
+            }
+            if (genderv.length > 0 && genderv.length < 2) {
+                newRow.gender = genderv.join(",");
+            }else{
+                validateForm = false;
+                alert("Insert Chr gender, please")
+            }
+
+            if(!this.arrayPlataformValue == "") {
+                newRow.arrayPlatform = this.arrayPlataformValue;
+            }else{
+                validateForm = false;
+                alert("Insert array platform, please")
+            }
+
+            if(!this.arrayIdValue == "") {
+                newRow.arrayId = this.arrayIdValue;
+            }else{
+                validateForm = false;
+                alert("Insert array Id, please")
+            }
+
+            if(!this.regionValueC == ""){
+                newRow.chromosome = this.regionValueC;
+            }else{
+                validateForm = false;
+                alert("Insert Chromosome, please")
+            }
+
+            if(!this.regionValueS == ""){
+                newRow.start = this.regionValueS;
+            }else{
+                validateForm = false;
+                alert("Insert Start, please")
+            }
+
+            if(!this.regionValueE == ""){
+                newRow.end = this.regionValueE;
+            }else{
+                validateForm = false;
+                alert("Insert End, please")
+            }
+
+            inputs = this.$.typeAdd.querySelectorAll("input");
+            var typev = [];
+
+            for (var i = 0; i < inputs.length; i++) {
+                var inputtype = inputs[i];
+                if (inputtype.checked) {
+                    typev.push(inputtype.value);
+                }
+            }
+            if (typev.length > 0 && typev.length < 3) {
+                newRow.type = typev.join(",");
+            }else{
+                validateForm = false;
+                alert("Insert Type of variant, please")
+            }
+
+            if(!this.nvariantsAdd == "") {
+                newRow.nv = this.nvariantsValue;
+            }else{
+                validateForm = false;
+                alert("Insert Number of variants, please")
+            }
+
+            if( this.dosesValue!= null && !this.dosesValue == "" ){
+                newRow.dosesNum = this.dosesValue;
+                newRow.dosesOp = this.$.dosesOp.value;
+            }
+
+
+           // newRow.code = this.userData.attributes.group;
+            if(validateForm){
+                this.push('data', newRow);
+            }
+
+
+
+//
+//
+//
+//
+//
+//
+//            var inputs = this.$.type.querySelectorAll("input");
+//            var typev = [];
+//
+//            for (var i = 0; i < inputs.length; i++) {
+//                var inputtype = inputs[i];
+//                if (inputtype.checked) {
+//                    typev.push(inputtype.value);
+//                }
+//            }
+//            if (typev.length > 0) {
+//                newRow.type = typev.join(",");
+//            }else{
+//                alert("no se ha insertado el type")
+//            }
+
+
         },
+
         showHPO: function() {
-            this.$.hpoPanel.hidden = !this.$.hpoPanel.hidden;
+            this.$.hpoPanelAdd.hidden = !this.$.hpoPanelAdd.hidden;
             // this.$.hpoPanel.handleClearSelected();
         },
         hpoValueChanged: function(neo, old) {
@@ -924,7 +1033,7 @@
             this.hpoValue = [];
         },
         showSyndrome: function() {
-            this.$.syndromePanel.hidden = !this.$.syndromePanel.hidden;
+            this.$.syndromePanelAdd.hidden = !this.$.syndromePanelAdd.hidden;
         },
         syndromeValueChanged: function(neo, old) {
             if (neo) {
@@ -940,7 +1049,7 @@
             this.syndromeValue = [];
         },
         showEthnic: function() {
-            this.$.ethnicPanel.hidden = !this.$.ethnicPanel.hidden;
+            this.$.ethnicPanelAdd.hidden = !this.$.ethnicPanelAdd.hidden;
         },
         ethnicValueChanged: function(neo, old) {
             if (neo) {
@@ -962,17 +1071,48 @@
                     o.clinicalSig + "\t" + o.inheritance + "\t" + o.yearOfBirth + "\t" + o.yearTest + "\t" + o.age + "\t" + o.agePrenatal
                     + "\t" + o.ethnicGroup + "\t" + o.origin + "\t" + o.arrayPlatform + "\t" + o.arrayId + "\t" + o.comments +"\n";
         },
-        /*parseJson: function(array){
-            if((array[1]).isArray){
-                this.parseJson(array[1]);
-            }else{
-                for (var i= 0; i < array.length; i++){
-                    this.stringToSave.concat(array[i].toString());
-                }
-            }
-        },*/
+        calculateGenes:function(){
 
-        mostrardiagnosis: function() {
+
+            var positions = [];
+            var me = this;
+            var variant = this.regionValueC + ":" + this.regionValueS + "-" + this.regionValueE;
+            positions.push(variant);
+
+            // Annotate
+            var query = positions.join(",");
+            if (positions.length > 0) {
+
+                CellBaseManager.get({
+                    host: CELLBASE_HOST,
+                    version: CELLBASE_VERSION,
+                    species: 'hsapiens',
+                    category: 'genomic',
+                    subCategory: 'region',
+                    resource: 'gene',
+                    query: query,
+                    params: {
+                        exclude: "transcripts,chunkIds,expressionValues,_chunkIds,mirna"
+                    },
+                    async: false,
+                    success: function(response) {
+                        try {
+                            for (var i = 0; response != null && i < response.response.length; i++) {
+                                var result = response.response[i].result;
+
+                                var genes = [];
+                                for (var j = 0; j < result.length; j++) {
+                                    var gene = result[j];
+                                    genes.push(gene.name);
+                                }
+
+                            }
+
+                            me.geneValue = genes.join(",");
+                        } catch (e) {}
+                    }
+                });
+            }
 
         },
         //Search Gens in textarea
@@ -983,10 +1123,10 @@
             //}
         },
         addGene: function(name){
-            if(this.$.gene.value == null || this.$.gene.value == ""){
-                this.$.gene.value = name;
+            if(this.$.geneAdd.value == null || this.$.geneAdd.value == ""){
+                this.$.geneAdd.value = name;
             }else{
-                this.$.gene.value = this.$.gene.value + "," + name;
+                this.$.geneAdd.value = this.$.geneAdd.value + "," + name;
             }
         },
         _initGeneSearch: function() {
@@ -1013,7 +1153,6 @@
                 });
                 cb(results);
             };
-            this.$.geneSearch.setSearchFunction(search);
         },
         ready: function() {
             var me = this;
@@ -1072,41 +1211,41 @@
                         var n = me.transformData(row.decipherId);
                         return n;
                     }
-//                }, {
-//                    name: 'LocalID',
-//                    title: 'Local ID',
-//                    width: 180,
-//                    columns: [{
-//                        name: 'centerId1',
-//                        title: 'ID 1',
-//                        width: 60,
-//                        formula: function(row) {
-//                            return row.centerId1;
-//                        }
-//                    }, {
-//                        name: 'centerId2',
-//                        title: 'ID 2',
-//                        width: 60,
-//                        formula: function(row) {
-//                            return row.centerId2;
-//                        }
-//                    }, {
-//                        name: 'centerId3',
-//                        title: 'ID 3',
-//                        width: 60,
-//                        formula: function(row) {
-//                            return row.centerId3;
-//                        }
-//                    }]
-//                }, {
-//                    name: 'LocalIDmerge',
-//                    title: 'Local ID(1,2,3)',
-//                    width: 180,
-//                    visible:false,
-//                    formula: function(row) {
-//                        return row.centerId1 +"<br/>"+row.centerId2+"</br>"+row.centerId3;
-//                    }
-//
+                }, {
+                    name: 'LocalID',
+                    title: 'Local ID',
+                    width: 180,
+                    columns: [{
+                        name: 'centerId1',
+                        title: 'ID 1',
+                        width: 60,
+                        formula: function(row) {
+                            return row.centerId1;
+                        }
+                    }, {
+                        name: 'centerId2',
+                        title: 'ID 2',
+                        width: 60,
+                        formula: function(row) {
+                            return row.centerId2;
+                        }
+                    }, {
+                        name: 'centerId3',
+                        title: 'ID 3',
+                        width: 60,
+                        formula: function(row) {
+                            return row.centerId3;
+                        }
+                    }]
+                }, {
+                    name: 'LocalIDmerge',
+                    title: 'Local ID(1,2,3)',
+                    width: 180,
+                    visible:false,
+                    formula: function(row) {
+                        return row.centerId1 +"<br/>"+row.centerId2+"</br>"+row.centerId3;
+                    }
+
                 },
                 {
                     name: 'assembly',
@@ -1492,16 +1631,7 @@
                 }
 
             ]
-            // Llamar a el distint para hacer el referal
 
-            var query = {};
-            var url = CNVSManager.regions.fetch({
-                query: query,
-                request: {
-                    url: true
-                }
-            });
-            this.formURL = url;
         },
         transformData: function(row){
             var n = "."
@@ -1516,10 +1646,10 @@
             this.selectedSpecies = DEFAULT_SPECIES;
         },
         clearForm: function() {
-            this.$.form.reset();
-//            this.localIdValue1 = null;
-//            this.localIdValue2 = null;
-//            this.localIdValue3 = null;
+            this.$.formAdd.reset();
+            this.localIdValue1 = null;
+            this.localIdValue2 = null;
+            this.localIdValue3 = null;
             this.regionValue = "";
             this.geneValue = "";
             this.arrayPlataformValue = null;
@@ -1616,7 +1746,7 @@
             var query = {};
 
             //  if (this.$.form.checkValidity() && (this.regionValue != '' || this.geneValue != '')) {
-            if (this.$.form.checkValidity() && this.dosesAndSizeNumValidity()) {
+            if (this.$.formAdd.checkValidity() && this.dosesAndSizeNumValidity()) {
                 var region = null;
                 if (this.regionValueC == "") { //TODO
                   region = "";
@@ -1625,48 +1755,19 @@
                     query.regions = region;
                 }
 
-                if (this.geneValue) {
-
-                    var gene = this.geneValue.toUpperCase();
-                    CellBaseManager.get({
-                        species: 'hsapiens',
-                        category: 'feature',
-                        subCategory: 'gene',
-                        query: gene,
-                        resource: "info",
-                        async: false,
-                        params: {
-                            include: 'chromosome,start,end'
-                        },
-                        success: function(data) {
-                            for (var i = 0; i < data.response.length; i++) {
-                                var queryResult = data.response[i];
-
-                                if (queryResult.result.length > 0) {
-                                    region = new Region(queryResult.result[0]);
-                                    //regions.push(region.toString());
-                                    query.regions = region;
-                                } else {
-                                    alert("Wrong gene: " + gene);
-                                }
-                            }
-                        }
-                    });
+                if(!this.localIdValue1 == ""){
+                    query.centerId1 = this.localIdValue1;
                 }
 
-//                if(!this.localIdValue1 == ""){
-//                    query.centerId1 = this.localIdValue1;
-//                }
-//
-//                if(!this.localIdValue2 == ""){
-//                    query.centerId2 = this.localIdValue2;
-//                }
-//
-//                if(!this.localIdValue3 == ""){
-//                    query.centerId3 = this.localIdValue3;
-//                }
+                if(!this.localIdValue2 == ""){
+                    query.centerId2 = this.localIdValue2;
+                }
 
-                var inputs = this.$.type.querySelectorAll("input");
+                if(!this.localIdValue3 == ""){
+                    query.centerId3 = this.localIdValue3;
+                }
+
+                var inputs = this.$.typeAdd.querySelectorAll("input");
                 var typev = [];
 
                 for (var i = 0; i < inputs.length; i++) {
@@ -1684,7 +1785,7 @@
                 if(!this.decipherIdValue == ""){
                     query.decipherId = this.decipherIdValue;
                 }
-                inputs = this.$.assembly.querySelectorAll("input");
+                inputs = this.$.assemblyAdd.querySelectorAll("input");
                 var assemblyv = [];
                 for (var i = 0; i < inputs.length; i++){
                     if(inputs[i].checked){
@@ -1695,7 +1796,7 @@
                     query.assembly = assemblyv.join(",");
                 }
 
-                inputs = this.$.doses.querySelectorAll("input");
+                inputs = this.$.dosesAdd.querySelectorAll("input");
                 var dosesv = [];
 
                 for (var i = 0; i < inputs.length; i++) {
@@ -1715,7 +1816,7 @@
                 }
 
 
-                inputs = this.$.clis.querySelectorAll("input");
+                inputs = this.$.clisAdd.querySelectorAll("input");
                 var clisv = [];
 
                 for (var i = 0; i < inputs.length; i++) {
@@ -1728,7 +1829,7 @@
                     query.clis = clisv.join(",");
                 }
 
-                inputs = this.$.inheritance.querySelectorAll("input");
+                inputs = this.$.inheritanceAdd.querySelectorAll("input");
                 var inhev = [];
 
                 for (var i = 0; i < inputs.length; i++) {
@@ -1744,7 +1845,7 @@
                 if(!this.nvariantsValue == "") {
                     query.nv = this.nvariantsValue;
                 }
-                inputs = this.$.cl.querySelectorAll("input");
+                inputs = this.$.clAdd.querySelectorAll("input");
                 var clv = [];
 
                 for (var i = 0; i < inputs.length; i++) {
@@ -1757,7 +1858,7 @@
                     query.cl = clv.join(",");
                 }
 
-                inputs = this.$.gender.querySelectorAll("input");
+                inputs = this.$.genderAdd.querySelectorAll("input");
                 var genderv = [];
 
                 for (var i = 0; i < inputs.length; i++) {
@@ -1770,7 +1871,7 @@
                     query.gender = genderv.join(",");
                 }
 
-                inputs = this.$.status.querySelectorAll("input");
+                inputs = this.$.statusAdd.querySelectorAll("input");
                 var statusv = [];
 
                 for (var i = 0; i < inputs.length; i++) {
@@ -1783,7 +1884,7 @@
                     query.status = statusv.join(",");
                 }
 
-                inputs = this.$.typeS.querySelectorAll("input");
+                inputs = this.$.typeSAdd.querySelectorAll("input");
                 var typeSv = [];
 
                 for (var i = 0; i < inputs.length; i++) {
@@ -1824,35 +1925,15 @@
                 }
                 if( this.dosesValue!= null && !this.dosesValue == "" ){
                     query.dosesNum = this.dosesValue;
-                    query.dosesOp = this.$.dosesOp.value;
+                    query.dosesOp = this.$.dosesOpAdd.value;
                 }
 
                 if( this.sizeValue!= null && !this.sizeValue == "" ){
                     query.size = this.sizeValue;
-                    query.sizesigno = this.$.sizeOp.value;
+                    query.sizesigno = this.$.sizeOpAdd.value;
                 }
 
-                //HPO
-//                var hposMap = {};
-//                for (var i = 0; i < this.hpoValue.length; i++) {
-//                    if (this.hpoValue[i].id.indexOf('HP:') >= 0) { // Si viene del arbol no tiene HP:
-//                        hposMap[this.hpoValue[i].id] = true;
-//                    } else {
-//                        hposMap['HP:' + this.hpoValue[i].id] = true;
-//                    }
-//                    if (this.hpoValue[i].f != null) { //f son los hijos parent el padre
-//                        if (Object.keys(this.hpoValue[i].f).length > 0) {
-//                            for (var j = 0; j < this.hpoValue[i].f.length; j++) {
-//                                this.hpoValue.push(this.hpoValue[i].f[j]);
-//                            }
-//                        }
-//                    }
-//                }
                 var hpov = [];
-//                if(this.hpoSearch.indexOf('HP:')){
-//                    hpov = this.hpoSearch.split(',');
-//                    query.hpo = this.hpoSearch;
-//                }
                 for (var i = 0; i < this.hpoValue.length; i++) {
                     if (this.hpoValue[i].id.indexOf('HP:') >= 0) { // Si viene del arbol no tiene HP:
                         hpov[i] = this.hpoValue[i].id;
@@ -1871,7 +1952,6 @@
                 if (hpov.length > 0) {
                     query.hpo = hpov.join(",");
                 }
-
                 var url = CNVSManager.regions.fetch({
                     query: query,
                     request: {

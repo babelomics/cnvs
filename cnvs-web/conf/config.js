@@ -9,3 +9,12 @@ CNVS_TRACK_TYPE_COLORS = {
     "gain": "blue",
     "LOH neutral": "green"
 };
+
+STEVIA_MANAGER_LOG = true;
+// STEVIA_SERVER_HOST = 'http://localhost:5555';
+//STEVIA_SERVER_HOST = 'http://ws.babelomics.org/teststv02';
+STEVIA_SERVER_HOST = 'http://mem18:1102/teststv02';
+
+STEVIA_SHOW_JOB_ERROR_FILES = true;
+UPLOAD_FILES_WITH_ERRORS = true;
+STEVIA_SHOW_HIDDEN_FILES = true;

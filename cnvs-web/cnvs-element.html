@@ -2,6 +2,8 @@
 <link rel="import" href="bower_components/iron-flex-layout/iron-flex-layout-classes.html">
 
 <script src="bower_components/cookies-js/dist/cookies.min.js"></script>
+<script src="bower_components/crypto-js/core.js"></script>
+<script src="bower_components/crypto-js/sha1.js"></script>
 
 <link rel="import" href="bower_components/stevia-elements/src/stv-header.html">
 <link rel="import" href="bower_components/stevia-elements/src/stv-application-behavior.html">
@@ -77,10 +79,11 @@
         </div>
         <div class="content" menu-option="add">
 
-            <add-cnv></add-cnv>
+            <add-cnv user-data="{{userData}}"></add-cnv>
         </div>
 
-        <stv-header id="stvHeader" hide-jobs hide-browse hide-signup selected-option="{{selectedOption}}" user-data="{{userData}}">
+        <stv-header id="stvHeader"  selected-option="{{selectedOption}}" user-data="{{userData}}">
+        <!--<stv-header id="stvHeader" hide-jobs hide-browse hide-signup selected-option="{{selectedOption}}" user-data="{{userData}}">-->
             <div class="icon">
                 <img src="./images/gotaCS.png" style="height: 50px;margin: 5px 0px 0 0;">
             </div>
@@ -134,7 +137,7 @@
         is: 'cnvs-element',
         behaviors: [StvApplicationBehavior],
         ready: function() {
-            this.setMenu('add');
+            this.setMenu('home');
         }
     });
 </script>
