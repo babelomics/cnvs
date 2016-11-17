@@ -167,8 +167,8 @@ public class CNVSQueryManager {
         return res.size();
     }
 
-    public void addCNV(List<CNV> listCNV, String username, String sid) {
-
+    public boolean addCNV(List<CNV> listCNV, String username, String sid) {
+        boolean res = true;
         DBCollection users = datastore.getDB().getCollection("users");
 
         BasicDBObject query = new BasicDBObject("name", username).append("sessions.id", sid);
@@ -177,10 +177,14 @@ public class CNVSQueryManager {
 
         if (dbUser != null) {
 //            List<CNV> res = datastore.createQuery(CNV.class).asList();
-
-            datastore.save(listCNV);
+            try {
+                datastore.save(listCNV);
+            }catch (Exception e){
+                res = false;
+            }
 //            return res.size();
         }
+        return res;
 
     }
 

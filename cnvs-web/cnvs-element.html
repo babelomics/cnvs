@@ -82,7 +82,7 @@
             <add-cnv user-data="{{userData}}"></add-cnv>
         </div>
 
-        <stv-header id="stvHeader"  selected-option="{{selectedOption}}" user-data="{{userData}}">
+        <stv-header id="stvHeader"  hide-signup hide-anonymous selected-option="{{selectedOption}}" user-data="{{userData}}" on-login="handleLogin" on-logout="handleLogout">
         <!--<stv-header id="stvHeader" hide-jobs hide-browse hide-signup selected-option="{{selectedOption}}" user-data="{{userData}}">-->
             <div class="icon">
                 <img src="./images/gotaCS.png" style="height: 50px;margin: 5px 0px 0 0;">
@@ -93,7 +93,7 @@
             <div id="menu" class="menu horizontal layout center flex">
                 <div style="margin-left:4vw;"></div>
 
-                <div title="" class="option" on-click="handleMenuOption" data-option="add">
+                <div title="" class="option" show-on-login on-click="handleLoggedOnlyMenuOption" data-option="add">
                     <i class="fa fa-magic"></i>
                     <span class="option-text">Add</span>
                 </div>
@@ -138,6 +138,13 @@
         behaviors: [StvApplicationBehavior],
         ready: function() {
             this.setMenu('home');
+            this.checkShowMenuOnLogin();
+        },
+        handleLogin: function() {
+            this.checkShowMenuOnLogin();
+        },
+        handleLogout: function() {
+            this.checkShowMenuOnLogin();
         }
     });
 </script>

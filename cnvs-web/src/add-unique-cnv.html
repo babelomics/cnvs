@@ -142,7 +142,8 @@
     </style>
     <template>
 
-            <form id = "formAdd" class="vertical layout">
+            <form id="formAdd" style="max-width: 100%" class="vertical layout">
+                <div id="formAddUnique" style="max-width: 700px; margin:0 auto" >
                 <div class="stv-formtitle">
                     Patients' Data
                 </div>
@@ -198,6 +199,11 @@
                         </div>
                         <input type="text" class="stv" id="ethnicAdd" name="ethnicAdd" value="{{ethnicSearch::change}}" rows="3" placeholder="White Mediterranean,Amerindian" disabled/>
                     </div>
+
+                    <div class="input_container vertical layout">
+                        <label class="stv">Geographic Origin</label>
+                        <input class="stv" id="geo" name="geo" placeholder="Spain,Bolivia" value="{{geoValue::change}}"/>
+                    </div>
                 </div>
                 <div class="stv-formtitle">
                     Sample Characteristics
@@ -208,23 +214,23 @@
                         <div class="input_container vertical layout">
                             <div class="horizontal layout">
                                 <label for="status0Add" class="stv-control flex">
-                                    <input type="radio" name="statusAdd" value="0" id="status0Add" />
+                                    <input type="radio" name="statusAdd" value="Proband" id="status0Add" />
                                     <span>Proband</span>
                                 </label>
                                 <label for="status1Add" class="stv-control flex">
-                                    <input type="radio" name="statusAdd" value="1" id="status1Add" />
+                                    <input type="radio" name="statusAdd" value="Father" id="status1Add" />
                                     <span>Father</span>
                                 </label>
                                 <label for="status2Add" class="stv-control flex">
-                                    <input type="radio" name="statusAdd" value="2" id="status2Add" />
+                                    <input type="radio" name="statusAdd" value="Mother" id="status2Add" />
                                     <span>Mother </span>
                                 </label>
                                 <label for="status3Add" class="stv-control flex">
-                                    <input type="radio" name="statusAdd" value="3" id="status3Add" />
+                                    <input type="radio" name="statusAdd" value="Control" id="status3Add" />
                                     <span>Control</span>
                                 </label>
                                 <label for="status5Add" class="stv-control flex">
-                                    <input type="radio" name="statusAdd" value="1" id="status5Add" />
+                                    <input type="radio" name="statusAdd" value="Others" id="status5Add" />
                                     <span>Others</span>
                                 </label>
                             </div>
@@ -235,11 +241,11 @@
                         <label class="stv">Cell line:</label>
                         <div class="horizontal layout">
                             <label for="cl0Add" class="stv-control flex">
-                                <input type="radio" name="clAdd" value="0" id="cl0Add" />
+                                <input type="radio" name="clAdd" value="Germline" id="cl0Add" />
                                 <span>Germline</span>
                             </label>
                             <label for="cl1Add" class="stv-control flex">
-                                <input type="radio" name="clAdd" value="1" id="cl1Add" />
+                                <input type="radio" name="clAdd" value="Somatic" id="cl1Add" />
                                 <span>Somatic</span>
                             </label>
                         </div>
@@ -249,36 +255,36 @@
                         <label class="stv"> Type of Sample</label>
                         <div class="horizontal layout">
                             <label for="typeS0Add" class="stv-control flex">
-                                <input type="radio" name="typeSAdd" value="0" id="typeS0Add" />
+                                <input type="radio" name="typeSAdd" value="Blood" id="typeS0Add" />
                                 <span>Blood</span>
                             </label>
                             <label for="typeS1Add" class="stv-control flex">
-                                <input type="radio" name="typeSAdd" value="1" id="typeS1Add" />
+                                <input type="radio" name="typeSAdd" value="Amniotic fluid" id="typeS1Add" />
                                 <span>Amniotic fluid</span>
                             </label>
 
                             <label for="typeS2Add" class="stv-control flex">
-                                <input type="radio" name="typeSAdd" value="2" id="typeS2Add" />
+                                <input type="radio" name="typeSAdd" value="Chorionic villi" id="typeS2Add" />
                                 <span>Chorionic villi</span>
                             </label>
                         </div>
                         <div class="horizontal layout">
                             <label for="typeS3Add" class="stv-control flex">
-                                <input type="radio" name="typeSAdd" value="3" id="typeS3Add" />
+                                <input type="radio" name="typeSAdd" value="Tumour" id="typeS3Add" />
                                 <span>Tumour</span>
                             </label>
                             <label for="typeS4Add" class="stv-control flex">
-                                <input type="radio" name="typeSAdd" value="4" id="typeS4Add" />
+                                <input type="radio" name="typeSAdd" value="Bone marrow" id="typeS4Add" />
                                 <span>Bone marrow</span>
                             </label>
                             <label for="typeS5Add" class="stv-control flex">
-                                <input type="radio" name="typeSAdd" value="3" id="typeS5Add" />
+                                <input type="radio" name="typeSAdd" value="Others" id="typeS5Add" />
                                 <span>Others</span>
                             </label>
                         </div>
                         <div class="horizontal layout">
                             <label for="typeS6Add" class="stv-control flex">
-                                <input type="radio" name="typeSAdd" value="4" id="typeS6Add" />
+                                <input type="radio" name="typeSAdd" value="Unknown" id="typeS6Add" />
                                 <span>Unknown</span>
                             </label>
                         </div>
@@ -288,36 +294,36 @@
                         <label class="stv"> Chromosomal Gender</label>
                         <div class="horizontal layout">
                             <label for="gender3Add" class="stv-control flex">
-                                <input type="radio" name="genderAdd" value="2" id="gender3Add" />
+                                <input type="radio" name="genderAdd" value="XXX" id="gender3Add" />
                                 <span>XXX</span>
                             </label>
                             <label for="gender0Add" class="stv-control flex">
-                                <input type="radio" name="genderAdd" value="0" id="gender0Add" />
+                                <input type="radio" name="genderAdd" value="XX" id="gender0Add" />
                                 <span>XX</span>
                             </label>
                             <label for="gender4Add" class="stv-control flex">
-                                <input type="radio" name="genderAdd" value="3" id="gender4Add" />
+                                <input type="radio" name="genderAdd" value="XXY" id="gender4Add" />
                                 <span>XXY</span>
                             </label>
                         </div>
                         <div class="horizontal layout">
                             <label for="gender1Add" class="stv-control flex">
-                                <input type="radio" name="genderAdd" value="1" id="gender1Add" />
+                                <input type="radio" name="genderAdd" value="XY" id="gender1Add" />
                                 <span>XY</span>
                             </label>
 
                             <label for="gender5Add" class="stv-control flex">
-                                <input type="radio" name="genderAdd" value="4" id="gender5Add" />
+                                <input type="radio" name="genderAdd" value="XYY" id="gender5Add" />
                                 <span>XYY</span>
                             </label>
                             <label for="gender2Add" class="stv-control flex">
-                                <input type="radio" name="genderAdd" value="1" id="gender2Add" />
+                                <input type="radio" name="genderAdd" value="X" id="gender2Add" />
                                 <span>X</span>
                             </label>
                         </div>
                         <div class="horizontal layout">
                             <label for="gender6Add" class="stv-control flex">
-                                <input type="radio" name="genderAdd" value="4" id="gender6Add" />
+                                <input type="radio" name="genderAdd" value="Unknown" id="gender6Add" />
                                 <span>Unknown</span>
                             </label>
                         </div>
@@ -330,6 +336,11 @@
                     <div class="input_container vertical layout">
                         <label class="stv">Array Id:</label>
                         <input type="text" class="stv" id="arrayIdAdd" name="arrayIdAdd" placeholder="253900010XXX_X_X" value="{{arrayIdValue::change}}" rows="3"/>
+                    </div>
+
+                    <div class="input_container vertical layout">
+                        <label class="stv">Comments:</label>
+                        <input type="text" class="stv" id="commentsAdd" name="commentsAdd" placeholder="Any comment" value="{{commentsValue::change}}" rows="3"/>
                     </div>
                 </div>
                 <div class="stv-formtitle">
@@ -345,26 +356,25 @@
                             <input type="text" class="stv" id="regionSAdd" name="regionSAdd" placeholder="766600" value="{{regionValueS::change}}" rows="3"/>
                             <label class="stv">End:</label>
                             <input type="text" class="stv" id="regionEAdd" name="regionEAdd" placeholder="766600" value="{{regionValueE::change}}" rows="3"/>
-
                         </div>
                     </div>
                     <div class="input_container vertical layout">
                         <div  class="stv-btn" on-click="calculateGenes">Show Genes:</div>
-                        <input type="text" class="stv" id="geneAdd" name="geneAdd" placeholder="BRCA2,PPL" value="{{geneValue::change}}" rows="3" disabled/>
+                        <textarea type="text" class="stv" id="geneAdd" name="geneAdd" placeholder="BRCA2,PPL" value="{{geneValue::change}}" rows="3" disabled></textarea>
                     </div>
                     <div id="typeAdd" class="input_container vertical layout">
                         <label class="stv">Type of Variant:</label>
                         <div class="horizontal layout">
                             <label for="type0Add" class="stv-control flex">
-                                <input type="radio" name="type" id="type0Add" value="0" />
+                                <input type="radio" name="type" id="type0Add" value="Gain" />
                                 <span>Gain</span>
                             </label>
                             <label for="type1Add" class="stv-control flex">
-                                <input type="radio" name="type" id="type1Add" value="1" />
+                                <input type="radio" name="type" id="type1Add" value="Loss" />
                                 <span>Loss</span>
                             </label>
                             <label for="type2Add" class="stv-control flex">
-                                <input type="radio" name="type" id="type2Add" value="2" />
+                                <input type="radio" name="type" id="type2Add" value="LOH neutral" />
                                 <span>LOH neutral</span>
                             </label>
                         </div>
@@ -379,29 +389,29 @@
                         <div class="vertical layout">
                             <div class="horizontal layout">
                                 <label for="doses0Add" class="stv-control flex">
-                                    <input type="radio" name="dosesAdd" value="0" id="doses0Add" />
+                                    <input type="radio" name="dosesAdd" value="Homozygous deletion" id="doses0Add" />
                                     <span>Homozygous deletion</span>
                                 </label>
                                 <label for="doses2Add" class="stv-control flex">
-                                    <input type="radio" name="dosesAdd" value="2" id="doses2Add" />
+                                    <input type="radio" name="dosesAdd" value="Hemyzygous deletion" id="doses2Add" />
                                     <span>Hemyzygous deletion</span>
                                 </label>
                                 <label for="doses1Add" class="stv-control flex">
-                                    <input type="radio" name="dosesAdd" value="1" id="doses1Add" />
+                                    <input type="radio" name="dosesAdd" value="Deletion" id="doses1Add" />
                                     <span>Deletion</span>
                                 </label>
                             </div>
                             <div class="horizontal layout">
                                 <label for="doses3Add" class="stv-control flex">
-                                    <input type="radio" name="dosesAdd" value="3" id="doses3Add" />
+                                    <input type="radio" name="dosesAdd" value="Duplication" id="doses3Add" />
                                     <span>Duplication</span>
                                 </label>
                                 <label for="doses4Add" class="stv-control flex">
-                                    <input type="radio" name="dosesAdd" value="4" id="doses4Add" />
+                                    <input type="radio" name="dosesAdd" value="Triplication" id="doses4Add" />
                                     <span>Triplication</span>
                                 </label>
                                 <label for="doses5Add" class="stv-control flex">
-                                    <input type="radio" name="dosesAdd" value="5" id="doses5Add" />
+                                    <input type="radio" name="dosesAdd" value="Amplification" id="doses5Add" />
                                     <span>Amplification</span>
                                 </label>
                             </div>
@@ -410,12 +420,13 @@
                     <div class="horizontal layout">
                         <input type="number" class="stv flex" id="dosesNumAdd" name="dosesNumAdd" placeholder="Numeric doses,Ex:-0.5" value="{{dosesValue::change}}"/>
                     </div>
-                    <div class="input_container vertical layout">
-                        <label class="stv">Size(Kb):</label>
-                        <div class="horizontal layout">
-                            <input type="text" class="stv flex" id="size" name="size" placeholder="Size, Not implemented" value="{{sizeValue::change}}" disabled/>
-                        </div>
-                    </div>
+                    <!--<div class="input_container vertical layout">-->
+                        <!--<label class="stv">Size(Kb):</label>-->
+                        <!--<div class="horizontal layout">-->
+                            <!--<input type="text" class="stv flex" id="size" name="size" placeholder="Size, Not implemented" value="{{sizeValue::change}}" disabled/>-->
+                        <!--</div>-->
+                    <!--</div>-->
+
                     <div class="input_container vertical layout">
                         <label class="stv">Cytoband:</label>
                         <input type="text" class="stv" id="cytobandAdd" name="cytobandAdd" placeholder="p36.33" value="{{bandValue::change}}" rows="3"/>
@@ -431,7 +442,7 @@
                                 <input type="radio" name="assemblyAdd" value="hg19" id="hg19Add" />
                                 <span>GRCh37/hg19</span>
                             </label>
-                            <label for="hg19Add" class="stv-control flex">
+                            <label for="hg38Add" class="stv-control flex">
                                 <input type="radio" name="assemblyAdd" value="hg38" id="hg38Add" />
                                 <span>GRCh38/hg38</span>
                             </label>
@@ -474,42 +485,42 @@
                     <div class="input_container vertical layout" id="inheritanceAdd">
                         <label class="stv">Inheritance</label>
                         <label for="inhe0Add" class="stv-control flex">
-                            <input type="radio" name="inheritanceAdd" value="0" id="inhe0Add" />
+                            <input type="radio" name="inheritanceAdd" value="De novo, mosaic" id="inhe0Add" />
                             <span>De novo, mosaic.</span>
                         </label>
                         <label for="inhe1Add" class="stv-control flex">
-                            <input type="radio" name="inheritanceAdd" value="1" id="inhe1Add" />
+                            <input type="radio" name="inheritanceAdd" value="De novo, constitutive" id="inhe1Add" />
                             <span>De novo, constitutive.</span>
                         </label>
                         <label for="inhe2Add" class="stv-control flex">
-                            <input type="radio" name="inheritanceAdd" value="2" id="inhe2Add" />
+                            <input type="radio" name="inheritanceAdd" value="Paternally inherited, constitutive in father" id="inhe2Add" />
                             <span>Paternally inherited, constitutive in father.</span>
                         </label>
                         <label for="inhe3Add" class="stv-control flex">
-                            <input type="radio" name="inheritanceAdd" value="3" id="inhe3Add" />
+                            <input type="radio" name="inheritanceAdd" value="Paternally inherited, mosaic in father" id="inhe3Add" />
                             <span>Paternally inherited, mosaic in father.</span>
                         </label>
                         <label for="inhe4Add" class="stv-control flex">
-                            <input type="radio" name="inheritanceAdd" value="4" id="inhe4Add" />
+                            <input type="radio" name="inheritanceAdd" value="Maternally inherited, constitutive in mother" id="inhe4Add" />
                             <span>Maternally inherited, constitutive in mother.</span>
                         </label>
                         <label for="inhe5Add" class="stv-control flex">
-                            <input type="radio" name="inheritanceAdd" value="5" id="inhe5Add" />
+                            <input type="radio" name="inheritanceAdd" value="Maternally inherited, mosaic in mother" id="inhe5Add" />
                             <span>Maternally inherited, mosaic in mother.</span>
                         </label>
 
                         <label for="inhe6Add" class="stv-control flex">
-                            <input type="radio" name="inheritanceAdd" value="6" id="inhe6Add" />
+                            <input type="radio" name="inheritanceAdd" value="Imbalance arising from a balanced parental rearrangement" id="inhe6Add" />
                             <span>Imbalance arising from a balanced parental rearrangement.</span>
                         </label>
 
                         <label for="inhe7Add" class="stv-control flex">
-                            <input type="radio" name="inheritanceAdd" value="7" id="inhe7Add" />
+                            <input type="radio" name="inheritanceAdd" value="Biparental" id="inhe7Add" />
                             <span>Biparental</span>
                         </label>
 
                         <label for="inhe8Add" class="stv-control flex">
-                            <input type="radio" name="inheritanceAdd" value="8" id="inhe8Add" />
+                            <input type="radio" name="inheritanceAdd" value="Unknown" id="inhe8Add" />
                             <span>Unknown</span>
                         </label>
                     </div>
@@ -548,22 +559,35 @@
                     </div>
                     <div class="stv-btn stv-btn-shdw" on-click="addCNV" title="ADD CNV IN TABLE" >ADD CNV NOW</div>
                 </div>
-            </form>
-        <div class="right vertical layout">
-            <stv-panel collapsible id="tablaresultadosPanel">
-                <div class="header">
-                    Results Table
                 </div>
-                <stv-table id="tablaresultados" class="container small" page-size="10" enable-paging enable-select enable-resize data="{{data}}" columns="{{columns}}" on-rowclick="handleRowClick" on-column-visibility-change="handleColumnVisibilityChange">
-                    <div class="custom-buttons horizontal layout">
-                        <button style="margin-right: 10px; color: #006699" id="saveTable" class="stv-btn down" on-click="downloadFiles" data-file="{{cnv}}"><i class="fa fa-cloud-download"></i> save</button>
-                        <button id="spamButtonTable" class="stv-btn" on-click="spamTable" disabled>expand</button>
-                        <button id="compressButtonTable"class="stv-btn" on-click="compressTable">compress</button>
+                <stv-panel collapsible id="tablaresultadosPanel" style="max-width: 98%">
+                    <div class="header">
+                        Results Table
                     </div>
-                </stv-table>
-            </stv-panel>
+                    <stv-table id="tablaresultados" class="container small" page-size="10" enable-paging enable-select enable-resize data="{{data}}" columns="{{columns}}" on-rowclick="handleRowClick" on-column-visibility-change="handleColumnVisibilityChange">
+                        <div class="custom-buttons horizontal layout">
+                            <button style="margin-right: 10px; color: #006699" id="saveTable" class="stv-btn down" on-click="upload" data-file="{{cnv}}"><i class="fa fa-cloud-download"></i> upload</button>
+                            <button id="spamButtonTable" class="stv-btn" on-click="spamTable" disabled>expand</button>
+                            <button id="compressButtonTable"class="stv-btn" on-click="compressTable">compress</button>
+                        </div>
+                    </stv-table>
+                </stv-panel>
 
-        </div>
+            </form>
+        <!--<div class="right vertical layout">-->
+            <!--<stv-panel collapsible id="tablaresultadosPanel">-->
+                <!--<div class="header">-->
+                    <!--Results Table-->
+                <!--</div>-->
+                <!--<stv-table id="tablaresultados" class="container small" page-size="10" enable-paging enable-select enable-resize data="{{data}}" columns="{{columns}}" on-rowclick="handleRowClick" on-column-visibility-change="handleColumnVisibilityChange">-->
+                    <!--<div class="custom-buttons horizontal layout">-->
+                        <!--<button style="margin-right: 10px; color: #006699" id="saveTable" class="stv-btn down" on-click="" data-file="{{cnv}}"><i class="fa fa-cloud-download"></i> upload</button>-->
+                        <!--<button id="spamButtonTable" class="stv-btn" on-click="spamTable" disabled>expand</button>-->
+                        <!--<button id="compressButtonTable"class="stv-btn" on-click="compressTable">compress</button>-->
+                    <!--</div>-->
+                <!--</stv-table>-->
+            <!--</stv-panel>-->
+        <!--</div>-->
         <stv-panel id="hpoPanelAdd" style="height:700px" modal closable hidden>
             <div class="header">
                 <i class="fa fa-search" aria-hidden="true"></i> Human Phenotype Ontology
@@ -762,10 +786,6 @@
                 type: String,
                 value: null
             },
-            ethicValue: {
-                type: String,
-                value: null
-            },
             geoValue: {
                 type: String,
                 value: null
@@ -777,6 +797,10 @@
             arrayIdValue: {
                 type: String,
                 value: null
+            },
+            commentsValue: {
+                type: String,
+                value: ""
             },
             allSyndromes: {
                 type: Array,
@@ -790,9 +814,11 @@
                 this.$.agePrenatalAdd.disabled = false;
                 this.$.labelageprenatal.style.color = "black";
                 this.ageValue = "Prenatal";
+                this.$.ageAdd.disabled = true;
             }else{
                 this.$.agePrenatalAdd.disabled = true;
                 this.$.labelageprenatal.style.color = "gray";
+                this.$.ageAdd.disabled = false;
             }
 
         },
@@ -826,32 +852,39 @@
                 validateForm = false;
             }
 
-            if(this.$.this.yearTestValue != null){
+            if (this.yearTestValue != null) {
                 newRow.yearTest = this.yearTestValue;
-            }else{
+            } else {
                 alert("Insert year of Test, please")
                 validateForm = false;
             }
-
 
             if(this.ageValue != null){
                 newRow.age = this.ageValue;
             }else{
-                alert("Insert year of birt, please")
+                alert("Insert Age at diagnosis, please")
                 validateForm = false;
             }
-
-            if(this.agePreValue != null){
-                newRow.agePrenatal = this.agePreValue;
-            }else{
-                alert("Insert year of Test, please")
-                validateForm = false;
+            if(this.$.prenatalAdd.checked ) {
+                if(this.agePreValue != null){
+                    newRow.agePrenatal = this.agePreValue;
+                }else{
+                    alert("Insert Age Prenatal, please")
+                    validateForm = false;
+                }
             }
 
-            if(this.ethnicSearch != null){
-                newRow.ethnicGroup = this.ethnicSearch;
+            if(this.ethnicValue.length >0){
+                newRow.ethnic = this.ethnicSearch;
             }else{
                 alert("Insert Ethnic, please")
+                validateForm = false;
+            }
+
+            if(this.geoValue != ""){
+                newRow.origin = this.geoValue;
+            }else{
+                alert("Insert Geografic location, please")
                 validateForm = false;
             }
 
@@ -870,7 +903,6 @@
                 validateForm = false;
                 alert("Insert Status, please")
             }
-
 
             inputs = this.$.clAdd.querySelectorAll("input");
             var clv = [];
@@ -934,6 +966,10 @@
                 alert("Insert array Id, please")
             }
 
+            if(!this.commentsValue == "") {
+                newRow.comments = this.commentsValue;
+            }
+
             if(!this.regionValueC == ""){
                 newRow.chromosome = this.regionValueC;
             }else{
@@ -955,6 +991,10 @@
                 alert("Insert End, please")
             }
 
+            if(!this.geneAdd == ""){
+                newRow.genes = this.genes;
+            }
+
             inputs = this.$.typeAdd.querySelectorAll("input");
             var typev = [];
 
@@ -971,47 +1011,126 @@
                 alert("Insert Type of variant, please")
             }
 
-            if(!this.nvariantsAdd == "") {
+            if(!this.nvariantsValue == "") {
                 newRow.nv = this.nvariantsValue;
             }else{
                 validateForm = false;
                 alert("Insert Number of variants, please")
             }
 
-            if( this.dosesValue!= null && !this.dosesValue == "" ){
-                newRow.dosesNum = this.dosesValue;
-                newRow.dosesOp = this.$.dosesOp.value;
+            inputs = this.$.dosesAdd.querySelectorAll("input");
+            var dosesv = [];
+
+            for (var i = 0; i < inputs.length; i++) {
+                var inputdoses = inputs[i];
+                if (inputdoses.checked) {
+                    dosesv.push(inputdoses.value);
+                }
+            }
+            if (dosesv.length > 0) {
+                newRow.doses = dosesv.join(",");
+            }else{
+                validateForm = false;
+                alert("Insert Doses, please")
             }
 
+            if( this.dosesValue!= null && !this.dosesValue == "" ){
+                newRow.dosesNum = this.dosesValue;
+            }else{
+                validateForm = false;
+                alert("Insert Doses Number, please")
+            }
+            //TODO hacer ws para que se traiga directamente la cytobanda
 
-           // newRow.code = this.userData.attributes.group;
+            if(!this.bandValue == ""){
+                newRow.band = this.bandValue;
+            }else{
+                validateForm = false;
+                alert("Insert the cytoband, please")
+            }
+
+            inputs = this.$.assemblyAdd.querySelectorAll("input");
+            var assemblyv = [];
+            for (var i = 0; i < inputs.length; i++){
+                if(inputs[i].checked){
+                    assemblyv.push(inputs[i].value);
+                }
+            }
+            if (assemblyv.length > 0 && assemblyv.length < 3) {
+                newRow.assembly = assemblyv.join(",");
+            }else{
+                validateForm = false;
+                alert("Insert assembly, please")
+            }
+
+            if(!this.rdValue == "") {
+                newRow.referalDiag = this.rdValue;
+            }else{
+                validateForm = false;
+                alert("Insert Referal Diagnosis, please")
+            }
+
+            var hpov = [];
+            for (var i = 0; i < this.hpoValue.length; i++) {
+                if (this.hpoValue[i].id.indexOf('HP:') >= 0) { // Si viene del arbol no tiene HP:
+                    hpov[i] = this.hpoValue[i].id;
+                } else {
+                    hpov[i] ='HP:' + this.hpoValue[i].id;
+                }
+                if (this.hpoValue[i].f != null) { //f son los hijos parent el padre
+                    if (Object.keys(this.hpoValue[i].f).length > 0) {
+                        for (var j = 0; j < this.hpoValue[i].f.length; j++) {
+                            this.hpoValue.push(this.hpoValue[i].f[j]);
+                        }
+                    }
+                }
+            }
+            this.hpoValue = [];
+            if (hpov.length > 0) {
+                newRow.hpo = hpov.join(",");
+            }
+
+            if(this.syndromeValue.length >0){
+                newRow.syndrome = this.syndromeSearch;
+            }
+
+            inputs = this.$.inheritanceAdd.querySelectorAll("input");
+            var inhev = [];
+
+            for (var i = 0; i < inputs.length; i++) {
+                var inputinhe = inputs[i];
+                if (inputinhe.checked) {
+                    inhev.push(inputinhe.value);
+                }
+            }
+            if (inhev.length > 0) {
+                newRow.inheritance = inhev.join(",");
+            }else{
+                validateForm = false;
+                alert("Insert inheritance, please")
+            }
+
+            inputs = this.$.clisAdd.querySelectorAll("input");
+            var clisv = [];
+
+            for (var i = 0; i < inputs.length; i++) {
+                var inputclis = inputs[i];
+                if (inputclis.checked) {
+                    clisv.push(inputclis.value);
+                }
+            }
+            if (clisv.length > 0) {
+                newRow.clis = clv.join(",");
+            }else{
+                validateForm = false;
+                alert("Insert clinical significance, please")
+            }
+
+            newRow.code = this.userData.attributes.group;
+
             if(validateForm){
                 this.push('data', newRow);
             }
-
-
-
-//
-//
-//
-//
-//
-//
-//            var inputs = this.$.type.querySelectorAll("input");
-//            var typev = [];
-//
-//            for (var i = 0; i < inputs.length; i++) {
-//                var inputtype = inputs[i];
-//                if (inputtype.checked) {
-//                    typev.push(inputtype.value);
-//                }
-//            }
-//            if (typev.length > 0) {
-//                newRow.type = typev.join(",");
-//            }else{
-//                alert("no se ha insertado el type")
-//            }
-
 
         },
 
@@ -1264,7 +1383,7 @@
                     title: 'Band',
                     width: 60,
                     formula: function(row){
-                        var n = me.transformData(row.locus);
+                        var n = me.transformData(row.band);
                         return n;
                     }
                 }, {
@@ -1280,7 +1399,7 @@
                     title: 'Doses',
                     width: 60,
                     formula: function(row){
-                        var n = me.transformData(row.doses);
+                        var n = me.transformData(row.doses) +"(" + me.transformData(row.dosesNum)+")";
                         return n;
                     }
                 }, {
@@ -1288,7 +1407,7 @@
                     title: 'Clinical Significance',
                     width: 150,
                     formula: function(row){
-                        var n = me.transformData(row.clinicalSig);
+                        var n = me.transformData(row.clis);
                         return n;
                     }
                 }, {
@@ -1312,7 +1431,7 @@
                     title: 'Cell Line',
                     width: 80,
                     formula: function(row){
-                        var n = me.transformData(row.cellLine);
+                        var n = me.transformData(row.cl);
                         return n;
                     }
                 }, {
@@ -1320,7 +1439,7 @@
                     title: 'Chr gender',
                     width: 80,
                     formula: function(row){
-                        var n = me.transformData(row.chromoGender);
+                        var n = me.transformData(row.gender);
                         return n;
                     }
                 }, {
@@ -1336,7 +1455,7 @@
                     title: 'Type of Sample',
                     width: 120,
                     formula: function(row){
-                        var n = me.transformData(row.typeSample);
+                        var n = me.transformData(row.typeS);
                         return n;
                     }
                 }, {
@@ -1352,7 +1471,7 @@
                     title: 'Phenotype(HPO)',
                     width: 120,
                     formula: function(row){
-                        var n = me.transformData(row.phenotype);
+                        var n = me.transformData(row.hpo);
                         return n;
                     }
                 }, {
@@ -1392,7 +1511,7 @@
                     title: 'Ethnic Group',
                     width: 120,
                     formula: function(row){
-                        var n = me.transformData(row.ethnicGroup);
+                        var n = me.transformData(row.ethnic);
                         return n;
                     }
                 }, {
@@ -1598,7 +1717,7 @@
                 },{
 
                     name: 'ethnicGeo',
-                    title: 'Ethinic Group',
+                    title: 'Ethnic Group',
                     width: 100,
                     visible:false,
                     columns: [{
@@ -1606,7 +1725,7 @@
                         title: 'Geog Origin',
                         width: 100,
                         formula: function (row) {
-                            return row.ethnicGroup + "</br>" + row.origin;
+                            return row.ethnic + "</br>" + row.origin;
                         }
                     }]
                 },{
@@ -1740,6 +1859,9 @@
                 }
             }
             return true;
+        },
+        upload: function() {
+
         },
         submitForm: function() {
             var me = this;
@@ -1907,7 +2029,7 @@
                 }
 
                 if(this.ethnicValue.length >0) {
-                    query.ethic = this.ethnicSearch;
+                    query.ethnic = this.ethnicSearch;
                 }
 
 
