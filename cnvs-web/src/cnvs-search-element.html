@@ -1014,6 +1014,7 @@
                     region = new Region(this.$.gv.genomeViewer.region);
                 } else {
                     region = new Region(this.regionValue.trim());
+                    query.regions = region;
                 }
 
                 if (this.geneValue) {
@@ -1036,6 +1037,7 @@
                                 if (queryResult.result.length > 0) {
                                     region = new Region(queryResult.result[0]);
                                     //regions.push(region.toString());
+                                    query.regions = region;
 
                                 } else {
                                     alert("Wrong gene: " + gene);
@@ -1163,7 +1165,7 @@
                 //query.gene = this.geneValue;
                 query.ethic = this.ethicValue;
                 query.geo = this.geoValue;
-                query.regions = region;
+
 
 
                 var url = CNVSManager.regions.fetch({
