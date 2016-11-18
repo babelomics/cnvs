@@ -566,9 +566,9 @@
                     </div>
                     <stv-table id="tablaresultados" class="container small" page-size="10" enable-paging enable-select enable-resize data="{{data}}" columns="{{columns}}" on-rowclick="handleRowClick" on-column-visibility-change="handleColumnVisibilityChange">
                         <div class="custom-buttons horizontal layout">
-                            <button style="margin-right: 10px; color: #006699" id="saveTable" class="stv-btn down" on-click="upload" data-file="{{cnv}}"><i class="fa fa-cloud-download"></i> upload</button>
-                            <button id="spamButtonTable" class="stv-btn" on-click="spamTable" disabled>expand</button>
-                            <button id="compressButtonTable"class="stv-btn" on-click="compressTable">compress</button>
+                            <div style="margin-right: 10px; color: #006699" id="saveTable" class="stv-btn down" on-click="upload" data-file="{{cnv}}"><i class="fa fa-cloud-download"></i> upload</div>
+                            <div id="spamButtonTable" class="stv-btn" on-click="spamTable" disabled>expand</div>
+                            <div id="compressButtonTable"class="stv-btn" on-click="compressTable">compress</div>
                         </div>
                     </stv-table>
                 </stv-panel>
@@ -593,7 +593,7 @@
                 <i class="fa fa-search" aria-hidden="true"></i> Human Phenotype Ontology
             </div>
             <div class="container" style="width:100%">
-                <stv-hpo hpo-value="{{hpoValue}}" on-added="showHPO"></stv-hpo>
+                <stv-hpo readyhp hpo-value="{{hpoValue}}" on-added="showHPO"></stv-hpo>
             </div>
         </stv-panel>
 

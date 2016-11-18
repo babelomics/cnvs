@@ -93,7 +93,7 @@
             <div id="menu" class="menu horizontal layout center flex">
                 <div style="margin-left:4vw;"></div>
 
-                <div title="" class="option" show-on-login on-click="handleLoggedOnlyMenuOption" data-option="add">
+                <div title="" class="option" login-required login-visible on-click="handleMenuOption" data-option="add">
                     <i class="fa fa-magic"></i>
                     <span class="option-text">Add</span>
                 </div>
@@ -138,13 +138,13 @@
         behaviors: [StvApplicationBehavior],
         ready: function() {
             this.setMenu('home');
-            this.checkShowMenuOnLogin();
+
         },
         handleLogin: function() {
-            this.checkShowMenuOnLogin();
+
         },
         handleLogout: function() {
-            this.checkShowMenuOnLogin();
+
         }
     });
 </script>
