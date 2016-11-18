@@ -785,7 +785,16 @@
                 }, {
                     name: 'clinicalSig',
                     title: 'Clinical Significance',
-                    width: 150
+                    width: 150,
+                    formula: function(row) {
+                        var clis;
+                        if (row.clinicalSig == "") {
+                            clis = "benign";
+                        } else {
+                            clis = row.clinicalSig;
+                        }
+                        return clis;
+                    }
                 }, {
                     name: 'inheritance',
                     title: 'Inheritance',
