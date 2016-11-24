@@ -53,7 +53,7 @@ CNVSRenderer.prototype.init = function () {
 
     var ejebenign = SVG.addChild(this.track.main, "rect", {
         'x': 0,
-        'y': 0,
+        'y': 10,
         'width': 5,
         'height': 50,
         'stroke': '#3B0B0B',
@@ -65,33 +65,70 @@ CNVSRenderer.prototype.init = function () {
 
     SVG.addChild(this.track.main, "line", {
         "x1": 0,
-        "y1": 50,
+        "y1": 60,
         "x2": this.track.width,
-        "y2": 50,
+        "y2": 60,
         "fill": "none",
         "stroke": "black"
     });
 
+
+    var text100= SVG.addChild(this.track.main, "text", {
+        'x': 0,
+        'y': 7,
+        'stroke': 'black',
+        'stroke-width': 1,
+        'font-size':"10"
+    });
+    text100.textContent = "100";
+
+    var text0= SVG.addChild(this.track.main, "text", {
+        'x': 0,
+        'y': 69,
+        'stroke': 'black',
+        'stroke-width': 1,
+        'font-size':"9"
+    });
+    text0.textContent = "0";
+
     var ejepatho = SVG.addChild(this.track.main, "rect", {
         'x': 0,
-        'y': 60,
+        'y': 80,
         'width': 5,
         'height': 50,
-        'stroke': '#3B0B0B',
+        'stroke': 'black',
         'stroke-width': 1,
         'stroke-opacity': 0.7,
         'fill': "red",
         'cursor': 'pointer'
     });
 
+
     SVG.addChild(this.track.main, "line", {
         "x1": 0,
-        "y1": 110,
+        "y1": 130,
         "x2": this.track.width,
-        "y2": 110,
+        "y2": 130,
         "fill": "none",
         "stroke": "black"
     });
+    var text0r= SVG.addChild(this.track.main, "text", {
+        'x': 0,
+        'y': 140,
+        'stroke': 'black',
+        'stroke-width': 1,
+        'font-size':"10"
+    });
+    text0r.textContent = "0";
+
+    var text100r= SVG.addChild(this.track.main, "text", {
+        'x': 0,
+        'y': 78,
+        'stroke': 'black',
+        'stroke-width': 1,
+        'font-size':"10"
+    });
+    text100r.textContent = "100";
 
 };
 
@@ -200,7 +237,7 @@ CNVSRenderer.prototype.draw = function (feature, svgGroup, i, args) {
     }
 
 
-    var offset = 140;
+    var offset = 150;
     var rowY = offset;
     var textY = textHeight + height + offset;
     var rowHeight = textHeight + height + 2;
@@ -382,7 +419,7 @@ CNVSRenderer.prototype.drawHistogram = function (cacheItem, svgGroup, i, args) {
 
         var ultimovalorx = 0;
         var ultimovalory = 0;
-        var yAdjust = 60 * j;
+        var yAdjust = 70 * j + 10;
         //Datos donde tengo las features
         var numpoints = 0;
 
