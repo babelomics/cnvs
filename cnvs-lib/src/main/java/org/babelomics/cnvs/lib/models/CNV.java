@@ -49,6 +49,17 @@ public class CNV {
     private int type;
     @Property("d")
     private double doses;
+
+    public double getDosesNum() {
+        return dosesNum;
+    }
+
+    public void setDosesNum(double dosesNum) {
+        this.dosesNum = dosesNum;
+    }
+
+    @Property("dn")
+    private double dosesNum;
     @Property("cs")
     private int clinicalSig;
     @Property("i")
@@ -81,6 +92,11 @@ public class CNV {
     private String arrayPlatform;
     @Property("ai")
     private String arrayId;
+
+
+    @JsonIgnore
+    @Transient
+    private String syndromeName;
     //@Embedded("sy")
     @Reference("sy")
     private List<Syndrome> syndrome;
@@ -113,12 +129,12 @@ public class CNV {
         this.genes = genes;
     }
 
-    public String getLocus() {
+    public String getBand() {
         return band;
     }
 
-    public void setLocus(String locus) {
-        this.band = locus;
+    public void setBand(String band) {
+        this.band = band;
     }
 
     public String getDoses() {
@@ -176,9 +192,10 @@ public class CNV {
                 break;
         }
     }
-    public void setDoses(float doses){
-        this.doses = doses;
-    }
+//    public void setDosesNum(float doses){
+//        this.doses = doses;
+//    }
+
 
     public String getClinicalSig() {
         switch (clinicalSig) {
@@ -333,7 +350,7 @@ public class CNV {
         }
     }
 
-    public String getChromoGender() {
+    public String getChromGender() {
         switch (chromGender) {
             case 0:
                 return "XX";
@@ -354,7 +371,7 @@ public class CNV {
         }
     }
 
-    public void setChromoGender(String chromGender) {
+    public void setChromGender(String chromGender) {
         switch (chromGender.toLowerCase()) {
             case "xx":
                 this.chromGender = 0;
@@ -574,24 +591,14 @@ public class CNV {
         this.arrayId = arrayId;
     }
 
-
-    @Override
-    public String toString() {
-        return "CNV [id=" + id + ", code=" + code + ", decipherId=" + decipherId
-                + ", centerId1=" + centerId1 + ", centerId2=" + centerId2
-                + ", centerId3=" + centerId3 + ", chromosome=" + chromosome
-                + ", start=" + start + ", end=" + end + ", assembly="
-                + assembly + ", genes=" + genes + ", locus=" + band
-                + ", type=" + type + ", doses=" + doses + ", clinicalSig="
-                + clinicalSig + ", inheritance=" + inheritance + ", nv=" + nv
-                + ", cellLine=" + cellLine + ", chromGender=" + chromGender
-                + ", status=" + status + ", typeSample=" + typeSample
-                + ", referalDiag=" + referalDiag + ", phenotype=" + phenotype
-                + ", yearOfBirth=" + yearOfBirth + ", ethnicGroup="
-                + ethnicGroup + ", origin=" + origin + ", arrayPlatform="
-                + arrayPlatform + ", arrayId=" + arrayId + ", comments="
-                + comments + "]";
+    public String getSyndromeName() {
+        return syndromeName;
     }
+
+    public void setSyndromeName(String syndromeName) {
+        this.syndromeName = syndromeName;
+    }
+
 
     public String getCenterId1() {
         return centerId1;
@@ -611,6 +618,48 @@ public class CNV {
 
     public String getCenterId3() {
         return centerId3;
+    }
+
+    @Override
+    public String toString() {
+        return "CNV{" +
+                "id=" + id +
+                ", code='" + code + '\'' +
+                ", decipherId=" + decipherId +
+                ", centerId1='" + centerId1 + '\'' +
+                ", centerId2='" + centerId2 + '\'' +
+                ", centerId3='" + centerId3 + '\'' +
+                ", chromosome='" + chromosome + '\'' +
+                ", start=" + start +
+                ", end=" + end +
+                ", assembly='" + assembly + '\'' +
+                ", genes='" + genes + '\'' +
+                ", band='" + band + '\'' +
+                ", type=" + type +
+                ", doses=" + doses +
+                ", dosesNum=" + dosesNum +
+                ", clinicalSig=" + clinicalSig +
+                ", inheritance=" + inheritance +
+                ", nv=" + nv +
+                ", cellLine=" + cellLine +
+                ", chromGender=" + chromGender +
+                ", status=" + status +
+                ", typeSample=" + typeSample +
+                ", referalDiag='" + referalDiag + '\'' +
+                ", phenotype='" + phenotype + '\'' +
+                ", yearOfBirth=" + yearOfBirth +
+                ", yearTest=" + yearTest +
+                ", age=" + age +
+                ", agePrenatal=" + agePrenatal +
+                ", ethnicGroup='" + ethnicGroup + '\'' +
+                ", origin='" + origin + '\'' +
+                ", arrayPlatform='" + arrayPlatform + '\'' +
+                ", arrayId='" + arrayId + '\'' +
+                ", syndromeName='" + syndromeName + '\'' +
+                ", syndrome=" + syndrome +
+                ", comments='" + comments + '\'' +
+                ", attr=" + attr +
+                '}';
     }
 
     public void setCenterId3(String centerId3) {
@@ -704,6 +753,8 @@ public class CNV {
     public void setComments(String comments) {
         this.comments = comments;
     }
+
+
     @PrePersist
     private void prePresist() {
 

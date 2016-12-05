@@ -87,7 +87,7 @@ public class CellBaseAnnotator {
                 Cytoband cytoband = getCytoband(cytobands, cnv);
 
                 if (cytoband != null) {
-                    cnv.setLocus(cytoband.name);
+                    cnv.setBand(cytoband.name);
                 }
             }
         }

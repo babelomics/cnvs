@@ -213,15 +213,15 @@ public class CNVSCopyNumberVariationXLSDataReader implements DataReader<CNV> {
     		cnv.setEnd(end);
     		cnv.setAssembly(ass);
     		//cnv.setGenes(gen);
-    		cnv.setLocus(band);
+    		cnv.setBand(band);
     		//cnv.setSize(size);
     		cnv.setType(type);
-    		cnv.setDoses(doses);
+    		cnv.setDosesNum(doses);
     		cnv.setClinicalSig(clisig);
     		cnv.setInheritance(inhe);
     		cnv.setNv(nv);
     		cnv.setCellLine(cellLine);
-    		cnv.setChromoGender(chrgen);
+    		cnv.setChromGender(chrgen);
     		cnv.setStatus(status);
     		cnv.setTypeSample(typeSample);
     		cnv.setReferalDiag(refediag);

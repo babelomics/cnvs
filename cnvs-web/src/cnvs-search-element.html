@@ -353,7 +353,7 @@
                 <div class="stv-formbox">
                     <label on-click="toggleElement" data-option="positions">
                         <div class="stv-formtitle ">
-                            Genome Analysis
+                            Genome Filters
                             <img src="../images/flechaizquierdaazul.png" id="positionsfoto" />
                         </div>
                     </label>
@@ -436,7 +436,7 @@
                             <input type="text" class="stv flex" id="dosesNum" name="dosesNum" placeholder="Numeric doses,Ex:-0.5" value="{{dosesValue::change}}"/>
                         </div>
                         <div class="input_container vertical layout">
-                            <label class="stv">Size(Kb):</label>
+                            <label class="stv">Size(nt):</label>
                             <div class="horizontal layout">
                                 <stv-select  id="sizeOp" value="=">
                                     <stv-option value="=">=</stv-option>
@@ -637,7 +637,7 @@
                 <div class="header">
                     Results Table
                 </div>
-                <stv-table id="tablaresultados" class="container small" page-size="10" enable-paging enable-remote enable-select enable-resize request="{{request}}" columns="{{columns}}" on-rowclick="handleRowClick" on-column-visibility-change="handleColumnVisibilityChange">
+                <stv-table id="tablaresultados" class="container small" page-size="10" enable-paging enable-remote enable-select enable-resize request="{{request}}" columns="[[columns]]" on-rowclick="handleRowClick" on-column-visibility-change="handleColumnVisibilityChange">
                     <div class="custom-buttons horizontal layout">
                         <button style="margin-right: 10px; color: #006699" id="saveTable" class="stv-btn down" on-click="downloadFiles" data-file="{{cnv}}"><i class="fa fa-cloud-download"></i> save</button>
                         <button id="spamButtonTable" class="stv-btn" on-click="spamTable" disabled>expand</button>
@@ -1066,6 +1066,16 @@
                 this.$.gv.genomeViewer.toggleAutoHeight(true);
                 var r = new Region("1:1-2000");
                 this.$.gv.genomeViewer.setRegion(r);
+                this.$.gv.genomeViewer.on("region:change",function(e){
+                    if(me._lastSelectedRow != null){
+                        var row = me._lastSelectedRow;
+                        setTimeout(function(){
+                            me.$.gv.genomeViewer.highlight({attrName:"feature_id",attrValue:""+row.chromosome+row.start+row.end});
+                        },5000)
+
+                    }
+                });
+
             }, 10);
 
             this.columns = [{
@@ -1581,6 +1591,10 @@
             this.codeValue = null;
             this.ethnicValue = null;
             this.geoValue = null;
+//            this.formURL = "";
+//
+            this.$.tablaresultados.clear();
+            this.$.tablaresultados.set("columns",this.columns);
 
         },
         _parse: function(response) {
@@ -1690,12 +1704,12 @@
             var args = {
                 label: function(f) {
                     var str = "";
-                    str += f.chromosome + ":" + f.start + "-" + f.end;
+                    str += f.chromosome + ":" + f.start + "-" + f.end +"("+f.code+")";
                     return str;
                 },
                 tooltipTitle: function(f) {
                     var str = "";
-                    str += f.chromosome + ":" + f.start + "-" + f.end;
+                    str += f.chromosome + ":" + f.start + "-" + f.end+"("+f.code+")";
                     return str;
                     //return FEATURE_TYPES.getTipTitleCommons(f);
                 },
@@ -1939,7 +1953,17 @@
                     query.year = this.yearIdValue;
                 }
 
-                if(this.ethnicValue.length >0) {
+
+
+                if(!this.ageValue == ""){
+                    if (this.$.prenatal.checked) {
+                        query.agePrenatal = this.ageValue;
+                    }else{
+                        query.age = this.ageValue;
+                    }
+                }
+
+                if(this.ethnicValue != null && this.ethnicValue.length >0) {
                     query.ethic = this.ethnicSearch;
                 }
 
@@ -1962,8 +1986,8 @@
                 }
 
                 if( this.sizeValue!= null && !this.sizeValue == "" ){
-                    query.size = this.sizeValue;
-                    query.sizesigno = this.$.sizeOp.value;
+                    query.sizeNum = this.sizeValue;
+                    query.sizeOp = this.$.sizeOp.value;
                 }
 
                 //HPO
@@ -2027,7 +2051,10 @@
         },
         handleRowClick: function(e) {
             var row = e.detail.row;
+            this._lastSelectedRow = row;
             this.$.gv.genomeViewer.setRegion(row);
+
+
         }
     });
 </script>

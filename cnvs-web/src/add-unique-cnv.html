@@ -53,15 +53,15 @@
 
 
         .stv-formbox,
-        #tablaresultadosPanel {
+        #tablacnvsPanel {
             box-shadow: 0px 0px 3px 1px rgba(0, 0, 0, 0.2);
         }
 
-        #tablaresultados {
+        #tablacnvs {
             border-top: 1px solid #d3d3d3;
         }
 
-        #tablaresultadosPanel {
+        #tablacnvsPanel {
             border: 1px solid #d3d3d3;
         }
 
@@ -558,15 +558,17 @@
                         </div>
                     </div>
                     <div class="stv-btn stv-btn-shdw" on-click="addCNV" title="ADD CNV IN TABLE" >ADD CNV NOW</div>
+                    <div class="stv-btn stv-btn-shdw" on-click="clearForm" title="ADD CNV IN FORM" >ADD Other CNV</div>
                 </div>
                 </div>
-                <stv-panel collapsible id="tablaresultadosPanel" style="max-width: 98%">
+                <stv-panel collapsible id="tablacnvsPanel" style="max-width: 98%">
                     <div class="header">
                         Results Table
                     </div>
-                    <stv-table id="tablaresultados" class="container small" page-size="10" enable-paging enable-select enable-resize data="{{data}}" columns="{{columns}}" on-rowclick="handleRowClick" on-column-visibility-change="handleColumnVisibilityChange">
+                    <stv-table id="tablacnvs" class="container small" page-size="10" enable-paging enable-select enable-resize data="{{data}}" columns="{{columns}}" on-rowclick="handleRowClick" on-column-visibility-change="handleColumnVisibilityChange">
                         <div class="custom-buttons horizontal layout">
                             <div style="margin-right: 10px; color: #006699" id="saveTable" class="stv-btn down" on-click="upload" data-file="{{cnv}}"><i class="fa fa-cloud-download"></i> upload</div>
+                            <div style="margin-right: 10px; color: #006699" id="cleanTable" class="stv-btn down" on-click="cleanTable" data-file="{{cnv}}"><i class="fa fa-cloud-download"></i> clean</div>
                             <div id="spamButtonTable" class="stv-btn" on-click="spamTable" disabled>expand</div>
                             <div id="compressButtonTable"class="stv-btn" on-click="compressTable">compress</div>
                         </div>
@@ -875,7 +877,7 @@
             }
 
             if(this.ethnicValue.length >0){
-                newRow.ethnic = this.ethnicSearch;
+                newRow.ethnicGroup = this.ethnicSearch;
             }else{
                 alert("Insert Ethnic, please")
                 validateForm = false;
@@ -914,7 +916,7 @@
                 }
             }
             if (clv.length > 0) {
-                newRow.cl = clv.join(",");
+                newRow.cellLine = clv.join(",");
             }else{
                 validateForm = false;
                 alert("Insert Cell line, please")
@@ -930,7 +932,7 @@
                 }
             }
             if (typeSv.length > 0) {
-                newRow.typeS = typeSv.join(",");
+                newRow.typeSample = typeSv.join(",");
             }else{
                 validateForm = false;
                 alert("Insert Type of Sample, please")
@@ -946,7 +948,7 @@
                 }
             }
             if (genderv.length > 0 && genderv.length < 2) {
-                newRow.gender = genderv.join(",");
+                newRow.chromGender = genderv.join(",");
             }else{
                 validateForm = false;
                 alert("Insert Chr gender, please")
@@ -991,10 +993,6 @@
                 alert("Insert End, please")
             }
 
-            if(!this.geneAdd == ""){
-                newRow.genes = this.genes;
-            }
-
             inputs = this.$.typeAdd.querySelectorAll("input");
             var typev = [];
 
@@ -1034,12 +1032,12 @@
                 alert("Insert Doses, please")
             }
 
-            if( this.dosesValue!= null && !this.dosesValue == "" ){
-                newRow.dosesNum = this.dosesValue;
-            }else{
-                validateForm = false;
-                alert("Insert Doses Number, please")
-            }
+//            if( this.dosesValue!= null && !this.dosesValue == "" ){
+//                newRow.dosesNum = this.dosesValue;
+//            }else{
+//                validateForm = false;
+//                alert("Insert Doses Number, please")
+//            }
             //TODO hacer ws para que se traiga directamente la cytobanda
 
             if(!this.bandValue == ""){
@@ -1087,11 +1085,11 @@
             }
             this.hpoValue = [];
             if (hpov.length > 0) {
-                newRow.hpo = hpov.join(",");
+                newRow.phenotype = hpov.join(",");
             }
 
             if(this.syndromeValue.length >0){
-                newRow.syndrome = this.syndromeSearch;
+                newRow.syndromeName = this.syndromeSearch;
             }
 
             inputs = this.$.inheritanceAdd.querySelectorAll("input");
@@ -1120,7 +1118,7 @@
                 }
             }
             if (clisv.length > 0) {
-                newRow.clis = clv.join(",");
+                newRow.clinicalSig = clv.join(",");
             }else{
                 validateForm = false;
                 alert("Insert clinical significance, please")
@@ -1185,7 +1183,7 @@
         },
         cnvToString: function(o){
             return o.code + "\t" + o.decipherId + "\t" + o.chromosome + "\t" + o.start + "\t" + o.end + "\t" + o.status + "\t" + o.typeSample
-                    + "\t" + o.cellLine + "\t" + o.chromoGender + "\t" + o.locus + "\t" + o.assembly + "\t" + o.nv + "\t" + o.type + "\t" +
+                    + "\t" + o.cellLine + "\t" + o.chromGender + "\t" + o.locus + "\t" + o.assembly + "\t" + o.nv + "\t" + o.type + "\t" +
                     o.doses + "\t" + size + "\t" + o.genes + "\t" + o.referalDiag + "\t" + o.syndrome + "\t" + o.phenotype + "\t" +
                     o.clinicalSig + "\t" + o.inheritance + "\t" + o.yearOfBirth + "\t" + o.yearTest + "\t" + o.age + "\t" + o.agePrenatal
                     + "\t" + o.ethnicGroup + "\t" + o.origin + "\t" + o.arrayPlatform + "\t" + o.arrayId + "\t" + o.comments +"\n";
@@ -1407,7 +1405,7 @@
                     title: 'Clinical Significance',
                     width: 150,
                     formula: function(row){
-                        var n = me.transformData(row.clis);
+                        var n = me.transformData(row.clinicalSig);
                         return n;
                     }
                 }, {
@@ -1431,15 +1429,15 @@
                     title: 'Cell Line',
                     width: 80,
                     formula: function(row){
-                        var n = me.transformData(row.cl);
+                        var n = me.transformData(row.cellLine);
                         return n;
                     }
                 }, {
-                    name: 'chromoGender',
+                    name: 'chromGender',
                     title: 'Chr gender',
                     width: 80,
                     formula: function(row){
-                        var n = me.transformData(row.gender);
+                        var n = me.transformData(row.chromGender);
                         return n;
                     }
                 }, {
@@ -1455,7 +1453,7 @@
                     title: 'Type of Sample',
                     width: 120,
                     formula: function(row){
-                        var n = me.transformData(row.typeS);
+                        var n = me.transformData(row.typeSample);
                         return n;
                     }
                 }, {
@@ -1471,7 +1469,7 @@
                     title: 'Phenotype(HPO)',
                     width: 120,
                     formula: function(row){
-                        var n = me.transformData(row.hpo);
+                        var n = me.transformData(row.phenotype);
                         return n;
                     }
                 }, {
@@ -1511,7 +1509,7 @@
                     title: 'Ethnic Group',
                     width: 120,
                     formula: function(row){
-                        var n = me.transformData(row.ethnic);
+                        var n = me.transformData(row.ethnicGroup);
                         return n;
                     }
                 }, {
@@ -1620,7 +1618,7 @@
                             title: 'Assembly',
                             width: 100,
                             formula: function (row) {
-                                return row.chromoGender + "</br>" + row.locus + "</br>" + row.assembly;
+                                return row.chromGender + "</br>" + row.band + "</br>" + row.assembly;
                             }
                         }]
                     }]
@@ -1725,7 +1723,7 @@
                         title: 'Geog Origin',
                         width: 100,
                         formula: function (row) {
-                            return row.ethnic + "</br>" + row.origin;
+                            return row.ethnicGroup + "</br>" + row.origin;
                         }
                     }]
                 },{
@@ -1861,7 +1859,28 @@
             return true;
         },
         upload: function() {
-
+            var me = this;
+            var query = {};
+            query.user = Cookies('bioinfo_user');
+            query.sid = Cookies('bioinfo_sid');
+            var url = CNVSManager.management.add({
+                query:query,
+                request: {
+                    method:"POST",
+                    headers:{
+                        "Content-Type":"aplicaction/json"
+                    },
+                    body: JSON.stringify(me.$.tablacnvs.data,"",""),
+                    success: function(response) {
+                        try {
+                           alert("Add correct. "+ response.result + "insertadas.");
+                        } catch (e) {}
+                    }
+                }
+            });
+        },
+        cleanTable:function(){
+            this.newRow = null;
         },
         submitForm: function() {
             var me = this;

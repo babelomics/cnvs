@@ -2,7 +2,6 @@ var CNVSManager = {
     host: (typeof CNVS_HOST === 'undefined') ? 'http://localhost:8080/cnvs/rest' : CNVS_HOST,
     version: 'v3',
 
-
     regions: {
         fetch: function (args) {
             return CNVSManager._doRequest(args, 'regions', 'fetch');
@@ -13,6 +12,11 @@ var CNVSManager = {
             return CNVSManager._doRequest(args, 'stats', 'count');
         }
 
+    },
+    management:{
+        add: function (args) {
+            return CNVSManager._doRequest(args, 'management', 'add');
+        }
     },
     _url: function (args, api, action) {
         var host = CNVSManager.host;
@@ -30,8 +34,11 @@ var CNVSManager = {
     },
 
     _doRequest: function (args, api, action) {
+
+
         var url = CNVSManager._url(args, api, action);
         if (args.request.url === true) {
+
             return url;
         } else {
             var method = 'GET';
@@ -40,16 +47,20 @@ var CNVSManager = {
             }
             var async = true;
             if (typeof args.request.async !== 'undefined' && args.request.async != null) {
+                console.log("Dentro del async");
                 async = args.request.async;
             }
-
             console.log(url);
+
             var request = new XMLHttpRequest();
             request.onload = function () {
+                console.log("Dentro del onload");
                 var contentType = this.getResponseHeader('Content-Type');
                 if (contentType === 'application/json') {
                     args.request.success(JSON.parse(this.response), this);
+                    console.log("Dentro del success 1");
                 } else {
+                    console.log("Dentro del success 2");
                     args.request.success(this.response, this);
                 }
             };
@@ -57,7 +68,26 @@ var CNVSManager = {
                 args.request.error(this);
             };
             request.open(method, url, async);
-            request.send();
+
+
+            if (args.request.headers != null) {
+                console.log("Dentro del headers");
+                for (var header in args.request.headers) {
+                    request.setRequestHeader(header, args.request.headers[header]);
+                }
+            }
+            var body = null;
+            if (args.request.body != null) {
+                console.log("Dentro del body");
+                body = args.request.body;
+
+            }
+
+            if (args.request.responseType != null) {
+                console.log("Dentro del responseType");
+                request.responseType = args.request.responseType;
+            }
+            request.send(body);
             return url;
         }
     }

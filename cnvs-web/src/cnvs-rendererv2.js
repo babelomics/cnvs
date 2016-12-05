@@ -134,33 +134,17 @@ CNVSRenderer.prototype.init = function () {
 
 CNVSRenderer.prototype.render = function (features, args) {
 
-    /*Cuando hay un cambio se llama al render solo una vez, este tiene todas las regiones
+    /*Cuando hay un cambio se llama al render solo una vez, este tiene todas las regiones*/
 
-     /****/
-    var timeId = "write dom " + Utils.randomString(4);
-    //console.time(timeId);
-    //console.log(features.length);
-    /****/
 
-    /**/
-    /**/
     var histoGroup = SVG.create('g');
 
 
     var lastRegion = null;
     for (var i = 0, leni = args.cacheItems.length; i < leni; i++) {
-        //console.log("cache items " + args.cacheItems.length);
-        //console.log("cache items " + args.cacheItems);
-        //var ultimospuntos = new Array(3);
-
-        //this.drawHistogram(args.cacheItems[i], histoGroup, i, args, ultimospuntos);
-
-        //console.log(args.cacheItems[i])
         this.drawHistogram(args.cacheItems[i], histoGroup, i, args);
     }
     args.svgCanvasFeatures.appendChild(histoGroup);
-    /**/
-    /**/
 
     var svgGroup = SVG.create('g');
     for (var i = 0, leni = features.length; i < leni; i++) {
@@ -168,10 +152,6 @@ CNVSRenderer.prototype.render = function (features, args) {
     }
     args.svgCanvasFeatures.appendChild(svgGroup);
 
-
-    /****/
-    //console.timeEnd(timeId);
-    /****/
 };
 
 CNVSRenderer.prototype.draw = function (feature, svgGroup, i, args) {
@@ -195,14 +175,6 @@ CNVSRenderer.prototype.draw = function (feature, svgGroup, i, args) {
         }
     }
 
-
-    ////check feature class
-    //if (feature.featureClass != null) {//regulatory
-    //    _.extend(this, FEATURE_TYPES[feature.featureClass]);
-    //} else if (feature.source != null) {//clinical
-    //    _.extend(this, FEATURE_TYPES[feature.source]);
-    //}
-
     //get feature render configuration
     var color = _.isFunction(this.color) ? this.color(feature) : this.color;
     var label = _.isFunction(this.label) ? this.label(feature) : this.label;
@@ -223,7 +195,6 @@ CNVSRenderer.prototype.draw = function (feature, svgGroup, i, args) {
     //transform to pixel position
     var width = length * args.pixelBase;
 
-//        var svgLabelWidth = this.getLabelWidth(label, args);
     var svgLabelWidth = label.length * 6.4;
 
     //calculate x to draw svg rect
@@ -249,7 +220,7 @@ CNVSRenderer.prototype.draw = function (feature, svgGroup, i, args) {
         var foundArea = args.renderedArea[rowY].add({start: x, end: x + maxWidth - 1});
 
         if (foundArea) {
-            var featureGroup = SVG.addChild(svgGroup, "g", {'feature_id': feature.id});
+            var featureGroup = SVG.addChild(svgGroup, "g", {'feature_id': ""+feature.chromosome + feature.start + feature.end});
             var rect = SVG.addChild(featureGroup, "rect", {
                 'x': x,
                 'y': rowY,
@@ -312,7 +283,7 @@ CNVSRenderer.prototype.draw = function (feature, svgGroup, i, args) {
 
 
 CNVSRenderer.prototype.drawHistogram = function (cacheItem, svgGroup, i, args) {
-    console.log("histograma")
+
     var features = cacheItem.value;
     var region = cacheItem.region;
     var start = region.start;
@@ -327,12 +298,9 @@ CNVSRenderer.prototype.drawHistogram = function (cacheItem, svgGroup, i, args) {
     var histogram_total = new Array(end - start + 1);
 
 
-    console.time("fill")
     histogram_benign.fill(0);
     histogram_pathogenic.fill(0);
     histogram_total.fill(0);
-
-    console.timeEnd("fill")
 
 
     //Si no hay datos solo pinto los puntos inicial y final de cada histograma
@@ -356,15 +324,11 @@ CNVSRenderer.prototype.drawHistogram = function (cacheItem, svgGroup, i, args) {
 
      }else {*/
 
-    console.time("sort")
     //Ordenar las features
     features.sort(function (a, b) {
         return a.start - b.start;
     });
 
-    console.timeEnd("sort");
-
-    console.time("arrays")
 
     //console.log(features.length);
     //Crear los arrays con los datos a pintar
@@ -399,12 +363,9 @@ CNVSRenderer.prototype.drawHistogram = function (cacheItem, svgGroup, i, args) {
         }
 
     }
-    console.timeEnd("arrays")
 
     var histo3 = new Array(histogram_benign, histogram_pathogenic);
 
-
-    console.time("pintar")
     //Pintar los datos
     for (var j = 0; j < 2; j++) {
         var histogramaactual = histo3[j];
@@ -461,8 +422,6 @@ CNVSRenderer.prototype.drawHistogram = function (cacheItem, svgGroup, i, args) {
             }
             ultimovalory = this.histogramHeight - height + yAdjust;
             ultimovalorx = (x + (width / 2)).toFixed(1);
-
-            // console.log("el del histograma es"+(this.histogramHeight - height).toFixed(1));
         }
         //pinto el ultimo valor
         var x = this.getFeatureX(histogramaactual.length - 1 + start, args);
@@ -476,15 +435,8 @@ CNVSRenderer.prototype.drawHistogram = function (cacheItem, svgGroup, i, args) {
         //Último valor suelo
         pointsArray.push((x + (width / 2)).toFixed(1) + "," + (this.histogramHeight + yAdjust).toFixed(1));
 
-        //guardo este ultimo punto para el siguiente histograma
-        //ultimospuntos[j] = (x + (width / 2)).toFixed(1) + "," + (this.histogramHeight - height).toFixed(1);
-
-
         var points = pointsArray.join(" ");
        // var no_dup = stv.utils.removeDuplicates(pointsArray);
-        //console.log(no_dup.length);
-        console.log(pointsArray.length);
-        //console.log(numpoints);
 
         //Añado al grupo de histogramas las lineas con los puntos calculados
         if (points !== '') {
@@ -497,9 +449,7 @@ CNVSRenderer.prototype.drawHistogram = function (cacheItem, svgGroup, i, args) {
 
         }
     }
-    console.timeEnd("pintar");
-
-    //}
+       //}
 };
 //Antes de que empiece las features
 /*   for (i = 0; i < start; i++) {

@@ -17,6 +17,8 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriInfo;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
@@ -34,52 +36,29 @@ public class ManagementWSServer extends CNVSWSServer {
     @Path("/add")
     @Produces("application/json")
     @ApiOperation(value = "Add CNVs to DB")
-//    public Response addCNV(@ApiParam(value = "limit") @QueryParam("limit") @DefaultValue("-1") int limit,
-//                           @ApiParam(value = "skip") @QueryParam("skip") @DefaultValue("-1") int skip,
+//    public Response addCNV(
 //                           @ApiParam(value = "host") @QueryParam("host") @DefaultValue("") String host,
 //                           @ApiParam(value = "user") @QueryParam("user") @DefaultValue("") String user,
 //                           @ApiParam(value = "sid") @QueryParam("sid") @DefaultValue("") String sid,
 //                           @ApiParam(value = "list") @QueryParam("list") @DefaultValue("") String list){
     public Response addCNV(@ApiParam(value = "user") @QueryParam("user") @DefaultValue("") String user,
                            @ApiParam(value = "sid") @QueryParam("sid") @DefaultValue("") String sid,
-                           @ApiParam(value="cnvs", required = true) List<CNV> cnvs) throws IOException {
+                           @ApiParam(value="body", required = true) List<CNV> body) throws IOException {
 
-        for(CNV c: cnvs){
+        System.out.println("Llego al webservice el cnvs es: ");
+        System.out.println("user:"+ user);
+        System.out.println("sid:"+ sid);
+        List<QueryResponse> queryResponses = new ArrayList<QueryResponse>();
+        for(CNV c: body){
             System.out.println(c.toString());
+            boolean res = qm.addCNV(body,user,sid);
+            QueryResponse qr = createQueryResponse(res);
+            queryResponses.add(qr);
         }
-        boolean res = qm.addCNV(cnvs,user,sid);
-        QueryResponse qr = createQueryResponse(res);
+
+        QueryResponse qr = createQueryResponse(queryResponses);
         return createOkResponse(qr);
 
     }
-
-//    @POST
-//    @Path("/{projectId}/update")
-//    @Consumes(MediaType.APPLICATION_JSON)
-//    @ApiOperation(value = "Update by POST [NO TESTED]", position = 4, response = Project.class)
-//    public Response updateByPost(@ApiParam(value = "projectId", required = true) @PathParam("projectId") String projectIdStr,
-//                                 @ApiParam(value = "params", required = true) Map<String, Object> params) throws IOException {
-//        try {
-//            ObjectMap objectMap = new ObjectMap(params);
-//            long projectId = catalogManager.getProjectId(projectIdStr);
-//            QueryResult result = catalogManager.modifyProject(projectId, objectMap, sessionId);
-//            return createOkResponse(result);
-//        } catch (Exception e) {
-//            return createErrorResponse(e);
-//        }
-//    }
-//    @POST
-//    @Path("/{fileId}/update")
-//    @ApiOperation(value = "Modify file", position = 16, response = File.class)
-//    public Response updatePOST(@ApiParam(value = "File id") @PathParam(value = "fileId") String fileIdStr,
-//                               @ApiParam(name = "params", value = "Parameters to modify", required = true) UpdateFile params) {
-//        try {
-//            long fileId = catalogManager.getFileId(convertPath(fileIdStr, sessionId), sessionId);
-//            QueryResult<File> queryResult = catalogManager.getFileManager().update(fileId,
-//                    new ObjectMap(jsonObjectMapper.writeValueAsString(params)), queryOptions, sessionId);
-//            return createOkResponse(queryResult);
-//        } catch (Exception e) {
-//            return createErrorResponse(e);
-//        }
 }
 

@@ -143,6 +143,22 @@ public class QueryCommandLine {
 		this.dosesNum = dosesNum;
 	}
 
+	public String getSizeOp() {
+		return sizeOp;
+	}
+
+	public void setSizeOp(String sizeOp) {
+		this.sizeOp = sizeOp;
+	}
+
+	public double getSizeNum() {
+		return sizeNum;
+	}
+
+	public void setSizeNum(double sizeNum) {
+		this.sizeNum = sizeNum;
+	}
+
 	public QueryCommandLine(boolean all, String code, List<Long> decipId, String regionList, String sizeOp, int sizeNum, List<String> assembly, List<String> band, List<Integer> type,
 							List<Integer> doses, String dosesOp, double dosesNum, List<Integer> cli, List<Integer> inhe, int nv, int cl, int gender, List<Integer> status,
 							List<Integer> typeSample, List<String> referalDiag, List<String> hpo, List<Integer> year,

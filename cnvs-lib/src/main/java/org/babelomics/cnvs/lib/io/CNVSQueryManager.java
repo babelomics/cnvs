@@ -57,6 +57,10 @@ public class CNVSQueryManager {
             this.addTypeLongToQuery(q.getDecipId(), query, "decipherId");
         }
 
+        if (q.getSizeNum() != -1) {
+            this.addSizeToQuery(q.getSizeNum(), q.getSizeOp(), query);
+        }
+
         if (q.getRegionList() != null && !q.getRegionList().isEmpty()) {
             this.addRegionsToQuery(q.getRegionList(), query);
         }
@@ -121,7 +125,7 @@ public class CNVSQueryManager {
         }
 
         if (q.getAge() != null && (!q.getAge().isEmpty())) {
-            this.addTypeStringToQuery(q.getAge(), query, "age");
+            this.addAgeTransformIntToQuery(q.getAge(), query, "age");
         }
 
         if (q.getAgePrenatal() != null && (!q.getAgePrenatal().isEmpty())) {
@@ -155,8 +159,6 @@ public class CNVSQueryManager {
         System.out.println(query);
 
         Iterable<CNV> aux = query.fetch();
-
-
         count.setValue(query.countAll());
 
         return aux;
@@ -168,38 +170,73 @@ public class CNVSQueryManager {
     }
 
     public boolean addCNV(List<CNV> listCNV, String username, String sid) {
-        boolean res = true;
+        boolean result = true;
         DBCollection users = datastore.getDB().getCollection("users");
 
         BasicDBObject query = new BasicDBObject("name", username).append("sessions.id", sid);
 
         DBObject dbUser = users.findOne(query);
 
+        List<CNV> res = datastore.createQuery(CNV.class).asList();
         if (dbUser != null) {
-//            List<CNV> res = datastore.createQuery(CNV.class).asList();
+            System.out.println("Ha encontrado el usuario");
             try {
                 datastore.save(listCNV);
+                System.out.println("Se ha insertado correctamente");
             }catch (Exception e){
-                res = false;
+                System.out.println("Error al insertar");
+                return false;
             }
 //            return res.size();
         }
-        return res;
+        System.out.println("   NOOO HA ENCONTRADO EL USUARIO!!");
+        return result;
 
     }
 
     public List<String> getAllEthnicGroup() {
 
         List auxQuery = this.datastore.getCollection(CNV.class).distinct("eg");
-
         List<String> res = getListOfString(auxQuery);
-
         return res;
     }
 
     private void addTypeIntToQuery(List<Integer> l, Query<CNV> query, String name) {
         if (l != null && !l.isEmpty()) {
             query.field(name).in(l);
+        }
+
+    }
+
+    private void addSizeToQuery(double size, String op, Query<CNV> query) {
+
+        if (op.equals("=")) {
+            query.where("this.e - this.s ==" + size);
+        } else if (op.equals(">")) {
+            query.where("this.e - this.s >" + size);
+        } else if (op.equals(">=")) {
+            query.where("this.e - this.s >=" + size);
+        } else if (op.equals("<=")) {
+            query.where("this.e - this.s <=" + size);
+        } else if (op.equals("<")) {
+            query.where("this.e - this.s <" + size);
+        }
+    }
+
+    private void addAgeTransformIntToQuery(List<String> l, Query<CNV> query, String name) {
+        List<Integer> li = new ArrayList<>();
+        for (String age : l) {
+            age = age.toLowerCase();
+            if (age.equals("prenatal")){
+                li.add(-2);
+            }else if(age.equals("")){
+                li.add(-1);
+            }else {
+                li.add(new Double(age).intValue());
+            }
+        }
+        if (li != null && !li.isEmpty()) {
+            query.field(name).in(li);
         }
 
     }
@@ -262,6 +299,8 @@ public class CNVSQueryManager {
         System.out.println("La doses es:" + doses.size());
 
     }
+
+
 
     private void addDNumericDosesToQuery(double doses, String op, Query<CNV> query) {
         if (op.equals("=")) {
