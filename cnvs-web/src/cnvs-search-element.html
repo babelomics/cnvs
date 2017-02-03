@@ -401,30 +401,31 @@
                                 <div class="vertical layout">
                                     <label for="doses0" class="stv-control flex">
                                         <input type="checkbox" name="doses" value="0" id="doses0" checked/>
-                                        <span>Homozygous deletion</span>
+                                        <span>0-Homozygous deletion</span>
                                     </label>
                                     <label for="doses2" class="stv-control flex">
                                         <input type="checkbox" name="doses" value="2" id="doses2" checked/>
-                                        <span>Hemyzygous deletion</span>
+                                        <span>0-Hemyzygous deletion</span>
                                     </label>
                                     <label for="doses1" class="stv-control flex">
                                         <input type="checkbox" name="doses" value="1" id="doses1" checked/>
-                                        <span>Deletion</span>
+                                        <span>1-Deletion</span>
                                     </label>
                                     <label for="doses3" class="stv-control flex">
                                         <input type="checkbox" name="doses" value="3" id="doses3" checked/>
-                                        <span>Duplication</span>
+                                        <span>3-Duplication</span>
                                     </label>
                                     <label for="doses4" class="stv-control flex">
                                         <input type="checkbox" name="doses" value="4" id="doses4" checked/>
-                                        <span>Triplication</span>
+                                        <span>4-Triplication</span>
                                     </label>
                                     <label for="doses5" class="stv-control flex">
                                         <input type="checkbox" name="doses" value="5" id="doses5" checked/>
-                                        <span>Amplification</span>
+                                        <span>5 or more-Amplification</span>
                                     </label>
                                 </div>
                             </div>
+                        <label class="stv">Mean log2 ratio</label>
                         <div class="horizontal layout">
                             <stv-select  id="dosesOp" value="=">
                                 <stv-option value="=">=</stv-option>
@@ -433,7 +434,7 @@
                                 <stv-option value=">=">>=</stv-option>
                                 <stv-option value="<="><=</stv-option>
                             </stv-select>
-                            <input type="text" class="stv flex" id="dosesNum" name="dosesNum" placeholder="Numeric doses,Ex:-0.5" value="{{dosesValue::change}}"/>
+                            <input type="text" class="stv flex" id="dosesNum" name="dosesNum" placeholder="Mean log2 ratio,Ex:-0.5" value="{{dosesValue::change}}"/>
                         </div>
                         <div class="input_container vertical layout">
                             <label class="stv">Size(nt):</label>
@@ -996,7 +997,7 @@
         },
         cnvToString: function(o){
             return o.code + "\t" + o.decipherId + "\t" + o.chromosome + "\t" + o.start + "\t" + o.end + "\t" + o.status + "\t" + o.typeSample
-                    + "\t" + o.cellLine + "\t" + o.chromoGender + "\t" + o.locus + "\t" + o.assembly + "\t" + o.nv + "\t" + o.type + "\t" +
+                    + "\t" + o.cellLine + "\t" + o.chromGender + "\t" + o.band + "\t" + o.assembly + "\t" + o.nv + "\t" + o.type + "\t" +
                     o.doses + "\t" + size + "\t" + o.genes + "\t" + o.referalDiag + "\t" + o.syndrome + "\t" + o.phenotype + "\t" +
                     o.clinicalSig + "\t" + o.inheritance + "\t" + o.yearOfBirth + "\t" + o.yearTest + "\t" + o.age + "\t" + o.agePrenatal
                     + "\t" + o.ethnicGroup + "\t" + o.origin + "\t" + o.arrayPlatform + "\t" + o.arrayId + "\t" + o.comments +"\n";
@@ -1176,11 +1177,11 @@
                     title: 'Genes',
                     width: 60
                 }, {
-                    name: 'locus',
+                    name: 'band',
                     title: 'Band',
                     width: 60,
                     formula: function(row){
-                        var n = me.transformData(row.locus);
+                        var n = me.transformData(row.band);
                         return n;
                     }
                 }, {
@@ -1232,11 +1233,11 @@
                         return n;
                     }
                 }, {
-                    name: 'chromoGender',
+                    name: 'chromGender',
                     title: 'Chr gender',
                     width: 80,
                     formula: function(row){
-                        var n = me.transformData(row.chromoGender);
+                        var n = me.transformData(row.chromGender);
                         return n;
                     }
                 }, {
@@ -1417,7 +1418,7 @@
                             title: 'Assembly',
                             width: 100,
                             formula: function (row) {
-                                return row.chromoGender + "</br>" + row.locus + "</br>" + row.assembly;
+                                return row.chromGender + "</br>" + row.band + "</br>" + row.assembly;
                             }
                         }]
                     }]

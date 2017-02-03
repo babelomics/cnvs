@@ -16,6 +16,9 @@ var CNVSManager = {
     management:{
         add: function (args) {
             return CNVSManager._doRequest(args, 'management', 'add');
+        },
+        search: function(args) {
+            return CNVSManager._doRequest(args, 'management', 'search');
         }
     },
     _url: function (args, api, action) {

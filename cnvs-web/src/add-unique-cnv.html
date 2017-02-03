@@ -567,8 +567,8 @@
                     </div>
                     <stv-table id="tablacnvs" class="container small" page-size="10" enable-paging enable-select enable-resize data="{{data}}" columns="{{columns}}" on-rowclick="handleRowClick" on-column-visibility-change="handleColumnVisibilityChange">
                         <div class="custom-buttons horizontal layout">
-                            <div style="margin-right: 10px; color: #006699" id="saveTable" class="stv-btn down" on-click="upload" data-file="{{cnv}}"><i class="fa fa-cloud-download"></i> upload</div>
-                            <div style="margin-right: 10px; color: #006699" id="cleanTable" class="stv-btn down" on-click="cleanTable" data-file="{{cnv}}"><i class="fa fa-cloud-download"></i> clean</div>
+                            <div style="margin-right: 10px; color: #006699" id="saveTable" class="stv-btn down" on-click="upload" data-file="{{cnv}}"><i class="fa fa-cloud-upload"></i> upload</div>
+                            <div style="margin-right: 10px; color: #006699" id="cleanTable" class="stv-btn down" on-click="cleanTable" data-file="{{cnv}}">clean</div>
                             <div id="spamButtonTable" class="stv-btn" on-click="spamTable" disabled>expand</div>
                             <div id="compressButtonTable"class="stv-btn" on-click="compressTable">compress</div>
                         </div>
@@ -1032,12 +1032,12 @@
                 alert("Insert Doses, please")
             }
 
-//            if( this.dosesValue!= null && !this.dosesValue == "" ){
-//                newRow.dosesNum = this.dosesValue;
-//            }else{
-//                validateForm = false;
-//                alert("Insert Doses Number, please")
-//            }
+            if( this.dosesValue!= null && !this.dosesValue == "" ){
+                newRow.dosesNum = this.dosesValue;
+            }else{
+                validateForm = false;
+                alert("Insert Doses Number, please")
+            }
             //TODO hacer ws para que se traiga directamente la cytobanda
 
             if(!this.bandValue == ""){
@@ -1118,14 +1118,15 @@
                 }
             }
             if (clisv.length > 0) {
-                newRow.clinicalSig = clv.join(",");
+                newRow.clinicalSig = clisv.join(",");
             }else{
                 validateForm = false;
                 alert("Insert clinical significance, please")
             }
 
             newRow.code = this.userData.attributes.group;
-
+            newRow.author = this.userData.name;
+            newRow.organization = this.userData.attributes.group;
             if(validateForm){
                 this.push('data', newRow);
             }
@@ -1183,13 +1184,13 @@
         },
         cnvToString: function(o){
             return o.code + "\t" + o.decipherId + "\t" + o.chromosome + "\t" + o.start + "\t" + o.end + "\t" + o.status + "\t" + o.typeSample
-                    + "\t" + o.cellLine + "\t" + o.chromGender + "\t" + o.locus + "\t" + o.assembly + "\t" + o.nv + "\t" + o.type + "\t" +
+                    + "\t" + o.cellLine + "\t" + o.chromGender + "\t" + o.band + "\t" + o.assembly + "\t" + o.nv + "\t" + o.type + "\t" +
                     o.doses + "\t" + size + "\t" + o.genes + "\t" + o.referalDiag + "\t" + o.syndrome + "\t" + o.phenotype + "\t" +
                     o.clinicalSig + "\t" + o.inheritance + "\t" + o.yearOfBirth + "\t" + o.yearTest + "\t" + o.age + "\t" + o.agePrenatal
                     + "\t" + o.ethnicGroup + "\t" + o.origin + "\t" + o.arrayPlatform + "\t" + o.arrayId + "\t" + o.comments +"\n";
         },
-        calculateGenes:function(){
 
+        calculateGenes:function(){
 
             var positions = [];
             var me = this;
@@ -1377,7 +1378,7 @@
                     title: 'Genes',
                     width: 60
                 }, {
-                    name: 'locus',
+                    name: 'band',
                     title: 'Band',
                     width: 60,
                     formula: function(row){
@@ -1396,8 +1397,16 @@
                     name: 'doses',
                     title: 'Doses',
                     width: 60,
-                    formula: function(row){
-                        var n = me.transformData(row.doses) +"(" + me.transformData(row.dosesNum)+")";
+                    formula: function (row) {
+                        var n = me.transformData(row.doses);
+                        return n;
+                    }
+                },{
+                    name: 'dosesnum',
+                    title: 'Mean log2 ratio',
+                    width: 60,
+                    formula: function (row) {
+                        var n =  me.transformData(row.dosesNum);
                         return n;
                     }
                 }, {
@@ -1537,15 +1546,15 @@
                         return n;
                     }
                 }, {
-                    name: 'syndrome',
-                    title: 'Aneuploidy',
+                    name: 'syndromeName',
+                    title: 'Sindrome',
                     width: 80,
                     formula: function (row) {
                         var syndromeParse;
-                        if (row.syndrome == null || row.syndrome == "") {
+                        if (row.syndromeName == null || row.syndromeName == "") {
                             syndromeParse = "."
                         } else {
-                            syndromeParse = row.syndrome;
+                            syndromeParse = row.syndromeName;
                         }
                         return syndromeParse;
                     }
@@ -1554,6 +1563,10 @@
                     title: 'Comments',
                     width: 120
 
+                },{
+                    name: 'author',
+                    title: 'Author',
+                    width: 120
                 },{
                     name: 'codeDecipher',
                     title: 'Code',
@@ -1873,7 +1886,7 @@
                     body: JSON.stringify(me.$.tablacnvs.data,"",""),
                     success: function(response) {
                         try {
-                           alert("Add correct. "+ response.result + "insertadas.");
+                           alert("Add correct. "+ response.numResults + "insertadas.");
                         } catch (e) {}
                     }
                 }

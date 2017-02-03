@@ -160,6 +160,9 @@
     Polymer({
         is: 'see-cnv-added',
         properties: {
+            userData:{
+                type:Object
+            },
             totalcaseValue: {
                 type: Number,
                 value: 0
@@ -437,75 +440,15 @@
             });
             debugger
         },
-        showHPO: function() {
-            this.$.hpoPanel.hidden = !this.$.hpoPanel.hidden;
-            // this.$.hpoPanel.handleClearSelected();
-        },
-        hpoValueChanged: function(neo, old) {
-            if (neo) {
-                var hpoName = [];
-                for (var i = 0; i < neo.length; i++) {
-                    hpoName.push(neo[i].n);
-                }
-                this.hpoSearch = hpoName.join(",");
-            }
-        },
-        clearHPO: function(){
-            this.hpoSearch = "";
-            this.hpoValue = [];
-        },
-        showSyndrome: function() {
-            this.$.syndromePanel.hidden = !this.$.syndromePanel.hidden;
-        },
-        syndromeValueChanged: function(neo, old) {
-            if (neo) {
-                var syndromeName = [];
-                for (var i = 0; i < neo.length; i++) {
-                    syndromeName.push(neo[i].n);
-                }
-                this.syndromeSearch = syndromeName.join(",");
-            }
-        },
-        clearSyndrome: function(){
-            this.syndromeSearch = "";
-            this.syndromeValue = [];
-        },
-        showEthnic: function() {
-            this.$.ethnicPanel.hidden = !this.$.ethnicPanel.hidden;
-        },
-        ethnicValueChanged: function(neo, old) {
-            if (neo) {
-                var ethnicName = [];
-                for (var i = 0; i < neo.length; i++) {
-                    ethnicName.push(neo[i].n);
-                }
-                this.ethnicSearch = ethnicName.join(",");
-            }
-        },
-        clearEthnic: function(){
-            this.ethnicSearch = "";
-            this.ethnicValue = [];
-        },
+
         cnvToString: function(o){
             return o.code + "\t" + o.decipherId + "\t" + o.chromosome + "\t" + o.start + "\t" + o.end + "\t" + o.status + "\t" + o.typeSample
-                    + "\t" + o.cellLine + "\t" + o.chromoGender + "\t" + o.locus + "\t" + o.assembly + "\t" + o.nv + "\t" + o.type + "\t" +
+                    + "\t" + o.cellLine + "\t" + o.chromGender + "\t" + o.band + "\t" + o.assembly + "\t" + o.nv + "\t" + o.type + "\t" +
                     o.doses + "\t" + size + "\t" + o.genes + "\t" + o.referalDiag + "\t" + o.syndrome + "\t" + o.phenotype + "\t" +
                     o.clinicalSig + "\t" + o.inheritance + "\t" + o.yearOfBirth + "\t" + o.yearTest + "\t" + o.age + "\t" + o.agePrenatal
                     + "\t" + o.ethnicGroup + "\t" + o.origin + "\t" + o.arrayPlatform + "\t" + o.arrayId + "\t" + o.comments +"\n";
         },
-        /*parseJson: function(array){
-            if((array[1]).isArray){
-                this.parseJson(array[1]);
-            }else{
-                for (var i= 0; i < array.length; i++){
-                    this.stringToSave.concat(array[i].toString());
-                }
-            }
-        },*/
 
-        mostrardiagnosis: function() {
-
-        },
         //Search Gens in textarea
         handleGeneSearchSelect: function(e) {
             var name = e.detail.name;
@@ -603,41 +546,41 @@
                         var n = me.transformData(row.decipherId);
                         return n;
                     }
-//                }, {
-//                    name: 'LocalID',
-//                    title: 'Local ID',
-//                    width: 180,
-//                    columns: [{
-//                        name: 'centerId1',
-//                        title: 'ID 1',
-//                        width: 60,
-//                        formula: function(row) {
-//                            return row.centerId1;
-//                        }
-//                    }, {
-//                        name: 'centerId2',
-//                        title: 'ID 2',
-//                        width: 60,
-//                        formula: function(row) {
-//                            return row.centerId2;
-//                        }
-//                    }, {
-//                        name: 'centerId3',
-//                        title: 'ID 3',
-//                        width: 60,
-//                        formula: function(row) {
-//                            return row.centerId3;
-//                        }
-//                    }]
-//                }, {
-//                    name: 'LocalIDmerge',
-//                    title: 'Local ID(1,2,3)',
-//                    width: 180,
-//                    visible:false,
-//                    formula: function(row) {
-//                        return row.centerId1 +"<br/>"+row.centerId2+"</br>"+row.centerId3;
-//                    }
-//
+                }, {
+                    name: 'LocalID',
+                    title: 'Local ID',
+                    width: 180,
+                    columns: [{
+                        name: 'centerId1',
+                        title: 'ID 1',
+                        width: 60,
+                        formula: function(row) {
+                            return row.centerId1;
+                        }
+                    }, {
+                        name: 'centerId2',
+                        title: 'ID 2',
+                        width: 60,
+                        formula: function(row) {
+                            return row.centerId2;
+                        }
+                    }, {
+                        name: 'centerId3',
+                        title: 'ID 3',
+                        width: 60,
+                        formula: function(row) {
+                            return row.centerId3;
+                        }
+                    }]
+                }, {
+                    name: 'LocalIDmerge',
+                    title: 'Local ID(1,2,3)',
+                    width: 180,
+                    visible:false,
+                    formula: function(row) {
+                        return row.centerId1 +"<br/>"+row.centerId2+"</br>"+row.centerId3;
+                    }
+
                 },
                 {
                     name: 'assembly',
@@ -652,11 +595,11 @@
                     title: 'Genes',
                     width: 60
                 }, {
-                    name: 'locus',
+                    name: 'band',
                     title: 'Band',
                     width: 60,
                     formula: function(row){
-                        var n = me.transformData(row.locus);
+                        var n = me.transformData(row.band);
                         return n;
                     }
                 }, {
@@ -708,11 +651,11 @@
                         return n;
                     }
                 }, {
-                    name: 'chromoGender',
+                    name: 'chromGender',
                     title: 'Chr gender',
                     width: 80,
                     formula: function(row){
-                        var n = me.transformData(row.chromoGender);
+                        var n = me.transformData(row.chromGender);
                         return n;
                     }
                 }, {
@@ -893,7 +836,7 @@
                             title: 'Assembly',
                             width: 100,
                             formula: function (row) {
-                                return row.chromoGender + "</br>" + row.locus + "</br>" + row.assembly;
+                                return row.chromGender + "</br>" + row.band + "</br>" + row.assembly;
                             }
                         }]
                     }]
@@ -1025,11 +968,18 @@
             ]
             // Llamar a el distint para hacer el referal
 
+            var me = this;
             var query = {};
-            var url = CNVSManager.regions.fetch({
-                query: query,
+            query.user = Cookies('bioinfo_user');
+            query.sid = Cookies('bioinfo_sid');
+//            query.group = this.userData.attributes.group;
+            var url = CNVSManager.management.search({
+                query:query,
                 request: {
-                    url: true
+                    method:"POST",
+                    headers:{
+                        "Content-Type":"aplicaction/json"
+                    }
                 }
             });
             this.formURL = url;
@@ -1046,29 +996,7 @@
         created: function() {
             this.selectedSpecies = DEFAULT_SPECIES;
         },
-        clearForm: function() {
-            this.$.form.reset();
-//            this.localIdValue1 = null;
-//            this.localIdValue2 = null;
-//            this.localIdValue3 = null;
-            this.regionValue = "";
-            this.geneValue = "";
-            this.arrayPlataformValue = null;
-            this.arrayIdValue = null;
-            this.rdValue = null;
-            this.hpoValue = [];
-            this.hpoSearch = "";
-            this.aneuploidValue = null;
-            this.localIdValue = null;
-            this.decipherIdValue = null;
-            this.yearIdValue = null;
-            this.yearTestValue = null;
-            this.ageValue = null;
-            this.codeValue = null;
-            this.ethnicValue = null;
-            this.geoValue = null;
 
-        },
         _parse: function(response) {
             var data = response.result;
             var positions = [];
@@ -1127,298 +1055,22 @@
                 };
             }
         },
-        dosesAndSizeNumValidity: function(){
-            if(this.dosesValue != null){
-                if(isNaN(this.dosesValue)) {
-                    alert("doses Number is not a number, check the form");
-                        return (false);
-                }
-            }
-            if(this.sizeValue != null){
-                if(isNaN(this.sizeValue)) {
-                    alert("The size is not a number, check the form");
-                    return (false);
-                }
-            }
-            return true;
-        },
         submitForm: function() {
             var me = this;
             var query = {};
-
-            //  if (this.$.form.checkValidity() && (this.regionValue != '' || this.geneValue != '')) {
-            if (this.$.form.checkValidity() && this.dosesAndSizeNumValidity()) {
-                var region = null;
-                if (this.regionValue == "") {
-                  region = "";
-                } else {
-                    region = new Region(this.regionValue.trim());
-                    query.regions = region;
+            query.user = Cookies('bioinfo_user');
+            query.sid = Cookies('bioinfo_sid');
+            var url = CNVSManager.management.search({
+                query:query,
+                request: {
+                    method:"POST",
+                    headers:{
+                        "Content-Type":"aplicaction/json"
+                    },
+                    url:true
                 }
-
-                if (this.geneValue) {
-
-                    var gene = this.geneValue.toUpperCase();
-                    CellBaseManager.get({
-                        species: 'hsapiens',
-                        category: 'feature',
-                        subCategory: 'gene',
-                        query: gene,
-                        resource: "info",
-                        async: false,
-                        params: {
-                            include: 'chromosome,start,end'
-                        },
-                        success: function(data) {
-                            for (var i = 0; i < data.response.length; i++) {
-                                var queryResult = data.response[i];
-
-                                if (queryResult.result.length > 0) {
-                                    region = new Region(queryResult.result[0]);
-                                    //regions.push(region.toString());
-                                    query.regions = region;
-                                } else {
-                                    alert("Wrong gene: " + gene);
-                                }
-                            }
-                        }
-                    });
-                }
-
-//                if(!this.localIdValue1 == ""){
-//                    query.centerId1 = this.localIdValue1;
-//                }
-//
-//                if(!this.localIdValue2 == ""){
-//                    query.centerId2 = this.localIdValue2;
-//                }
-//
-//                if(!this.localIdValue3 == ""){
-//                    query.centerId3 = this.localIdValue3;
-//                }
-
-                var inputs = this.$.type.querySelectorAll("input");
-                var typev = [];
-
-                for (var i = 0; i < inputs.length; i++) {
-                    var inputtype = inputs[i];
-                    if (inputtype.checked) {
-                        typev.push(inputtype.value);
-                    }
-                }
-                if (typev.length > 0 && typev.length < 3) {
-                    query.type = typev.join(",");
-                }
-                if(!this.codeValue == ""){
-                    query.code = this.codeValue;
-                }
-                if(!this.decipherIdValue == ""){
-                    query.decipherId = this.decipherIdValue;
-                }
-                inputs = this.$.assembly.querySelectorAll("input");
-                var assemblyv = [];
-                for (var i = 0; i < inputs.length; i++){
-                    if(inputs[i].checked){
-                        assemblyv.push(inputs[i].value);
-                    }
-                }
-                if (assemblyv.length > 0 && assemblyv.length < 3) {
-                    query.assembly = assemblyv.join(",");
-                }
-
-                inputs = this.$.doses.querySelectorAll("input");
-                var dosesv = [];
-
-                for (var i = 0; i < inputs.length; i++) {
-                    var inputdoses = inputs[i];
-                    if (inputdoses.checked) {
-                        dosesv.push(inputdoses.value);
-                    }
-                }
-                if (dosesv.length > 0 && dosesv.length < 4) {
-                    query.doses = dosesv.join(",");
-                }
-                if(!this.sizeValue == ""){
-                   // query.size = this.sizeValue; //TODO
-                }
-                if(!this.bandValue == ""){
-                    query.band = this.bandValue;
-                }
-
-
-                inputs = this.$.clis.querySelectorAll("input");
-                var clisv = [];
-
-                for (var i = 0; i < inputs.length; i++) {
-                    var inputclis = inputs[i];
-                    if (inputclis.checked) {
-                        clisv.push(inputclis.value);
-                    }
-                }
-                if (clisv.length > 0 && clisv.length < 5) {
-                    query.clis = clisv.join(",");
-                }
-
-                inputs = this.$.inheritance.querySelectorAll("input");
-                var inhev = [];
-
-                for (var i = 0; i < inputs.length; i++) {
-                    var inputinhe = inputs[i];
-                    if (inputinhe.checked) {
-                        inhev.push(inputinhe.value);
-                    }
-                }
-                if (inhev.length > 0 && inhev.length < 4) {
-                    query.inheritance = inhev.join(",");
-                }
-
-                if(!this.nvariantsValue == "") {
-                    query.nv = this.nvariantsValue;
-                }
-                inputs = this.$.cl.querySelectorAll("input");
-                var clv = [];
-
-                for (var i = 0; i < inputs.length; i++) {
-                    var inputcl = inputs[i];
-                    if (inputcl.checked) {
-                        clv.push(inputcl.value);
-                    }
-                }
-                if (clv.length > 0 && clv.length < 2) {
-                    query.cl = clv.join(",");
-                }
-
-                inputs = this.$.gender.querySelectorAll("input");
-                var genderv = [];
-
-                for (var i = 0; i < inputs.length; i++) {
-                    var inputgender = inputs[i];
-                    if (inputgender.checked) {
-                        genderv.push(inputgender.value);
-                    }
-                }
-                if (genderv.length > 0 && genderv.length < 2) {
-                    query.gender = genderv.join(",");
-                }
-
-                inputs = this.$.status.querySelectorAll("input");
-                var statusv = [];
-
-                for (var i = 0; i < inputs.length; i++) {
-                    var inputstatus = inputs[i];
-                    if (inputstatus.checked) {
-                        statusv.push(inputstatus.value);
-                    }
-                }
-                if (statusv.length > 0 && statusv.length < 4) {
-                    query.status = statusv.join(",");
-                }
-
-                inputs = this.$.typeS.querySelectorAll("input");
-                var typeSv = [];
-
-                for (var i = 0; i < inputs.length; i++) {
-                    var inputtypeS = inputs[i];
-                    if (inputtypeS.checked) {
-                        typeSv.push(inputtypeS.value);
-                    }
-                }
-                if (typeSv.length > 0 && typeSv.length < 5) {
-                    query.typeS = typeSv.join(",");
-                }
-
-                if(!this.rdValue == "") {
-                    query.referalDiag = this.rdValue;
-                }
-
-                //Comprobar que todos son números
-                if(!this.yearIdValue == "") {
-                    query.year = this.yearIdValue;
-                }
-
-                if(this.ethnicValue.length >0) {
-                    query.ethic = this.ethnicSearch;
-                }
-
-
-                if(!this.geoValue == "") {
-                    query.geo = this.geoValue;
-                }
-                if(!this.arrayPlataformValue == "") {
-                    query.arrayPlatform = this.arrayPlataformValue;
-                }
-                if(!this.arrayIdValue == "") {
-                    query.arrayId = this.arrayIdValue;
-                }
-                if(!this.localIdValue == "") {
-                    query.localId = this.localIdValue;
-                }
-                if( this.dosesValue!= null && !this.dosesValue == "" ){
-                    query.dosesNum = this.dosesValue;
-                    query.dosesOp = this.$.dosesOp.value;
-                }
-
-                if( this.sizeValue!= null && !this.sizeValue == "" ){
-                    query.size = this.sizeValue;
-                    query.sizesigno = this.$.sizeOp.value;
-                }
-
-                //HPO
-//                var hposMap = {};
-//                for (var i = 0; i < this.hpoValue.length; i++) {
-//                    if (this.hpoValue[i].id.indexOf('HP:') >= 0) { // Si viene del arbol no tiene HP:
-//                        hposMap[this.hpoValue[i].id] = true;
-//                    } else {
-//                        hposMap['HP:' + this.hpoValue[i].id] = true;
-//                    }
-//                    if (this.hpoValue[i].f != null) { //f son los hijos parent el padre
-//                        if (Object.keys(this.hpoValue[i].f).length > 0) {
-//                            for (var j = 0; j < this.hpoValue[i].f.length; j++) {
-//                                this.hpoValue.push(this.hpoValue[i].f[j]);
-//                            }
-//                        }
-//                    }
-//                }
-                var hpov = [];
-//                if(this.hpoSearch.indexOf('HP:')){
-//                    hpov = this.hpoSearch.split(',');
-//                    query.hpo = this.hpoSearch;
-//                }
-                for (var i = 0; i < this.hpoValue.length; i++) {
-                    if (this.hpoValue[i].id.indexOf('HP:') >= 0) { // Si viene del arbol no tiene HP:
-                        hpov[i] = this.hpoValue[i].id;
-                    } else {
-                        hpov[i] ='HP:' + this.hpoValue[i].id;
-                    }
-                    if (this.hpoValue[i].f != null) { //f son los hijos parent el padre
-                        if (Object.keys(this.hpoValue[i].f).length > 0) {
-                            for (var j = 0; j < this.hpoValue[i].f.length; j++) {
-                                this.hpoValue.push(this.hpoValue[i].f[j]);
-                            }
-                        }
-                    }
-                }
-                this.hpoValue = [];
-                if (hpov.length > 0) {
-                    query.hpo = hpov.join(",");
-                }
-
-                var url = CNVSManager.regions.fetch({
-                    query: query,
-                    request: {
-                        url: true
-                    }
-                });
-
-                this.formURL = url;
-                console.log(url);
-
-                this.adapter.params = query;
-
-                this.query = query;
-            } else {
-                alert("Please check the form");
-            }
+            });
+            this.formURL = url;
         }
     });
 </script>

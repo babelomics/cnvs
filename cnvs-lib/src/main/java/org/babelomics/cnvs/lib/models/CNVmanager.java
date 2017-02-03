@@ -13,7 +13,7 @@ import java.util.*;
         @Index(name = "chunks", value = "_at.chIds")
 })
 
-public class CNV {
+public class CNVmanager {
 
     @Id
     private ObjectId id;
@@ -22,13 +22,10 @@ public class CNV {
     private String code;
     @Property("di")
     private long decipherId;
-    @JsonIgnore
     @Property("ci1")
     private String centerId1;
-    @JsonIgnore
     @Property("ci2")
     private String centerId2;
-    @JsonIgnore
     @Property("ci3")
     private String centerId3;
     @Property("c")
@@ -42,14 +39,11 @@ public class CNV {
     @Property("g")
     private String genes; // ARRAY
     @Property("l")
-    private String band;
-    /*@Property("sz")
-    private String size; */ // LO QUITAMOS DE BD
+    private String band;//locus
     @Property("t")
     private int type;
     @Property("d")
     private double doses;
-
     @Property("dn")
     private double dosesNum; // Mean log2 ratio
     @Property("cs")
@@ -60,7 +54,7 @@ public class CNV {
     @Property("cl")
     private int cellLine; // 0 germline, 1 somatic
     @Property("cg")
-    private int chromGender; //0 XX, 1 XY
+    private int chromGender; //0 XXX...
     @Property("st")
     private int status; //0 proband, 1 Father, 2 Mother, 3 Control, 4 Other relatives
     @Property("ts")
@@ -84,22 +78,20 @@ public class CNV {
     private String arrayPlatform;
     @Property("ai")
     private String arrayId;
-
-    @JsonIgnore
-    @Transient
-    private String syndromeName;
-    //@Embedded("sy")
-    @Reference("sy")
-    private List<Syndrome> syndrome;
+    @Property("sn")
+    private List<String> syndromeName;
+    @Property("org")
+    private String organization;
+    @Property("au")
+    private String author;
     @Property("co")
     private String comments;
     @Property("_at")
     private Map<String, Object> attr;
 
-
-    public CNV() {
+    public CNVmanager() {
         this.attr = new HashMap<>();
-        this.syndrome = new ArrayList<>();
+        this.syndromeName = new ArrayList<>();
     }
 
     public String getAssembly() {
@@ -586,13 +578,7 @@ public class CNV {
         this.arrayId = arrayId;
     }
 
-    public String getSyndromeName() {
-        return syndromeName;
-    }
 
-    public void setSyndromeName(String syndromeName) {
-        this.syndromeName = syndromeName;
-    }
 
 
     public String getCenterId1() {
@@ -615,47 +601,6 @@ public class CNV {
         return centerId3;
     }
 
-    @Override
-    public String toString() {
-        return "CNV{" +
-                "id=" + id +
-                ", code='" + code + '\'' +
-                ", decipherId=" + decipherId +
-                ", centerId1='" + centerId1 + '\'' +
-                ", centerId2='" + centerId2 + '\'' +
-                ", centerId3='" + centerId3 + '\'' +
-                ", chromosome='" + chromosome + '\'' +
-                ", start=" + start +
-                ", end=" + end +
-                ", assembly='" + assembly + '\'' +
-                ", genes='" + genes + '\'' +
-                ", band='" + band + '\'' +
-                ", type=" + type +
-                ", doses=" + doses +
-                ", dosesNum=" + dosesNum +
-                ", clinicalSig=" + clinicalSig +
-                ", inheritance=" + inheritance +
-                ", nv=" + nv +
-                ", cellLine=" + cellLine +
-                ", chromGender=" + chromGender +
-                ", status=" + status +
-                ", typeSample=" + typeSample +
-                ", referalDiag='" + referalDiag + '\'' +
-                ", phenotype='" + phenotype + '\'' +
-                ", yearOfBirth=" + yearOfBirth +
-                ", yearTest=" + yearTest +
-                ", age=" + age +
-                ", agePrenatal=" + agePrenatal +
-                ", ethnicGroup='" + ethnicGroup + '\'' +
-                ", origin='" + origin + '\'' +
-                ", arrayPlatform='" + arrayPlatform + '\'' +
-                ", arrayId='" + arrayId + '\'' +
-                ", syndromeName='" + syndromeName + '\'' +
-                ", syndrome=" + syndrome +
-                ", comments='" + comments + '\'' +
-                ", attr=" + attr +
-                '}';
-    }
 
     public void setCenterId3(String centerId3) {
         this.centerId3 = centerId3;
@@ -734,11 +679,28 @@ public class CNV {
         this.code = code;
     }
 
-    public List<Syndrome> getSyndrome() {
-        return syndrome;
+    public String getAuthor() {
+        return author;
     }
-    public void setSyndrome(List<Syndrome> syndrome) {
-        this.syndrome = syndrome;
+
+    public void setAuthor(String author) {
+        this.author = author;
+    }
+
+    public String getOrganization() {
+        return organization;
+    }
+
+    public void setOrganization(String organization) {
+        this.organization = organization;
+    }
+
+    public List<String> getSyndromeName() {
+        return syndromeName;
+    }
+
+    public void setSyndromeName(List<String> syndromeName) {
+        this.syndromeName = syndromeName;
     }
 
     public String getComments() {
@@ -749,6 +711,48 @@ public class CNV {
         this.comments = comments;
     }
 
+    @Override
+    public String toString() {
+        return "CNVmanager{" +
+                "id=" + id +
+                ", code='" + code + '\'' +
+                ", decipherId=" + decipherId +
+                ", centerId1='" + centerId1 + '\'' +
+                ", centerId2='" + centerId2 + '\'' +
+                ", centerId3='" + centerId3 + '\'' +
+                ", chromosome='" + chromosome + '\'' +
+                ", start=" + start +
+                ", end=" + end +
+                ", assembly='" + assembly + '\'' +
+                ", genes='" + genes + '\'' +
+                ", band='" + band + '\'' +
+                ", type=" + type +
+                ", doses=" + doses +
+                ", dosesNum=" + dosesNum +
+                ", clinicalSig=" + clinicalSig +
+                ", inheritance=" + inheritance +
+                ", nv=" + nv +
+                ", cellLine=" + cellLine +
+                ", chromGender=" + chromGender +
+                ", status=" + status +
+                ", typeSample=" + typeSample +
+                ", referalDiag='" + referalDiag + '\'' +
+                ", phenotype='" + phenotype + '\'' +
+                ", yearOfBirth=" + yearOfBirth +
+                ", yearTest=" + yearTest +
+                ", age=" + age +
+                ", agePrenatal=" + agePrenatal +
+                ", ethnicGroup='" + ethnicGroup + '\'' +
+                ", origin='" + origin + '\'' +
+                ", arrayPlatform='" + arrayPlatform + '\'' +
+                ", arrayId='" + arrayId + '\'' +
+                ", syndromeName=" + syndromeName +
+                ", organization='" + organization + '\'' +
+                ", author='" + author + '\'' +
+                ", comments='" + comments + '\'' +
+                ", attr=" + attr +
+                '}';
+    }
 
     @PrePersist
     private void prePresist() {

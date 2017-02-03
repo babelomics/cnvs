@@ -12,6 +12,7 @@ import com.mongodb.DBCollection;
 import com.mongodb.DBObject;
 import org.babelomics.cnvs.lib.cli.QueryCommandLine;
 import org.babelomics.cnvs.lib.models.CNV;
+import org.babelomics.cnvs.lib.models.CNVmanager;
 import org.mongodb.morphia.Datastore;
 import org.mongodb.morphia.Morphia;
 import org.mongodb.morphia.annotations.Entity;
@@ -169,7 +170,7 @@ public class CNVSQueryManager {
         return res.size();
     }
 
-    public boolean addCNV(List<CNV> listCNV, String username, String sid) {
+    public boolean addCNV(List<CNVmanager> listCNV, String username, String sid) {
         boolean result = true;
         DBCollection users = datastore.getDB().getCollection("users");
 
@@ -177,7 +178,7 @@ public class CNVSQueryManager {
 
         DBObject dbUser = users.findOne(query);
 
-        List<CNV> res = datastore.createQuery(CNV.class).asList();
+        List<CNVmanager> res = datastore.createQuery(CNVmanager.class).asList();
         if (dbUser != null) {
             System.out.println("Ha encontrado el usuario");
             try {
@@ -191,6 +192,42 @@ public class CNVSQueryManager {
         }
         System.out.println("   NOOO HA ENCONTRADO EL USUARIO!!");
         return result;
+
+    }
+
+    public Iterable<CNV> searchCNVs(String username, String sid, MutableLong count){
+
+        DBCollection users = datastore.getDB().getCollection("users");
+
+        BasicDBObject query = new BasicDBObject("name", username).append("sessions.id", sid);
+
+        DBObject dbUser = users.findOne(query);
+
+        Query<CNV> querycnvs = datastore.createQuery(CNV.class);
+        List<CNV> res = datastore.createQuery(CNV.class).asList();
+        if (dbUser != null) {
+            System.out.println("Ha encontrado el usuario buscando sus CNVS");
+            try {
+                System.out.println("Mostrando al Usario");
+                System.out.println(dbUser);
+                System.out.println(dbUser.get("attributes.group"));
+//                System.out.println(dbUser.attributes.group)
+//                if (dbUser.attributes.group != null) {
+//                    query.filter("r =", dbUser.attributes.group);
+//                }
+
+                System.out.println(query);
+
+                Iterable<CNV> aux = querycnvs.fetch();
+                count.setValue(querycnvs.countAll());
+
+                return aux;
+
+            }catch (Exception e){
+                System.out.println("Error al buscar");
+            }
+        }
+        return null;
 
     }
 

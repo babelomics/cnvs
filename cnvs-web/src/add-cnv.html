@@ -146,7 +146,8 @@
                     <label>
                         <div class="stv-formtitle" data-value="add" data-checked$="{{isChecked('add', menu)}}" on-click="handleMenu">
                             ADD CNV
-                            <img src="../images/flechaizquierdaazul.png" id="addfoto" />
+                            <i class="fa fa-angle-right" aria-hidden="true" style="float:right"></i>
+                            <!--<img src="../images/flechaderechaazul.png" id="addfoto" />-->
                         </div>
                     </label>
                     </div>
@@ -155,7 +156,8 @@
                     <label>
                         <div class="stv-formtitle" data-value="addmult" data-checked$="{{isChecked('addmult', menu)}}" on-click="handleMenu">
                             ADD MULTIPLE CNV
-                            <img src="../images/flechaizquierdaazul.png" id="addMultifoto" />
+                            <i class="fa fa-angle-right" aria-hidden="true" style="float:right"></i>
+                            <!--<img src="../images/flechaderechaazul.png" id="addMultifoto" />-->
                         </div>
                     </label>
                 </div>
@@ -163,7 +165,8 @@
                     <label>
                         <div class="stv-formtitle" data-value="see" data-checked$="{{isChecked('see', menu)}}" on-click="handleMenu">
                             SEE CNV ADDED
-                            <img src="../images/flechaizquierdaazul.png" id="seefoto" />
+                            <i class="fa fa-angle-right" aria-hidden="true" style="float:right"></i>
+                            <!--<img src="../images/flechaderechaazul.png" id="seefoto" />-->
                         </div>
                     </label>
                 </div>
@@ -173,7 +176,7 @@
         <div class="right vertical layout">
             <add-unique-cnv style="padding: 10px 0" hidden$="{{!isChecked('add', menu)}}" user-data="{{userData}}"></add-unique-cnv>
             <add-multiple-cnv style="padding: 10px 0" hidden$="{{!isChecked('addmult', menu)}}"></add-multiple-cnv>
-            <see-cnv-added style="padding: 10px 0" hidden$="{{!isChecked('see', menu)}}"></see-cnv-added>
+            <see-cnv-added style="padding: 10px 0" hidden$="{{!isChecked('see', menu)}}" cnvs="{cnvs}" user-data="{{userData}}"></see-cnv-added>
 
             <span style="color: #006699;font-size: 14px; margin:10px">Supported by:</span>
             <div class="layout flex">
