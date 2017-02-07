@@ -1,13 +1,12 @@
 package org.babelomics.cnvs.lib.models;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.babelomics.cnvs.lib.io.CNVSCopyNumberVariationMongoDataWriter;
 import org.bson.types.ObjectId;
 import org.mongodb.morphia.annotations.*;
 
 import java.util.*;
-
-@Entity(noClassnameStored = true)
+@Entity("CNV")
+//@Entity(value= "CNV", noClassnameStored = true)
 @Indexes({
         @Index(name = "index", value = "c,s,e"),
         @Index(name = "chunks", value = "_at.chIds")

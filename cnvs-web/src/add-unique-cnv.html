@@ -417,6 +417,7 @@
                             </div>
                         </div>
                     </div>
+                    <label class="stv">Mean Log2 Ratio:</label>
                     <div class="horizontal layout">
                         <input type="number" class="stv flex" id="dosesNumAdd" name="dosesNumAdd" placeholder="Numeric doses,Ex:-0.5" value="{{dosesValue::change}}"/>
                     </div>
@@ -530,29 +531,29 @@
                         <label class="stv">Clinical Significance</label>
                         <div class ="horizontal layout">
                             <label for="clis0Add" class="stv-control flex">
-                                <input type="radio" name="clisAdd" value="0" id="clis0Add" />
+                                <input type="radio" name="clisAdd" value="Definitely Pathogenic" id="clis0Add" />
                                 <span>Definitely Pathogenic</span>
                             </label>
                             <label for="clis1Add" class="stv-control flex">
-                                <input type="radio" name="clisAdd" value="1" id="clis1Add" />
+                                <input type="radio" name="clisAdd" value="Probably Pathogenic" id="clis1Add" />
                                 <span>Probably Pathogenic</span>
                             </label>
                             <label for="clis2Add" class="stv-control flex">
-                                <input type="radio" name="clisAdd" value="2" id="clis2Add" />
-                                <span>PossibilyPathogenic</span>
+                                <input type="radio" name="clisAdd" value="Possibily Pathogenic" id="clis2Add" />
+                                <span>Possibily Pathogenic</span>
                             </label>
                         </div>
                         <div class ="horizontal layout">
                             <label for="clis3Add" class="stv-control flex">
-                                <input type="radio" name="clisAdd" value="3" id="clis3Add" />
+                                <input type="radio" name="clisAdd" value="Uncertain" id="clis3Add" />
                                 <span>Uncertain/VOUS</span>
                             </label>
                             <label for="clis4Add" class="stv-control flex">
-                                <input type="radio" name="clisAdd" value="4" id="clis4Add" />
+                                <input type="radio" name="clisAdd" value="Likely Benign" id="clis4Add" />
                                 <span>Likely Benign </span>
                             </label>
                             <label for="clis5Add" class="stv-control flex">
-                                <input type="radio" name="clisAdd" value="5" id="clis5Add" />
+                                <input type="radio" name="clisAdd" value="Benign" id="clis5Add" />
                                 <span>Benign</span>
                             </label>
                         </div>
@@ -1089,7 +1090,8 @@
             }
 
             if(this.syndromeValue.length >0){
-                newRow.syndromeName = this.syndromeSearch;
+                var syn = this.syndromeSearch.split(",");
+                newRow.syndromeName = syn;
             }
 
             inputs = this.$.inheritanceAdd.querySelectorAll("input");
@@ -1414,7 +1416,12 @@
                     title: 'Clinical Significance',
                     width: 150,
                     formula: function(row){
-                        var n = me.transformData(row.clinicalSig);
+                        var n = "."
+                        if(row.clinicalSig == ""){
+                            return n;
+                        }else{
+                            return row.clinicalSig;
+                        }
                         return n;
                     }
                 }, {
@@ -1567,6 +1574,10 @@
                     name: 'author',
                     title: 'Author',
                     width: 120
+                }, {
+                    name:'organization',
+                    title:'organization',
+                    width: 120
                 },{
                     name: 'codeDecipher',
                     title: 'Code',
@@ -1680,10 +1691,10 @@
                         width: 120,
                         formula: function (row) {
                             var syndromeParse;
-                            if(row.syndrome == null){
+                            if(row.syndromeName == null){
                                 syndromeParse = "."
                             }else{
-                                syndromeParse = row.syndrome;
+                                syndromeParse = row.syndromeName;
                             }
                             return  row.referalDiag +"</br>" +syndromeParse;
                         }
@@ -1758,6 +1769,19 @@
                     width: 90,
                     visible:false
 
+                },{
+                    name: 'authorOrga',
+                    title: 'Author',
+                    width: 120,
+                    visible:false,
+                    columns:[{
+                    name:'organization',
+                    title:'organization',
+                    width: 120,
+                        formula: function(row){
+                            return row.author + "</br>" + row.organization;
+                        }
+                    }]
                 }
 
             ]

@@ -178,7 +178,7 @@ public class CNVSQueryManager {
 
         DBObject dbUser = users.findOne(query);
 
-        List<CNVmanager> res = datastore.createQuery(CNVmanager.class).asList();
+//        List<CNVmanager> res = datastore.createQuery(CNVmanager.class).asList();
         if (dbUser != null) {
             System.out.println("Ha encontrado el usuario");
             try {

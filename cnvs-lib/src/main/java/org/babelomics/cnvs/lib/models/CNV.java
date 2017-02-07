@@ -85,6 +85,7 @@ public class CNV {
     @Property("ai")
     private String arrayId;
 
+
     @JsonIgnore
     @Transient
     private String syndromeName;
@@ -95,6 +96,8 @@ public class CNV {
     private String comments;
     @Property("_at")
     private Map<String, Object> attr;
+
+
 
 
     public CNV() {
@@ -184,7 +187,7 @@ public class CNV {
 //    public void setDosesNum(float doses){
 //        this.doses = doses;
 //    }
-    public double getDosesNum() {
+public double getDosesNum() {
     return dosesNum;
 }
 

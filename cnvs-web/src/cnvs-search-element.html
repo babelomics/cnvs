@@ -1342,10 +1342,10 @@
                     width: 80,
                     formula: function (row) {
                         var syndromeParse;
-                        if (row.syndrome == null || row.syndrome == "") {
+                        if (row.syndromeName == null || row.syndromeName.length == 0) {
                             syndromeParse = "."
                         } else {
-                            syndromeParse = row.syndrome;
+                            syndromeParse = row.syndromeName;
                         }
                         return syndromeParse;
                     }
