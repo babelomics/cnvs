@@ -167,10 +167,6 @@
                 type: Number,
                 value: 0
             },
-            regionValue: {
-                type: String,
-                value: ""
-            },
             columns: {
                 type: Array,
                 value: function() {
@@ -187,143 +183,6 @@
                 type: String,
                 value: "",
                 observer: 'urlChanged'
-            },
-//            localIdValue1:{
-//                type: String,
-//                value: null
-//            },
-//            localIdValue2:{
-//                type: String,
-//                value: null
-//            },
-//            localIdValue3:{
-//                type: String,
-//                value: null
-//            },
-            geneValue: { //gene de gen
-                type: String,
-                value: ""
-            },
-            sizeValue: {
-                type: String,
-                value: null
-            },
-            bandValue: {
-                type: String,
-                value: null
-            },
-            rdValue: {
-                type: String,
-                value: null
-            },
-            hpoValue: {
-                type: Array,
-                notify: true,
-                value: function() {
-                    return [];
-                },
-                observer: 'hpoValueChanged'
-            },
-            hpoSearch: {
-                type: String,
-                notify: true,
-                value: '',
-            },
-            hpoToQuery: {
-                type: String,
-                value: "",
-            },
-            syndromeValue: {
-                type: Array,
-                notify: true,
-                value: function() {
-                    return [];
-                },
-                observer: 'syndromeValueChanged'
-            },
-            syndromeSearch: {
-                type: String,
-                notify: true,
-                value: '',
-            },
-            syndromeToQuery: {
-                type: String,
-                value: "",
-            },
-            ethnicValue: {
-                type: Array,
-                notify: true,
-                value: function() {
-                    return [];
-                },
-                observer: 'ethnicValueChanged'
-            },
-            ethnicSearch: {
-                type: String,
-                notify: true,
-                value: '',
-            },
-            ethnicToQuery: {
-                type: String,
-                value: "",
-            },
-            aneuploidValue: {
-                type: String,
-                value: null
-            },
-            localIdValue: {
-                type: String,
-                value: null
-            },
-            decipherIdValue: {
-                type: String,
-                value: null
-            },
-            nvariantsValue:{
-                type: String,
-                value: null
-            },
-            dosesValue:{
-                type:String,
-                value: null
-            },
-            yearIdValue: {
-                type: String,
-                value: null
-            },
-            yearTestValue: {
-                type: String,
-                value: null
-            },
-            ageValue: {
-                type: String,
-                value: null
-            },
-            codeValue: {
-                type: String,
-                value: null
-            },
-            ethicValue: {
-                type: String,
-                value: null
-            },
-            geoValue: {
-                type: String,
-                value: null
-            },
-            arrayPlataformValue: {
-                type: String,
-                value: null
-            },
-            arrayIdValue: {
-                type: String,
-                value: null
-            },
-            allSyndromes: {
-                type: Array,
-                value: function() {
-                    return [];
-                }
             }
         },
         mantenimiento: function(){
@@ -760,10 +619,10 @@
                     width: 80,
                     formula: function (row) {
                         var syndromeParse;
-                        if (row.syndrome == null || row.syndrome == "") {
+                        if (row.syndromeName == null || row.syndromeName == "") {
                             syndromeParse = "."
                         } else {
-                            syndromeParse = row.syndrome;
+                            syndromeParse = row.syndromeName;
                         }
                         return syndromeParse;
                     }
@@ -976,10 +835,10 @@
             var url = CNVSManager.management.search({
                 query:query,
                 request: {
-                    method:"POST",
                     headers:{
                         "Content-Type":"aplicaction/json"
-                    }
+                    },
+                    url:true
                 }
             });
             this.formURL = url;
@@ -1063,7 +922,6 @@
             var url = CNVSManager.management.search({
                 query:query,
                 request: {
-                    method:"POST",
                     headers:{
                         "Content-Type":"aplicaction/json"
                     },

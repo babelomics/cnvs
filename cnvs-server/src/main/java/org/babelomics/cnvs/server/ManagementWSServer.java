@@ -38,25 +38,16 @@ public class ManagementWSServer extends CNVSWSServer {
     @Path("/add")
     @Produces("application/json")
     @ApiOperation(value = "Add CNVs to DB")
-//    public Response addCNV(
-//                           @ApiParam(value = "host") @QueryParam("host") @DefaultValue("") String host,
-//                           @ApiParam(value = "user") @QueryParam("user") @DefaultValue("") String user,
-//                           @ApiParam(value = "sid") @QueryParam("sid") @DefaultValue("") String sid,
-//                           @ApiParam(value = "list") @QueryParam("list") @DefaultValue("") String list){
     public Response addCNV(@ApiParam(value = "user") @QueryParam("user") @DefaultValue("") String user,
                            @ApiParam(value = "sid") @QueryParam("sid") @DefaultValue("") String sid,
                            @ApiParam(value="body", required = true) List<CNVmanager> body) throws IOException {
 
-        System.out.println("Llego al webservice el cnvs es: ");
-        System.out.println("user:"+ user);
-        System.out.println("sid:"+ sid);
+        System.out.println("WS add. Add CNVS to DB: ");
+        System.out.println("user:"+ user + "sid:"+ sid);
         List<QueryResponse> queryResponses = new ArrayList<QueryResponse>();
 
         for(CNVmanager c: body){
             System.out.println(c.toString());
-//            if(c.getSyndromeName()!= null & c.getSyndromeName() != ""){
-//
-//            }
             boolean res = qm.addCNV(body, user, sid);
             QueryResponse qr = createQueryResponse(res);
             queryResponses.add(qr);
@@ -67,15 +58,16 @@ public class ManagementWSServer extends CNVSWSServer {
 
     }
 
-    @POST
+    @GET
     @Path("/search")
     @Produces("application/json")
     @ApiOperation(value = "Search for CNVS added by a group")
     public Response searchCNVs(@ApiParam(value = "user") @QueryParam("user") @DefaultValue("") String user,
-                               @ApiParam(value = "sid") @QueryParam("sid") @DefaultValue("") String sid) {
+                               @ApiParam(value = "sid") @QueryParam("sid") @DefaultValue("") String sid,
+                                @ApiParam(value = "limit") @QueryParam("limit") @DefaultValue("10") int limit,
+                                @ApiParam(value = "skip") @QueryParam("skip") @DefaultValue("0") int skip){
         MutableLong count = new MutableLong(-1);
-        List<QueryResponse> queryResponses = new ArrayList<QueryResponse>();
-        Iterable<CNV> cnvs =  qm.searchCNVs(user, sid, count);
+        Iterable<CNVmanager> cnvs =  qm.searchCNVs(user, sid, skip, limit, count);
 
         QueryResponse qr = createQueryResponse(cnvs);
         qr.setNumTotalResults(count.getValue());

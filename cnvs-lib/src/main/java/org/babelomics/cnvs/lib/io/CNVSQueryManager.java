@@ -3,10 +3,12 @@ package org.babelomics.cnvs.lib.io;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 
 
+import com.beust.jcommander.internal.Lists;
 import com.mongodb.BasicDBObject;
 import com.mongodb.DBCollection;
 import com.mongodb.DBObject;
@@ -195,7 +197,7 @@ public class CNVSQueryManager {
 
     }
 
-    public Iterable<CNV> searchCNVs(String username, String sid, MutableLong count){
+    public Iterable<CNVmanager> searchCNVs(String username, String sid, int skip, int limit, MutableLong count){
 
         DBCollection users = datastore.getDB().getCollection("users");
 
@@ -203,23 +205,25 @@ public class CNVSQueryManager {
 
         DBObject dbUser = users.findOne(query);
 
-        Query<CNV> querycnvs = datastore.createQuery(CNV.class);
-        List<CNV> res = datastore.createQuery(CNV.class).asList();
+        Query<CNVmanager> querycnvs = datastore.createQuery(CNVmanager.class);
+
         if (dbUser != null) {
             System.out.println("Ha encontrado el usuario buscando sus CNVS");
             try {
-                System.out.println("Mostrando al Usario");
-                System.out.println(dbUser);
-                System.out.println(dbUser.get("attributes.group"));
-//                System.out.println(dbUser.attributes.group)
-//                if (dbUser.attributes.group != null) {
-//                    query.filter("r =", dbUser.attributes.group);
-//                }
+                String group = ((DBObject)dbUser.get("attributes")).get("group").toString();
+                System.out.println("El group es:" + ((DBObject) dbUser.get("attributes")).get("group"));
+                System.out.println("Transformado:" + group);
+                if (group != null) {
+                    querycnvs.filter("code =", group);
+                }
+                querycnvs.offset(skip).limit(limit);
+                System.out.println(querycnvs);
+                System.out.println("skip"+ skip);
+                System.out.println("limit"+ limit);
 
-                System.out.println(query);
-
-                Iterable<CNV> aux = querycnvs.fetch();
+                Iterable<CNVmanager> aux = querycnvs.fetch();
                 count.setValue(querycnvs.countAll());
+                System.out.println("count"+ querycnvs.countAll());
 
                 return aux;
 
@@ -336,8 +340,6 @@ public class CNVSQueryManager {
         System.out.println("La doses es:" + doses.size());
 
     }
-
-
 
     private void addDNumericDosesToQuery(double doses, String op, Query<CNV> query) {
         if (op.equals("=")) {
