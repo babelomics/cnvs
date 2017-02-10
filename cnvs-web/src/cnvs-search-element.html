@@ -838,7 +838,7 @@
         handleColumnVisibilityChange: function(){
             //if(e.currentTarget.name == this.columns[1].checked || this.columns[5].checked){
             var small = true;
-            for ( var i = 27; i < this.columns.length; i++){
+            for ( var i = 28; i < this.columns.length; i++){
                 if ( this.columns[i].visible){
                     small = false;
                 }
@@ -897,11 +897,11 @@
             }
         },
         compressTable: function(){
-            for ( var i = 0; i < 27; i++){
+            for ( var i = 0; i < 28; i++){
 //                this.columns[i].visible = false;
                 this.set('columns.'+i+'.visible', false);
             }
-            for ( var i = 27; i < this.columns.length; i++){
+            for ( var i = 28; i < this.columns.length; i++){
 //                this.columns[i].visible = true;
                 this.set('columns.'+i+'.visible', true);
             }
@@ -911,11 +911,11 @@
             this.handleColumnVisibilityChange();
         },
         spamTable: function(){
-            for ( var i = 0; i < 27; i++){
+            for ( var i = 0; i < 28; i++){
                 //this.columns[i].visible = true;
                 this.set('columns.'+i+'.visible', true);
             }
-            for ( var i = 27; i < this.columns.length; i++){
+            for ( var i = 28; i < this.columns.length; i++){
                 this.set('columns.'+i+'.visible', false);
                 //this.columns[i].visible = false;
             }
@@ -1195,9 +1195,17 @@
                 }, {
                     name: 'doses',
                     title: 'Doses',
-                    width: 60,
-                    formula: function(row){
+                    width: 80,
+                    formula: function (row) {
                         var n = me.transformData(row.doses);
+                        return n;
+                    }
+                },{
+                    name: 'dosesnum',
+                    title: 'Mean log2 ratio',
+                    width: 60,
+                    formula: function (row) {
+                        var n = me.transformData(row.dosesNum);
                         return n;
                     }
                 }, {
@@ -1352,7 +1360,11 @@
                 }, {
                     name: 'comments',
                     title: 'Comments',
-                    width: 120
+                    width: 120,
+                    formula: function(row){
+                        var n = me.transformData(row.comments);
+                        return n;
+                    }
 
                 },{
                     name: 'codeDecipher',
@@ -1467,10 +1479,10 @@
                         width: 120,
                         formula: function (row) {
                             var syndromeParse;
-                            if(row.syndrome == null){
+                            if(row.syndromeName == null){
                                 syndromeParse = "."
                             }else{
-                                syndromeParse = row.syndrome;
+                                syndromeParse = row.syndromeName;
                             }
                             return  row.referalDiag +"</br>" +syndromeParse;
                         }
@@ -1481,6 +1493,10 @@
                     title: 'Phenotype(HPO)',
                     width: 120,
                     visible:false,
+                    formula: function(row){
+                        var n = me.transformData(row.phenotype);
+                        return n;
+                    }
                 },{
                     name: 'cliSInheri',
                     title: 'Clinical Significance',
@@ -1503,15 +1519,24 @@
                         name: 'yearTest',
                         title: 'Test year',
                         width: 100,
-                        columns: [{
-                            name: 'ageAgePrenatal',
-                            title: 'Age Age(pr)',
-                            width: 100,
-                            formula: function(row) {
-                                return  row.yearOfBirth +"</br>" + row.yearTest + "</br>" + row.age + " "+ row.agePrenatal;
-                            }
-                        }]
+                        formula: function(row) {
+                            return  row.yearOfBirth +"</br>" + row.yearTest;
+                        }
                     }]
+                }, {
+                    name: 'age',
+                    title: 'Age',
+                    width: 100,
+                    visible:false,
+                    columns: [{
+                        name: 'agePrenatal',
+                        title: 'Age Prenatal',
+                        width: 100,
+                        formula: function(row) {
+                            return  row.age + "</br>"+ row.agePrenatal;
+                        }
+                    }]
+
                 },{
 
                     name: 'ethnicGeo',
@@ -1523,7 +1548,7 @@
                         title: 'Geog Origin',
                         width: 100,
                         formula: function (row) {
-                            return row.ethnicGroup + "</br>" + row.origin;
+                            return me.transformData(row.ethnicGroup) + "</br>" + me.transformData(row.origin);
                         }
                     }]
                 },{
@@ -1536,15 +1561,17 @@
                         title: 'Array ID',
                         width: 100,
                         formula: function(row) {
-                            return  row.arrayPlatform +"</br>" +row.arrayId;
+                            return  me.transformData(row.arrayPlatform) +"</br>" + me.transformData(row.arrayId);
                         }
                     }]
                 },{
                     name: 'comments2',
                     title: 'Comments',
                     width: 90,
-                    visible:false
-
+                    visible:false,
+                    formula: function(row){
+                        return me.transformData(row.comments);
+                    }
                 }
 
             ]

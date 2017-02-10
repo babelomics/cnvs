@@ -214,7 +214,7 @@ public class CNVSQueryManager {
                 System.out.println("El group es:" + ((DBObject) dbUser.get("attributes")).get("group"));
                 System.out.println("Transformado:" + group);
                 if (group != null) {
-                    querycnvs.filter("code =", group);
+                    querycnvs.filter("organization =", group);
                 }
                 querycnvs.offset(skip).limit(limit);
                 System.out.println(querycnvs);

@@ -389,37 +389,37 @@
                         <div class="vertical layout">
                             <div class="horizontal layout">
                                 <label for="doses0Add" class="stv-control flex">
-                                    <input type="radio" name="dosesAdd" value="Homozygous deletion" id="doses0Add" />
-                                    <span>Homozygous deletion</span>
+                                    <input type="radio" name="dosesAdd" value="0-Homozygous deletion" id="doses0Add" />
+                                    <span>0-Homozygous deletion</span>
                                 </label>
                                 <label for="doses2Add" class="stv-control flex">
-                                    <input type="radio" name="dosesAdd" value="Hemyzygous deletion" id="doses2Add" />
-                                    <span>Hemyzygous deletion</span>
+                                    <input type="radio" name="dosesAdd" value="0-Hemyzygous deletion" id="doses2Add" />
+                                    <span>0-Hemyzygous deletion</span>
                                 </label>
                                 <label for="doses1Add" class="stv-control flex">
-                                    <input type="radio" name="dosesAdd" value="Deletion" id="doses1Add" />
-                                    <span>Deletion</span>
+                                    <input type="radio" name="dosesAdd" value="1-Deletion" id="doses1Add" />
+                                    <span>1-Deletion</span>
                                 </label>
                             </div>
                             <div class="horizontal layout">
                                 <label for="doses3Add" class="stv-control flex">
-                                    <input type="radio" name="dosesAdd" value="Duplication" id="doses3Add" />
-                                    <span>Duplication</span>
+                                    <input type="radio" name="dosesAdd" value="3-Duplication" id="doses3Add" />
+                                    <span>3-Duplication</span>
                                 </label>
                                 <label for="doses4Add" class="stv-control flex">
-                                    <input type="radio" name="dosesAdd" value="Triplication" id="doses4Add" />
-                                    <span>Triplication</span>
+                                    <input type="radio" name="dosesAdd" value="4-Triplication" id="doses4Add" />
+                                    <span>4-Triplication</span>
                                 </label>
                                 <label for="doses5Add" class="stv-control flex">
-                                    <input type="radio" name="dosesAdd" value="Amplification" id="doses5Add" />
-                                    <span>Amplification</span>
+                                    <input type="radio" name="dosesAdd" value="5 or more-Amplification" id="doses5Add" />
+                                    <span>5 or more-Amplification</span>
                                 </label>
                             </div>
                         </div>
                     </div>
                     <label class="stv">Mean Log2 Ratio:</label>
                     <div class="horizontal layout">
-                        <input type="number" class="stv flex" id="dosesNumAdd" name="dosesNumAdd" placeholder="Numeric doses,Ex:-0.5" value="{{dosesValue::change}}"/>
+                        <input type="text" class="stv flex" id="dosesNumAdd" name="dosesNumAdd" placeholder="Numeric doses,Ex:-0.5" value="{{dosesValue::change}}"/>
                     </div>
                     <!--<div class="input_container vertical layout">-->
                         <!--<label class="stv">Size(Kb):</label>-->
@@ -577,20 +577,6 @@
                 </stv-panel>
 
             </form>
-        <!--<div class="right vertical layout">-->
-            <!--<stv-panel collapsible id="tablaresultadosPanel">-->
-                <!--<div class="header">-->
-                    <!--Results Table-->
-                <!--</div>-->
-                <!--<stv-table id="tablaresultados" class="container small" page-size="10" enable-paging enable-select enable-resize data="{{data}}" columns="{{columns}}" on-rowclick="handleRowClick" on-column-visibility-change="handleColumnVisibilityChange">-->
-                    <!--<div class="custom-buttons horizontal layout">-->
-                        <!--<button style="margin-right: 10px; color: #006699" id="saveTable" class="stv-btn down" on-click="" data-file="{{cnv}}"><i class="fa fa-cloud-download"></i> upload</button>-->
-                        <!--<button id="spamButtonTable" class="stv-btn" on-click="spamTable" disabled>expand</button>-->
-                        <!--<button id="compressButtonTable"class="stv-btn" on-click="compressTable">compress</button>-->
-                    <!--</div>-->
-                <!--</stv-table>-->
-            <!--</stv-panel>-->
-        <!--</div>-->
         <stv-panel id="hpoPanelAdd" style="height:700px" modal closable hidden>
             <div class="header">
                 <i class="fa fa-search" aria-hidden="true"></i> Human Phenotype Ontology
@@ -617,9 +603,6 @@
                 <cnvs-ethnic ethnic-value="{{ethnicValue}}" on-added="showEthnic"></cnvs-ethnic>
             </div>
         </stv-panel>
-
-
-
 
     </template>
 </dom-module>
@@ -811,6 +794,47 @@
                     return [];
                 }
             }
+        },
+        handleColumnVisibilityChange: function(){
+            var small = true;
+            for ( var i = 31; i < this.columns.length; i++){
+                if ( this.columns[i].visible){
+                    small = false;
+                }
+            }
+            if(small){
+                this.$.tablacnvs.set('pageSize',10);
+                this.$.tablacnvs.classList.remove('big');
+                this.$.tablacnvs.classList.add('small');
+            }else{
+                this.$.tablacnvs.set('pageSize',6);
+                this.$.tablacnvs.classList.remove('small');
+                this.$.tablacnvs.classList.add('big');
+            }
+        },
+        compressTable: function(){
+            for ( var i = 0; i < 31; i++){
+                this.set('columns.'+i+'.visible', false);
+            }
+            for ( var i = 31; i < this.columns.length; i++){
+                this.set('columns.'+i+'.visible', true);
+            }
+            this.$.tablacnvs.refresh();
+            this.$.compressButtonTable.setAttribute('disabled',"");
+            this.$.spamButtonTable.removeAttribute('disabled');
+            this.handleColumnVisibilityChange();
+        },
+        spamTable: function(){
+            for ( var i = 0; i < 31; i++){
+                this.set('columns.'+i+'.visible', true);
+            }
+            for ( var i = 31; i < this.columns.length; i++){
+                this.set('columns.'+i+'.visible', false);
+            }
+            this.$.tablacnvs.refresh();
+            this.$.spamButtonTable.setAttribute('disabled',"");
+            this.$.compressButtonTable.removeAttribute('disabled');
+            this.handleColumnVisibilityChange();
         },
         enablePrenatal: function(){
             if(this.$.prenatalAdd.checked){
@@ -1126,7 +1150,7 @@
                 alert("Insert clinical significance, please")
             }
 
-            newRow.code = this.userData.attributes.group;
+//            newRow.code = this.userData.attributes.group;
             newRow.author = this.userData.name;
             newRow.organization = this.userData.attributes.group;
             if(validateForm){
@@ -1357,17 +1381,7 @@
                             return row.centerId3;
                         }
                     }]
-                }, {
-                    name: 'LocalIDmerge',
-                    title: 'Local ID(1,2,3)',
-                    width: 180,
-                    visible:false,
-                    formula: function(row) {
-                        return row.centerId1 +"<br/>"+row.centerId2+"</br>"+row.centerId3;
-                    }
-
-                },
-                {
+                },{
                     name: 'assembly',
                     title: 'Assembly',
                     width: 80,
@@ -1576,7 +1590,7 @@
                     width: 120
                 }, {
                     name:'organization',
-                    title:'organization',
+                    title:'Organization',
                     width: 120
                 },{
                     name: 'codeDecipher',
@@ -1592,6 +1606,14 @@
                         }
                     }]
                 },{
+                    name: 'LocalIDmerge',
+                    title: 'Local ID(1,2,3)',
+                    width: 180,
+                    visible:false,
+                    formula: function(row) {
+                        return row.centerId1 +"<br/>"+row.centerId2+"</br>"+row.centerId3;
+                    }
+                },{
                     name: 'position2',
                     title: 'Chr',
                     width: 100,
@@ -1605,7 +1627,6 @@
                             title: 'End',
                             width: 100,
                             formula: function (row) {
-                                //var siz = row.end - row.start;
                                 return row.chromosome + "</br>" + row.start + "</br>" + row.end;
                             }
                         }]
@@ -1776,7 +1797,7 @@
                     visible:false,
                     columns:[{
                     name:'organization',
-                    title:'organization',
+                    title:'Organization',
                     width: 120,
                         formula: function(row){
                             return row.author + "</br>" + row.organization;

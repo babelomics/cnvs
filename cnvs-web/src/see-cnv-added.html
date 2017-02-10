@@ -134,10 +134,10 @@
         <div class="right vertical layout">
             <div id="add_cnvs" class="horizontal layout" style="margin:10px 0px 15px 0px;">
                 <div>
-                    <span style="color: #006699; margin: 10px;" >  Total cnvs added by you:  {{totalcaseValue}}</span>
+                    <span style="color: #006699; margin: 10px;" >  Total cnvs added by your group:  {{totalcasegroupValue}}</span>
                 </div>
                 <div>
-                    <span style="color: #006699; margin: 10px;" >  Total cnvs added by your group:  {{totalcaseValue}}</span>
+                    <span style="color: #006699; margin: 10px;" >  Total cnvs:  {{totalcaseValue}}</span>
                 </div>
             </div>
             </br>
@@ -167,6 +167,10 @@
                 type: Number,
                 value: 0
             },
+            totalcasegroupValue: {
+                type: Number,
+                value: 0
+            },
             columns: {
                 type: Array,
                 value: function() {
@@ -191,7 +195,7 @@
         handleColumnVisibilityChange: function(){
             //if(e.currentTarget.name == this.columns[1].checked || this.columns[5].checked){
             var small = true;
-            for ( var i = 27; i < this.columns.length; i++){
+            for ( var i = 31; i < this.columns.length; i++){
                 if ( this.columns[i].visible){
                     small = false;
                 }
@@ -250,11 +254,11 @@
             }
         },
         compressTable: function(){
-            for ( var i = 0; i < 27; i++){
+            for ( var i = 0; i < 31; i++){
 //                this.columns[i].visible = false;
                 this.set('columns.'+i+'.visible', false);
             }
-            for ( var i = 27; i < this.columns.length; i++){
+            for ( var i = 31; i < this.columns.length; i++){
 //                this.columns[i].visible = true;
                 this.set('columns.'+i+'.visible', true);
             }
@@ -264,11 +268,11 @@
             this.handleColumnVisibilityChange();
         },
         spamTable: function(){
-            for ( var i = 0; i < 27; i++){
+            for ( var i = 0; i < 31; i++){
                 //this.columns[i].visible = true;
                 this.set('columns.'+i+'.visible', true);
             }
-            for ( var i = 27; i < this.columns.length; i++){
+            for ( var i = 31; i < this.columns.length; i++){
                 this.set('columns.'+i+'.visible', false);
                 //this.columns[i].visible = false;
             }
@@ -297,7 +301,6 @@
                 },
 
             });
-            debugger
         },
 
         cnvToString: function(o){
@@ -431,15 +434,6 @@
                             return row.centerId3;
                         }
                     }]
-                }, {
-                    name: 'LocalIDmerge',
-                    title: 'Local ID(1,2,3)',
-                    width: 180,
-                    visible:false,
-                    formula: function(row) {
-                        return row.centerId1 +"<br/>"+row.centerId2+"</br>"+row.centerId3;
-                    }
-
                 },
                 {
                     name: 'assembly',
@@ -478,6 +472,14 @@
                         return n;
                     }
                 }, {
+                    name: 'dosesnum',
+                    title: 'Mean log2 ratio',
+                    width: 60,
+                    formula: function (row) {
+                        var n = me.transformData(row.dosesNum);
+                        return n;
+                    }
+                },{
                     name: 'clinicalSig',
                     title: 'Clinical Significance',
                     width: 150,
@@ -629,8 +631,19 @@
                 }, {
                     name: 'comments',
                     title: 'Comments',
+                    width: 120,
+                    formula: function(row){
+                        var n = me.transformData(row.comments);
+                        return n;
+                    }
+                },{
+                    name: 'author',
+                    title: 'Author',
                     width: 120
-
+                }, {
+                    name:'organization',
+                    title:'organization',
+                    width: 120
                 },{
                     name: 'codeDecipher',
                     title: 'Code',
@@ -644,6 +657,14 @@
                             return row.code + "</br>" + row.decipherId;
                         }
                     }]
+                },{
+                    name: 'LocalIDmerge',
+                    title: 'Local ID(1,2,3)',
+                    width: 180,
+                    visible:false,
+                    formula: function(row) {
+                        return row.centerId1 +"<br/>"+row.centerId2+"</br>"+row.centerId3;
+                    }
                 },{
                     name: 'position2',
                     title: 'Chr',
@@ -753,7 +774,6 @@
                         }
                     }]
                 },{
-
                     name: 'phenotype',
                     title: 'Phenotype(HPO)',
                     width: 120,
@@ -790,7 +810,6 @@
                         }]
                     }]
                 },{
-
                     name: 'ethnicGeo',
                     title: 'Ethinic Group',
                     width: 100,
@@ -800,7 +819,7 @@
                         title: 'Geog Origin',
                         width: 100,
                         formula: function (row) {
-                            return row.ethnicGroup + "</br>" + row.origin;
+                            return me.transformData(row.ethnicGroup) + "</br>" + me.transformData(row.origin);
                         }
                     }]
                 },{
@@ -813,35 +832,34 @@
                         title: 'Array ID',
                         width: 100,
                         formula: function(row) {
-                            return  row.arrayPlatform +"</br>" +row.arrayId;
+                            return  me.transformData(row.arrayPlatform) +"</br>" + me.transformData(row.arrayId);
                         }
                     }]
                 },{
                     name: 'comments2',
                     title: 'Comments',
                     width: 90,
-                    visible:false
-
+                    visible:false,
+                    formula: function(row){
+                        var n = me.transformData(row.comments);
+                        return n;
+                    }
+                },{
+                    name: 'authorOrga',
+                    title: 'Author',
+                    width: 120,
+                    visible:false,
+                    columns:[{
+                        name:'organization',
+                        title:'organization',
+                        width: 120,
+                        formula: function(row){
+                            return row.author + "</br>" + row.organization;
+                        }
+                    }]
                 }
 
             ]
-            // Llamar a el distint para hacer el referal
-
-            var me = this;
-            var query = {};
-            query.user = Cookies('bioinfo_user');
-            query.sid = Cookies('bioinfo_sid');
-//            query.group = this.userData.attributes.group;
-            var url = CNVSManager.management.search({
-                query:query,
-                request: {
-                    headers:{
-                        "Content-Type":"aplicaction/json"
-                    },
-                    url:true
-                }
-            });
-            this.formURL = url;
         },
         transformData: function(row){
             var n = "."
@@ -900,16 +918,16 @@
             }
             return data;
         },
-        _parseTotal: function(response) {
-            return response.numTotalResults;
-        },
         urlChanged: function(neo, old) {
             var me = this;
             if (neo != '') {
                 this.request = {
                     url: this.formURL,
                     parse: this._parse,
-                    parseTotal: this._parseTotal,
+                    parseTotal:  function(response) {
+                        me.totalcasegroupValue = response.numTotalResults;
+                        return response.numTotalResults;
+                    },
                     file: this.file
                 };
             }

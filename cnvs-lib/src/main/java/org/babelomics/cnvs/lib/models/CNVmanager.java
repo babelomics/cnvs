@@ -5,7 +5,7 @@ import org.bson.types.ObjectId;
 import org.mongodb.morphia.annotations.*;
 
 import java.util.*;
-@Entity("CNV")
+@Entity(value="CNV", noClassnameStored = true)
 //@Entity(value= "CNV", noClassnameStored = true)
 @Indexes({
         @Index(name = "index", value = "c,s,e"),
@@ -118,54 +118,45 @@ public class CNVmanager {
     }
 
     public String getDoses() {
-       /* switch (doses) {
-            case 0:
-                return "Homozygous deletion";
+        switch (((int) doses)) {
             case 1:
-                return "Deletion";
+                return "0-Homozygous deletion";
             case 2:
-                return "Duplication";
+                return "0-Hemyzygous Deletion";
             case 3:
-                return "Triplication";
+                return "1-Deletion";
             case 4:
-                return "Amplification";
+                return "3-Duplication";
+            case 5:
+                return "4-Triplication";
+            case 6:
+                return "5 or more-Amplification";
             default:
-                return ""+doses;
-        }*/
-        if(doses <= -1)
-            return "Homozygous deletion("+doses+")";
-        else if(doses > -1 && doses < -0.35){
-            return "deletion("+doses+")";
-        }else if(doses == 1){
-            return "(X duplication in males)";
-        }else if(0.35 < doses && doses < 0.6){
-            return "duplication("+doses+")";
-        }else if(0.61 < doses && doses < 1){
-            return "triplication("+doses+")";
-        }else if(doses > 1){
-            return "amplification("+doses+")";
+                return "";
         }
-        return ""+doses;
     }
 
     public void setDoses(String doses) {
 
         //TODO revisar si esto va a cambiar si es con los nuevos valores o que PARECE QUE CORRECTO.
         switch (doses.toLowerCase().replaceAll(" ", "")) {
-            case "homozygous deletion":
-                this.doses = 0;
-                break;
-            case "deletion":
+            case "0-homozygousdeletion":
                 this.doses = 1;
                 break;
-            case "duplication":
+            case "0-hemyzygousdeletion":
                 this.doses = 2;
                 break;
-            case "triplication":
+            case "1-deletion":
                 this.doses = 3;
                 break;
-            case "amplification":
+            case "3-duplication":
                 this.doses = 4;
+                break;
+            case "4-triplication":
+                this.doses = 5;
+                break;
+            case "5ormoreamplification":
+                this.doses = 6;
                 break;
             default:
                 this.doses = -1;
