@@ -2,7 +2,6 @@
 <link rel="import" href="../bower_components/iron-flex-layout/iron-flex-layout.html">
 <!--<link rel="import" href="../bower_components/stevia-elements/src/ontology/stv-hpo.html">-->
 <link rel="import" href="../bower_components/stevia-elements/src/table/stv-table.html">
-<link rel="import" href="../bower_components/stevia-elements/src/stv-search.html">
 <link rel="import" href="cnvs-syndrome.html">
 <link rel="import" href="cnvs-ethnic.html">
 
@@ -36,40 +35,19 @@
             resize: none;
         }
 
-        .searchGene {
-            margin-top: 5px;
-        }
-
         .container > span {
             margin-left: 10px;
         }
 
-        #tools {
-            margin-top: 10px;
-        }
-
-
-        .stv-formbox,
         #tablaresultadosPanel {
             box-shadow: 0px 0px 3px 1px rgba(0, 0, 0, 0.2);
+            border: 1px solid #d3d3d3;
         }
 
         #tablaresultados {
             border-top: 1px solid #d3d3d3;
         }
 
-        #tablaresultadosPanel {
-            border: 1px solid #d3d3d3;
-        }
-
-        .stv-formcontent {
-            display: none;
-        }
-        stv-search{
-            padding: 0px;
-            margin:0px;
-            width:198px;
-        }
         stv-table {
             overflow-y: auto;
         }
@@ -79,21 +57,16 @@
         }
 
         stv-table::shadow #list {
-            max-height: 300px;
-            min-height: 50px;
+            height: 300px;
             overflow-x: auto
         }
-        stv-table.small::shadow .table-row {
+        stv-table.small::shadow .table-row{
             height:30px;
         }
 
-        stv-table.big::shadow .table-row {
+        stv-table.big::shadow .table-row{
             height:50px;
         }
-        /*.stv-formbox  img{
-
-
-        }*/
 
         .stv-formtitle img {
             float: right;
@@ -106,27 +79,7 @@
             transition: all 0.2s ease-in;
         }
 
-        .toggleElement {
-            display: block;
-        }
-        .input_container {
-            margin-bottom: 5px;
-        }
-        .input_container >label{
-            /*color: #225e71;*/
-            color: black;
-        }
-        .stv-control >span{
-            color:gray;
-        }
-        .logo{
-            max-height: 40px;
-            max-width: 90px;
-            margin: 10px;
-        }
-        #inheritance span{
-            font-size: 12px;
-        }
+
 
     </style>
     <template>
@@ -193,7 +146,6 @@
             alert("This site will be closed on November 8 from 10:30 to 11:30. Regreted");
         },
         handleColumnVisibilityChange: function(){
-            //if(e.currentTarget.name == this.columns[1].checked || this.columns[5].checked){
             var small = true;
             for ( var i = 31; i < this.columns.length; i++){
                 if ( this.columns[i].visible){
@@ -204,12 +156,10 @@
                 this.$.tablaresultados.set('pageSize',10);
                 this.$.tablaresultados.classList.remove('big');
                 this.$.tablaresultados.classList.add('small');
-                //$(".table-row").css("height","30px");
             }else{
                 this.$.tablaresultados.set('pageSize',6);
                 this.$.tablaresultados.classList.remove('small');
                 this.$.tablaresultados.classList.add('big');
-                //$(".table-row").css("height","50px");
 
             }
         },
@@ -230,15 +180,6 @@
                 $(idfoto).css("-webkit-transform", "rotate( 0deg)");
             }
 
-        },
-        colapseAll: function(){
-            var g = this.$.form.querySelectorAll(".stv-formbox > div");
-            for(var i = 0; i< g.length; i++) {
-                g[i].style.display = "none";
-                var idfoto = this.$[g[i].id + "foto"];
-                $(idfoto).css("-moz-transform", "rotate(90deg)");
-                $(idfoto).css("-webkit-transform", "rotate( 0deg)");
-            }
         },
         cerrartabla: function() {
             var elem = this.$.tablaresultados;

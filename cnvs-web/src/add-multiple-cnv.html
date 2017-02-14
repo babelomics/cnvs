@@ -161,7 +161,7 @@
                 </div>
                 <stv-table id="tablaresultados" class="container small" page-size="10" enable-paging enable-remote enable-select enable-resize request="{{request}}" columns="{{columns}}" on-rowclick="handleRowClick" on-column-visibility-change="handleColumnVisibilityChange">
                     <div class="custom-buttons horizontal layout">
-                        <button style="margin-right: 10px; color: #006699" id="saveTable" class="stv-btn down" on-click="downloadFiles" data-file="{{cnv}}"><i class="fa fa-cloud-download"></i> save</button>
+                        <button style="margin-right: 10px; color: #006699" id="saveTable" class="stv-btn down" on-click="upload" data-file="{{cnv}}"><i class="fa fa-cloud-upload"></i> upload</button>
                         <button id="spamButtonTable" class="stv-btn" on-click="spamTable" disabled>expand</button>
                         <button id="compressButtonTable"class="stv-btn" on-click="compressTable">compress</button>
                     </div>
@@ -174,15 +174,32 @@
     Polymer({
         is: 'add-multiple-cnv',
         properties: {
+            userData:{
+                type:Object
+            },
             totalcaseValue: {
                 type: Number,
                 value: 0
             },
-            regionValue: {
+            regionValueC: {
+                type: String,
+                value: ""
+            },
+            regionValueS: {
+                type: String,
+                value: ""
+            },
+            regionValueE: {
                 type: String,
                 value: ""
             },
             columns: {
+                type: Array,
+                value: function() {
+                    return [];
+                }
+            },
+            data:{
                 type: Array,
                 value: function() {
                     return [];
@@ -199,18 +216,18 @@
                 value: "",
                 observer: 'urlChanged'
             },
-//            localIdValue1:{
-//                type: String,
-//                value: null
-//            },
-//            localIdValue2:{
-//                type: String,
-//                value: null
-//            },
-//            localIdValue3:{
-//                type: String,
-//                value: null
-//            },
+            localIdValue1:{
+                type: String,
+                value: ""
+            },
+            localIdValue2:{
+                type: String,
+                value: ""
+            },
+            localIdValue3:{
+                type: String,
+                value: ""
+            },
             geneValue: { //gene de gen
                 type: String,
                 value: ""
@@ -233,7 +250,7 @@
                 value: function() {
                     return [];
                 },
-
+                observer: 'hpoValueChanged'
             },
             hpoSearch: {
                 type: String,
@@ -250,7 +267,7 @@
                 value: function() {
                     return [];
                 },
-
+                observer: 'syndromeValueChanged'
             },
             syndromeSearch: {
                 type: String,
@@ -267,7 +284,7 @@
                 value: function() {
                     return [];
                 },
-
+                observer: 'ethnicValueChanged'
             },
             ethnicSearch: {
                 type: String,
@@ -282,14 +299,15 @@
                 type: String,
                 value: null
             },
-            localIdValue: {
-                type: String,
-                value: null
-            },
+
             decipherIdValue: {
                 type: String,
                 value: null
             },
+//            codeAdd: {
+//                type: String,
+//                value: null
+//            },
             nvariantsValue:{
                 type: String,
                 value: null
@@ -310,11 +328,11 @@
                 type: String,
                 value: null
             },
-            codeValue: {
-                type: String,
-                value: null
+            agePreValue:{
+                type:String,
+                value:null
             },
-            ethicValue: {
+            codeValue: {
                 type: String,
                 value: null
             },
@@ -330,6 +348,10 @@
                 type: String,
                 value: null
             },
+            commentsValue: {
+                type: String,
+                value: ""
+            },
             allSyndromes: {
                 type: Array,
                 value: function() {
@@ -337,88 +359,405 @@
                 }
             }
         },
-        mantenimiento: function(){
-            alert("This site will be closed on November 8 from 10:30 to 11:30. Regreted");
-        },
         handleColumnVisibilityChange: function(){
-            //if(e.currentTarget.name == this.columns[1].checked || this.columns[5].checked){
             var small = true;
-            for ( var i = 27; i < this.columns.length; i++){
+            for ( var i = 31; i < this.columns.length; i++){
                 if ( this.columns[i].visible){
                     small = false;
                 }
             }
             if(small){
-                this.$.tablaresultados.set('pageSize',10);
-                this.$.tablaresultados.classList.remove('big');
-                this.$.tablaresultados.classList.add('small');
-                //$(".table-row").css("height","30px");
+                this.$.tablacnvs.set('pageSize',10);
+                this.$.tablacnvs.classList.remove('big');
+                this.$.tablacnvs.classList.add('small');
             }else{
-                this.$.tablaresultados.set('pageSize',6);
-                this.$.tablaresultados.classList.remove('small');
-                this.$.tablaresultados.classList.add('big');
-                //$(".table-row").css("height","50px");
-
-            }
-        },
-
-        colapseAll: function(){
-            var g = this.$.form.querySelectorAll(".stv-formbox > div");
-            for(var i = 0; i< g.length; i++) {
-                g[i].style.display = "none";
-                var idfoto = this.$[g[i].id + "foto"];
-                $(idfoto).css("-moz-transform", "rotate(90deg)");
-                $(idfoto).css("-webkit-transform", "rotate( 0deg)");
-            }
-        },
-        cerrartabla: function() {
-            var elem = this.$.tablaresultados;
-            if (elem.style.display == "" || elem.style.display == "block") {
-                elem.style.display = "none";
-                // this.$.iconoexpan.className = this.$.iconoexpan.className.replace(/(?:|\s)fa-expan(?!\S)/g ,'')
-                document.getElementById("iconoexpan").classList.remove('fa-compress');
-                document.getElementById("iconoexpan").classList.add('fa-expand');
-            } else {
-                elem.style.display = "block";
-                document.getElementById("iconoexpan").classList.remove('fa-expand');
-                document.getElementById("iconoexpan").classList.add('fa-compress');
+                this.$.tablacnvs.set('pageSize',6);
+                this.$.tablacnvs.classList.remove('small');
+                this.$.tablacnvs.classList.add('big');
             }
         },
         compressTable: function(){
-            for ( var i = 0; i < 27; i++){
-//                this.columns[i].visible = false;
+            for ( var i = 0; i < 31; i++){
                 this.set('columns.'+i+'.visible', false);
             }
-            for ( var i = 27; i < this.columns.length; i++){
-//                this.columns[i].visible = true;
+            for ( var i = 31; i < this.columns.length; i++){
                 this.set('columns.'+i+'.visible', true);
             }
-            this.$.tablaresultados.refresh();
+            this.$.tablacnvs.refresh();
             this.$.compressButtonTable.setAttribute('disabled',"");
             this.$.spamButtonTable.removeAttribute('disabled');
             this.handleColumnVisibilityChange();
         },
         spamTable: function(){
-            for ( var i = 0; i < 27; i++){
-                //this.columns[i].visible = true;
+            for ( var i = 0; i < 31; i++){
                 this.set('columns.'+i+'.visible', true);
             }
-            for ( var i = 27; i < this.columns.length; i++){
+            for ( var i = 31; i < this.columns.length; i++){
                 this.set('columns.'+i+'.visible', false);
-                //this.columns[i].visible = false;
             }
-            this.$.tablaresultados.refresh();
+            this.$.tablacnvs.refresh();
             this.$.spamButtonTable.setAttribute('disabled',"");
             this.$.compressButtonTable.removeAttribute('disabled');
             this.handleColumnVisibilityChange();
         },
+        enablePrenatal: function(){
+            if(this.$.prenatalAdd.checked){
+                this.$.agePrenatalAdd.disabled = false;
+                this.$.labelageprenatal.style.color = "black";
+                this.ageValue = "Prenatal";
+                this.$.ageAdd.disabled = true;
+            }else{
+                this.$.agePrenatalAdd.disabled = true;
+                this.$.labelageprenatal.style.color = "gray";
+                this.$.ageAdd.disabled = false;
+            }
 
+        },
+        addCNV: function(){
+            var validateForm = true;
+            var newRow = {};
+
+            if(!this.localIdValue1 == ""){
+                newRow.centerId1 = this.localIdValue1;
+            }else{
+                alert("Insert Local Id, please")
+                validateForm = false;
+            }
+
+            if(!this.localIdValue2 == ""){
+                newRow.centerId2 = this.localIdValue2;
+            }
+
+            if(!this.localIdValue3 == ""){
+                newRow.centerId3 = this.localIdValue3;
+            }
+
+            if(this.decipherIdValue != null){
+                newRow.decipherId = this.decipherIdValue;
+            }
+
+            if(this.yearIdValue != null){
+                newRow.yearOfBirth = this.yearIdValue;
+            }else{
+                alert("Insert year of birt, please")
+                validateForm = false;
+            }
+
+            if (this.yearTestValue != null) {
+                newRow.yearTest = this.yearTestValue;
+            } else {
+                alert("Insert year of Test, please")
+                validateForm = false;
+            }
+
+            if(this.ageValue != null){
+                newRow.age = this.ageValue;
+            }else{
+                alert("Insert Age at diagnosis, please")
+                validateForm = false;
+            }
+            if(this.$.prenatalAdd.checked ) {
+                if(this.agePreValue != null){
+                    newRow.agePrenatal = this.agePreValue;
+                }else{
+                    alert("Insert Age Prenatal, please")
+                    validateForm = false;
+                }
+            }
+
+            if(this.ethnicValue.length >0){
+                newRow.ethnicGroup = this.ethnicSearch;
+            }else{
+                alert("Insert Ethnic, please")
+                validateForm = false;
+            }
+
+            if(this.geoValue != ""){
+                newRow.origin = this.geoValue;
+            }else{
+                alert("Insert Geografic location, please")
+                validateForm = false;
+            }
+
+            var inputs = this.$.statusAdd.querySelectorAll("input");
+            var statusv = [];
+
+            for (var i = 0; i < inputs.length; i++) {
+                var inputstatus = inputs[i];
+                if (inputstatus.checked) {
+                    statusv.push(inputstatus.value);
+                }
+            }
+            if (statusv.length > 0) {
+                newRow.status = statusv.join(",");
+            }else{
+                validateForm = false;
+                alert("Insert Status, please")
+            }
+
+            inputs = this.$.clAdd.querySelectorAll("input");
+            var clv = [];
+
+            for (var i = 0; i < inputs.length; i++) {
+                var inputcl = inputs[i];
+                if (inputcl.checked) {
+                    clv.push(inputcl.value);
+                }
+            }
+            if (clv.length > 0) {
+                newRow.cellLine = clv.join(",");
+            }else{
+                validateForm = false;
+                alert("Insert Cell line, please")
+            }
+
+            inputs = this.$.typeSAdd.querySelectorAll("input");
+            var typeSv = [];
+
+            for (var i = 0; i < inputs.length; i++) {
+                var inputtypeS = inputs[i];
+                if (inputtypeS.checked) {
+                    typeSv.push(inputtypeS.value);
+                }
+            }
+            if (typeSv.length > 0) {
+                newRow.typeSample = typeSv.join(",");
+            }else{
+                validateForm = false;
+                alert("Insert Type of Sample, please")
+            }
+
+            inputs = this.$.genderAdd.querySelectorAll("input");
+            var genderv = [];
+
+            for (var i = 0; i < inputs.length; i++) {
+                var inputgender = inputs[i];
+                if (inputgender.checked) {
+                    genderv.push(inputgender.value);
+                }
+            }
+            if (genderv.length > 0 && genderv.length < 2) {
+                newRow.chromGender = genderv.join(",");
+            }else{
+                validateForm = false;
+                alert("Insert Chr gender, please")
+            }
+
+            if(!this.arrayPlataformValue == "") {
+                newRow.arrayPlatform = this.arrayPlataformValue;
+            }else{
+                validateForm = false;
+                alert("Insert array platform, please")
+            }
+
+            if(!this.arrayIdValue == "") {
+                newRow.arrayId = this.arrayIdValue;
+            }else{
+                validateForm = false;
+                alert("Insert array Id, please")
+            }
+
+            if(!this.commentsValue == "") {
+                newRow.comments = this.commentsValue;
+            }
+
+            if(!this.regionValueC == ""){
+                newRow.chromosome = this.regionValueC;
+            }else{
+                validateForm = false;
+                alert("Insert Chromosome, please")
+            }
+
+            if(!this.regionValueS == ""){
+                newRow.start = this.regionValueS;
+            }else{
+                validateForm = false;
+                alert("Insert Start, please")
+            }
+
+            if(!this.regionValueE == ""){
+                newRow.end = this.regionValueE;
+            }else{
+                validateForm = false;
+                alert("Insert End, please")
+            }
+
+            inputs = this.$.typeAdd.querySelectorAll("input");
+            var typev = [];
+
+            for (var i = 0; i < inputs.length; i++) {
+                var inputtype = inputs[i];
+                if (inputtype.checked) {
+                    typev.push(inputtype.value);
+                }
+            }
+            if (typev.length > 0 && typev.length < 3) {
+                newRow.type = typev.join(",");
+            }else{
+                validateForm = false;
+                alert("Insert Type of variant, please")
+            }
+
+            if(!this.nvariantsValue == "") {
+                newRow.nv = this.nvariantsValue;
+            }else{
+                validateForm = false;
+                alert("Insert Number of variants, please")
+            }
+
+            inputs = this.$.dosesAdd.querySelectorAll("input");
+            var dosesv = [];
+
+            for (var i = 0; i < inputs.length; i++) {
+                var inputdoses = inputs[i];
+                if (inputdoses.checked) {
+                    dosesv.push(inputdoses.value);
+                }
+            }
+            if (dosesv.length > 0) {
+                newRow.doses = dosesv.join(",");
+            }else{
+                validateForm = false;
+                alert("Insert Doses, please")
+            }
+
+            if( this.dosesValue!= null && !this.dosesValue == "" ){
+                newRow.dosesNum = this.dosesValue;
+            }else{
+                validateForm = false;
+                alert("Insert Doses Number, please")
+            }
+            //TODO hacer ws para que se traiga directamente la cytobanda
+
+            if(!this.bandValue == ""){
+                newRow.band = this.bandValue;
+            }else{
+                validateForm = false;
+                alert("Insert the cytoband, please")
+            }
+
+            inputs = this.$.assemblyAdd.querySelectorAll("input");
+            var assemblyv = [];
+            for (var i = 0; i < inputs.length; i++){
+                if(inputs[i].checked){
+                    assemblyv.push(inputs[i].value);
+                }
+            }
+            if (assemblyv.length > 0 && assemblyv.length < 3) {
+                newRow.assembly = assemblyv.join(",");
+            }else{
+                validateForm = false;
+                alert("Insert assembly, please")
+            }
+
+            if(!this.rdValue == "") {
+                newRow.referalDiag = this.rdValue;
+            }else{
+                validateForm = false;
+                alert("Insert Referal Diagnosis, please")
+            }
+
+            var hpov = [];
+            for (var i = 0; i < this.hpoValue.length; i++) {
+                if (this.hpoValue[i].id.indexOf('HP:') >= 0) { // Si viene del arbol no tiene HP:
+                    hpov[i] = this.hpoValue[i].id;
+                } else {
+                    hpov[i] ='HP:' + this.hpoValue[i].id;
+                }
+                if (this.hpoValue[i].f != null) { //f son los hijos parent el padre
+                    if (Object.keys(this.hpoValue[i].f).length > 0) {
+                        for (var j = 0; j < this.hpoValue[i].f.length; j++) {
+                            this.hpoValue.push(this.hpoValue[i].f[j]);
+                        }
+                    }
+                }
+            }
+            this.hpoValue = [];
+            if (hpov.length > 0) {
+                newRow.phenotype = hpov.join(",");
+            }
+
+            if(this.syndromeValue.length >0){
+                var syn = this.syndromeSearch.split(",");
+                newRow.syndromeName = syn;
+            }
+
+            inputs = this.$.inheritanceAdd.querySelectorAll("input");
+            var inhev = [];
+
+            for (var i = 0; i < inputs.length; i++) {
+                var inputinhe = inputs[i];
+                if (inputinhe.checked) {
+                    inhev.push(inputinhe.value);
+                }
+            }
+            if (inhev.length > 0) {
+                newRow.inheritance = inhev.join(",");
+            }else{
+                validateForm = false;
+                alert("Insert inheritance, please")
+            }
+
+            inputs = this.$.clisAdd.querySelectorAll("input");
+            var clisv = [];
+
+            for (var i = 0; i < inputs.length; i++) {
+                var inputclis = inputs[i];
+                if (inputclis.checked) {
+                    clisv.push(inputclis.value);
+                }
+            }
+            if (clisv.length > 0) {
+                newRow.clinicalSig = clisv.join(",");
+            }else{
+                validateForm = false;
+                alert("Insert clinical significance, please")
+            }
+
+//            newRow.code = this.userData.attributes.group;
+            newRow.author = this.userData.name;
+            newRow.organization = this.userData.attributes.group;
+            if(validateForm){
+                this.push('data', newRow);
+            }
+
+        },
+
+        showHPO: function() {
+            this.$.hpoPanelAdd.hidden = !this.$.hpoPanelAdd.hidden;
+            // this.$.hpoPanel.handleClearSelected();
+        },
+        hpoValueChanged: function(neo, old) {
+            if (neo) {
+                var hpoName = [];
+                for (var i = 0; i < neo.length; i++) {
+                    hpoName.push(neo[i].n);
+                }
+                this.hpoSearch = hpoName.join(",");
+            }
+        },
+        clearHPO: function(){
+            this.hpoSearch = "";
+            this.hpoValue = [];
+        },
+        showSyndrome: function() {
+            this.$.syndromePanelAdd.hidden = !this.$.syndromePanelAdd.hidden;
+        },
+        syndromeValueChanged: function(neo, old) {
+            if (neo) {
+                var syndromeName = [];
+                for (var i = 0; i < neo.length; i++) {
+                    syndromeName.push(neo[i].n);
+                }
+                this.syndromeSearch = syndromeName.join(",");
+            }
+        },
         clearSyndrome: function(){
             this.syndromeSearch = "";
             this.syndromeValue = [];
         },
         showEthnic: function() {
-            this.$.ethnicPanel.hidden = !this.$.ethnicPanel.hidden;
+            this.$.ethnicPanelAdd.hidden = !this.$.ethnicPanelAdd.hidden;
         },
         ethnicValueChanged: function(neo, old) {
             if (neo) {
@@ -435,12 +774,69 @@
         },
         cnvToString: function(o){
             return o.code + "\t" + o.decipherId + "\t" + o.chromosome + "\t" + o.start + "\t" + o.end + "\t" + o.status + "\t" + o.typeSample
-                    + "\t" + o.cellLine + "\t" + o.chromoGender + "\t" + o.locus + "\t" + o.assembly + "\t" + o.nv + "\t" + o.type + "\t" +
+                    + "\t" + o.cellLine + "\t" + o.chromGender + "\t" + o.band + "\t" + o.assembly + "\t" + o.nv + "\t" + o.type + "\t" +
                     o.doses + "\t" + size + "\t" + o.genes + "\t" + o.referalDiag + "\t" + o.syndrome + "\t" + o.phenotype + "\t" +
                     o.clinicalSig + "\t" + o.inheritance + "\t" + o.yearOfBirth + "\t" + o.yearTest + "\t" + o.age + "\t" + o.agePrenatal
                     + "\t" + o.ethnicGroup + "\t" + o.origin + "\t" + o.arrayPlatform + "\t" + o.arrayId + "\t" + o.comments +"\n";
         },
 
+        calculateGenes:function(){
+
+            var positions = [];
+            var me = this;
+            var variant = this.regionValueC + ":" + this.regionValueS + "-" + this.regionValueE;
+            positions.push(variant);
+
+            // Annotate
+            var query = positions.join(",");
+            if (positions.length > 0) {
+
+                CellBaseManager.get({
+                    host: CELLBASE_HOST,
+                    version: CELLBASE_VERSION,
+                    species: 'hsapiens',
+                    category: 'genomic',
+                    subCategory: 'region',
+                    resource: 'gene',
+                    query: query,
+                    params: {
+                        exclude: "transcripts,chunkIds,expressionValues,_chunkIds,mirna"
+                    },
+                    async: false,
+                    success: function(response) {
+                        try {
+                            for (var i = 0; response != null && i < response.response.length; i++) {
+                                var result = response.response[i].result;
+
+                                var genes = [];
+                                for (var j = 0; j < result.length; j++) {
+                                    var gene = result[j];
+                                    genes.push(gene.name);
+                                }
+
+                            }
+
+                            me.geneValue = genes.join(",");
+                        } catch (e) {}
+                    }
+                });
+            }
+
+        },
+        //Search Gens in textarea
+        handleGeneSearchSelect: function(e) {
+            var name = e.detail.name;
+            // if (this.selectedGeneMap[name] == null) {
+            this.addGene(name);
+            //}
+        },
+        addGene: function(name){
+            if(this.$.geneAdd.value == null || this.$.geneAdd.value == ""){
+                this.$.geneAdd.value = name;
+            }else{
+                this.$.geneAdd.value = this.$.geneAdd.value + "," + name;
+            }
+        },
         _initGeneSearch: function() {
             var me = this;
             var search = function(query, cb) {
@@ -465,7 +861,6 @@
                 });
                 cb(results);
             };
-//            this.$.geneSearch.setSearchFunction(search);
         },
         ready: function() {
             var me = this;
@@ -476,484 +871,506 @@
 
 
             this.columns = [{
-                    name: 'position',
-                    title: 'Position',
-                    width: 280,
-                    columns: [{
-                        name: 'chromosome',
-                        title: 'Chr',
-                        width: 60,
-                        formula: function(row) {
-                            return row.chromosome;
-                        }
-                    }, {
-                        name: 'start',
-                        title: 'Start',
-                        width: 60,
-                        formula: function(row) {
-                            return row.start;
-                        }
-                    }, {
-                        name: 'end',
-                        title: 'End',
-                        width: 60,
-                        formula: function(row) {
-                            return row.end;
-                        }
-                    }, {
-                        name: 'size',
-                        title: 'Size(nt)',
-                        width: 100,
-                        formula: function(row) {
-                            return row.end - row.start;
-                        }
-                    }]
-                }, {
-                    name: 'code',
-                    title: "Code",
-                    width: 60,
-                    formula: function(row){
-                        var n = me.transformData(row.code);
-                        return n;
-                    }
-                }, {
-                    name: 'decipherId',
-                    title: 'DecipherId',
-                    width: 80,
-                    formula: function(row){
-                        var n = me.transformData(row.decipherId);
-                        return n;
-                    }
-//                }, {
-//                    name: 'LocalID',
-//                    title: 'Local ID',
-//                    width: 180,
-//                    columns: [{
-//                        name: 'centerId1',
-//                        title: 'ID 1',
-//                        width: 60,
-//                        formula: function(row) {
-//                            return row.centerId1;
-//                        }
-//                    }, {
-//                        name: 'centerId2',
-//                        title: 'ID 2',
-//                        width: 60,
-//                        formula: function(row) {
-//                            return row.centerId2;
-//                        }
-//                    }, {
-//                        name: 'centerId3',
-//                        title: 'ID 3',
-//                        width: 60,
-//                        formula: function(row) {
-//                            return row.centerId3;
-//                        }
-//                    }]
-//                }, {
-//                    name: 'LocalIDmerge',
-//                    title: 'Local ID(1,2,3)',
-//                    width: 180,
-//                    visible:false,
-//                    formula: function(row) {
-//                        return row.centerId1 +"<br/>"+row.centerId2+"</br>"+row.centerId3;
-//                    }
-//
-                },
-                {
-                    name: 'assembly',
-                    title: 'Assembly',
-                    width: 80,
-                    formula: function(row){
-                        var n = me.transformData(row.assembly);
-                        return n;
-                    }
-                }, {
-                    name: 'genes',
-                    title: 'Genes',
-                    width: 60
-                }, {
-                    name: 'locus',
-                    title: 'Band',
-                    width: 60,
-                    formula: function(row){
-                        var n = me.transformData(row.locus);
-                        return n;
-                    }
-                }, {
-                    name: 'type',
-                    title: 'Type',
-                    width: 60,
-                    formula: function(row){
-                        var n = me.transformData(row.type);
-                        return n;
-                    }
-                }, {
-                    name: 'doses',
-                    title: 'Doses',
-                    width: 60,
-                    formula: function(row){
-                        var n = me.transformData(row.doses);
-                        return n;
-                    }
-                }, {
-                    name: 'clinicalSig',
-                    title: 'Clinical Significance',
-                    width: 150,
-                    formula: function(row){
-                        var n = me.transformData(row.clinicalSig);
-                        return n;
-                    }
-                }, {
-                    name: 'inheritance',
-                    title: 'Inheritance',
-                    width: 120,
-                    formula: function(row){
-                        var n = me.transformData(row.inheritance);
-                        return n;
-                    }
-                }, {
-                    name: 'nv',
-                    title: 'Nº of variants',
-                    width: 90,
-                    formula: function(row){
-                        var n = me.transformData(row.nv);
-                        return n;
-                    }
-                }, {
-                    name: 'cellLine',
-                    title: 'Cell Line',
-                    width: 80,
-                    formula: function(row){
-                        var n = me.transformData(row.cellLine);
-                        return n;
-                    }
-                }, {
-                    name: 'chromoGender',
-                    title: 'Chr gender',
-                    width: 80,
-                    formula: function(row){
-                        var n = me.transformData(row.chromoGender);
-                        return n;
-                    }
-                }, {
-                    name: 'status',
-                    title: 'Status',
-                    width: 80,
-                    formula: function(row){
-                        var n = me.transformData(row.status);
-                        return n;
-                    }
-                }, {
-                    name: 'typeSample',
-                    title: 'Type of Sample',
-                    width: 120,
-                    formula: function(row){
-                        var n = me.transformData(row.typeSample);
-                        return n;
-                    }
-                }, {
-                    name: 'referalDiag',
-                    title: 'Referal Diagnosis',
-                    width: 120,
-                    formula: function(row){
-                        var n = me.transformData(row.referalDiag);
-                        return n;
-                    }
-                }, {
-                    name: 'phenotype',
-                    title: 'Phenotype(HPO)',
-                    width: 120,
-                    formula: function(row){
-                        var n = me.transformData(row.phenotype);
-                        return n;
-                    }
-                }, {
-                    name: 'yearOfBirth',
-                    title: 'Year Birth',
-                    width: 80,
-                    formula: function(row){
-                        var n = me.transformData(row.yearOfBirth);
-                        return n;
-                    }
-                }, {
-                    name: 'yearTest',
-                    title: 'Year Test',
-                    width: 80,
-                    formula: function(row){
-                        var n = me.transformData(row.yearTest);
-                        return n;
-                    }
-                }, {
-                    name: 'age',
-                    title: 'Age',
-                    width: 80
-                }, {
-                    name: 'agePrenatal',
-                    title: 'Age Prenatal',
-                    width: 80,
-                    formula: function(row){
-                        var n = "."
-                        if(row.agePrenatal == 0){
-                            return n;
-                        }else{
-                            return row.agePrenatal;
-                        }
-                    }
-                }, {
-                    name: 'ethnicGroup',
-                    title: 'Ethnic Group',
-                    width: 120,
-                    formula: function(row){
-                        var n = me.transformData(row.ethnicGroup);
-                        return n;
-                    }
-                }, {
-                    name: 'origin',
-                    title: 'Greographic Origin',
-                    width: 120,
-                    formula: function(row){
-                        var n = me.transformData(row.origin);
-                        return n;
-                    }
-                }, {
-                    name: 'arrayPlatform',
-                    title: 'Array Platform',
-                    width: 120,
-                    formula: function(row){
-                        var n = me.transformData(row.arrayPlatform);
-                        return n;
-                    }
-                }, {
-                    name: 'arrayId',
-                    title: 'Array ID',
-                    width: 80,
-                    formula: function(row){
-                        var n = me.transformData(row.arrayId);
-                        return n;
-                    }
-                }, {
-                    name: 'syndrome',
-                    title: 'Aneuploidy',
-                    width: 80,
-                    formula: function (row) {
-                        var syndromeParse;
-                        if (row.syndrome == null || row.syndrome == "") {
-                            syndromeParse = "."
-                        } else {
-                            syndromeParse = row.syndrome;
-                        }
-                        return syndromeParse;
-                    }
-                }, {
-                    name: 'comments',
-                    title: 'Comments',
-                    width: 120
-
-                },{
-                    name: 'codeDecipher',
-                    title: 'Code',
-                    width: 90,
-                    visible:false,
-                    columns: [{
-                        name: 'decipher',
-                        title: 'Decipher',
-                        width: 90,
-                        formula: function (row) {
-                            return row.code + "</br>" + row.decipherId;
-                        }
-                    }]
-                },{
-                    name: 'position2',
+                name: 'position',
+                title: 'Position',
+                width: 280,
+                columns: [{
+                    name: 'chromosome',
                     title: 'Chr',
-                    width: 100,
-                    visible:false,
-                    columns: [{
-                        name: 'start',
-                        title: 'Start',
-                        width: 100,
-                        columns: [{
-                            name: 'end',
-                            title: 'End',
-                            width: 100,
-                            formula: function (row) {
-                                //var siz = row.end - row.start;
-                                return row.chromosome + "</br>" + row.start + "</br>" + row.end;
-                            }
-                        }]
-                    }]
-                },{
-                    name: 'statTypeCell',
-                    title: 'Status',
-                    width: 100,
-                    visible:false,
-                    columns: [{
-                        name: 'typeSample',
-                        title: 'Type of Sample',
-                        width: 100,
-                        columns: [{
-                            name: 'cellLine',
-                            title: 'Cell Line',
-                            width: 100,
-                            formula: function (row) {
-                                return row.status + "</br>" + row.typeSample + "</br>" + row.cellLine;
-                            }
-                        }]
-                    }]
-                },{
-                    name: 'genderCytoAssem',
-                    title: 'Chr Gender',
-                    width: 100,
-                    visible:false,
-                    columns: [{
-                        name: 'band',
-                        title: 'Cytoband',
-                        width: 100,
-                        columns: [{
-                            name: 'assembly',
-                            title: 'Assembly',
-                            width: 100,
-                            formula: function (row) {
-                                return row.chromoGender + "</br>" + row.locus + "</br>" + row.assembly;
-                            }
-                        }]
-                    }]
-                },{
-                    name: 'nvTypeCopy',
-                    title: 'Nº of variants',
-                    width: 120,
-                    visible:false,
-                    columns: [{
-                        name: 'type',
-                        title: 'Type variant',
-                        width: 120,
-                        columns: [{
-                            name: 'dosis',
-                            title: 'Copy Number',
-                            width: 120,
-                            formula: function (row) {
-                                var n = me.transformData(row.nv);
-                                var t = me.transformData(row.type);
-                                var d = me.transformData(row.doses);
-                                return n + "</br>" + t + "</br>" + d;
-                            }
-                        }]
-                    }]
+                    width: 60,
+                    formula: function(row) {
+                        return row.chromosome;
+                    }
+                }, {
+                    name: 'start',
+                    title: 'Start',
+                    width: 60,
+                    formula: function(row) {
+                        return row.start;
+                    }
+                }, {
+                    name: 'end',
+                    title: 'End',
+                    width: 60,
+                    formula: function(row) {
+                        return row.end;
+                    }
                 }, {
                     name: 'size',
                     title: 'Size(nt)',
                     width: 100,
-                    visible:false,
                     formula: function(row) {
                         return row.end - row.start;
                     }
+                }]
+            }, {
+                name: 'code',
+                title: "Code",
+                width: 60,
+                formula: function(row){
+                    var n = me.transformData(row.code);
+                    return n;
+                }
+            }, {
+                name: 'decipherId',
+                title: 'DecipherId',
+                width: 80,
+                formula: function(row){
+                    var n = me.transformData(row.decipherId);
+                    return n;
+                }
+            }, {
+                name: 'LocalID',
+                title: 'Local ID',
+                width: 180,
+                columns: [{
+                    name: 'centerId1',
+                    title: 'ID 1',
+                    width: 60,
+                    formula: function(row) {
+                        return row.centerId1;
+                    }
                 }, {
-                    name: 'genes',
-                    title: 'Genes',
+                    name: 'centerId2',
+                    title: 'ID 2',
+                    width: 60,
+                    formula: function(row) {
+                        return row.centerId2;
+                    }
+                }, {
+                    name: 'centerId3',
+                    title: 'ID 3',
+                    width: 60,
+                    formula: function(row) {
+                        return row.centerId3;
+                    }
+                }]
+            },{
+                name: 'assembly',
+                title: 'Assembly',
+                width: 80,
+                formula: function(row){
+                    var n = me.transformData(row.assembly);
+                    return n;
+                }
+            }, {
+                name: 'genes',
+                title: 'Genes',
+                width: 60
+            }, {
+                name: 'band',
+                title: 'Band',
+                width: 60,
+                formula: function(row){
+                    var n = me.transformData(row.band);
+                    return n;
+                }
+            }, {
+                name: 'type',
+                title: 'Type',
+                width: 60,
+                formula: function(row){
+                    var n = me.transformData(row.type);
+                    return n;
+                }
+            }, {
+                name: 'doses',
+                title: 'Doses',
+                width: 60,
+                formula: function (row) {
+                    var n = me.transformData(row.doses);
+                    return n;
+                }
+            },{
+                name: 'dosesnum',
+                title: 'Mean log2 ratio',
+                width: 60,
+                formula: function (row) {
+                    var n =  me.transformData(row.dosesNum);
+                    return n;
+                }
+            }, {
+                name: 'clinicalSig',
+                title: 'Clinical Significance',
+                width: 150,
+                formula: function(row){
+                    var n = "."
+                    if(row.clinicalSig == ""){
+                        return n;
+                    }else{
+                        return row.clinicalSig;
+                    }
+                    return n;
+                }
+            }, {
+                name: 'inheritance',
+                title: 'Inheritance',
+                width: 120,
+                formula: function(row){
+                    var n = me.transformData(row.inheritance);
+                    return n;
+                }
+            }, {
+                name: 'nv',
+                title: 'Nº of variants',
+                width: 90,
+                formula: function(row){
+                    var n = me.transformData(row.nv);
+                    return n;
+                }
+            }, {
+                name: 'cellLine',
+                title: 'Cell Line',
+                width: 80,
+                formula: function(row){
+                    var n = me.transformData(row.cellLine);
+                    return n;
+                }
+            }, {
+                name: 'chromGender',
+                title: 'Chr gender',
+                width: 80,
+                formula: function(row){
+                    var n = me.transformData(row.chromGender);
+                    return n;
+                }
+            }, {
+                name: 'status',
+                title: 'Status',
+                width: 80,
+                formula: function(row){
+                    var n = me.transformData(row.status);
+                    return n;
+                }
+            }, {
+                name: 'typeSample',
+                title: 'Type of Sample',
+                width: 120,
+                formula: function(row){
+                    var n = me.transformData(row.typeSample);
+                    return n;
+                }
+            }, {
+                name: 'referalDiag',
+                title: 'Referal Diagnosis',
+                width: 120,
+                formula: function(row){
+                    var n = me.transformData(row.referalDiag);
+                    return n;
+                }
+            }, {
+                name: 'phenotype',
+                title: 'Phenotype(HPO)',
+                width: 120,
+                formula: function(row){
+                    var n = me.transformData(row.phenotype);
+                    return n;
+                }
+            }, {
+                name: 'yearOfBirth',
+                title: 'Year Birth',
+                width: 80,
+                formula: function(row){
+                    var n = me.transformData(row.yearOfBirth);
+                    return n;
+                }
+            }, {
+                name: 'yearTest',
+                title: 'Year Test',
+                width: 80,
+                formula: function(row){
+                    var n = me.transformData(row.yearTest);
+                    return n;
+                }
+            }, {
+                name: 'age',
+                title: 'Age',
+                width: 80
+            }, {
+                name: 'agePrenatal',
+                title: 'Age Prenatal',
+                width: 80,
+                formula: function(row){
+                    var n = "."
+                    if(row.agePrenatal == 0){
+                        return n;
+                    }else{
+                        return row.agePrenatal;
+                    }
+                }
+            }, {
+                name: 'ethnicGroup',
+                title: 'Ethnic Group',
+                width: 120,
+                formula: function(row){
+                    var n = me.transformData(row.ethnicGroup);
+                    return n;
+                }
+            }, {
+                name: 'origin',
+                title: 'Greographic Origin',
+                width: 120,
+                formula: function(row){
+                    var n = me.transformData(row.origin);
+                    return n;
+                }
+            }, {
+                name: 'arrayPlatform',
+                title: 'Array Platform',
+                width: 120,
+                formula: function(row){
+                    var n = me.transformData(row.arrayPlatform);
+                    return n;
+                }
+            }, {
+                name: 'arrayId',
+                title: 'Array ID',
+                width: 80,
+                formula: function(row){
+                    var n = me.transformData(row.arrayId);
+                    return n;
+                }
+            }, {
+                name: 'syndromeName',
+                title: 'Sindrome',
+                width: 80,
+                formula: function (row) {
+                    var syndromeParse;
+                    if (row.syndromeName == null || row.syndromeName == "") {
+                        syndromeParse = "."
+                    } else {
+                        syndromeParse = row.syndromeName;
+                    }
+                    return syndromeParse;
+                }
+            }, {
+                name: 'comments',
+                title: 'Comments',
+                width: 120
+
+            },{
+                name: 'author',
+                title: 'Author',
+                width: 120
+            }, {
+                name:'organization',
+                title:'Organization',
+                width: 120
+            },{
+                name: 'codeDecipher',
+                title: 'Code',
+                width: 90,
+                visible:false,
+                columns: [{
+                    name: 'decipher',
+                    title: 'Decipher',
+                    width: 90,
+                    formula: function (row) {
+                        return row.code + "</br>" + row.decipherId;
+                    }
+                }]
+            },{
+                name: 'LocalIDmerge',
+                title: 'Local ID(1,2,3)',
+                width: 180,
+                visible:false,
+                formula: function(row) {
+                    return row.centerId1 +"<br/>"+row.centerId2+"</br>"+row.centerId3;
+                }
+            },{
+                name: 'position2',
+                title: 'Chr',
+                width: 100,
+                visible:false,
+                columns: [{
+                    name: 'start',
+                    title: 'Start',
                     width: 100,
-                    visible:false,
-                },{
-                    name: 'refDiagnosis',
-                    title: 'Ref Diagnosis',
-                    width: 120,
-                    visible:false,
                     columns: [{
-                        name: 'syndrome',
-                        title: 'Aneuploidy Sindrome',
+                        name: 'end',
+                        title: 'End',
+                        width: 100,
+                        formula: function (row) {
+                            return row.chromosome + "</br>" + row.start + "</br>" + row.end;
+                        }
+                    }]
+                }]
+            },{
+                name: 'statTypeCell',
+                title: 'Status',
+                width: 100,
+                visible:false,
+                columns: [{
+                    name: 'typeSample',
+                    title: 'Type of Sample',
+                    width: 100,
+                    columns: [{
+                        name: 'cellLine',
+                        title: 'Cell Line',
+                        width: 100,
+                        formula: function (row) {
+                            return row.status + "</br>" + row.typeSample + "</br>" + row.cellLine;
+                        }
+                    }]
+                }]
+            },{
+                name: 'genderCytoAssem',
+                title: 'Chr Gender',
+                width: 100,
+                visible:false,
+                columns: [{
+                    name: 'band',
+                    title: 'Cytoband',
+                    width: 100,
+                    columns: [{
+                        name: 'assembly',
+                        title: 'Assembly',
+                        width: 100,
+                        formula: function (row) {
+                            return row.chromGender + "</br>" + row.band + "</br>" + row.assembly;
+                        }
+                    }]
+                }]
+            },{
+                name: 'nvTypeCopy',
+                title: 'Nº of variants',
+                width: 120,
+                visible:false,
+                columns: [{
+                    name: 'type',
+                    title: 'Type variant',
+                    width: 120,
+                    columns: [{
+                        name: 'dosis',
+                        title: 'Copy Number',
                         width: 120,
                         formula: function (row) {
-                            var syndromeParse;
-                            if(row.syndrome == null){
-                                syndromeParse = "."
-                            }else{
-                                syndromeParse = row.syndrome;
-                            }
-                            return  row.referalDiag +"</br>" +syndromeParse;
+                            var n = me.transformData(row.nv);
+                            var t = me.transformData(row.type);
+                            var d = me.transformData(row.doses);
+                            return n + "</br>" + t + "</br>" + d;
                         }
                     }]
-                },{
-
-                    name: 'phenotype',
-                    title: 'Phenotype(HPO)',
+                }]
+            }, {
+                name: 'size',
+                title: 'Size(nt)',
+                width: 100,
+                visible:false,
+                formula: function(row) {
+                    return row.end - row.start;
+                }
+            }, {
+                name: 'genes',
+                title: 'Genes',
+                width: 100,
+                visible:false,
+            },{
+                name: 'refDiagnosis',
+                title: 'Ref Diagnosis',
+                width: 120,
+                visible:false,
+                columns: [{
+                    name: 'syndrome',
+                    title: 'Aneuploidy Sindrome',
                     width: 120,
-                    visible:false,
-                },{
-                    name: 'cliSInheri',
-                    title: 'Clinical Significance',
-                    width: 140,
-                    visible:false,
-                    columns: [{
-                        name: 'inheritance',
-                        title: 'Inheritance',
-                        width: 140,
-                        formula: function (row) {
-                            return row.clinicalSig + "</br>" + row.inheritance;
+                    formula: function (row) {
+                        var syndromeParse;
+                        if(row.syndromeName == null){
+                            syndromeParse = "."
+                        }else{
+                            syndromeParse = row.syndromeName;
                         }
-                    }]
-                },{
-                    name: 'birthTestAge',
-                    title: 'Birth year', //Birth year, Test year, Age Age(pr)
-                    width: 100,
-                    visible:false,
-                    columns: [{
-                        name: 'yearTest',
-                        title: 'Test year',
-                        width: 100,
-                        columns: [{
-                            name: 'ageAgePrenatal',
-                            title: 'Age Age(pr)',
-                            width: 100,
-                            formula: function(row) {
-                                return  row.yearOfBirth +"</br>" + row.yearTest + "</br>" + row.age + " "+ row.agePrenatal;
-                            }
-                        }]
-                    }]
-                },{
+                        return  row.referalDiag +"</br>" +syndromeParse;
+                    }
+                }]
+            },{
 
-                    name: 'ethnicGeo',
-                    title: 'Ethinic Group',
+                name: 'phenotype',
+                title: 'Phenotype(HPO)',
+                width: 120,
+                visible:false,
+            },{
+                name: 'cliSInheri',
+                title: 'Clinical Significance',
+                width: 140,
+                visible:false,
+                columns: [{
+                    name: 'inheritance',
+                    title: 'Inheritance',
+                    width: 140,
+                    formula: function (row) {
+                        return row.clinicalSig + "</br>" + row.inheritance;
+                    }
+                }]
+            },{
+                name: 'birthTestAge',
+                title: 'Birth year', //Birth year, Test year, Age Age(pr)
+                width: 100,
+                visible:false,
+                columns: [{
+                    name: 'yearTest',
+                    title: 'Test year',
                     width: 100,
-                    visible:false,
                     columns: [{
-                        name: 'origin',
-                        title: 'Geog Origin',
-                        width: 100,
-                        formula: function (row) {
-                            return row.ethnicGroup + "</br>" + row.origin;
-                        }
-                    }]
-                },{
-                    name: 'arrays',
-                    title: 'Array Platf',
-                    width: 100,
-                    visible:false,
-                    columns: [{
-                        name: 'arrayID',
-                        title: 'Array ID',
+                        name: 'ageAgePrenatal',
+                        title: 'Age Age(pr)',
                         width: 100,
                         formula: function(row) {
-                            return  row.arrayPlatform +"</br>" +row.arrayId;
+                            return  row.yearOfBirth +"</br>" + row.yearTest + "</br>" + row.age + " "+ row.agePrenatal;
                         }
                     }]
-                },{
-                    name: 'comments2',
-                    title: 'Comments',
-                    width: 90,
-                    visible:false
+                }]
+            },{
 
-                }
+                name: 'ethnicGeo',
+                title: 'Ethnic Group',
+                width: 100,
+                visible:false,
+                columns: [{
+                    name: 'origin',
+                    title: 'Geog Origin',
+                    width: 100,
+                    formula: function (row) {
+                        return row.ethnicGroup + "</br>" + row.origin;
+                    }
+                }]
+            },{
+                name: 'arrays',
+                title: 'Array Platf',
+                width: 100,
+                visible:false,
+                columns: [{
+                    name: 'arrayID',
+                    title: 'Array ID',
+                    width: 100,
+                    formula: function(row) {
+                        return  row.arrayPlatform +"</br>" +row.arrayId;
+                    }
+                }]
+            },{
+                name: 'comments2',
+                title: 'Comments',
+                width: 90,
+                visible:false
+
+            },{
+                name: 'authorOrga',
+                title: 'Author',
+                width: 120,
+                visible:false,
+                columns:[{
+                    name:'organization',
+                    title:'Organization',
+                    width: 120,
+                    formula: function(row){
+                        return row.author + "</br>" + row.organization;
+                    }
+                }]
+            }
 
             ]
-            // Llamar a el distint para hacer el referal
 
-            var query = {};
-            var url = CNVSManager.regions.fetch({
-                query: query,
-                request: {
-                    url: true
-                }
-            });
-            this.formURL = url;
         },
         transformData: function(row){
             var n = "."
@@ -968,10 +1385,10 @@
             this.selectedSpecies = DEFAULT_SPECIES;
         },
         clearForm: function() {
-            this.$.form.reset();
-//            this.localIdValue1 = null;
-//            this.localIdValue2 = null;
-//            this.localIdValue3 = null;
+            this.$.formAdd.reset();
+            this.localIdValue1 = null;
+            this.localIdValue2 = null;
+            this.localIdValue3 = null;
             this.regionValue = "";
             this.geneValue = "";
             this.arrayPlataformValue = null;
@@ -1052,7 +1469,7 @@
             if(this.dosesValue != null){
                 if(isNaN(this.dosesValue)) {
                     alert("doses Number is not a number, check the form");
-                        return (false);
+                    return (false);
                 }
             }
             if(this.sizeValue != null){
@@ -1063,62 +1480,57 @@
             }
             return true;
         },
+        upload: function() {
+            var me = this;
+            var query = {};
+            query.user = Cookies('bioinfo_user');
+            query.sid = Cookies('bioinfo_sid');
+            var url = CNVSManager.management.add({
+                query:query,
+                request: {
+                    method:"POST",
+                    headers:{
+                        "Content-Type":"aplicaction/json"
+                    },
+                    body: JSON.stringify(me.$.tablacnvs.data,"",""),
+                    success: function(response) {
+                        try {
+                            alert("Add correct. "+ response.numResults + "insertadas.");
+                        } catch (e) {}
+                    }
+                }
+            });
+        },
+        cleanTable:function(){
+            this.newRow = null;
+        },
         submitForm: function() {
             var me = this;
             var query = {};
 
             //  if (this.$.form.checkValidity() && (this.regionValue != '' || this.geneValue != '')) {
-            if (this.$.form.checkValidity() && this.dosesAndSizeNumValidity()) {
+            if (this.$.formAdd.checkValidity() && this.dosesAndSizeNumValidity()) {
                 var region = null;
-                if (this.regionValue == "") {
-                  region = "";
+                if (this.regionValueC == "") { //TODO
+                    region = "";
                 } else {
                     region = new Region(this.regionValue.trim());
                     query.regions = region;
                 }
 
-                if (this.geneValue) {
-
-                    var gene = this.geneValue.toUpperCase();
-                    CellBaseManager.get({
-                        species: 'hsapiens',
-                        category: 'feature',
-                        subCategory: 'gene',
-                        query: gene,
-                        resource: "info",
-                        async: false,
-                        params: {
-                            include: 'chromosome,start,end'
-                        },
-                        success: function(data) {
-                            for (var i = 0; i < data.response.length; i++) {
-                                var queryResult = data.response[i];
-
-                                if (queryResult.result.length > 0) {
-                                    region = new Region(queryResult.result[0]);
-                                    //regions.push(region.toString());
-                                    query.regions = region;
-                                } else {
-                                    alert("Wrong gene: " + gene);
-                                }
-                            }
-                        }
-                    });
+                if(!this.localIdValue1 == ""){
+                    query.centerId1 = this.localIdValue1;
                 }
 
-//                if(!this.localIdValue1 == ""){
-//                    query.centerId1 = this.localIdValue1;
-//                }
-//
-//                if(!this.localIdValue2 == ""){
-//                    query.centerId2 = this.localIdValue2;
-//                }
-//
-//                if(!this.localIdValue3 == ""){
-//                    query.centerId3 = this.localIdValue3;
-//                }
+                if(!this.localIdValue2 == ""){
+                    query.centerId2 = this.localIdValue2;
+                }
 
-                var inputs = this.$.type.querySelectorAll("input");
+                if(!this.localIdValue3 == ""){
+                    query.centerId3 = this.localIdValue3;
+                }
+
+                var inputs = this.$.typeAdd.querySelectorAll("input");
                 var typev = [];
 
                 for (var i = 0; i < inputs.length; i++) {
@@ -1136,7 +1548,7 @@
                 if(!this.decipherIdValue == ""){
                     query.decipherId = this.decipherIdValue;
                 }
-                inputs = this.$.assembly.querySelectorAll("input");
+                inputs = this.$.assemblyAdd.querySelectorAll("input");
                 var assemblyv = [];
                 for (var i = 0; i < inputs.length; i++){
                     if(inputs[i].checked){
@@ -1147,7 +1559,7 @@
                     query.assembly = assemblyv.join(",");
                 }
 
-                inputs = this.$.doses.querySelectorAll("input");
+                inputs = this.$.dosesAdd.querySelectorAll("input");
                 var dosesv = [];
 
                 for (var i = 0; i < inputs.length; i++) {
@@ -1160,14 +1572,14 @@
                     query.doses = dosesv.join(",");
                 }
                 if(!this.sizeValue == ""){
-                   // query.size = this.sizeValue; //TODO
+                    // query.size = this.sizeValue; //TODO
                 }
                 if(!this.bandValue == ""){
                     query.band = this.bandValue;
                 }
 
 
-                inputs = this.$.clis.querySelectorAll("input");
+                inputs = this.$.clisAdd.querySelectorAll("input");
                 var clisv = [];
 
                 for (var i = 0; i < inputs.length; i++) {
@@ -1180,7 +1592,7 @@
                     query.clis = clisv.join(",");
                 }
 
-                inputs = this.$.inheritance.querySelectorAll("input");
+                inputs = this.$.inheritanceAdd.querySelectorAll("input");
                 var inhev = [];
 
                 for (var i = 0; i < inputs.length; i++) {
@@ -1196,7 +1608,7 @@
                 if(!this.nvariantsValue == "") {
                     query.nv = this.nvariantsValue;
                 }
-                inputs = this.$.cl.querySelectorAll("input");
+                inputs = this.$.clAdd.querySelectorAll("input");
                 var clv = [];
 
                 for (var i = 0; i < inputs.length; i++) {
@@ -1209,7 +1621,7 @@
                     query.cl = clv.join(",");
                 }
 
-                inputs = this.$.gender.querySelectorAll("input");
+                inputs = this.$.genderAdd.querySelectorAll("input");
                 var genderv = [];
 
                 for (var i = 0; i < inputs.length; i++) {
@@ -1222,7 +1634,7 @@
                     query.gender = genderv.join(",");
                 }
 
-                inputs = this.$.status.querySelectorAll("input");
+                inputs = this.$.statusAdd.querySelectorAll("input");
                 var statusv = [];
 
                 for (var i = 0; i < inputs.length; i++) {
@@ -1235,7 +1647,7 @@
                     query.status = statusv.join(",");
                 }
 
-                inputs = this.$.typeS.querySelectorAll("input");
+                inputs = this.$.typeSAdd.querySelectorAll("input");
                 var typeSv = [];
 
                 for (var i = 0; i < inputs.length; i++) {
@@ -1258,7 +1670,7 @@
                 }
 
                 if(this.ethnicValue.length >0) {
-                    query.ethic = this.ethnicSearch;
+                    query.ethnic = this.ethnicSearch;
                 }
 
 
@@ -1276,35 +1688,15 @@
                 }
                 if( this.dosesValue!= null && !this.dosesValue == "" ){
                     query.dosesNum = this.dosesValue;
-                    query.dosesOp = this.$.dosesOp.value;
+                    query.dosesOp = this.$.dosesOpAdd.value;
                 }
 
                 if( this.sizeValue!= null && !this.sizeValue == "" ){
                     query.size = this.sizeValue;
-                    query.sizesigno = this.$.sizeOp.value;
+                    query.sizesigno = this.$.sizeOpAdd.value;
                 }
 
-                //HPO
-//                var hposMap = {};
-//                for (var i = 0; i < this.hpoValue.length; i++) {
-//                    if (this.hpoValue[i].id.indexOf('HP:') >= 0) { // Si viene del arbol no tiene HP:
-//                        hposMap[this.hpoValue[i].id] = true;
-//                    } else {
-//                        hposMap['HP:' + this.hpoValue[i].id] = true;
-//                    }
-//                    if (this.hpoValue[i].f != null) { //f son los hijos parent el padre
-//                        if (Object.keys(this.hpoValue[i].f).length > 0) {
-//                            for (var j = 0; j < this.hpoValue[i].f.length; j++) {
-//                                this.hpoValue.push(this.hpoValue[i].f[j]);
-//                            }
-//                        }
-//                    }
-//                }
                 var hpov = [];
-//                if(this.hpoSearch.indexOf('HP:')){
-//                    hpov = this.hpoSearch.split(',');
-//                    query.hpo = this.hpoSearch;
-//                }
                 for (var i = 0; i < this.hpoValue.length; i++) {
                     if (this.hpoValue[i].id.indexOf('HP:') >= 0) { // Si viene del arbol no tiene HP:
                         hpov[i] = this.hpoValue[i].id;
@@ -1323,7 +1715,6 @@
                 if (hpov.length > 0) {
                     query.hpo = hpov.join(",");
                 }
-
                 var url = CNVSManager.regions.fetch({
                     query: query,
                     request: {

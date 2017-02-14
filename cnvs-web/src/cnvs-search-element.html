@@ -936,7 +936,11 @@
                         for( var i = 0; i < r.result.length; i++){
                             stringToSave = stringToSave + me.cnvToString(r.result[i]);
                         }
-                        console.log(stringToSave);
+                        var blob = new Blob([stringToSave], {
+                            type: "text/plain;charset=utf-8"
+                        });
+                        saveAs(blob, "cnvs.bed");
+                        //console.log(stringToSave);
                     },
                     error:function(r){
                         console.log("error in save");
@@ -944,7 +948,6 @@
                 },
 
             });
-            debugger
         },
         showHPO: function() {
             this.$.hpoPanel.hidden = !this.$.hpoPanel.hidden;
@@ -996,9 +999,10 @@
             this.ethnicValue = [];
         },
         cnvToString: function(o){
-            return o.code + "\t" + o.decipherId + "\t" + o.chromosome + "\t" + o.start + "\t" + o.end + "\t" + o.status + "\t" + o.typeSample
+            var size = o.end - o.start;
+            return  o.chromosome + "\t" + o.start + "\t" + o.end + "\t" + o.code + "\t" + o.decipherId + "\t" + o.status + "\t" + o.typeSample
                     + "\t" + o.cellLine + "\t" + o.chromGender + "\t" + o.band + "\t" + o.assembly + "\t" + o.nv + "\t" + o.type + "\t" +
-                    o.doses + "\t" + size + "\t" + o.genes + "\t" + o.referalDiag + "\t" + o.syndrome + "\t" + o.phenotype + "\t" +
+                    o.doses + "\t" + o.dosesNum + "\t" + size  + "\t" + "referalduag"+ o.referalDiag + "\t" + "sindrome name"+ o.syndromeName + "\t" + "phenotype"+o.phenotype + "\t" +
                     o.clinicalSig + "\t" + o.inheritance + "\t" + o.yearOfBirth + "\t" + o.yearTest + "\t" + o.age + "\t" + o.agePrenatal
                     + "\t" + o.ethnicGroup + "\t" + o.origin + "\t" + o.arrayPlatform + "\t" + o.arrayId + "\t" + o.comments +"\n";
         },
@@ -1980,7 +1984,9 @@
                 if(!this.yearIdValue == "") {
                     query.year = this.yearIdValue;
                 }
-
+                if(!this.yearTestValue == ""){
+                    query.yearTest = this.yearTestValue;
+                }
 
 
                 if(!this.ageValue == ""){

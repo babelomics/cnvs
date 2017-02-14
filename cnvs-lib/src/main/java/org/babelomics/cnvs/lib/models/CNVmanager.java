@@ -94,7 +94,20 @@ public class CNVmanager {
     }
 
     public String getAssembly() {
-        return assembly;
+        switch (assembly) {
+            case "GRCh36/hg18":
+            case "hg18":
+                return "GRCh36/hg18";
+            case "GRCh37/hg19":
+            case "hg19":
+                return "GRCh37/hg19";
+            case "GRCh38/hg38":
+            case "hg38":
+                return "GRCh38/hg38";
+            default:
+                return assembly;
+        }
+
     }
 
     public void setAssembly(String assembly) {
