@@ -88,8 +88,8 @@ public class CNV {
     @Property("sn")
     private List<String> syndromeName;
     //@Embedded("sy")
-    @Reference("sy")
-    private List<Syndrome> syndrome;
+//    @Reference("sy")
+//    private List<Syndrome> syndrome;
     @Property("co")
     private String comments;
     @Property("_at")
@@ -103,7 +103,7 @@ public class CNV {
         this.band = new ArrayList<>();
         this.phenotype = new ArrayList<>();
         this.referalDiag = new ArrayList<>();
-        this.syndrome = new ArrayList<>();
+        this.syndromeName = new ArrayList<>();
     }
 
     public String getAssembly() {
@@ -684,7 +684,7 @@ public class CNV {
                 ", arrayPlatform='" + arrayPlatform + '\'' +
                 ", arrayId='" + arrayId + '\'' +
                 ", syndromeName='" + syndromeName + '\'' +
-                ", syndrome=" + syndrome +
+//                ", syndrome=" + syndrome +
                 ", comments='" + comments + '\'' +
                 ", attr=" + attr +
                 '}';
@@ -767,12 +767,12 @@ public class CNV {
         this.code = code;
     }
 
-    public List<Syndrome> getSyndrome() {
-        return syndrome;
-    }
-    public void setSyndrome(List<Syndrome> syndrome) {
-        this.syndrome = syndrome;
-    }
+//    public List<Syndrome> getSyndrome() {
+//        return syndrome;
+//    }
+//    public void setSyndrome(List<Syndrome> syndrome) {
+//        this.syndrome = syndrome;
+//    }
 
     public String getComments() {
         return comments;
