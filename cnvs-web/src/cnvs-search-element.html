@@ -999,13 +999,16 @@
             this.ethnicValue = [];
         },
         cnvToString: function(o){
-            var size = o.end - o.start;
-            return  o.chromosome + "\t" + o.start + "\t" + o.end + "\t" + o.code + "\t" + o.decipherId + "\t" + o.status + "\t" + o.typeSample
-                    + "\t" + o.cellLine + "\t" + o.chromGender + "\t" + o.band + "\t" + o.assembly + "\t" + o.nv + "\t" + o.type + "\t" +
-                    o.doses + "\t" + o.dosesNum + "\t" + size  + "\t" + "referalduag"+ o.referalDiag + "\t" + "sindrome name"+ o.syndromeName + "\t" + "phenotype"+o.phenotype + "\t" +
-                    o.clinicalSig + "\t" + o.inheritance + "\t" + o.yearOfBirth + "\t" + o.yearTest + "\t" + o.age + "\t" + o.agePrenatal
-                    + "\t" + o.ethnicGroup + "\t" + o.origin + "\t" + o.arrayPlatform + "\t" + o.arrayId + "\t" + o.comments +"\n";
+            return  o.chromosome + "\t" + o.start + "\t" + o.end + "\t" + o.code +"\n";
         },
+//        cnvToString: function(o){
+//            var size = o.end - o.start;
+//            return  o.chromosome + "\t" + o.start + "\t" + o.end + "\t" + o.code + "\t" + o.decipherId + "\t" + o.status + "\t" + o.typeSample
+//                    + "\t" + o.cellLine + "\t" + o.chromGender + "\t" + o.band + "\t" + o.assembly + "\t" + o.nv + "\t" + o.type + "\t" +
+//                    o.doses + "\t" + o.dosesNum + "\t" + size  + "\t" + "referalduag"+ o.referalDiag + "\t" + "sindrome name"+ o.syndromeName + "\t" + "phenotype"+o.phenotype + "\t" +
+//                    o.clinicalSig + "\t" + o.inheritance + "\t" + o.yearOfBirth + "\t" + o.yearTest + "\t" + o.age + "\t" + o.agePrenatal
+//                    + "\t" + o.ethnicGroup + "\t" + o.origin + "\t" + o.arrayPlatform + "\t" + o.arrayId + "\t" + o.comments +"\n";
+//        },
         /*parseJson: function(array){
             if((array[1]).isArray){
                 this.parseJson(array[1]);

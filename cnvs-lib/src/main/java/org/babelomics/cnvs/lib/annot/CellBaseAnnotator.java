@@ -29,7 +29,7 @@ public class CellBaseAnnotator {
     private final static String CT_TAG = "ct";
     private final static String GENE_TAG = "g";
     private final static String HOST = "http://bioinfo.hpc.cam.ac.uk/cellbase/webservices/rest";
-    private final static String VERSION = "v3";
+    private final static String VERSION = "v4"; //v3
     private final static String SPECIES = "hsapiens";
 
     public CellBaseAnnotator() {
@@ -84,24 +84,28 @@ public class CellBaseAnnotator {
                     }
                 }
 
-                Cytoband cytoband = getCytoband(cytobands, cnv);
+//                Cytoband cytoband = getCytoband(cytobands, cnv);
+                List<String> cytoband = getCytoband(cytobands, cnv);
 
                 if (cytoband != null) {
-                    cnv.setBand(cytoband.name);
+                   // cnv.setBand(cytoband.name);
+                    cnv.setBand(cytoband);
                 }
             }
         }
 
     }
 
-    private Cytoband getCytoband(List<Cytoband> cytobands, CNV cnv) {
+    private List<String> getCytoband(List<Cytoband> cytobands, CNV cnv) {
+        List <String> cytobandNames = new ArrayList<>();
 
         for (Cytoband c : cytobands) {
             if (c.start <= cnv.getStart() && c.end >= cnv.getEnd()) {
-                return c;
+                cytobandNames.add(c.name);
+//                return c;
             }
         }
-        return null;
+        return cytobandNames;
 
 
     }

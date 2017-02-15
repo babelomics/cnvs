@@ -42,7 +42,7 @@ public class CNV {
     @Property("g")
     private String genes; // ARRAY
     @Property("l")
-    private String band;
+    private List<String> band;
     /*@Property("sz")
     private String size; */ // LO QUITAMOS DE BD
     @Property("t")
@@ -66,9 +66,9 @@ public class CNV {
     @Property("ts")
     private int typeSample;
     @Property("rd")
-    private String referalDiag;
+    private List<String> referalDiag;
     @Property("p")
-    private String phenotype;
+    private List<String> phenotype;
     @Property("y")
     private int yearOfBirth;
     @Property("yt")
@@ -85,10 +85,8 @@ public class CNV {
     @Property("ai")
     private String arrayId;
 
-
-    @JsonIgnore
-    @Transient
-    private String syndromeName;
+    @Property("sn")
+    private List<String> syndromeName;
     //@Embedded("sy")
     @Reference("sy")
     private List<Syndrome> syndrome;
@@ -102,6 +100,9 @@ public class CNV {
 
     public CNV() {
         this.attr = new HashMap<>();
+        this.band = new ArrayList<>();
+        this.phenotype = new ArrayList<>();
+        this.referalDiag = new ArrayList<>();
         this.syndrome = new ArrayList<>();
     }
 
@@ -133,11 +134,11 @@ public class CNV {
         this.genes = genes;
     }
 
-    public String getBand() {
+    public List<String> getBand() {
         return band;
     }
 
-    public void setBand(String band) {
+    public void setBand(List<String> band) {
         this.band = band;
     }
 
@@ -517,11 +518,11 @@ public class CNV {
         }
     }
 
-    public String getPhenotype() {
+    public List<String> getPhenotype() {
         return phenotype;
     }
 
-    public void setPhenotype(String phenotype) {
+    public void setPhenotype(List<String> phenotype) {
         this.phenotype = phenotype;
     }
 
@@ -570,11 +571,11 @@ public class CNV {
         this.agePrenatal = agePrenatal;
     }
 
-    public String getReferalDiag() {
+    public List<String> getReferalDiag() {
         return referalDiag;
     }
 
-    public void setReferalDiag(String referalDiag) {
+    public void setReferalDiag(List<String> referalDiag) {
         this.referalDiag = referalDiag;
     }
 
@@ -618,11 +619,11 @@ public class CNV {
         this.arrayId = arrayId;
     }
 
-    public String getSyndromeName() {
+    public  List<String> getSyndromeName() {
         return syndromeName;
     }
 
-    public void setSyndromeName(String syndromeName) {
+    public void setSyndromeName( List<String> syndromeName) {
         this.syndromeName = syndromeName;
     }
 

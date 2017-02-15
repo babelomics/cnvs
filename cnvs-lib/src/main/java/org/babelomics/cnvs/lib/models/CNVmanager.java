@@ -38,7 +38,7 @@ public class CNVmanager {
     @Property("g")
     private String genes; // ARRAY
     @Property("l")
-    private String band;//locus
+    private List<String> band;//locus
     @Property("t")
     private int type;
     @Property("d")
@@ -59,9 +59,9 @@ public class CNVmanager {
     @Property("ts")
     private int typeSample;
     @Property("rd")
-    private String referalDiag;
+    private List<String> referalDiag;
     @Property("p")
-    private String phenotype;
+    private List<String> phenotype;
     @Property("y")
     private int yearOfBirth;
     @Property("yt")
@@ -90,6 +90,9 @@ public class CNVmanager {
 
     public CNVmanager() {
         this.attr = new HashMap<>();
+        this.band = new ArrayList<>();
+        this.phenotype = new ArrayList<>();
+        this.referalDiag = new ArrayList<>();
         this.syndromeName = new ArrayList<>();
     }
 
@@ -122,11 +125,11 @@ public class CNVmanager {
         this.genes = genes;
     }
 
-    public String getBand() {
+    public List<String> getBand() {
         return band;
     }
 
-    public void setBand(String band) {
+    public void setBand(List<String> band) {
         this.band = band;
     }
 
@@ -480,11 +483,11 @@ public class CNVmanager {
         }
     }
 
-    public String getPhenotype() {
+    public List<String> getPhenotype() {
         return phenotype;
     }
 
-    public void setPhenotype(String phenotype) {
+    public void setPhenotype(List<String> phenotype) {
         this.phenotype = phenotype;
     }
 
@@ -533,11 +536,11 @@ public class CNVmanager {
         this.agePrenatal = agePrenatal;
     }
 
-    public String getReferalDiag() {
+    public List<String> getReferalDiag() {
         return referalDiag;
     }
 
-    public void setReferalDiag(String referalDiag) {
+    public void setReferalDiag(List<String> referalDiag) {
         this.referalDiag = referalDiag;
     }
 

@@ -455,7 +455,7 @@
                 </div>
                 <div id="clinicalData">
                     <div class="input_container vertical layout">
-                        <label class="stv"> Referral Diagnosis</label>
+                        <label class="stv"> Referral Diagnosis</label>Please 
                         <input type="text" class="stv" id="rdAdd" name="rdAdd" placeholder="Control" value="{{rdValue::change}}" rows="3"/>
                     </div>
 
@@ -1066,7 +1066,7 @@
             //TODO hacer ws para que se traiga directamente la cytobanda
 
             if(!this.bandValue == ""){
-                newRow.band = this.bandValue;
+                newRow.band = this.bandValue.split(",");
             }else{
                 validateForm = false;
                 alert("Insert the cytoband, please")
@@ -1087,10 +1087,9 @@
             }
 
             if(!this.rdValue == "") {
-                newRow.referalDiag = this.rdValue;
+                newRow.referalDiag = this.rdValue.split(";");
             }else{
-                validateForm = false;
-                alert("Insert Referal Diagnosis, please")
+                alert("Warning Referal Diagnosis is empty");
             }
 
             var hpov = [];
@@ -1110,7 +1109,8 @@
             }
             this.hpoValue = [];
             if (hpov.length > 0) {
-                newRow.phenotype = hpov.join(",");
+//                newRow.phenotype = hpov.join(",");
+                newRow.phenotype = hpov;
             }
 
             if(this.syndromeValue.length >0){

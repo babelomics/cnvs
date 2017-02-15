@@ -170,8 +170,16 @@ public class CNVSCopyNumberVariationXLSDataReader implements DataReader<CNV> {
     		String ass = r.getCell(9, Row.CREATE_NULL_AS_BLANK).getStringCellValue();
     		
     		//String gen = r.getCell(10, Row.CREATE_NULL_AS_BLANK).getStringCellValue(); ME SALTO LOS GENES
-    		
+
+
     		String band = r.getCell(11, Row.CREATE_NULL_AS_BLANK).getStringCellValue();
+			List<String> bandlist = new ArrayList<>();
+			String[] bandsplit = band.split(",");
+			for (String s : bandsplit) {
+				bandlist.add(s);
+			}
+
+
     		//String size = r.getCell(12, Row.CREATE_NULL_AS_BLANK).getNumericCellValue() + "";ME SALTO EL SIZE
     		
     		String type = r.getCell(13, Row.CREATE_NULL_AS_BLANK).getStringCellValue();
@@ -186,7 +194,19 @@ public class CNVSCopyNumberVariationXLSDataReader implements DataReader<CNV> {
     		String status = r.getCell(20, Row.CREATE_NULL_AS_BLANK).getStringCellValue();
     		String typeSample = r.getCell(21, Row.CREATE_NULL_AS_BLANK).getStringCellValue();// HABRA QUE RETOCARLO
     		String refediag = r.getCell(22, Row.CREATE_NULL_AS_BLANK).getStringCellValue();// HABRA QUE RETOCARLO
+			List<String> refdlist = new ArrayList<>();
+			String[] refdsplit = refediag.split(",");
+			for (String s : refdsplit) {
+				refdlist.add(s);
+			}
+
     		String hpo = r.getCell(23, Row.CREATE_NULL_AS_BLANK).getStringCellValue();
+			List<String> hpolist = new ArrayList<>();
+			String[] hposplit = refediag.split(",");
+			for (String s : hposplit) {
+				hpolist.add(s);
+			}
+
     		int yearB = (int)r.getCell(24, Row.CREATE_NULL_AS_BLANK).getNumericCellValue();
     		int yeartest = (int)r.getCell(25, Row.CREATE_NULL_AS_BLANK).getNumericCellValue();
 			System.out.println("antes de la edad");
@@ -213,7 +233,7 @@ public class CNVSCopyNumberVariationXLSDataReader implements DataReader<CNV> {
     		cnv.setEnd(end);
     		cnv.setAssembly(ass);
     		//cnv.setGenes(gen);
-    		cnv.setBand(band);
+    		cnv.setBand(bandlist);
     		//cnv.setSize(size);
     		cnv.setType(type);
     		cnv.setDosesNum(doses);
@@ -224,8 +244,8 @@ public class CNVSCopyNumberVariationXLSDataReader implements DataReader<CNV> {
     		cnv.setChromGender(chrgen);
     		cnv.setStatus(status);
     		cnv.setTypeSample(typeSample);
-    		cnv.setReferalDiag(refediag);
-    		cnv.setPhenotype(hpo);
+    		cnv.setReferalDiag(refdlist);
+    		cnv.setPhenotype(hpolist);
     		cnv.setYearOfBirth(yearB);
 			cnv.setYearTest(yeartest);
 			cnv.setAge(age);
