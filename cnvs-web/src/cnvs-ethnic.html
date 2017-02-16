@@ -227,72 +227,72 @@
                 this.handleView(e);
             },
             // createJson: function(content) {
-            createJson: function() {
-                var me = this;
-                openRemoteFile("/projects/bierapp/conf/hp_obo.sif", function(content) {
-                    var lines = content.split("\n");
-                    for (var i = 0; i < lines.length; i++) {
-                        var line = lines[i];
-                        var fields = line.split(" ");
-                        if (me.map[fields[2]] == null) {
-                            me.map[fields[2]] = {};
-                        }
-                        me.map[fields[2]][fields[0]] = me.map[fields[0]];
-                    }
-                });
-            },
-            ontology: function(e) {
-                var me = this;
-                openRemoteFile("/projects/bierapp/conf/hp_obo.sif", function(content) {
-                    me.createJson(content);
-                    me.handleView(e);
-                });
-                var newFile = "";
-                var ethnic = this.selectedethnic;
-                var ids = [];
-                for (var i = 0; i < ethnic.length; i++) {
-                    ids.push(ethnic[i].id);
-                }
-                openRemoteFile("/projects/bierapp/conf/hp_obo.sif", function(content) {
-                    if (Object.keys(me.map).length == 0) {
-                        me.createJson(content);
-                    }
-                    for (var i = 0; i < ids.length; i++) {
-                        var keys = Object.keys(me.map[ids[i]]);
-                        if (keys.length > 0) {
-                            for (var j = 0; j < keys.length; j++) {
-                                ids.push(keys[j]);
-                            }
-                        }
-                    }
-                    var lines = content.split("\n");
-                    for (var i = 0; i < lines.length; i++) {
-                        var line = lines[i];
-                        for (var j = 0; j < ids.length; j++) {
-                            var id = ids[j];
-                            if (line.indexOf(id) == 0) {
-                                newFile += '\n' + line;
-                            }
-                        }
-                    }
-
-                    me.handleView(e);
-                    me.$.network.startOver();
-                    me.$.network.loadSif(newFile);
-                    me.$.network.setLayout('Force directed');
-                    me.$.network.$.edgeRender.applyVisualSet({
-                        attribute: 'relation',
-                        displayProperty: 'color',
-                        enabled: true,
-                        parse: 'string',
-                        type: 'categorical',
-                        matches: {
-                            'is_a': '#0033cc'
-                        }
-                    })
-                });
-
-            }
+//            createJson: function() {
+//                var me = this;
+//                openRemoteFile("/projects/bierapp/conf/hp_obo.sif", function(content) {
+//                    var lines = content.split("\n");
+//                    for (var i = 0; i < lines.length; i++) {
+//                        var line = lines[i];
+//                        var fields = line.split(" ");
+//                        if (me.map[fields[2]] == null) {
+//                            me.map[fields[2]] = {};
+//                        }
+//                        me.map[fields[2]][fields[0]] = me.map[fields[0]];
+//                    }
+//                });
+//            },
+//            ontology: function(e) {
+//                var me = this;
+//                openRemoteFile("/projects/bierapp/conf/hp_obo.sif", function(content) {
+//                    me.createJson(content);
+//                    me.handleView(e);
+//                });
+//                var newFile = "";
+//                var ethnic = this.selectedethnic;
+//                var ids = [];
+//                for (var i = 0; i < ethnic.length; i++) {
+//                    ids.push(ethnic[i].id);
+//                }
+//                openRemoteFile("/projects/bierapp/conf/hp_obo.sif", function(content) {
+//                    if (Object.keys(me.map).length == 0) {
+//                        me.createJson(content);
+//                    }
+//                    for (var i = 0; i < ids.length; i++) {
+//                        var keys = Object.keys(me.map[ids[i]]);
+//                        if (keys.length > 0) {
+//                            for (var j = 0; j < keys.length; j++) {
+//                                ids.push(keys[j]);
+//                            }
+//                        }
+//                    }
+//                    var lines = content.split("\n");
+//                    for (var i = 0; i < lines.length; i++) {
+//                        var line = lines[i];
+//                        for (var j = 0; j < ids.length; j++) {
+//                            var id = ids[j];
+//                            if (line.indexOf(id) == 0) {
+//                                newFile += '\n' + line;
+//                            }
+//                        }
+//                    }
+//
+//                    me.handleView(e);
+//                    me.$.network.startOver();
+//                    me.$.network.loadSif(newFile);
+//                    me.$.network.setLayout('Force directed');
+//                    me.$.network.$.edgeRender.applyVisualSet({
+//                        attribute: 'relation',
+//                        displayProperty: 'color',
+//                        enabled: true,
+//                        parse: 'string',
+//                        type: 'categorical',
+//                        matches: {
+//                            'is_a': '#0033cc'
+//                        }
+//                    })
+//                });
+//
+//            }
         })
     </script>
 </dom-module>
