@@ -164,6 +164,12 @@
                     value: function() {
                         return {};
                     }
+                },
+                mapSelectedEthnic: {
+                    type: Object,
+                    value: function() {
+                        return {};
+                    }
                 }
             },
             ready: function() {
@@ -209,11 +215,16 @@
             handleAddethnic: function(e) {
                 for (var i = 0; i < this.$.allethnic.selected.length; i++) {
                     var ethnic = this.$.allethnic.selected[i];
-                    this.push('selectedethnic', ethnic);
+                    if (this.mapSelectedEthnic[ethnic.id] == null) {
+                        this.mapSelectedEthnic[ethnic.id] = ethnic;
+                        this.push('selectedethnic', ethnic);
+                    }
                 }
             },
             handleClearSelected: function(e) {
                 this.selectedethnic = [];
+                this.mapSelectedEthnic = [];
+
             },
             handleAddSelected: function(e) {
                 var ethnics=[];
