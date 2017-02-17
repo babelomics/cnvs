@@ -5408,3 +5408,20 @@ CYTOBANDS=[
         }
         ]}
     ]
+
+CYTOBANDMAP = {};
+function createCitobandMap (){
+
+    var chromosomes =CYTOBANDS[0].chromosomes;
+    for(var indexchr in chromosomes){
+        CYTOBANDMAP[chromosomes[indexchr].name]= {};
+        aux = {};
+        for (var cito in chromosomes[indexchr].cytobands){
+            //aux[chromosomes[indexchr].cytobands[cito].name]= {"end":chromosomes[indexchr].cytobands[cito].end, "start":chromosomes[indexchr].cytobands[cito].start};
+            aux[chromosomes[indexchr].cytobands[cito].name]= chromosomes[indexchr].cytobands[cito];
+        }
+        CYTOBANDMAP[chromosomes[indexchr].name] = aux;
+    }
+
+}
+    createCitobandMap();

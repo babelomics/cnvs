@@ -1830,39 +1830,70 @@
                     var chromo = "";
                     var band1 = "";
                     var band2 = "";
+                    var start;
+                    var end;
                     var bands = this.bandValue.split("-");
-                    var bandsplit = bands[0].split("(?=p");
+                    var bandsplit = bands[0].split(/(?=p)/g);
                     if(bandsplit.length == 2){
                         chromo = bandsplit[0];
                         band1 = bandsplit[1];
-                        if(bands.length == 1) {
-                            band2 = band1;
-                        }else {
+                        if(CYTOBANDMAP[chromo][band1] != null){
+                            start = CYTOBANDMAP[chromo][band1].start;
+                            end = CYTOBANDMAP[chromo][band1].end;
+                        }else{
+                            alert("Incorrect Band");
+                            return;
+                        }
+                        if(bands.length == 2) {
                             band2 = bands[1];
+                            if(CYTOBANDMAP[chromo][band2] != null){
+                                if (CYTOBANDMAP[chromo][band2].start < start) {
+                                    start = CYTOBANDMAP[chromo][band2].start;
+                                }
+                                if (CYTOBANDMAP[chromo][band2].end > end) {
+                                    end = CYTOBANDMAP[chromo][band2].end;
+                                }
+                            }else{
+                                alert("Incorrect Band");
+                                return;
+                            }
                         }
                     }else{
-                        bandsplit = bands[0].split("(?=q");
+                        bandsplit = bands[0].split(/(?=q)/g);
                         if(bandsplit.length == 2){
                             chromo = bandsplit[0];
                             band1 = bandsplit[1];
-                            band2 = band1;
-                            if(bands.length == 1) {
-                                band2 = band1;
-                            }else {
+                            if(CYTOBANDMAP[chromo][band1] != null){
+                                start = CYTOBANDMAP[chromo][band1].start;
+                                end = CYTOBANDMAP[chromo][band1].end;
+                            }else{
+                                alert("Incorrect Band");
+                                return;
+                            }
+                            if(bands.length == 2) {
                                 band2 = bands[1];
+                                if(CYTOBANDMAP[chromo][band2] != null){
+                                    if (CYTOBANDMAP[chromo][band2].start < start) {
+                                        start = CYTOBANDMAP[chromo][band2].start;
+                                    }
+                                    if (CYTOBANDMAP[chromo][band2].end > end) {
+                                        end = CYTOBANDMAP[chromo][band2].end;
+                                    }
+                                }else{
+                                    alert("Incorrect Band");
+                                    return;
+                                }
                             }
                         }else{
                             alert("Incorrect Band");
+                            return;
                         }
 
                     }
-                    var start_1;
-                    var start_2;
-                    var end_1;
-                    var end_2;
-
+                    region = new Region(chromo + ":" + start + "-" + end);
+                    query.regions = region;
 //                    bandsList
-                    query.band = this.bandValue;
+//                    query.band = this.bandValue;
                 }
 
 
