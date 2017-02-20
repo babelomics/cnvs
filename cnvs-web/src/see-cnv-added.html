@@ -706,10 +706,10 @@
                         width: 120,
                         formula: function (row) {
                             var syndromeParse;
-                            if(row.syndrome == null){
+                            if(row.syndromeName == null){
                                 syndromeParse = "."
                             }else{
-                                syndromeParse = row.syndrome;
+                                syndromeParse = row.syndromeName;
                             }
                             return  row.referalDiag +"</br>" +syndromeParse;
                         }
@@ -888,6 +888,8 @@
                 }
             });
             this.formURL = url;
+            this.$.tablaresultados.refresh();
+            //añadir un refresh de la tabla porque no cambia la url las segundas veces que aprietas.
         }
     });
 </script>
