@@ -1571,6 +1571,7 @@
             this.codeValue = null;
             this.ethnicValue = null;
             this.geoValue = null;
+            this.bandValue = null;
 //            this.formURL = "";
 //
             this.$.tablaresultados.clear();
@@ -1738,18 +1739,58 @@
             }
             return true;
         },
+        checkCorrectForm: function(){
+            if(this.regionValue != "" && this.geneValue !=""){
+                alert("Enter only the gen field or the region field")
+                return false;
+            }
+            if(this.regionValue != "" && this.bandValue != null){
+                alert("Enter only the region field or the band")
+                return false;
+            }
+            if(this.bandValue != null && this.geneValue !=""){
+                alert("Enter only the gen field or the band")
+                return false;
+            }
+            var years = this.yearIdValue;
+            if(years != null){
+                for(var i =0; i < years.length() ; i++){
+                    if(isNaN(years[i]) || (years[i] < 1900)){
+                        alert("Year of birth is not a number or is less than 1900, check the form");
+                        return (false);
+                    }
+                }
+            }
+            var years = this.yearTestValue;
+            if(years != null) {
+                for (var i = 0; i < years.length(); i++) {
+                    if (isNaN(years[i]) || (years[i] < 1950)) {
+                        alert("Year of Test is not a number or is less than 1950, check the form");
+                        return (false);
+                    }
+                }
+            }
+            return true;
+
+
+        },
         submitForm: function() {
             var me = this;
             var query = {};
 
             //  if (this.$.form.checkValidity() && (this.regionValue != '' || this.geneValue != '')) {
-            if (this.$.form.checkValidity() && this.dosesAndSizeNumValidity()) {
+            if (this.$.form.checkValidity() && this.dosesAndSizeNumValidity() && this.checkCorrectForm()) {
                 var region = null;
                 if (this.regionValue == "") {
                     region = new Region(this.$.gv.genomeViewer.region);
                     //region = "";
                 } else {
                     region = new Region(this.regionValue.trim());
+                    var regionsplit = this.regionValue.trim().split(":");
+                    if(CYTOBANDMAP[regionsplit[0]] == null){
+                        alert (" the chromosome "+ regionsplit[0]+ " not exits.");
+                        return;
+                    }
                     query.regions = region;
                 }
 
@@ -1823,9 +1864,7 @@
                 if (dosesv.length > 0 && dosesv.length < 4) {
                     query.doses = dosesv.join(",");
                 }
-                if(!this.sizeValue == ""){
-                   // query.size = this.sizeValue; //TODO
-                }
+
                 if(!this.bandValue == ""){
                     var chromo = "";
                     var band1 = "";
