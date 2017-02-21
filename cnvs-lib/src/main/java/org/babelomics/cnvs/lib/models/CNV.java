@@ -19,7 +19,7 @@ public class CNV {
     private ObjectId id;
 
     @Property("r")
-    private String code;
+    private long code;
     @Property("di")
     private long decipherId;
     @JsonIgnore
@@ -90,6 +90,8 @@ public class CNV {
     //@Embedded("sy")
 //    @Reference("sy")
 //    private List<Syndrome> syndrome;
+    @Property("org")
+    private String organization;
     @Property("co")
     private String comments;
     @Property("_at")
@@ -120,6 +122,14 @@ public class CNV {
             default:
                 return assembly;
         }
+    }
+
+    public void setCode(long code) {
+        this.code = code;
+    }
+
+    public long getCode() {
+        return code;
     }
 
     public void setAssembly(String assembly) {
@@ -759,12 +769,12 @@ public class CNV {
         }
     }
 
-    public String getCode() {
-        return code;
+    public String getOrganization() {
+        return organization;
     }
 
-    public void setCode(String code) {
-        this.code = code;
+    public void setOrganization(String organization) {
+        this.organization = organization;
     }
 
 //    public List<Syndrome> getSyndrome() {

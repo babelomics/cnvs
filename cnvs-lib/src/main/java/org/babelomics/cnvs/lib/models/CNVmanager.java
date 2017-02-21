@@ -18,7 +18,7 @@ public class CNVmanager {
     private ObjectId id;
 
     @Property("r")
-    private String code;
+    private long code;
     @Property("di")
     private long decipherId;
     @Property("ci1")
@@ -677,11 +677,11 @@ public class CNVmanager {
         }
     }
 
-    public String getCode() {
+    public long getCode() {
         return code;
     }
 
-    public void setCode(String code) {
+    public void setCode(long code) {
         this.code = code;
     }
 

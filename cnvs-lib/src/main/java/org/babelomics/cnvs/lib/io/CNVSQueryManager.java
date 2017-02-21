@@ -12,6 +12,7 @@ import com.beust.jcommander.internal.Lists;
 import com.mongodb.BasicDBObject;
 import com.mongodb.DBCollection;
 import com.mongodb.DBObject;
+import com.sun.scenario.effect.impl.sw.sse.SSEBlend_SRC_OUTPeer;
 import org.babelomics.cnvs.lib.cli.QueryCommandLine;
 import org.babelomics.cnvs.lib.models.CNV;
 import org.babelomics.cnvs.lib.models.CNVmanager;
@@ -184,10 +185,43 @@ public class CNVSQueryManager {
         if (dbUser != null) {
             System.out.println("Ha encontrado el usuario");
             try {
+
+                /* Inserto el code correcto*/
+                Query<CNVmanager> querycnvs = datastore.createQuery(CNVmanager.class);
+                String group = ((DBObject)dbUser.get("attributes")).get("group").toString();
+                System.out.println("El group es:" + ((DBObject) dbUser.get("attributes")).get("group"));
+                System.out.println("Transformado:" + group);
+                if (group != null) {
+                    querycnvs.filter("organization =", group);
+                }
+                long total = 1;
+//                long total = querycnvs.countAll() +1;
+                querycnvs.limit(1);
+
+                Iterable<CNVmanager> cnvmaxcode = querycnvs.order("-code").fetch(); // el - es para el reverse del sort()
+                System.out.println("despues del iterable");
+                if(cnvmaxcode.iterator().hasNext()) {
+                    System.out.println("estoy dentro del if del iterator");
+                    CNVmanager c = cnvmaxcode.iterator().next();
+                    System.out.println("La cenv que devuelve es : "+ c);
+                    if (c.getCode() >0) {
+                        total = c.getCode() + 1;
+                        System.out.println("el total es:" + total);
+                    }
+                }
+                System.out.println("despues del if");
+                for (CNVmanager cnv : listCNV) {
+                    System.out.println("code de la Cnv a insertar: " + total);
+                    cnv.setCode(total);
+                    total++;
+                }
+                System.out.println("antes del save");
+                /**/
                 datastore.save(listCNV);
                 System.out.println("Se ha insertado correctamente");
             }catch (Exception e){
                 System.out.println("Error al insertar");
+                System.out.println(e);
                 return false;
             }
 //            return res.size();

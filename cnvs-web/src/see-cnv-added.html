@@ -338,7 +338,7 @@
                     title: "Code",
                     width: 60,
                     formula: function(row){
-                        var n = me.transformData(row.code);
+                        var n = me.transformData(row.organization + "-" + row.code);
                         return n;
                     }
                 }, {
@@ -595,7 +595,7 @@
                         title: 'Decipher',
                         width: 90,
                         formula: function (row) {
-                            return row.code + "</br>" + row.decipherId;
+                            return row.organization + "-" + row.code + "</br>" + row.decipherId;
                         }
                     }]
                 },{

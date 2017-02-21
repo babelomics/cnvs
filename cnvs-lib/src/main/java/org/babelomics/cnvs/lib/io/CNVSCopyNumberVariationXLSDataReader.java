@@ -153,11 +153,8 @@ public class CNVSCopyNumberVariationXLSDataReader implements DataReader<CNV> {
     		Row r = this.it.next();
     		
     		
-			String ref = r.getCell(1, Row.CREATE_NULL_AS_BLANK).getStringCellValue();
-			if(ref.equals("")){
-				vacio++;
-				System.out.println("PASO POR VACIO **************************"+ vacio);
-			}
+			long ref = (long)r.getCell(1, Row.CREATE_NULL_AS_BLANK).getNumericCellValue();
+
 			long deciId = (long)r.getCell(2, Row.CREATE_NULL_AS_BLANK).getNumericCellValue();
 			
 			String centerId1 = this.getCellAsString(r.getCell(3, Row.CREATE_NULL_AS_BLANK));
@@ -165,6 +162,10 @@ public class CNVSCopyNumberVariationXLSDataReader implements DataReader<CNV> {
 			String centerId3 = this.getCellAsString(r.getCell(5, Row.CREATE_NULL_AS_BLANK));
 			
 			String chr = this.getCellAsString(r.getCell(6, Row.CREATE_NULL_AS_BLANK));
+			if(chr.equals("")){
+				vacio++;
+				System.out.println("PASO POR VACIO **************************"+ vacio);
+			}
     		long start = (long) r.getCell(7, Row.CREATE_NULL_AS_BLANK).getNumericCellValue();
     		long end = (long) r.getCell(8, Row.CREATE_NULL_AS_BLANK).getNumericCellValue();
     		String ass = r.getCell(9, Row.CREATE_NULL_AS_BLANK).getStringCellValue();
