@@ -173,7 +173,7 @@ public class CNVSQueryManager {
         return res.size();
     }
 
-    public boolean addCNV(List<CNVmanager> listCNV, String username, String sid) {
+    public int addCNV(List<CNVmanager> listCNV, String username, String sid) {
         boolean result = true;
         DBCollection users = datastore.getDB().getCollection("users");
 
@@ -181,7 +181,6 @@ public class CNVSQueryManager {
 
         DBObject dbUser = users.findOne(query);
 
-//        List<CNVmanager> res = datastore.createQuery(CNVmanager.class).asList();
         if (dbUser != null) {
             System.out.println("Ha encontrado el usuario");
             try {
@@ -199,35 +198,32 @@ public class CNVSQueryManager {
                 querycnvs.limit(1);
 
                 Iterable<CNVmanager> cnvmaxcode = querycnvs.order("-code").fetch(); // el - es para el reverse del sort()
-                System.out.println("despues del iterable");
+
                 if(cnvmaxcode.iterator().hasNext()) {
-                    System.out.println("estoy dentro del if del iterator");
+
                     CNVmanager c = cnvmaxcode.iterator().next();
-                    System.out.println("La cenv que devuelve es : "+ c);
                     if (c.getCode() >0) {
                         total = c.getCode() + 1;
-                        System.out.println("el total es:" + total);
                     }
                 }
-                System.out.println("despues del if");
                 for (CNVmanager cnv : listCNV) {
                     System.out.println("code de la Cnv a insertar: " + total);
                     cnv.setCode(total);
                     total++;
                 }
-                System.out.println("antes del save");
-                /**/
+
                 datastore.save(listCNV);
                 System.out.println("Se ha insertado correctamente");
+                return listCNV.size();
             }catch (Exception e){
                 System.out.println("Error al insertar");
                 System.out.println(e);
-                return false;
+                return 0;
             }
 //            return res.size();
         }
         System.out.println("   NOOO HA ENCONTRADO EL USUARIO!!");
-        return result;
+        return 0;
 
     }
 

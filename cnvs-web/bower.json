@@ -1,26 +1,27 @@
 {
-    "name": "copy-number-variation-server",
-    "version": "1.0.0",
-    "homepage": "https://github.com/babelomics/svs",
-    "authors": [
-        "agaor <sgaort@gmail.com>",
-        "frastor <frastor@gmail.com>",
-        "aaleman <alejandro.aleman.ramos@gmail.com>"
-    ],
-    "license": "GPL-3.0",
-    "ignore": [
-        "**/.*",
-        "node_modules",
-        "bower_components"
-    ],
-    "dependencies": {
-        "polymer": "Polymer/polymer#^1.6.0",
-        "iron-flex-layout": "PolymerElements/iron-flex-layout#^1.3.1",
-        "iron-list": "^1.2.8",
-        "fontawesome": "*",
-        "cookies-js": "~1.1.0",
-        "stevia-elements": "https://github.com/babelomics/stevia-elements.git#develop",
-        "jsorolla": "https://github.com/opencb/jsorolla.git#develop"
-    },
-    "private": true
+  "name": "copy-number-variation-server",
+  "version": "1.0.0",
+  "homepage": "https://github.com/babelomics/svs",
+  "authors": [
+    "agaor <sgaort@gmail.com>",
+    "frastor <frastor@gmail.com>",
+    "aaleman <alejandro.aleman.ramos@gmail.com>"
+  ],
+  "license": "GPL-3.0",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components"
+  ],
+  "dependencies": {
+    "polymer": "Polymer/polymer#^1.6.0",
+    "iron-flex-layout": "PolymerElements/iron-flex-layout#^1.3.1",
+    "iron-list": "^1.2.8",
+    "fontawesome": "*",
+    "cookies-js": "~1.1.0",
+    "stevia-elements": "https://github.com/babelomics/stevia-elements.git#develop",
+    "jsorolla": "https://github.com/opencb/jsorolla.git#develop",
+    "js-xlsx": "^0.8.5"
+  },
+  "private": true
 }

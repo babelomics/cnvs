@@ -79,8 +79,7 @@
         }
 
         stv-table::shadow #list {
-            max-height: 300px;
-            min-height: 50px;
+            height: 300px;
             overflow-x: auto
         }
         stv-table.small::shadow .table-row {
@@ -132,34 +131,24 @@
     <template>
         <div class="right vertical layout">
             <form>
-                <div class="form_block positionBlock">
-
-                        <input type="file" name="cnvsFile" accept="application/vnd.sealed-xls">
-                        <input type="upload">
-
+                <div class="form_block positionBlock horizontal layout">
+                        <input type="file" id ="cnvsFile" name="cnvsFile" accept="application/vnd.sealed-xls">
+                        <div class="stv-btn stv-btn-shdw" on-click="readXLSX" title="read">Read File</div>
                 </div>
             </form>
 
-            <!--  <div id="selectordeEnfermedades" >
-                <stv-table ></stv-table>
-                <stv-table></stv-table>
-            </div>!-->
             <div id="add_cnvs" class="horizontal layout" style="margin:10px 0px 15px 0px;">
-                <div >
+                <div>
                     <span style="color: #006699; margin: 10px;" >  Total cases:  {{totalcaseValue}}</span>
                 </div>
 
-                <!--<div class="stv-btn stv-btn-shdw" on-click="" style="color: #006699;float: right;">
-                    <i class="fa fa-plus" aria-hidden="true"></i>
-                    Add CNV
-                </div>-->
             </div>
             </br>
             <stv-panel collapsible id="tablaresultadosPanel">
                 <div class="header">
                     CNVS READ
                 </div>
-                <stv-table id="tablaresultados" class="container small" page-size="10" enable-paging enable-remote enable-select enable-resize request="{{request}}" columns="{{columns}}" on-rowclick="handleRowClick" on-column-visibility-change="handleColumnVisibilityChange">
+                <stv-table id="tablaread" class="container small" page-size="10" enable-paging enable-remote enable-select enable-resize data="{{data}}" columns="{{columns}}" on-rowclick="handleRowClick" on-column-visibility-change="handleColumnVisibilityChange">
                     <div class="custom-buttons horizontal layout">
                         <button style="margin-right: 10px; color: #006699" id="saveTable" class="stv-btn down" on-click="upload" data-file="{{cnv}}"><i class="fa fa-cloud-upload"></i> upload</button>
                         <button id="spamButtonTable" class="stv-btn" on-click="spamTable" disabled>expand</button>
@@ -180,18 +169,6 @@
             totalcaseValue: {
                 type: Number,
                 value: 0
-            },
-            regionValueC: {
-                type: String,
-                value: ""
-            },
-            regionValueS: {
-                type: String,
-                value: ""
-            },
-            regionValueE: {
-                type: String,
-                value: ""
             },
             columns: {
                 type: Array,
@@ -216,148 +193,6 @@
                 value: "",
                 observer: 'urlChanged'
             },
-            localIdValue1:{
-                type: String,
-                value: ""
-            },
-            localIdValue2:{
-                type: String,
-                value: ""
-            },
-            localIdValue3:{
-                type: String,
-                value: ""
-            },
-            geneValue: { //gene de gen
-                type: String,
-                value: ""
-            },
-            sizeValue: {
-                type: String,
-                value: null
-            },
-            bandValue: {
-                type: String,
-                value: null
-            },
-            rdValue: {
-                type: String,
-                value: null
-            },
-            hpoValue: {
-                type: Array,
-                notify: true,
-                value: function() {
-                    return [];
-                },
-                observer: 'hpoValueChanged'
-            },
-            hpoSearch: {
-                type: String,
-                notify: true,
-                value: '',
-            },
-            hpoToQuery: {
-                type: String,
-                value: "",
-            },
-            syndromeValue: {
-                type: Array,
-                notify: true,
-                value: function() {
-                    return [];
-                },
-                observer: 'syndromeValueChanged'
-            },
-            syndromeSearch: {
-                type: String,
-                notify: true,
-                value: '',
-            },
-            syndromeToQuery: {
-                type: String,
-                value: "",
-            },
-            ethnicValue: {
-                type: Array,
-                notify: true,
-                value: function() {
-                    return [];
-                },
-                observer: 'ethnicValueChanged'
-            },
-            ethnicSearch: {
-                type: String,
-                notify: true,
-                value: '',
-            },
-            ethnicToQuery: {
-                type: String,
-                value: "",
-            },
-            aneuploidValue: {
-                type: String,
-                value: null
-            },
-
-            decipherIdValue: {
-                type: String,
-                value: null
-            },
-//            codeAdd: {
-//                type: String,
-//                value: null
-//            },
-            nvariantsValue:{
-                type: String,
-                value: null
-            },
-            dosesValue:{
-                type:String,
-                value: null
-            },
-            yearIdValue: {
-                type: String,
-                value: null
-            },
-            yearTestValue: {
-                type: String,
-                value: null
-            },
-            ageValue: {
-                type: String,
-                value: null
-            },
-            agePreValue:{
-                type:String,
-                value:null
-            },
-            codeValue: {
-                type: String,
-                value: null
-            },
-            geoValue: {
-                type: String,
-                value: null
-            },
-            arrayPlataformValue: {
-                type: String,
-                value: null
-            },
-            arrayIdValue: {
-                type: String,
-                value: null
-            },
-            commentsValue: {
-                type: String,
-                value: ""
-            },
-            allSyndromes: {
-                type: Array,
-                value: function() {
-                    return [];
-                }
-            }
         },
         handleColumnVisibilityChange: function(){
             var small = true;
@@ -367,13 +202,13 @@
                 }
             }
             if(small){
-                this.$.tablacnvs.set('pageSize',10);
-                this.$.tablacnvs.classList.remove('big');
-                this.$.tablacnvs.classList.add('small');
+                this.$.tablaread.set('pageSize',10);
+                this.$.tablaread.classList.remove('big');
+                this.$.tablaread.classList.add('small');
             }else{
-                this.$.tablacnvs.set('pageSize',6);
-                this.$.tablacnvs.classList.remove('small');
-                this.$.tablacnvs.classList.add('big');
+                this.$.tablaread.set('pageSize',6);
+                this.$.tablaread.classList.remove('small');
+                this.$.tablaread.classList.add('big');
             }
         },
         compressTable: function(){
@@ -383,7 +218,7 @@
             for ( var i = 31; i < this.columns.length; i++){
                 this.set('columns.'+i+'.visible', true);
             }
-            this.$.tablacnvs.refresh();
+            this.$.tablaread.refresh();
             this.$.compressButtonTable.setAttribute('disabled',"");
             this.$.spamButtonTable.removeAttribute('disabled');
             this.handleColumnVisibilityChange();
@@ -395,7 +230,7 @@
             for ( var i = 31; i < this.columns.length; i++){
                 this.set('columns.'+i+'.visible', false);
             }
-            this.$.tablacnvs.refresh();
+            this.$.tablaread.refresh();
             this.$.spamButtonTable.setAttribute('disabled',"");
             this.$.compressButtonTable.removeAttribute('disabled');
             this.handleColumnVisibilityChange();
@@ -413,314 +248,237 @@
             }
 
         },
-        addCNV: function(){
+        readXLSX: function(){
+            var file = this.$.cnvsFile.files[0]
+            var reader = new FileReader();
+            var me = this;
+            reader.onload = function(e) {
+                var data = e.target.result;
+                var workbook = XLSX.read(data, {type: 'binary'});
+                me.procesarWorkbook(workbook);
+            }
+            reader.readAsBinaryString(file);
+        },
+        procesarWorkbook: function(workbook){
+
+            var sheet_name_list = workbook.SheetNames;
+            var me = this;
+            sheet_name_list.forEach(function(y) { /* iterate through sheets */
+                var sheetsList;
+                var worksheet = workbook.Sheets[y];
+                var c = XLSX.utils.sheet_to_json(worksheet);
+                for (var i = 0; i < c.length; i++){
+                    console.log(c[i], i);
+                    me.addCNV(c[i], i);
+                }
+            });
+        },
+        addCNV: function(z, index){
             var validateForm = true;
             var newRow = {};
 
-            if(!this.localIdValue1 == ""){
-                newRow.centerId1 = this.localIdValue1;
+            //not required
+            if(z.hasOwnProperty("01-Decipher ID")){
+                newRow.decipherId = z["01-Decipher ID"];
+            }
+
+            //required one
+            if(z.hasOwnProperty("02-Local ID 1")){
+                newRow.centerId1 = z["02-Local ID 1"] ;
             }else{
                 alert("Insert Local Id, please")
                 validateForm = false;
             }
 
-            if(!this.localIdValue2 == ""){
-                newRow.centerId2 = this.localIdValue2;
+            if(z.hasOwnProperty("02-Local ID 2")){
+                newRow.centerId2 = z["02-Local ID 2"];
             }
 
-            if(!this.localIdValue3 == ""){
-                newRow.centerId3 = this.localIdValue3;
+            if(z.hasOwnProperty("02-Local ID 3")){
+                newRow.centerId3 = z["02-Local ID 3"];
             }
 
-            if(this.decipherIdValue != null){
-                newRow.decipherId = this.decipherIdValue;
+            //not required Facultativo
+            if(z.hasOwnProperty("20-Year of Birth")){
+                newRow.yearOfBirth = z["20-Year of Birth"];
             }
 
-            if(this.yearIdValue != null){
-                newRow.yearOfBirth = this.yearIdValue;
-            }else{
-                alert("Insert year of birt, please")
-                validateForm = false;
+            //not required Facultativo
+            if (z.hasOwnProperty("21-Year test performed")) {
+                newRow.yearTest = z["21-Year test performed"];
             }
 
-            if (this.yearTestValue != null) {
-                newRow.yearTest = this.yearTestValue;
-            } else {
-                alert("Insert year of Test, please")
-                validateForm = false;
-            }
+            //not required Facultativo
+            if(z.hasOwnProperty("22-Age")){
+                newRow.age = z["22-Age"];
 
-            if(this.ageValue != null){
-                newRow.age = this.ageValue;
-            }else{
-                alert("Insert Age at diagnosis, please")
-                validateForm = false;
-            }
-            if(this.$.prenatalAdd.checked ) {
-                if(this.agePreValue != null){
-                    newRow.agePrenatal = this.agePreValue;
-                }else{
-                    alert("Insert Age Prenatal, please")
-                    validateForm = false;
+                if(z["22-Age"] == "Prenatal"){
+                    if(z.hasOwnProperty("23-Age in weeks (only for prenatal)")){
+                        newRow.agePrenatal = z["23-Age in weeks (only for prenatal)"];
+                    }else{
+                        alert("Insert Age Prenatal, please")
+                        validateForm = false;
+                    }
                 }
             }
 
-            if(this.ethnicValue.length >0){
-                newRow.ethnicGroup = this.ethnicSearch;
-            }else{
-                alert("Insert Ethnic, please")
-                validateForm = false;
+            //not required Facultativo
+            if(z.hasOwnProperty("24-Ethnic group")){
+                newRow.ethnicGroup = z["24-Ethnic group"];
             }
 
-            if(this.geoValue != ""){
-                newRow.origin = this.geoValue;
-            }else{
-                alert("Insert Geografic location, please")
-                validateForm = false;
+            //not required Facultativo
+            if(z.hasOwnProperty("25-Geographic origin")){
+                newRow.origin = z["25-Geographic origin"];
             }
 
-            var inputs = this.$.statusAdd.querySelectorAll("input");
-            var statusv = [];
-
-            for (var i = 0; i < inputs.length; i++) {
-                var inputstatus = inputs[i];
-                if (inputstatus.checked) {
-                    statusv.push(inputstatus.value);
-                }
-            }
-            if (statusv.length > 0) {
-                newRow.status = statusv.join(",");
+            if(z.hasOwnProperty("16-Status")){
+                newRow.status = z["16-Status"];
             }else{
                 validateForm = false;
                 alert("Insert Status, please")
             }
 
-            inputs = this.$.clAdd.querySelectorAll("input");
-            var clv = [];
-
-            for (var i = 0; i < inputs.length; i++) {
-                var inputcl = inputs[i];
-                if (inputcl.checked) {
-                    clv.push(inputcl.value);
-                }
-            }
-            if (clv.length > 0) {
-                newRow.cellLine = clv.join(",");
+            if(z.hasOwnProperty("14-Cell line")){
+                newRow.cellLine = z["14-Cell line"];
             }else{
                 validateForm = false;
                 alert("Insert Cell line, please")
             }
 
-            inputs = this.$.typeSAdd.querySelectorAll("input");
-            var typeSv = [];
-
-            for (var i = 0; i < inputs.length; i++) {
-                var inputtypeS = inputs[i];
-                if (inputtypeS.checked) {
-                    typeSv.push(inputtypeS.value);
-                }
-            }
-            if (typeSv.length > 0) {
-                newRow.typeSample = typeSv.join(",");
+            if(z.hasOwnProperty("17-Type of sample")){
+                newRow.typeSample = z["17-Type of sample"];
             }else{
                 validateForm = false;
                 alert("Insert Type of Sample, please")
             }
 
-            inputs = this.$.genderAdd.querySelectorAll("input");
-            var genderv = [];
-
-            for (var i = 0; i < inputs.length; i++) {
-                var inputgender = inputs[i];
-                if (inputgender.checked) {
-                    genderv.push(inputgender.value);
-                }
-            }
-            if (genderv.length > 0 && genderv.length < 2) {
-                newRow.chromGender = genderv.join(",");
+            if(z.hasOwnProperty("15-Chromosomal gender")){
+                newRow.chromGender = z["15-Chromosomal gender"];
             }else{
                 validateForm = false;
                 alert("Insert Chr gender, please")
             }
 
-            if(!this.arrayPlataformValue == "") {
-                newRow.arrayPlatform = this.arrayPlataformValue;
-            }else{
-                validateForm = false;
-                alert("Insert array platform, please")
+            //not required Facultativo
+            if(z.hasOwnProperty("26-Array platform")) {
+                newRow.arrayPlatform = z["26-Array platform"];
             }
 
-            if(!this.arrayIdValue == "") {
-                newRow.arrayId = this.arrayIdValue;
-            }else{
-                validateForm = false;
-                alert("Insert array Id, please")
+            //not required Facultativo
+            if(z.hasOwnProperty("27-array ID")) {
+                newRow.arrayId = z["27-array ID"];
             }
 
-            if(!this.commentsValue == "") {
+            if(z.hasOwnProperty("29-Comments")) {
                 newRow.comments = this.commentsValue;
             }
 
-            if(!this.regionValueC == ""){
-                newRow.chromosome = this.regionValueC;
+            if(z.hasOwnProperty("03-Chromosome")){
+                newRow.chromosome = z["03-Chromosome"];
             }else{
                 validateForm = false;
                 alert("Insert Chromosome, please")
             }
 
-            if(!this.regionValueS == ""){
-                newRow.start = this.regionValueS;
+            if(z.hasOwnProperty("04-Start")){
+                newRow.start = z["04-Start"];
             }else{
                 validateForm = false;
                 alert("Insert Start, please")
             }
 
-            if(!this.regionValueE == ""){
-                newRow.end = this.regionValueE;
+            if(z.hasOwnProperty("05-End")){
+                newRow.end = z["05-End"];
             }else{
                 validateForm = false;
                 alert("Insert End, please")
             }
 
-            inputs = this.$.typeAdd.querySelectorAll("input");
-            var typev = [];
 
-            for (var i = 0; i < inputs.length; i++) {
-                var inputtype = inputs[i];
-                if (inputtype.checked) {
-                    typev.push(inputtype.value);
-                }
-            }
-            if (typev.length > 0 && typev.length < 3) {
-                newRow.type = typev.join(",");
+            if (z.hasOwnProperty("08-Type of variant")) {
+                newRow.type = z["08-Type of variant"];
             }else{
                 validateForm = false;
                 alert("Insert Type of variant, please")
             }
 
-            if(!this.nvariantsValue == "") {
-                newRow.nv = this.nvariantsValue;
+            if(z.hasOwnProperty("13-Number of variants")) {
+                newRow.nv = z["13-Number of variants"];
             }else{
                 validateForm = false;
                 alert("Insert Number of variants, please")
             }
 
-            inputs = this.$.dosesAdd.querySelectorAll("input");
-            var dosesv = [];
-
-            for (var i = 0; i < inputs.length; i++) {
-                var inputdoses = inputs[i];
-                if (inputdoses.checked) {
-                    dosesv.push(inputdoses.value);
-                }
-            }
-            if (dosesv.length > 0) {
-                newRow.doses = dosesv.join(",");
+            if (z.hasOwnProperty("09-Doses")) {
+                newRow.doses = z["09-Doses"];
             }else{
                 validateForm = false;
                 alert("Insert Doses, please")
             }
 
-            if( this.dosesValue!= null && !this.dosesValue == "" ){
-                newRow.dosesNum = this.dosesValue;
+            if( z.hasOwnProperty("10-Mean ratio")){
+                newRow.dosesNum =  z["10-Mean ratio"];
             }else{
                 validateForm = false;
                 alert("Insert Doses Number, please")
             }
             //TODO hacer ws para que se traiga directamente la cytobanda
 
-            if(!this.bandValue == ""){
-                newRow.band = this.bandValue;
+            if(z.hasOwnProperty("07-Band")){
+                newRow.band = z["07-Band"].split(",");
             }else{
                 validateForm = false;
                 alert("Insert the cytoband, please")
             }
 
-            inputs = this.$.assemblyAdd.querySelectorAll("input");
-            var assemblyv = [];
-            for (var i = 0; i < inputs.length; i++){
-                if(inputs[i].checked){
-                    assemblyv.push(inputs[i].value);
-                }
-            }
-            if (assemblyv.length > 0 && assemblyv.length < 3) {
-                newRow.assembly = assemblyv.join(",");
+
+            if (z.hasOwnProperty("06-Assembly")) {
+                newRow.assembly = z["06-Assembly"];
             }else{
                 validateForm = false;
                 alert("Insert assembly, please")
             }
 
-            if(!this.rdValue == "") {
-                newRow.referalDiag = this.rdValue;
-            }else{
-                validateForm = false;
-                alert("Insert Referal Diagnosis, please")
+            if(z.hasOwnProperty("18-Referral diagnosis")) {
+                newRow.referalDiag = z["18-Referral diagnosis"].split(";");
             }
 
-            var hpov = [];
-            for (var i = 0; i < this.hpoValue.length; i++) {
-                if (this.hpoValue[i].id.indexOf('HP:') >= 0) { // Si viene del arbol no tiene HP:
-                    hpov[i] = this.hpoValue[i].id;
-                } else {
-                    hpov[i] ='HP:' + this.hpoValue[i].id;
-                }
-                if (this.hpoValue[i].f != null) { //f son los hijos parent el padre
-                    if (Object.keys(this.hpoValue[i].f).length > 0) {
-                        for (var j = 0; j < this.hpoValue[i].f.length; j++) {
-                            this.hpoValue.push(this.hpoValue[i].f[j]);
-                        }
-                    }
-                }
+
+            if (z.hasOwnProperty("19-Phenotype (HPO)")) {
+                newRow.phenotype = z["19-Phenotype (HPO)"].split(",");
             }
-            this.hpoValue = [];
-            if (hpov.length > 0) {
-                newRow.phenotype = hpov.join(",");
+//            }else{
+//                alert("Insert Phenotype");
+//            }
+
+            if(z.hasOwnProperty("28-Aneuploidy-Deletion/Duplication Syndrome")){
+                newRow.syndromeName = z["28-Aneuploidy-Deletion/Duplication Syndrome"].split(",");
             }
 
-            if(this.syndromeValue.length >0){
-                var syn = this.syndromeSearch.split(",");
-                newRow.syndromeName = syn;
-            }
-
-            inputs = this.$.inheritanceAdd.querySelectorAll("input");
-            var inhev = [];
-
-            for (var i = 0; i < inputs.length; i++) {
-                var inputinhe = inputs[i];
-                if (inputinhe.checked) {
-                    inhev.push(inputinhe.value);
-                }
-            }
-            if (inhev.length > 0) {
-                newRow.inheritance = inhev.join(",");
+            if(z.hasOwnProperty("12-Inheritance")){
+                newRow.inheritance = z["12-Inheritance"];
             }else{
                 validateForm = false;
                 alert("Insert inheritance, please")
             }
 
-            inputs = this.$.clisAdd.querySelectorAll("input");
-            var clisv = [];
-
-            for (var i = 0; i < inputs.length; i++) {
-                var inputclis = inputs[i];
-                if (inputclis.checked) {
-                    clisv.push(inputclis.value);
-                }
-            }
-            if (clisv.length > 0) {
-                newRow.clinicalSig = clisv.join(",");
+            if(z.hasOwnProperty("11-Clinical significance")){
+                newRow.clinicalSig = z["11-Clinical significance"];
             }else{
                 validateForm = false;
                 alert("Insert clinical significance, please")
             }
 
-//            newRow.code = this.userData.attributes.group;
+
             newRow.author = this.userData.name;
             newRow.organization = this.userData.attributes.group;
             if(validateForm){
                 this.push('data', newRow);
+            }else{
+                alert("Check the CNV number" + index);
             }
-
+            console.log(newRow);
         },
 
         showHPO: function() {
@@ -1166,7 +924,7 @@
                     title: 'Decipher',
                     width: 90,
                     formula: function (row) {
-                        return row.code + "</br>" + row.decipherId;
+                        return me.transformData(row.code) + "</br>" + me.transformData(row.decipherId);
                     }
                 }]
             },{
@@ -1492,10 +1250,10 @@
                     headers:{
                         "Content-Type":"aplicaction/json"
                     },
-                    body: JSON.stringify(me.$.tablacnvs.data,"",""),
+                    body: JSON.stringify(me.$.tablaread.data,"",""),
                     success: function(response) {
                         try {
-                            alert("Add correct. "+ response.numResults + "insertadas.");
+                            alert("Add correct. "+ response.result + "insertadas.");
                         } catch (e) {}
                     }
                 }

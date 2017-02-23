@@ -9,7 +9,8 @@ import java.util.*;
 //@Entity(value= "CNV", noClassnameStored = true)
 @Indexes({
         @Index(name = "index", value = "c,s,e"),
-        @Index(name = "chunks", value = "_at.chIds")
+        @Index(name = "chunks", value = "_at.chIds"),
+        @Index(name = "org", value = "org")
 })
 
 public class CNVmanager {

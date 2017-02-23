@@ -133,6 +133,7 @@
             /*background-color: #4F7CAC;*/
             background-color: #80A1C1;
             color: white;
+
         }
         input:disabled{
             color:black;
@@ -141,12 +142,13 @@
 
     </style>
     <template>
-
+        <!--<div class="stv-btn stv-btn-shdw" on-click="cleanForm" title="Clean Form" >Clean Form</div>-->
             <form id="formAdd" style="max-width: 100%" class="vertical layout">
                 <div id="formAddUnique" style="max-width: 700px; margin:0 auto" >
                 <div class="stv-formtitle">
                     Patients' Data
                 </div>
+
                 <div  id="pacientsAdd">
                     <div class="input_container vertical layout">
                         <label class="stv"> Locals id</label>
@@ -851,8 +853,10 @@
         },
         addCNV: function(){
             var validateForm = true;
+            var promtForm = false;
+            var stringprompt = "";
             var newRow = {};
-
+            //required one
             if(!this.localIdValue1 == ""){
                 newRow.centerId1 = this.localIdValue1;
             }else{
@@ -868,30 +872,40 @@
                 newRow.centerId3 = this.localIdValue3;
             }
 
+            //not required
             if(this.decipherIdValue != null){
                 newRow.decipherId = this.decipherIdValue;
             }
 
+            //not required Facultativo
             if(this.yearIdValue != null){
                 newRow.yearOfBirth = this.yearIdValue;
             }else{
-                alert("Insert year of birt, please")
-                validateForm = false;
+//                alert("Insert year of birt, please")
+                promtForm = true;
+                stringprompt += " Year of birth";
             }
 
+            //not required Facultativo
             if (this.yearTestValue != null) {
                 newRow.yearTest = this.yearTestValue;
             } else {
-                alert("Insert year of Test, please")
-                validateForm = false;
+//                alert("Insert year of Test, please")
+                promtForm = true;
+                stringprompt += " Year of Test";
             }
 
+            //not required Facultativo
             if(this.ageValue != null){
                 newRow.age = this.ageValue;
             }else{
-                alert("Insert Age at diagnosis, please")
-                validateForm = false;
+//                alert("Insert Age at diagnosis, please")
+//                validateForm = false;
+                promtForm = true;
+                stringprompt += " Age at diagnosis";
             }
+
+
             if(this.$.prenatalAdd.checked ) {
                 if(this.agePreValue != null){
                     newRow.agePrenatal = this.agePreValue;
@@ -901,18 +915,23 @@
                 }
             }
 
+            //not required Facultativo
             if(this.ethnicValue.length >0){
                 newRow.ethnicGroup = this.ethnicSearch;
             }else{
-                alert("Insert Ethnic, please")
-                validateForm = false;
+//                alert("Insert Ethnic, please")
+//                validateForm = false;
+                promtForm = true;
+                stringprompt += " Insert Ethnic"
             }
 
+            //not required Facultativo
             if(this.geoValue != ""){
                 newRow.origin = this.geoValue;
             }else{
-                alert("Insert Geografic location, please")
-                validateForm = false;
+
+                promtForm = true;
+                stringprompt += " Geografic location"
             }
 
             var inputs = this.$.statusAdd.querySelectorAll("input");
@@ -979,18 +998,20 @@
                 alert("Insert Chr gender, please")
             }
 
+            //not required Facultativo
             if(!this.arrayPlataformValue == "") {
                 newRow.arrayPlatform = this.arrayPlataformValue;
             }else{
-                validateForm = false;
-                alert("Insert array platform, please")
+                promtForm = true;
+                stringprompt += " Array platform";
             }
 
+            //not required Facultativo
             if(!this.arrayIdValue == "") {
                 newRow.arrayId = this.arrayIdValue;
             }else{
-                validateForm = false;
-                alert("Insert array Id, please")
+                promtForm = true;
+                stringprompt += " Array Idm";
             }
 
             if(!this.commentsValue == "") {
@@ -1931,7 +1952,7 @@
                     body: JSON.stringify(me.$.tablacnvs.data,"",""),
                     success: function(response) {
                         try {
-                           alert("Add correct. "+ response.numResults + "insertadas.");
+                           alert("Add correct. "+ response.result + "insertadas.");
                         } catch (e) {}
                     }
                 }
@@ -1939,234 +1960,235 @@
         },
         cleanTable:function(){
             this.newRow = null;
+            this.$.tablacnvs.clear();
         },
-        submitForm: function() {
-            var me = this;
-            var query = {};
-
-            //  if (this.$.form.checkValidity() && (this.regionValue != '' || this.geneValue != '')) {
-            if (this.$.formAdd.checkValidity() && this.dosesAndSizeNumValidity()) {
-                var region = null;
-                if (this.regionValueC == "") { //TODO
-                  region = "";
-                } else {
-                    region = new Region(this.regionValue.trim());
-                    query.regions = region;
-                }
-
-                if(!this.localIdValue1 == ""){
-                    query.centerId1 = this.localIdValue1;
-                }
-
-                if(!this.localIdValue2 == ""){
-                    query.centerId2 = this.localIdValue2;
-                }
-
-                if(!this.localIdValue3 == ""){
-                    query.centerId3 = this.localIdValue3;
-                }
-
-                var inputs = this.$.typeAdd.querySelectorAll("input");
-                var typev = [];
-
-                for (var i = 0; i < inputs.length; i++) {
-                    var inputtype = inputs[i];
-                    if (inputtype.checked) {
-                        typev.push(inputtype.value);
-                    }
-                }
-                if (typev.length > 0 && typev.length < 3) {
-                    query.type = typev.join(",");
-                }
-                if(!this.codeValue == ""){
-                    query.code = this.codeValue;
-                }
-                if(!this.decipherIdValue == ""){
-                    query.decipherId = this.decipherIdValue;
-                }
-                inputs = this.$.assemblyAdd.querySelectorAll("input");
-                var assemblyv = [];
-                for (var i = 0; i < inputs.length; i++){
-                    if(inputs[i].checked){
-                        assemblyv.push(inputs[i].value);
-                    }
-                }
-                if (assemblyv.length > 0 && assemblyv.length < 3) {
-                    query.assembly = assemblyv.join(",");
-                }
-
-                inputs = this.$.dosesAdd.querySelectorAll("input");
-                var dosesv = [];
-
-                for (var i = 0; i < inputs.length; i++) {
-                    var inputdoses = inputs[i];
-                    if (inputdoses.checked) {
-                        dosesv.push(inputdoses.value);
-                    }
-                }
-                if (dosesv.length > 0 && dosesv.length < 4) {
-                    query.doses = dosesv.join(",");
-                }
-                if(!this.sizeValue == ""){
-                   // query.size = this.sizeValue; //TODO
-                }
-                if(!this.bandValue == ""){
-                    query.band = this.bandValue;
-                }
-
-
-                inputs = this.$.clisAdd.querySelectorAll("input");
-                var clisv = [];
-
-                for (var i = 0; i < inputs.length; i++) {
-                    var inputclis = inputs[i];
-                    if (inputclis.checked) {
-                        clisv.push(inputclis.value);
-                    }
-                }
-                if (clisv.length > 0 && clisv.length < 5) {
-                    query.clis = clisv.join(",");
-                }
-
-                inputs = this.$.inheritanceAdd.querySelectorAll("input");
-                var inhev = [];
-
-                for (var i = 0; i < inputs.length; i++) {
-                    var inputinhe = inputs[i];
-                    if (inputinhe.checked) {
-                        inhev.push(inputinhe.value);
-                    }
-                }
-                if (inhev.length > 0 && inhev.length < 4) {
-                    query.inheritance = inhev.join(",");
-                }
-
-                if(!this.nvariantsValue == "") {
-                    query.nv = this.nvariantsValue;
-                }
-                inputs = this.$.clAdd.querySelectorAll("input");
-                var clv = [];
-
-                for (var i = 0; i < inputs.length; i++) {
-                    var inputcl = inputs[i];
-                    if (inputcl.checked) {
-                        clv.push(inputcl.value);
-                    }
-                }
-                if (clv.length > 0 && clv.length < 2) {
-                    query.cl = clv.join(",");
-                }
-
-                inputs = this.$.genderAdd.querySelectorAll("input");
-                var genderv = [];
-
-                for (var i = 0; i < inputs.length; i++) {
-                    var inputgender = inputs[i];
-                    if (inputgender.checked) {
-                        genderv.push(inputgender.value);
-                    }
-                }
-                if (genderv.length > 0 && genderv.length < 2) {
-                    query.gender = genderv.join(",");
-                }
-
-                inputs = this.$.statusAdd.querySelectorAll("input");
-                var statusv = [];
-
-                for (var i = 0; i < inputs.length; i++) {
-                    var inputstatus = inputs[i];
-                    if (inputstatus.checked) {
-                        statusv.push(inputstatus.value);
-                    }
-                }
-                if (statusv.length > 0 && statusv.length < 4) {
-                    query.status = statusv.join(",");
-                }
-
-                inputs = this.$.typeSAdd.querySelectorAll("input");
-                var typeSv = [];
-
-                for (var i = 0; i < inputs.length; i++) {
-                    var inputtypeS = inputs[i];
-                    if (inputtypeS.checked) {
-                        typeSv.push(inputtypeS.value);
-                    }
-                }
-                if (typeSv.length > 0 && typeSv.length < 5) {
-                    query.typeS = typeSv.join(",");
-                }
-
-                if(!this.rdValue == "") {
-                    query.referalDiag = this.rdValue;
-                }
-
-                //Comprobar que todos son números
-                if(!this.yearIdValue == "") {
-                    query.year = this.yearIdValue;
-                }
-
-                if(this.ethnicValue.length >0) {
-                    query.ethnic = this.ethnicSearch;
-                }
-
-
-                if(!this.geoValue == "") {
-                    query.geo = this.geoValue;
-                }
-                if(!this.arrayPlataformValue == "") {
-                    query.arrayPlatform = this.arrayPlataformValue;
-                }
-                if(!this.arrayIdValue == "") {
-                    query.arrayId = this.arrayIdValue;
-                }
-                if(!this.localIdValue == "") {
-                    query.localId = this.localIdValue;
-                }
-                if( this.dosesValue!= null && !this.dosesValue == "" ){
-                    query.dosesNum = this.dosesValue;
-                    query.dosesOp = this.$.dosesOpAdd.value;
-                }
-
-                if( this.sizeValue!= null && !this.sizeValue == "" ){
-                    query.size = this.sizeValue;
-                    query.sizesigno = this.$.sizeOpAdd.value;
-                }
-
-                var hpov = [];
-                for (var i = 0; i < this.hpoValue.length; i++) {
-                    if (this.hpoValue[i].id.indexOf('HP:') >= 0) { // Si viene del arbol no tiene HP:
-                        hpov[i] = this.hpoValue[i].id;
-                    } else {
-                        hpov[i] ='HP:' + this.hpoValue[i].id;
-                    }
-                    if (this.hpoValue[i].f != null) { //f son los hijos parent el padre
-                        if (Object.keys(this.hpoValue[i].f).length > 0) {
-                            for (var j = 0; j < this.hpoValue[i].f.length; j++) {
-                                this.hpoValue.push(this.hpoValue[i].f[j]);
-                            }
-                        }
-                    }
-                }
-                this.hpoValue = [];
-                if (hpov.length > 0) {
-                    query.hpo = hpov.join(",");
-                }
-                var url = CNVSManager.regions.fetch({
-                    query: query,
-                    request: {
-                        url: true
-                    }
-                });
-
-                this.formURL = url;
-                console.log(url);
-
-                this.adapter.params = query;
-
-                this.query = query;
-            } else {
-                alert("Please check the form");
-            }
-        }
+//        submitForm: function() {
+//            var me = this;
+//            var query = {};
+//
+//            //  if (this.$.form.checkValidity() && (this.regionValue != '' || this.geneValue != '')) {
+//            if (this.$.formAdd.checkValidity() && this.dosesAndSizeNumValidity()) {
+//                var region = null;
+//                if (this.regionValueC == "") { //TODO
+//                  region = "";
+//                } else {
+//                    region = new Region(this.regionValue.trim());
+//                    query.regions = region;
+//                }
+//
+//                if(!this.localIdValue1 == ""){
+//                    query.centerId1 = this.localIdValue1;
+//                }
+//
+//                if(!this.localIdValue2 == ""){
+//                    query.centerId2 = this.localIdValue2;
+//                }
+//
+//                if(!this.localIdValue3 == ""){
+//                    query.centerId3 = this.localIdValue3;
+//                }
+//
+//                var inputs = this.$.typeAdd.querySelectorAll("input");
+//                var typev = [];
+//
+//                for (var i = 0; i < inputs.length; i++) {
+//                    var inputtype = inputs[i];
+//                    if (inputtype.checked) {
+//                        typev.push(inputtype.value);
+//                    }
+//                }
+//                if (typev.length > 0 && typev.length < 3) {
+//                    query.type = typev.join(",");
+//                }
+//                if(!this.codeValue == ""){
+//                    query.code = this.codeValue;
+//                }
+//                if(!this.decipherIdValue == ""){
+//                    query.decipherId = this.decipherIdValue;
+//                }
+//                inputs = this.$.assemblyAdd.querySelectorAll("input");
+//                var assemblyv = [];
+//                for (var i = 0; i < inputs.length; i++){
+//                    if(inputs[i].checked){
+//                        assemblyv.push(inputs[i].value);
+//                    }
+//                }
+//                if (assemblyv.length > 0 && assemblyv.length < 3) {
+//                    query.assembly = assemblyv.join(",");
+//                }
+//
+//                inputs = this.$.dosesAdd.querySelectorAll("input");
+//                var dosesv = [];
+//
+//                for (var i = 0; i < inputs.length; i++) {
+//                    var inputdoses = inputs[i];
+//                    if (inputdoses.checked) {
+//                        dosesv.push(inputdoses.value);
+//                    }
+//                }
+//                if (dosesv.length > 0 && dosesv.length < 4) {
+//                    query.doses = dosesv.join(",");
+//                }
+//                if(!this.sizeValue == ""){
+//                   // query.size = this.sizeValue; //TODO
+//                }
+//                if(!this.bandValue == ""){
+//                    query.band = this.bandValue;
+//                }
+//
+//
+//                inputs = this.$.clisAdd.querySelectorAll("input");
+//                var clisv = [];
+//
+//                for (var i = 0; i < inputs.length; i++) {
+//                    var inputclis = inputs[i];
+//                    if (inputclis.checked) {
+//                        clisv.push(inputclis.value);
+//                    }
+//                }
+//                if (clisv.length > 0 && clisv.length < 5) {
+//                    query.clis = clisv.join(",");
+//                }
+//
+//                inputs = this.$.inheritanceAdd.querySelectorAll("input");
+//                var inhev = [];
+//
+//                for (var i = 0; i < inputs.length; i++) {
+//                    var inputinhe = inputs[i];
+//                    if (inputinhe.checked) {
+//                        inhev.push(inputinhe.value);
+//                    }
+//                }
+//                if (inhev.length > 0 && inhev.length < 4) {
+//                    query.inheritance = inhev.join(",");
+//                }
+//
+//                if(!this.nvariantsValue == "") {
+//                    query.nv = this.nvariantsValue;
+//                }
+//                inputs = this.$.clAdd.querySelectorAll("input");
+//                var clv = [];
+//
+//                for (var i = 0; i < inputs.length; i++) {
+//                    var inputcl = inputs[i];
+//                    if (inputcl.checked) {
+//                        clv.push(inputcl.value);
+//                    }
+//                }
+//                if (clv.length > 0 && clv.length < 2) {
+//                    query.cl = clv.join(",");
+//                }
+//
+//                inputs = this.$.genderAdd.querySelectorAll("input");
+//                var genderv = [];
+//
+//                for (var i = 0; i < inputs.length; i++) {
+//                    var inputgender = inputs[i];
+//                    if (inputgender.checked) {
+//                        genderv.push(inputgender.value);
+//                    }
+//                }
+//                if (genderv.length > 0 && genderv.length < 2) {
+//                    query.gender = genderv.join(",");
+//                }
+//
+//                inputs = this.$.statusAdd.querySelectorAll("input");
+//                var statusv = [];
+//
+//                for (var i = 0; i < inputs.length; i++) {
+//                    var inputstatus = inputs[i];
+//                    if (inputstatus.checked) {
+//                        statusv.push(inputstatus.value);
+//                    }
+//                }
+//                if (statusv.length > 0 && statusv.length < 4) {
+//                    query.status = statusv.join(",");
+//                }
+//
+//                inputs = this.$.typeSAdd.querySelectorAll("input");
+//                var typeSv = [];
+//
+//                for (var i = 0; i < inputs.length; i++) {
+//                    var inputtypeS = inputs[i];
+//                    if (inputtypeS.checked) {
+//                        typeSv.push(inputtypeS.value);
+//                    }
+//                }
+//                if (typeSv.length > 0 && typeSv.length < 5) {
+//                    query.typeS = typeSv.join(",");
+//                }
+//
+//                if(!this.rdValue == "") {
+//                    query.referalDiag = this.rdValue;
+//                }
+//
+//                //Comprobar que todos son números
+//                if(!this.yearIdValue == "") {
+//                    query.year = this.yearIdValue;
+//                }
+//
+//                if(this.ethnicValue.length >0) {
+//                    query.ethnic = this.ethnicSearch;
+//                }
+//
+//
+//                if(!this.geoValue == "") {
+//                    query.geo = this.geoValue;
+//                }
+//                if(!this.arrayPlataformValue == "") {
+//                    query.arrayPlatform = this.arrayPlataformValue;
+//                }
+//                if(!this.arrayIdValue == "") {
+//                    query.arrayId = this.arrayIdValue;
+//                }
+//                if(!this.localIdValue == "") {
+//                    query.localId = this.localIdValue;
+//                }
+//                if( this.dosesValue!= null && !this.dosesValue == "" ){
+//                    query.dosesNum = this.dosesValue;
+//                    query.dosesOp = this.$.dosesOpAdd.value;
+//                }
+//
+//                if( this.sizeValue!= null && !this.sizeValue == "" ){
+//                    query.size = this.sizeValue;
+//                    query.sizesigno = this.$.sizeOpAdd.value;
+//                }
+//
+//                var hpov = [];
+//                for (var i = 0; i < this.hpoValue.length; i++) {
+//                    if (this.hpoValue[i].id.indexOf('HP:') >= 0) { // Si viene del arbol no tiene HP:
+//                        hpov[i] = this.hpoValue[i].id;
+//                    } else {
+//                        hpov[i] ='HP:' + this.hpoValue[i].id;
+//                    }
+//                    if (this.hpoValue[i].f != null) { //f son los hijos parent el padre
+//                        if (Object.keys(this.hpoValue[i].f).length > 0) {
+//                            for (var j = 0; j < this.hpoValue[i].f.length; j++) {
+//                                this.hpoValue.push(this.hpoValue[i].f[j]);
+//                            }
+//                        }
+//                    }
+//                }
+//                this.hpoValue = [];
+//                if (hpov.length > 0) {
+//                    query.hpo = hpov.join(",");
+//                }
+//                var url = CNVSManager.regions.fetch({
+//                    query: query,
+//                    request: {
+//                        url: true
+//                    }
+//                });
+//
+//                this.formURL = url;
+//                console.log(url);
+//
+//                this.adapter.params = query;
+//
+//                this.query = query;
+//            } else {
+//                alert("Please check the form");
+//            }
+//        }
     });
 </script>

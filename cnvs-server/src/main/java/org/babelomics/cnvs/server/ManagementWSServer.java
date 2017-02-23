@@ -44,16 +44,10 @@ public class ManagementWSServer extends CNVSWSServer {
 
         System.out.println("WS add. Add CNVS to DB: ");
         System.out.println("user:"+ user + "sid:"+ sid);
-        List<QueryResponse> queryResponses = new ArrayList<QueryResponse>();
 
-        for(CNVmanager c: body){
-            System.out.println(c.toString());
-            boolean res = qm.addCNV(body, user, sid);
-            QueryResponse qr = createQueryResponse(res);
-            queryResponses.add(qr);
-        }
+        int res = qm.addCNV(body, user, sid);
+        QueryResponse qr = createQueryResponse(res);
 
-        QueryResponse qr = createQueryResponse(queryResponses);
         return createOkResponse(qr);
 
     }
