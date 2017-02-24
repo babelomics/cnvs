@@ -1,6 +1,6 @@
 <link rel="import" href="../bower_components/polymer/polymer.html">
 <link rel="import" href="../bower_components/iron-flex-layout/iron-flex-layout.html">
-<link rel="import" href="../bower_components/stevia-elements/src/ontology/stv-hpo.html">
+<link rel="import" href="../bower_components/stevia-elements/src/ontology/stv-hpo-local.html">
 <link rel="import" href="../bower_components/stevia-elements/src/table/stv-table.html">
 <link rel="import" href="../bower_components/stevia-elements/src/stv-search.html">
 <link rel="import" href="cnvs-syndrome.html">
@@ -584,7 +584,7 @@
                 <i class="fa fa-search" aria-hidden="true"></i> Human Phenotype Ontology
             </div>
             <div class="container" style="width:100%">
-                <stv-hpo readyhp hpo-value="{{hpoValue}}" on-added="showHPO"></stv-hpo>
+                <stv-hpo-local readyhp hpo-value="{{hpoValue}}" on-added="showHPO"></stv-hpo-local>
             </div>
         </stv-panel>
 

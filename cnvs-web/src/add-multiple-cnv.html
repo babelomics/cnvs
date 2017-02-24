@@ -264,7 +264,6 @@
             var sheet_name_list = workbook.SheetNames;
             var me = this;
             sheet_name_list.forEach(function(y) { /* iterate through sheets */
-                var sheetsList;
                 var worksheet = workbook.Sheets[y];
                 var c = XLSX.utils.sheet_to_json(worksheet);
                 for (var i = 0; i < c.length; i++){
@@ -286,7 +285,7 @@
             if(z.hasOwnProperty("02-Local ID 1")){
                 newRow.centerId1 = z["02-Local ID 1"] ;
             }else{
-                alert("Insert Local Id, please")
+                alert("Insert Local Id in cnv number "+ index +", please")
                 validateForm = false;
             }
 
@@ -316,7 +315,7 @@
                     if(z.hasOwnProperty("23-Age in weeks (only for prenatal)")){
                         newRow.agePrenatal = z["23-Age in weeks (only for prenatal)"];
                     }else{
-                        alert("Insert Age Prenatal, please")
+                        alert("Insert Age Prenatal in cnv number "+ index +", please")
                         validateForm = false;
                     }
                 }
@@ -336,7 +335,7 @@
                 newRow.status = z["16-Status"];
             }else{
                 validateForm = false;
-                alert("Insert Status, please")
+                alert("Insert Status in cnv number "+ index +", please")
             }
 
             if(z.hasOwnProperty("14-Cell line")){
@@ -350,14 +349,14 @@
                 newRow.typeSample = z["17-Type of sample"];
             }else{
                 validateForm = false;
-                alert("Insert Type of Sample, please")
+                alert("Insert Type of Sample in cnv number "+ index +", please")
             }
 
             if(z.hasOwnProperty("15-Chromosomal gender")){
                 newRow.chromGender = z["15-Chromosomal gender"];
             }else{
                 validateForm = false;
-                alert("Insert Chr gender, please")
+                alert("Insert Chr gender in cnv number "+ index +", please")
             }
 
             //not required Facultativo
@@ -378,21 +377,21 @@
                 newRow.chromosome = z["03-Chromosome"];
             }else{
                 validateForm = false;
-                alert("Insert Chromosome, please")
+                alert("Insert Chromosome in cnv number "+ index +", please")
             }
 
             if(z.hasOwnProperty("04-Start")){
                 newRow.start = z["04-Start"];
             }else{
                 validateForm = false;
-                alert("Insert Start, please")
+                alert("Insert Start in cnv number "+ index +", please")
             }
 
             if(z.hasOwnProperty("05-End")){
                 newRow.end = z["05-End"];
             }else{
                 validateForm = false;
-                alert("Insert End, please")
+                alert("Insert End in cnv number "+ index +", please")
             }
 
 
@@ -400,28 +399,28 @@
                 newRow.type = z["08-Type of variant"];
             }else{
                 validateForm = false;
-                alert("Insert Type of variant, please")
+                alert("Insert Type of variant in cnv number "+ index +", please")
             }
 
             if(z.hasOwnProperty("13-Number of variants")) {
                 newRow.nv = z["13-Number of variants"];
             }else{
                 validateForm = false;
-                alert("Insert Number of variants, please")
+                alert("Insert Number of variants in cnv number "+ index +", please")
             }
 
             if (z.hasOwnProperty("09-Doses")) {
                 newRow.doses = z["09-Doses"];
             }else{
                 validateForm = false;
-                alert("Insert Doses, please")
+                alert("Insert Doses in cnv number "+ index +", please")
             }
 
             if( z.hasOwnProperty("10-Mean ratio")){
                 newRow.dosesNum =  z["10-Mean ratio"];
             }else{
                 validateForm = false;
-                alert("Insert Doses Number, please")
+                alert("Insert Doses Number in cnv number "+ index +", please")
             }
             //TODO hacer ws para que se traiga directamente la cytobanda
 
@@ -429,7 +428,7 @@
                 newRow.band = z["07-Band"].split(",");
             }else{
                 validateForm = false;
-                alert("Insert the cytoband, please")
+                alert("Insert the cytoband in cnv number "+ index +", please")
             }
 
 
@@ -437,7 +436,7 @@
                 newRow.assembly = z["06-Assembly"];
             }else{
                 validateForm = false;
-                alert("Insert assembly, please")
+                alert("Insert assembly in cnv number "+ index +", please")
             }
 
             if(z.hasOwnProperty("18-Referral diagnosis")) {
@@ -449,7 +448,7 @@
                 newRow.phenotype = z["19-Phenotype (HPO)"].split(",");
             }
 //            }else{
-//                alert("Insert Phenotype");
+//                alert("Insert Phenotype in cnv number "+ index +", please");
 //            }
 
             if(z.hasOwnProperty("28-Aneuploidy-Deletion/Duplication Syndrome")){
@@ -460,14 +459,14 @@
                 newRow.inheritance = z["12-Inheritance"];
             }else{
                 validateForm = false;
-                alert("Insert inheritance, please")
+                alert("Insert inheritance in cnv number "+ index +", please")
             }
 
             if(z.hasOwnProperty("11-Clinical significance")){
                 newRow.clinicalSig = z["11-Clinical significance"];
             }else{
                 validateForm = false;
-                alert("Insert clinical significance, please")
+                alert("Insert clinical significance in cnv number"+ index +", please")
             }
 
 
