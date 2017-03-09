@@ -1685,12 +1685,12 @@
             var args = {
                 label: function(f) {
                     var str = "";
-                    str += f.chromosome + ":" + f.start + "-" + f.end +"("+f.code+")";
+                    str += f.chromosome + ":" + f.start + "-" + f.end +"("+ f.organization +"-"+f.code+")";
                     return str;
                 },
                 tooltipTitle: function(f) {
                     var str = "";
-                    str += f.chromosome + ":" + f.start + "-" + f.end+"("+f.code+")";
+                    str += f.chromosome + ":" + f.start + "-" + f.end+"("+ f.organization +"-"+f.code+")";
                     return str;
                     //return FEATURE_TYPES.getTipTitleCommons(f);
                 },
