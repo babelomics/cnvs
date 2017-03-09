@@ -393,28 +393,28 @@
                             <div class="input_container vertical layout" id="doses">
                                 <label class="stv">Copy Number(Doses):</label>
                                 <div class="vertical layout">
-                                    <label for="doses0" class="stv-control flex">
-                                        <input type="checkbox" name="doses" value="0" id="doses0" checked/>
+                                    <label for="doses1" class="stv-control flex">
+                                        <input type="checkbox" name="doses" value="1" id="doses1" checked/>
                                         <span>0-Homozygous deletion</span>
                                     </label>
                                     <label for="doses2" class="stv-control flex">
                                         <input type="checkbox" name="doses" value="2" id="doses2" checked/>
                                         <span>0-Hemyzygous deletion</span>
                                     </label>
-                                    <label for="doses1" class="stv-control flex">
-                                        <input type="checkbox" name="doses" value="1" id="doses1" checked/>
-                                        <span>1-Deletion</span>
-                                    </label>
                                     <label for="doses3" class="stv-control flex">
                                         <input type="checkbox" name="doses" value="3" id="doses3" checked/>
-                                        <span>3-Duplication</span>
+                                        <span>1-Deletion</span>
                                     </label>
                                     <label for="doses4" class="stv-control flex">
                                         <input type="checkbox" name="doses" value="4" id="doses4" checked/>
-                                        <span>4-Triplication</span>
+                                        <span>3-Duplication</span>
                                     </label>
                                     <label for="doses5" class="stv-control flex">
                                         <input type="checkbox" name="doses" value="5" id="doses5" checked/>
+                                        <span>4-Triplication</span>
+                                    </label>
+                                    <label for="doses6" class="stv-control flex">
+                                        <input type="checkbox" name="doses" value="6" id="doses6" checked/>
                                         <span>5 or more-Amplification</span>
                                     </label>
                                 </div>
@@ -446,7 +446,7 @@
                         </div>
                         <div class="input_container vertical layout">
                             <label class="stv">Cytoband:</label>
-                            <textarea class="stv" id="cytoband" name="cytoband" placeholder="p36.33" value="{{bandValue::change}}" rows="3"></textarea>
+                            <textarea class="stv" id="cytoband" name="cytoband" placeholder="1p36.33" value="{{bandValue::change}}" rows="3"></textarea>
                         </div>
                         <div class="input_container vertical layout" id = "assembly">
                             <label class="stv">Assembly:</label>
@@ -1725,13 +1725,13 @@
             this.$.gv.genomeViewer.setTrackIndex(track, 0);
         },
         dosesAndSizeNumValidity: function(){
-            if(this.dosesValue != null){
+            if(this.dosesValue != null && this.dosesValue != ""){
                 if(isNaN(this.dosesValue)) {
                     alert("doses Number is not a number, check the form");
                         return (false);
                 }
             }
-            if(this.sizeValue != null){
+            if(this.sizeValue != null && this.sizeValue != ""){
                 if(isNaN(this.sizeValue)) {
                     alert("The size is not a number, check the form");
                     return (false);
@@ -1752,19 +1752,21 @@
                 alert("Enter only the gen field or the band")
                 return false;
             }
-            var years = this.yearIdValue;
-            if(years != null){
-                for(var i =0; i < years.length() ; i++){
-                    if(isNaN(years[i]) || (years[i] < 1900)){
+
+            if(this.yearIdValue != null){
+                var years = this.yearIdValue.split(",");
+                for(var i =0; i < years.length ; i++){
+                    if(years[i] != "" && (isNaN(years[i]) || (years[i] < 1900))){
                         alert("Year of birth is not a number or is less than 1900, check the form");
                         return (false);
                     }
                 }
             }
-            var years = this.yearTestValue;
-            if(years != null) {
-                for (var i = 0; i < years.length(); i++) {
-                    if (isNaN(years[i]) || (years[i] < 1950)) {
+
+            if(this.yearTestValue != null) {
+                var yearst = this.yearTestValue.split(",");
+                for (var i = 0; i < yearst.length; i++) {
+                    if (yearst[i] != "" && (isNaN(yearst[i]) || (yearst[i] < 1950))) {
                         alert("Year of Test is not a number or is less than 1950, check the form");
                         return (false);
                     }

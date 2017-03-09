@@ -50,7 +50,6 @@ var CNVSManager = {
             }
             var async = true;
             if (typeof args.request.async !== 'undefined' && args.request.async != null) {
-                console.log("Dentro del async");
                 async = args.request.async;
             }
             console.log(url);

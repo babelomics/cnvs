@@ -131,15 +131,17 @@
     <template>
         <div class="right vertical layout">
             <form>
-                <div class="form_block positionBlock horizontal layout">
-                        <input type="file" id ="cnvsFile" name="cnvsFile" accept="application/vnd.sealed-xls">
+                <div class="form_block positionBlock horizontal layout center">
+                        <input type="file" id ="cnvsFile" on-change="handleSelectFile" name="cnvsFile" accept="application/vnd.sealed-xls" hidden>
+                        <div class="stv-btn stv-btn-shdw" on-click="handleFileClick" title="read" style="margin-right:10px">Choose File</div>
+                        <div id="cnvsFileName" style="margin-right:10px">No file chosen</div>
                         <div class="stv-btn stv-btn-shdw" on-click="readXLSX" title="read">Read File</div>
                 </div>
             </form>
 
             <div id="add_cnvs" class="horizontal layout" style="margin:10px 0px 15px 0px;">
                 <div>
-                    <span style="color: #006699; margin: 10px;" >  Total cases:  {{totalcaseValue}}</span>
+                    <span style="color: #006699; margin: 10px;" >  Total cases readed:  {{totalcasereadedValue}}</span>
                 </div>
 
             </div>
@@ -166,7 +168,7 @@
             userData:{
                 type:Object
             },
-            totalcaseValue: {
+            totalcasereadedValue: {
                 type: Number,
                 value: 0
             },
@@ -193,6 +195,15 @@
                 value: "",
                 observer: 'urlChanged'
             },
+        },
+        handleFileClick: function (){
+            this.$.cnvsFile.value = null;
+            this.$.cnvsFileName.innerHTML = "";
+            this.$.cnvsFile.click();
+
+        },
+        handleSelectFile: function (){
+            this.$.cnvsFileName.innerHTML =  this.$.cnvsFile.files[0].name;
         },
         handleColumnVisibilityChange: function(){
             var small = true;
@@ -249,7 +260,7 @@
 
         },
         readXLSX: function(){
-            var file = this.$.cnvsFile.files[0]
+            var file = this.$.cnvsFile.files[0];
             var reader = new FileReader();
             var me = this;
             reader.onload = function(e) {
@@ -270,7 +281,9 @@
                     console.log(c[i], i);
                     me.addCNV(c[i], i);
                 }
+                me.totalcasereadedValue += c.length;
             });
+
         },
         addCNV: function(z, index){
             var validateForm = true;
@@ -622,7 +635,7 @@
         ready: function() {
             var me = this;
 
-            this.totalcaseValue = ALL_CASE;
+            this.totalcasereadedValue = 0;
             this.species = 'Homo sapiens';
             this._initGeneSearch();
 

@@ -82,7 +82,8 @@ public class CNVSQueryManager {
         }
 
         if (q.getDoses() != null && (q.getDoses().size() > 0)) {
-            this.addDosesToQuery(q.getDoses(), q.getDosesNum(), q.getDosesOp(), query);
+            this.addTypeIntToQuery(q.getDoses(),query, "doses");
+//            this.addDosesToQuery(q.getDoses(), q.getDosesNum(), q.getDosesOp(), query);
         } else if (q.getDosesNum() != -10) {
             this.addDNumericDosesToQuery(q.getDosesNum(), q.getDosesOp(), query);
         }
@@ -311,65 +312,65 @@ public class CNVSQueryManager {
         }
 
     }
-
-    private void addDosesToQuery(List<Integer> doses, double dosesnum, String op, Query<CNV> query) {
-        int criteriaSize = doses.size();
-        if (dosesnum != -10) {
-            criteriaSize++;
-        }
-        Criteria[] or = new Criteria[criteriaSize];
-
-        int i = 0;
-        for (int dos : doses) {
-            Query<CNV> auxQuery = this.datastore.createQuery(CNV.class);
-            List<Criteria> andList = new ArrayList<>();
-            switch (dos) {
-                case 0:
-                    andList.add(auxQuery.criteria("doses").lessThanOrEq(-1));
-                    break;
-                case 1:
-                    andList.add(auxQuery.criteria("doses").greaterThan(-1));
-                    andList.add(auxQuery.criteria("doses").lessThan(-0.35));
-                    break;
-                case 2:
-                    andList.add(auxQuery.criteria("doses").equal(1));
-                    break;
-                case 3:
-                    andList.add(auxQuery.criteria("doses").greaterThan(0.35));
-                    andList.add(auxQuery.criteria("doses").lessThanOrEq(0.6));
-                    break;
-                case 4:
-                    andList.add(auxQuery.criteria("doses").greaterThanOrEq(0.61));
-                    andList.add(auxQuery.criteria("doses").lessThan(1));
-                    break;
-                case 5:
-                    andList.add(auxQuery.criteria("doses").greaterThanOrEq(1));
-                    break;
-
-            }
-            or[i++] = auxQuery.and(andList.toArray(new Criteria[andList.size()]));
-        }
-        if (dosesnum != -10) {
-            Query<CNV> auxQuery = this.datastore.createQuery(CNV.class);
-            List<Criteria> andList = new ArrayList<>();
-            if (op.equals("=")) {
-                andList.add(auxQuery.criteria("doses").equal(dosesnum));
-            } else if (op.equals(">")) {
-                andList.add(auxQuery.criteria("doses").greaterThan(dosesnum));
-            } else if (op.equals(">=")) {
-                andList.add(auxQuery.criteria("doses").greaterThanOrEq(dosesnum));
-            } else if (op.equals("<=")) {
-                andList.add(auxQuery.criteria("doses").lessThanOrEq(dosesnum));
-            } else if (op.equals("<")) {
-                andList.add(auxQuery.criteria("doses").lessThan(dosesnum));
-            }
-            or[i++] = auxQuery.and(andList.toArray(new Criteria[andList.size()]));
-        }
-
-        query.or(or);
-        System.out.println("La doses es:" + doses.size());
-
-    }
+//
+//    private void addDosesToQuery(List<Integer> doses, double dosesnum, String op, Query<CNV> query) {
+//        int criteriaSize = doses.size();
+//        if (dosesnum != -10) {
+//            criteriaSize++;
+//        }
+//        Criteria[] or = new Criteria[criteriaSize];
+//
+//        int i = 0;
+//        for (int dos : doses) {
+//            Query<CNV> auxQuery = this.datastore.createQuery(CNV.class);
+//            List<Criteria> andList = new ArrayList<>();
+//            switch (dos) {
+//                case 0:
+//                    andList.add(auxQuery.criteria("doses").lessThanOrEq(-1));
+//                    break;
+//                case 1:
+//                    andList.add(auxQuery.criteria("doses").greaterThan(-1));
+//                    andList.add(auxQuery.criteria("doses").lessThan(-0.35));
+//                    break;
+//                case 2:
+//                    andList.add(auxQuery.criteria("doses").equal(1));
+//                    break;
+//                case 3:
+//                    andList.add(auxQuery.criteria("doses").greaterThan(0.35));
+//                    andList.add(auxQuery.criteria("doses").lessThanOrEq(0.6));
+//                    break;
+//                case 4:
+//                    andList.add(auxQuery.criteria("doses").greaterThanOrEq(0.61));
+//                    andList.add(auxQuery.criteria("doses").lessThan(1));
+//                    break;
+//                case 5:
+//                    andList.add(auxQuery.criteria("doses").greaterThanOrEq(1));
+//                    break;
+//
+//            }
+//            or[i++] = auxQuery.and(andList.toArray(new Criteria[andList.size()]));
+//        }
+//        if (dosesnum != -10) {
+//            Query<CNV> auxQuery = this.datastore.createQuery(CNV.class);
+//            List<Criteria> andList = new ArrayList<>();
+//            if (op.equals("=")) {
+//                andList.add(auxQuery.criteria("doses").equal(dosesnum));
+//            } else if (op.equals(">")) {
+//                andList.add(auxQuery.criteria("doses").greaterThan(dosesnum));
+//            } else if (op.equals(">=")) {
+//                andList.add(auxQuery.criteria("doses").greaterThanOrEq(dosesnum));
+//            } else if (op.equals("<=")) {
+//                andList.add(auxQuery.criteria("doses").lessThanOrEq(dosesnum));
+//            } else if (op.equals("<")) {
+//                andList.add(auxQuery.criteria("doses").lessThan(dosesnum));
+//            }
+//            or[i++] = auxQuery.and(andList.toArray(new Criteria[andList.size()]));
+//        }
+//
+//        query.or(or);
+//        System.out.println("La doses es:" + doses.size());
+//
+//    }
 
     private void addDNumericDosesToQuery(double doses, String op, Query<CNV> query) {
         if (op.equals("=")) {
