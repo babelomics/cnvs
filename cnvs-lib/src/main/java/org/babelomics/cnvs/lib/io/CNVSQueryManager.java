@@ -374,15 +374,15 @@ public class CNVSQueryManager {
 
     private void addDNumericDosesToQuery(double doses, String op, Query<CNV> query) {
         if (op.equals("=")) {
-            query.field("doses").equal(doses);
+            query.field("dosesNum").equal(doses);
         } else if (op.equals(">")) {
-            query.field("doses").greaterThan(doses);
+            query.field("dosesNum").greaterThan(doses);
         } else if (op.equals(">=")) {
-            query.field("doses").greaterThanOrEq(doses);
+            query.field("dosesNum").greaterThanOrEq(doses);
         } else if (op.equals("<=")) {
-            query.field("doses").lessThanOrEq(doses);
+            query.field("dosesNum").lessThanOrEq(doses);
         } else if (op.equals("<")) {
-            query.field("doses").lessThan(doses);
+            query.field("dosesNum").lessThan(doses);
         }
     }
 

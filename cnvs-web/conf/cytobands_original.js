@@ -6,12 +6,6 @@ CYTOBANDS=[
         {
             cytobands: [
                 {
-                    stain: "acen0",
-                    name: "p11",
-                    end: 123400000,
-                    start: 120400001
-                },
-                {
                     stain: "acen",
                     name: "p11.1",
                     end: 123400000,
@@ -30,12 +24,6 @@ CYTOBANDS=[
                     start: 117200001
                 },
                 {
-                    stain: "gneg0",
-                    name: "p13.1",
-                    end: 117200000,
-                    start: 106700001
-                },
-                {
                     stain: "gneg",
                     name: "p13.1",
                     end: 117200000,
@@ -52,11 +40,6 @@ CYTOBANDS=[
                     name: "p13.3",
                     end: 111200000,
                     start: 106700001
-                },{
-                    stain: "gpos0",
-                    name: "p21",
-                    end: 106700000,
-                    start: 94300001
                 },
                 {
                     stain: "gpos100",
@@ -77,12 +60,6 @@ CYTOBANDS=[
                     start: 94300001
                 },
                 {
-                    stain: "gneg0",
-                    name: "p22",
-                    end: 94300000,
-                    start: 84400001
-                },
-                {
                     stain: "gneg",
                     name: "p22.1",
                     end: 94300000,
@@ -101,12 +78,6 @@ CYTOBANDS=[
                     start: 84400001
                 },
                 {
-                    stain: "gpos0",
-                    name: "p31",
-                    end: 84400000,
-                    start: 60800001
-                },
-                {
                     stain: "gpos100",
                     name: "p31.1",
                     end: 84400000,
@@ -123,12 +94,6 @@ CYTOBANDS=[
                     name: "p31.3",
                     end: 68500000,
                     start: 60800001
-                },
-                {
-                    stain: "gneg0",
-                    name: "p32",
-                    end: 60800000,
-                    start: 50200001
                 },
                 {
                     stain: "gneg",
@@ -155,12 +120,6 @@ CYTOBANDS=[
                     start: 46300001
                 },
                 {
-                    stain: "gneg0",
-                    name: "p34",
-                    end: 46300000,
-                    start: 34300001
-                },
-                {
                     stain: "gneg",
                     name: "p34.1",
                     end: 46300000,
@@ -179,12 +138,6 @@ CYTOBANDS=[
                     start: 34300001
                 },
                 {
-                    stain: "gpos0",
-                    name: "p35",
-                    end: 34300000,
-                    start: 27600001
-                },
-                {
                     stain: "gpos25",
                     name: "p35.1",
                     end: 34300000,
@@ -201,12 +154,6 @@ CYTOBANDS=[
                     name: "p35.3",
                     end: 29900000,
                     start: 27600001
-                },
-                {
-                    stain: "gneg0",
-                    name: "p36",
-                    end: 27600000,
-                    start: 1
                 },
                 {
                     stain: "gneg",
@@ -275,12 +222,6 @@ CYTOBANDS=[
                     start: 125100001
                 },
                 {
-                    stain: "gneg0",
-                    name: "q21",
-                    end: 155100000,
-                    start: 143200001
-                },
-                {
                     stain: "gneg",
                     name: "q21.1",
                     end: 147500000,
@@ -305,12 +246,6 @@ CYTOBANDS=[
                     start: 155100001
                 },
                 {
-                    stain: "gneg0",
-                    name: "q23",
-                    end: 165500000,
-                    start: 156600001
-                },
-                {
                     stain: "gneg",
                     name: "q23.1",
                     end: 159100000,
@@ -327,12 +262,6 @@ CYTOBANDS=[
                     name: "q23.3",
                     end: 165500000,
                     start: 160500001
-                },
-                {
-                    stain: "gpos0",
-                    name: "q24",
-                    end: 173000000,
-                    start: 165500001
                 },
                 {
                     stain: "gpos50",
@@ -353,12 +282,6 @@ CYTOBANDS=[
                     start: 170900001
                 },
                 {
-                    stain: "gneg0",
-                    name: "q25",
-                    end: 185800000,
-                    start: 173000001
-                },
-                {
                     stain: "gneg",
                     name: "q25.1",
                     end: 176100000,
@@ -377,12 +300,6 @@ CYTOBANDS=[
                     start: 180300001
                 },
                 {
-                    stain: "gpos0",
-                    name: "q31",
-                    end: 198700000,
-                    start: 185800001
-                },
-                {
                     stain: "gpos100",
                     name: "q31.1",
                     end: 190800000,
@@ -399,12 +316,6 @@ CYTOBANDS=[
                     name: "q31.3",
                     end: 198700000,
                     start: 193800001
-                },
-                {
-                    stain: "gneg0",
-                    name: "q32",
-                    end: 214400000,
-                    start: 198700001
                 },
                 {
                     stain: "gneg",
@@ -429,12 +340,6 @@ CYTOBANDS=[
                     name: "q41",
                     end: 223900000,
                     start: 214400001
-                },
-                {
-                    stain: "gneg0",
-                    name: "q42",
-                    end: 236400000,
-                    start: 223900001
                 },
                 {
                     stain: "gneg",
@@ -488,12 +393,6 @@ CYTOBANDS=[
         {
             cytobands: [
                 {
-                    stain: "acen0",
-                    name: "p11",
-                    end: 93900000,
-                    start: 83100001
-                },
-                {
                     stain: "acen",
                     name: "p11.1",
                     end: 93900000,
@@ -510,12 +409,6 @@ CYTOBANDS=[
                     name: "p12",
                     end: 83100000,
                     start: 74800001
-                },
-                {
-                    stain: "gneg0",
-                    name: "p13.1",
-                    end: 74800000,
-                    start: 68400001
                 },
                 {
                     stain: "gneg",
@@ -548,12 +441,6 @@ CYTOBANDS=[
                     start: 61000001
                 },
                 {
-                    stain: "gpos0",
-                    name: "p16.1",
-                    end: 61000000,
-                    start: 47500001
-                },
-                {
                     stain: "gpos100",
                     name: "p16.1",
                     end: 61000000,
@@ -578,12 +465,6 @@ CYTOBANDS=[
                     start: 41500001
                 },
                 {
-                    stain: "gpos0",
-                    name: "p22",
-                    end: 41500000,
-                    start: 31800001
-                },
-                {
                     stain: "gpos50",
                     name: "p22.1",
                     end: 41500000,
@@ -600,12 +481,6 @@ CYTOBANDS=[
                     name: "p22.3",
                     end: 36300000,
                     start: 31800001
-                },
-                {
-                    stain: "gneg0",
-                    name: "p23",
-                    end: 31800000,
-                    start: 23800001
                 },
                 {
                     stain: "gneg",
@@ -626,12 +501,6 @@ CYTOBANDS=[
                     start: 23800001
                 },
                 {
-                    stain: "gpos0",
-                    name: "p24",
-                    end: 23800000,
-                    start: 12000001
-                },
-                {
                     stain: "gpos75",
                     name: "p24.1",
                     end: 23800000,
@@ -650,12 +519,6 @@ CYTOBANDS=[
                     start: 12000001
                 },
                 {
-                    stain: "gneg0",
-                    name: "p25",
-                    end: 12000000,
-                    start: 1
-                },
-                {
                     stain: "gneg",
                     name: "p25.1",
                     end: 12000000,
@@ -672,12 +535,6 @@ CYTOBANDS=[
                     name: "p25.3",
                     end: 4400000,
                     start: 1
-                },
-                {
-                    stain: "acen0",
-                    name: "q11",
-                    end: 108700000,
-                    start: 93900001
                 },
                 {
                     stain: "acen",
@@ -716,12 +573,6 @@ CYTOBANDS=[
                     start: 108700001
                 },
                 {
-                    stain: "gpos0",
-                    name: "q14",
-                    end: 129100000,
-                    start: 112200001
-                },
-                {
                     stain: "gpos50",
                     name: "q14.1",
                     end: 118100000,
@@ -738,12 +589,6 @@ CYTOBANDS=[
                     name: "q14.3",
                     end: 129100000,
                     start: 121600001
-                },
-                {
-                    stain: "gneg0",
-                    name: "q21",
-                    end: 136100000,
-                    start: 129100001
                 },
                 {
                     stain: "gneg",
@@ -764,12 +609,6 @@ CYTOBANDS=[
                     start: 134300001
                 },
                 {
-                    stain: "gpos0",
-                    name: "q22",
-                    end: 147900000,
-                    start: 136100001
-                },
-                {
                     stain: "gpos100",
                     name: "q22.1",
                     end: 141500000,
@@ -786,12 +625,6 @@ CYTOBANDS=[
                     name: "q22.3",
                     end: 147900000,
                     start: 143400001
-                },
-                {
-                    stain: "gneg0",
-                    name: "q23",
-                    end: 154000000,
-                    start: 147900001
                 },
                 {
                     stain: "gneg",
@@ -812,12 +645,6 @@ CYTOBANDS=[
                     start: 149600001
                 },
                 {
-                    stain: "gpos0",
-                    name: "q24",
-                    end: 168900000,
-                    start: 154000001
-                },
-                {
                     stain: "gpos75",
                     name: "q24.1",
                     end: 158900000,
@@ -834,12 +661,6 @@ CYTOBANDS=[
                     name: "q24.3",
                     end: 168900000,
                     start: 162900001
-                },
-                {
-                    stain: "gneg0",
-                    name: "q31",
-                    end: 182100000,
-                    start: 168900001
                 },
                 {
                     stain: "gneg",
@@ -860,12 +681,6 @@ CYTOBANDS=[
                     start: 179700001
                 },
                 {
-                    stain: "gpos0",
-                    name: "q32",
-                    end: 196600000,
-                    start: 182100001
-                },
-                {
                     stain: "gpos75",
                     name: "q32.1",
                     end: 188500000,
@@ -882,12 +697,6 @@ CYTOBANDS=[
                     name: "q32.3",
                     end: 196600000,
                     start: 191100001
-                },
-                {
-                    stain: "gneg0",
-                    name: "q33",
-                    end: 208200000,
-                    start: 196600001
                 },
                 {
                     stain: "gneg",
@@ -920,12 +729,6 @@ CYTOBANDS=[
                     start: 214500001
                 },
                 {
-                    stain: "gpos0",
-                    name: "q36",
-                    end: 230100000,
-                    start: 220700001
-                },
-                {
                     stain: "gpos75",
                     name: "q36.1",
                     end: 224300000,
@@ -942,12 +745,6 @@ CYTOBANDS=[
                     name: "q36.3",
                     end: 230100000,
                     start: 225200001
-                },
-                {
-                    stain: "gneg0",
-                    name: "q37",
-                    end: 242193529,
-                    start: 230100001
                 },
                 {
                     stain: "gneg",
@@ -977,12 +774,6 @@ CYTOBANDS=[
         {
             cytobands: [
                 {
-                    stain: "acen0",
-                    name: "p11",
-                    end: 90900000,
-                    start: 87100001
-                },
-                {
                     stain: "acen",
                     name: "p11.1",
                     end: 90900000,
@@ -993,12 +784,6 @@ CYTOBANDS=[
                     name: "p11.2",
                     end: 87800000,
                     start: 87100001
-                },
-                {
-                    stain: "gpos0",
-                    name: "p12",
-                    end: 87100000,
-                    start: 74100001
                 },
                 {
                     stain: "gpos75",
@@ -1025,12 +810,6 @@ CYTOBANDS=[
                     start: 69700001
                 },
                 {
-                    stain: "gpos0",
-                    name: "p14",
-                    end: 69700000,
-                    start: 54400001
-                },
-                {
                     stain: "gpos50",
                     name: "p14.1",
                     end: 69700000,
@@ -1047,12 +826,6 @@ CYTOBANDS=[
                     name: "p14.3",
                     end: 58600000,
                     start: 54400001
-                },
-                {
-                    stain: "gneg0",
-                    name: "p21",
-                    end: 54400000,
-                    start: 43600001
                 },
                 {
                     stain: "gneg",
@@ -1085,12 +858,6 @@ CYTOBANDS=[
                     start: 43600001
                 },
                 {
-                    stain: "gpos0",
-                    name: "p22.1",
-                    end: 43600000,
-                    start: 32000001
-                },
-                {
                     stain: "gpos75",
                     name: "p22.1",
                     end: 43600000,
@@ -1115,12 +882,6 @@ CYTOBANDS=[
                     start: 30800001
                 },
                 {
-                    stain: "gpos0",
-                    name: "p24",
-                    end: 30800000,
-                    start: 16300001
-                },
-                {
                     stain: "gpos75",
                     name: "p24.1",
                     end: 30800000,
@@ -1137,12 +898,6 @@ CYTOBANDS=[
                     name: "p24.3",
                     end: 23800000,
                     start: 16300001
-                },
-                {
-                    stain: "gneg0",
-                    name: "p25",
-                    end: 16300000,
-                    start: 8100001
                 },
                 {
                     stain: "gneg",
@@ -1163,12 +918,6 @@ CYTOBANDS=[
                     start: 8100001
                 },
                 {
-                    stain: "gpos0",
-                    name: "p26",
-                    end: 8100000,
-                    start: 1
-                },
-                {
                     stain: "gpos50",
                     name: "p26.1",
                     end: 8100000,
@@ -1187,12 +936,6 @@ CYTOBANDS=[
                     start: 1
                 },
                 {
-                    stain: "acen0",
-                    name: "q11",
-                    end: 98600000,
-                    start: 90900001
-                },
-                {
                     stain: "acen",
                     name: "q11.1",
                     end: 94000000,
@@ -1203,12 +946,6 @@ CYTOBANDS=[
                     name: "q11.2",
                     end: 98600000,
                     start: 94000001
-                },
-                {
-                    stain: "gneg0",
-                    name: "q12",
-                    end: 103100000,
-                    start: 98600001
                 },
                 {
                     stain: "gneg",
@@ -1227,12 +964,6 @@ CYTOBANDS=[
                     name: "q12.3",
                     end: 103100000,
                     start: 101200001
-                },
-                {
-                    stain: "gpos0",
-                    name: "q13",
-                    end: 122200000,
-                    start: 103100001
                 },
                 {
                     stain: "gpos75",
@@ -1277,12 +1008,6 @@ CYTOBANDS=[
                     start: 119300001
                 },
                 {
-                    stain: "gneg0",
-                    name: "q21",
-                    end: 129500000,
-                    start: 122200001
-                },
-                {
                     stain: "gneg",
                     name: "q21.1",
                     end: 124100000,
@@ -1299,12 +1024,6 @@ CYTOBANDS=[
                     name: "q21.3",
                     end: 129500000,
                     start: 126100001
-                },
-                {
-                    stain: "gpos0",
-                    name: "q22",
-                    end: 139000000,
-                    start: 129500001
                 },
                 {
                     stain: "gpos25",
@@ -1337,12 +1056,6 @@ CYTOBANDS=[
                     start: 143100001
                 },
                 {
-                    stain: "gneg0",
-                    name: "q25",
-                    end: 161000000,
-                    start: 149200001
-                },
-                {
                     stain: "gneg",
                     name: "q25.1",
                     end: 152300000,
@@ -1373,12 +1086,6 @@ CYTOBANDS=[
                     start: 159300001
                 },
                 {
-                    stain: "gpos0",
-                    name: "q26",
-                    end: 183000000,
-                    start: 161000001
-                },
-                {
                     stain: "gpos100",
                     name: "q26.1",
                     end: 167900000,
@@ -1407,12 +1114,6 @@ CYTOBANDS=[
                     name: "q26.33",
                     end: 183000000,
                     start: 179300001
-                },
-                {
-                    stain: "gneg0",
-                    name: "q27",
-                    end: 188200000,
-                    start: 183000001
                 },
                 {
                     stain: "gneg",
@@ -1478,12 +1179,6 @@ CYTOBANDS=[
                     start: 35800001
                 },
                 {
-                    stain: "gpos0",
-                    name: "p15",
-                    end: 35800000,
-                    start: 11300001
-                },
-                {
                     stain: "gpos100",
                     name: "p15.1",
                     end: 35800000,
@@ -1512,12 +1207,6 @@ CYTOBANDS=[
                     name: "p15.33",
                     end: 15000000,
                     start: 11300001
-                },
-                {
-                    stain: "gneg0",
-                    name: "p16",
-                    end: 11300000,
-                    start: 1
                 },
                 {
                     stain: "gneg",
@@ -1550,12 +1239,6 @@ CYTOBANDS=[
                     start: 51800001
                 },
                 {
-                    stain: "gpos0",
-                    name: "q13",
-                    end: 75300000,
-                    start: 58500001
-                },
-                {
                     stain: "gpos100",
                     name: "q13.1",
                     end: 65500000,
@@ -1572,12 +1255,6 @@ CYTOBANDS=[
                     name: "q13.3",
                     end: 75300000,
                     start: 69400001
-                },
-                {
-                    stain: "gneg0",
-                    name: "q21",
-                    end: 87100000,
-                    start: 75300001
                 },
                 {
                     stain: "gneg",
@@ -1608,12 +1285,6 @@ CYTOBANDS=[
                     name: "q21.3",
                     end: 87100000,
                     start: 86000001
-                },
-                {
-                    stain: "gpos0",
-                    name: "q22",
-                    end: 97900000,
-                    start: 87100001
                 },
                 {
                     stain: "gpos75",
@@ -1664,12 +1335,6 @@ CYTOBANDS=[
                     start: 119900001
                 },
                 {
-                    stain: "gpos0",
-                    name: "q28",
-                    end: 138500000,
-                    start: 122800001
-                },
-                {
                     stain: "gpos50",
                     name: "q28.1",
                     end: 127900000,
@@ -1686,12 +1351,6 @@ CYTOBANDS=[
                     name: "q28.3",
                     end: 138500000,
                     start: 130100001
-                },
-                {
-                    stain: "gneg0",
-                    name: "q31",
-                    end: 154600000,
-                    start: 138500001
                 },
                 {
                     stain: "gneg",
@@ -1724,12 +1383,6 @@ CYTOBANDS=[
                     start: 150200001
                 },
                 {
-                    stain: "gpos0",
-                    name: "q32",
-                    end: 169200000,
-                    start: 154600001
-                },
-                {
                     stain: "gpos100",
                     name: "q32.1",
                     end: 160800000,
@@ -1754,12 +1407,6 @@ CYTOBANDS=[
                     start: 169200001
                 },
                 {
-                    stain: "gpos0",
-                    name: "q34",
-                    end: 182300000,
-                    start: 171000001
-                },
-                {
                     stain: "gpos75",
                     name: "q34.1",
                     end: 175400000,
@@ -1776,12 +1423,6 @@ CYTOBANDS=[
                     name: "q34.3",
                     end: 182300000,
                     start: 176600001
-                },
-                {
-                    stain: "gneg0",
-                    name: "q35",
-                    end: 190214555,
-                    start: 182300001
                 },
                 {
                     stain: "gneg",
@@ -1817,12 +1458,6 @@ CYTOBANDS=[
                     start: 42500001
                 },
                 {
-                    stain: "gneg0",
-                    name: "p13",
-                    end: 42500000,
-                    start: 28900001
-                },
-                {
                     stain: "gneg",
                     name: "p13.1",
                     end: 42500000,
@@ -1841,12 +1476,6 @@ CYTOBANDS=[
                     start: 28900001
                 },
                 {
-                    stain: "gpos0",
-                    name: "p14",
-                    end: 28900000,
-                    start: 18400001
-                },
-                {
                     stain: "gpos100",
                     name: "p14.1",
                     end: 28900000,
@@ -1863,12 +1492,6 @@ CYTOBANDS=[
                     name: "p14.3",
                     end: 23300000,
                     start: 18400001
-                },
-                {
-                    stain: "gneg0",
-                    name: "p15",
-                    end: 18400000,
-                    start: 1
                 },
                 {
                     stain: "gneg",
@@ -1901,12 +1524,6 @@ CYTOBANDS=[
                     start: 1
                 },
                 {
-                    stain: "acen0",
-                    name: "q11",
-                    end: 59600000,
-                    start: 48800001
-                },
-                {
                     stain: "acen",
                     name: "q11.1",
                     end: 51400000,
@@ -1917,12 +1534,6 @@ CYTOBANDS=[
                     name: "q11.2",
                     end: 59600000,
                     start: 51400001
-                },
-                {
-                    stain: "gpos0",
-                    name: "q12",
-                    end: 67400000,
-                    start: 59600001
                 },
                 {
                     stain: "gpos75",
@@ -1943,12 +1554,6 @@ CYTOBANDS=[
                     start: 63900001
                 },
                 {
-                    stain: "gneg0",
-                    name: "q13",
-                    end: 77600000,
-                    start: 67400001
-                },
-                {
                     stain: "gneg",
                     name: "q13.1",
                     end: 69100000,
@@ -1965,12 +1570,6 @@ CYTOBANDS=[
                     name: "q13.3",
                     end: 77600000,
                     start: 74000001
-                },
-                {
-                    stain: "gpos0",
-                    name: "q14",
-                    end: 93000000,
-                    start: 77600001
                 },
                 {
                     stain: "gpos50",
@@ -1997,12 +1596,6 @@ CYTOBANDS=[
                     start: 93000001
                 },
                 {
-                    stain: "gpos0",
-                    name: "q21",
-                    end: 110200000,
-                    start: 98900001
-                },
-                {
                     stain: "gpos100",
                     name: "q21.1",
                     end: 103400000,
@@ -2019,12 +1612,6 @@ CYTOBANDS=[
                     name: "q21.3",
                     end: 110200000,
                     start: 105100001
-                },
-                {
-                    stain: "gneg0",
-                    name: "q22",
-                    end: 115900000,
-                    start: 110200001
                 },
                 {
                     stain: "gneg",
@@ -2045,12 +1632,6 @@ CYTOBANDS=[
                     start: 113800001
                 },
                 {
-                    stain: "gpos0",
-                    name: "q23",
-                    end: 131200000,
-                    start: 115900001
-                },
-                {
                     stain: "gpos100",
                     name: "q23.1",
                     end: 122100000,
@@ -2067,12 +1648,6 @@ CYTOBANDS=[
                     name: "q23.3",
                     end: 131200000,
                     start: 127900001
-                },
-                {
-                    stain: "gneg0",
-                    name: "q31",
-                    end: 145100000,
-                    start: 131200001
                 },
                 {
                     stain: "gneg",
@@ -2099,12 +1674,6 @@ CYTOBANDS=[
                     start: 145100001
                 },
                 {
-                    stain: "gneg0",
-                    name: "q33",
-                    end: 160500000,
-                    start: 150400001
-                },
-                {
                     stain: "gneg",
                     name: "q33.1",
                     end: 153300000,
@@ -2127,12 +1696,6 @@ CYTOBANDS=[
                     name: "q34",
                     end: 169000000,
                     start: 160500001
-                },
-                {
-                    stain: "gneg0",
-                    name: "q35",
-                    end: 181538259,
-                    start: 169000001
                 },
                 {
                     stain: "gneg",
@@ -2163,12 +1726,6 @@ CYTOBANDS=[
             cytobands: [
                 {
                     stain: "acen",
-                    name: "p11",
-                    end: 59800000,
-                    start: 53000001
-                },
-                {
-                    stain: "acen",
                     name: "p11.1",
                     end: 59800000,
                     start: 58500001
@@ -2178,12 +1735,6 @@ CYTOBANDS=[
                     name: "p11.2",
                     end: 58500000,
                     start: 57200001
-                },
-                {
-                    stain: "gpos0",
-                    name: "p12",
-                    end: 57200000,
-                    start: 46200001
                 },
                 {
                     stain: "gpos100",
@@ -2202,12 +1753,6 @@ CYTOBANDS=[
                     name: "p12.3",
                     end: 51800000,
                     start: 46200001
-                },
-                {
-                    stain: "gneg0",
-                    name: "p21",
-                    end: 46200000,
-                    start: 30500001
                 },
                 {
                     stain: "gneg",
@@ -2240,12 +1785,6 @@ CYTOBANDS=[
                     start: 30500001
                 },
                 {
-                    stain: "gpos0",
-                    name: "p22",
-                    end: 30500000,
-                    start: 15200001
-                },
-                {
                     stain: "gpos50",
                     name: "p22.1",
                     end: 30500000,
@@ -2270,12 +1809,6 @@ CYTOBANDS=[
                     start: 13400001
                 },
                 {
-                    stain: "gpos0",
-                    name: "p24",
-                    end: 13400000,
-                    start: 7100001
-                },
-                {
                     stain: "gpos25",
                     name: "p24.1",
                     end: 13400000,
@@ -2295,12 +1828,6 @@ CYTOBANDS=[
                 },
                 {
                     stain: "gneg",
-                    name: "p25",
-                    end: 7100000,
-                    start: 1
-                },
-                {
-                    stain: "gneg",
                     name: "p25.1",
                     end: 7100000,
                     start: 4200001
@@ -2316,12 +1843,6 @@ CYTOBANDS=[
                     name: "p25.3",
                     end: 2300000,
                     start: 1
-                },
-                {
-                    stain: "acen0",
-                    name: "q11",
-                    end: 62700000,
-                    start: 59800001
                 },
                 {
                     stain: "acen",
@@ -2348,12 +1869,6 @@ CYTOBANDS=[
                     start: 69200001
                 },
                 {
-                    stain: "gpos0",
-                    name: "q14",
-                    end: 87300000,
-                    start: 75200001
-                },
-                {
                     stain: "gpos50",
                     name: "q14.1",
                     end: 83200000,
@@ -2378,12 +1893,6 @@ CYTOBANDS=[
                     start: 87300001
                 },
                 {
-                    stain: "gpos0",
-                    name: "q16",
-                    end: 105000000,
-                    start: 92500001
-                },
-                {
                     stain: "gpos100",
                     name: "q16.1",
                     end: 98900000,
@@ -2406,12 +1915,6 @@ CYTOBANDS=[
                     name: "q21",
                     end: 114200000,
                     start: 105000001
-                },
-                {
-                    stain: "gpos0",
-                    name: "q22",
-                    end: 130000000,
-                    start: 114200001
                 },
                 {
                     stain: "gpos75",
@@ -2444,12 +1947,6 @@ CYTOBANDS=[
                     start: 126800001
                 },
                 {
-                    stain: "gneg0",
-                    name: "q23",
-                    end: 138300000,
-                    start: 130000001
-                },
-                {
                     stain: "gneg",
                     name: "q23.1",
                     end: 130900000,
@@ -2468,12 +1965,6 @@ CYTOBANDS=[
                     start: 134700001
                 },
                 {
-                    stain: "gpos0",
-                    name: "q24",
-                    end: 148500000,
-                    start: 138300001
-                },
-                {
                     stain: "gpos75",
                     name: "q24.1",
                     end: 142200000,
@@ -2490,12 +1981,6 @@ CYTOBANDS=[
                     name: "q24.3",
                     end: 148500000,
                     start: 145100001
-                },
-                {
-                    stain: "gneg0",
-                    name: "q25",
-                    end: 160600000,
-                    start: 148500001
                 },
                 {
                     stain: "gneg",
@@ -2538,12 +2023,6 @@ CYTOBANDS=[
             cytobands: [
                 {
                     stain: "acen",
-                    name: "p11",
-                    end: 60100000,
-                    start: 53900001
-                },
-                {
-                    stain: "acen",
                     name: "p11.1",
                     end: 60100000,
                     start: 58100001
@@ -2553,12 +2032,6 @@ CYTOBANDS=[
                     name: "p11.2",
                     end: 58100000,
                     start: 53900001
-                },
-                {
-                    stain: "gpos0",
-                    name: "p12",
-                    end: 53900000,
-                    start: 45400001
                 },
                 {
                     stain: "gpos75",
@@ -2585,12 +2058,6 @@ CYTOBANDS=[
                     start: 43300001
                 },
                 {
-                    stain: "gpos0",
-                    name: "p14",
-                    end: 43300000,
-                    start: 28800001
-                },
-                {
                     stain: "gpos75",
                     name: "p14.1",
                     end: 43300000,
@@ -2607,12 +2074,6 @@ CYTOBANDS=[
                     name: "p14.3",
                     end: 34900000,
                     start: 28800001
-                },
-                {
-                    stain: "gneg0",
-                    name: "p15",
-                    end: 28800000,
-                    start: 20900001
                 },
                 {
                     stain: "gneg",
@@ -2636,12 +2097,6 @@ CYTOBANDS=[
                     stain: "gpos100",
                     name: "p21.1",
                     end: 20900000,
-                    start: 7200001
-                },
-                {
-                    stain: "gpos100",
-                    name: "p21.1",
-                    end: 20900000,
                     start: 16500001
                 },
                 {
@@ -2655,12 +2110,6 @@ CYTOBANDS=[
                     name: "p21.3",
                     end: 13700000,
                     start: 7200001
-                },
-                {
-                    stain: "gneg0",
-                    name: "p22",
-                    end: 7200000,
-                    start: 1
                 },
                 {
                     stain: "gneg",
@@ -2679,12 +2128,6 @@ CYTOBANDS=[
                     name: "p22.3",
                     end: 2800000,
                     start: 1
-                },
-                {
-                    stain: "acen0",
-                    name: "q11",
-                    end: 77900000,
-                    start: 60100001
                 },
                 {
                     stain: "acen",
@@ -2709,12 +2152,6 @@ CYTOBANDS=[
                     name: "q11.23",
                     end: 77900000,
                     start: 72700001
-                },
-                {
-                    stain: "gpos0",
-                    name: "q21",
-                    end: 98400000,
-                    start: 77900001
                 },
                 {
                     stain: "gpos100",
@@ -2748,12 +2185,6 @@ CYTOBANDS=[
                 },
                 {
                     stain: "gneg",
-                    name: "q22",
-                    end: 107800000,
-                    start: 98400001
-                },
-                {
-                    stain: "gneg",
                     name: "q22.1",
                     end: 104200000,
                     start: 98400001
@@ -2769,12 +2200,6 @@ CYTOBANDS=[
                     name: "q22.3",
                     end: 107800000,
                     start: 104900001
-                },
-                {
-                    stain: "gpos0",
-                    name: "q31",
-                    end: 127500000,
-                    start: 107800001
                 },
                 {
                     stain: "gpos75",
@@ -2805,12 +2230,6 @@ CYTOBANDS=[
                     name: "q31.33",
                     end: 127500000,
                     start: 124100001
-                },
-                {
-                    stain: "gneg0",
-                    name: "q32",
-                    end: 132900000,
-                    start: 127500001
                 },
                 {
                     stain: "gneg",
@@ -2849,12 +2268,6 @@ CYTOBANDS=[
                     start: 143400001
                 },
                 {
-                    stain: "gneg0",
-                    name: "q36",
-                    end: 159345973,
-                    start: 148200001
-                },
-                {
                     stain: "gneg",
                     name: "q36.1",
                     end: 152800000,
@@ -2881,12 +2294,6 @@ CYTOBANDS=[
         },
         {
             cytobands: [
-                {
-                    stain: "acen0",
-                    name: "p11",
-                    end: 45200000,
-                    start: 36700001
-                },
                 {
                     stain: "acen",
                     name: "p11.1",
@@ -2918,12 +2325,6 @@ CYTOBANDS=[
                     start: 29000001
                 },
                 {
-                    stain: "gneg0",
-                    name: "p21",
-                    end: 29000000,
-                    start: 19200001
-                },
-                {
                     stain: "gneg",
                     name: "p21.1",
                     end: 29000000,
@@ -2948,12 +2349,6 @@ CYTOBANDS=[
                     start: 12800001
                 },
                 {
-                    stain: "gneg0",
-                    name: "p23",
-                    end: 12800000,
-                    start: 1
-                },
-                {
                     stain: "gneg",
                     name: "p23.1",
                     end: 12800000,
@@ -2970,12 +2365,6 @@ CYTOBANDS=[
                     name: "p23.3",
                     end: 2300000,
                     start: 1
-                },
-                {
-                    stain: "acen0",
-                    name: "q11",
-                    end: 54600000,
-                    start: 45200001
                 },
                 {
                     stain: "acen",
@@ -3002,12 +2391,6 @@ CYTOBANDS=[
                     start: 51700001
                 },
                 {
-                    stain: "gpos0",
-                    name: "q12",
-                    end: 65100000,
-                    start: 54600001
-                },
-                {
                     stain: "gpos50",
                     name: "q12.1",
                     end: 60600000,
@@ -3026,12 +2409,6 @@ CYTOBANDS=[
                     start: 61300001
                 },
                 {
-                    stain: "gneg0",
-                    name: "q13",
-                    end: 72000000,
-                    start: 65100001
-                },
-                {
                     stain: "gneg",
                     name: "q13.1",
                     end: 67100000,
@@ -3048,12 +2425,6 @@ CYTOBANDS=[
                     name: "q13.3",
                     end: 72000000,
                     start: 69600001
-                },
-                {
-                    stain: "gpos0",
-                    name: "q21",
-                    end: 92300000,
-                    start: 72000001
                 },
                 {
                     stain: "gpos100",
@@ -3087,12 +2458,6 @@ CYTOBANDS=[
                 },
                 {
                     stain: "gneg",
-                    name: "q22",
-                    end: 105100000,
-                    start: 92300001
-                },
-                {
-                    stain: "gneg",
                     name: "q22.1",
                     end: 97900000,
                     start: 92300001
@@ -3108,12 +2473,6 @@ CYTOBANDS=[
                     name: "q22.3",
                     end: 105100000,
                     start: 100500001
-                },
-                {
-                    stain: "gpos0",
-                    name: "q23",
-                    end: 116700000,
-                    start: 105100001
                 },
                 {
                     stain: "gpos75",
@@ -3132,12 +2491,6 @@ CYTOBANDS=[
                     name: "q23.3",
                     end: 116700000,
                     start: 111100001
-                },
-                {
-                    stain: "gneg0",
-                    name: "q24",
-                    end: 145138636,
-                    start: 116700001
                 },
                 {
                     stain: "gneg",
@@ -3191,12 +2544,6 @@ CYTOBANDS=[
         {
             cytobands: [
                 {
-                    stain: "acen0",
-                    name: "p11",
-                    end: 43000000,
-                    start: 40000001
-                },
-                {
                     stain: "acen",
                     name: "p11.1",
                     end: 43000000,
@@ -3213,12 +2560,6 @@ CYTOBANDS=[
                     name: "p12",
                     end: 40000000,
                     start: 39000001
-                },
-                {
-                    stain: "gneg0",
-                    name: "p13",
-                    end: 39000000,
-                    start: 33200001
                 },
                 {
                     stain: "gneg",
@@ -3239,12 +2580,6 @@ CYTOBANDS=[
                     start: 33200001
                 },
                 {
-                    stain: "gpos0",
-                    name: "p21",
-                    end: 33200000,
-                    start: 19900001
-                },
-                {
                     stain: "gpos100",
                     name: "p21.1",
                     end: 33200000,
@@ -3261,12 +2596,6 @@ CYTOBANDS=[
                     name: "p21.3",
                     end: 25600000,
                     start: 19900001
-                },
-                {
-                    stain: "gneg0",
-                    name: "p22",
-                    end: 19900000,
-                    start: 14200001
                 },
                 {
                     stain: "gneg",
@@ -3291,12 +2620,6 @@ CYTOBANDS=[
                     name: "p23",
                     end: 14200000,
                     start: 9000001
-                },
-                {
-                    stain: "gneg0",
-                    name: "p24",
-                    end: 9000000,
-                    start: 1
                 },
                 {
                     stain: "gneg",
@@ -3333,12 +2656,6 @@ CYTOBANDS=[
                     name: "q13",
                     end: 65000000,
                     start: 61500001
-                },
-                {
-                    stain: "gpos0",
-                    name: "q21",
-                    end: 87800000,
-                    start: 65000001
                 },
                 {
                     stain: "gpos25",
@@ -3383,12 +2700,6 @@ CYTOBANDS=[
                     start: 84300001
                 },
                 {
-                    stain: "gneg0",
-                    name: "q22",
-                    end: 99800000,
-                    start: 87800001
-                },
-                {
                     stain: "gneg",
                     name: "q22.1",
                     end: 89200000,
@@ -3419,12 +2730,6 @@ CYTOBANDS=[
                     start: 96500001
                 },
                 {
-                    stain: "gpos0",
-                    name: "q31",
-                    end: 112100000,
-                    start: 99800001
-                },
-                {
                     stain: "gpos100",
                     name: "q31.1",
                     end: 105400000,
@@ -3449,12 +2754,6 @@ CYTOBANDS=[
                     start: 112100001
                 },
                 {
-                    stain: "gpos0",
-                    name: "q33",
-                    end: 127500000,
-                    start: 114900001
-                },
-                {
                     stain: "gpos75",
                     name: "q33.1",
                     end: 119800000,
@@ -3471,12 +2770,6 @@ CYTOBANDS=[
                     name: "q33.3",
                     end: 127500000,
                     start: 123100001
-                },
-                {
-                    stain: "gneg0",
-                    name: "q34",
-                    end: 138394717,
-                    start: 127500001
                 },
                 {
                     stain: "gneg",
@@ -3519,12 +2812,6 @@ CYTOBANDS=[
             cytobands: [
                 {
                     stain: "acen",
-                    name: "p11",
-                    end: 39800000,
-                    start: 29300001
-                },
-                {
-                    stain: "acen",
                     name: "p11.1",
                     end: 39800000,
                     start: 38000001
@@ -3546,12 +2833,6 @@ CYTOBANDS=[
                     name: "p11.23",
                     end: 31100000,
                     start: 29300001
-                },
-                {
-                    stain: "gpos0",
-                    name: "p12",
-                    end: 29300000,
-                    start: 17300001
                 },
                 {
                     stain: "gpos50",
@@ -3596,12 +2877,6 @@ CYTOBANDS=[
                     start: 6600001
                 },
                 {
-                    stain: "gneg0",
-                    name: "p15",
-                    end: 6600000,
-                    start: 1
-                },
-                {
                     stain: "gneg",
                     name: "p15.1",
                     end: 6600000,
@@ -3618,12 +2893,6 @@ CYTOBANDS=[
                     name: "p15.3",
                     end: 3000000,
                     start: 1
-                },
-                {
-                    stain: "acen0",
-                    name: "q11",
-                    end: 51100000,
-                    start: 39800001
                 },
                 {
                     stain: "acen",
@@ -3650,12 +2919,6 @@ CYTOBANDS=[
                     start: 48600001
                 },
                 {
-                    stain: "gpos0",
-                    name: "q21",
-                    end: 68800000,
-                    start: 51100001
-                },
-                {
                     stain: "gpos100",
                     name: "q21.1",
                     end: 59400000,
@@ -3674,12 +2937,6 @@ CYTOBANDS=[
                     start: 62800001
                 },
                 {
-                    stain: "gneg0",
-                    name: "q22",
-                    end: 80300000,
-                    start: 68800001
-                },
-                {
                     stain: "gneg",
                     name: "q22.1",
                     end: 73100000,
@@ -3696,12 +2953,6 @@ CYTOBANDS=[
                     name: "q22.3",
                     end: 80300000,
                     start: 75900001
-                },
-                {
-                    stain: "gpos0",
-                    name: "q23",
-                    end: 95300000,
-                    start: 80300001
                 },
                 {
                     stain: "gpos100",
@@ -3734,12 +2985,6 @@ CYTOBANDS=[
                     start: 92300001
                 },
                 {
-                    stain: "gneg0",
-                    name: "q24",
-                    end: 104000000,
-                    start: 95300001
-                },
-                {
                     stain: "gneg",
                     name: "q24.1",
                     end: 97500000,
@@ -3770,12 +3015,6 @@ CYTOBANDS=[
                     start: 103100001
                 },
                 {
-                    stain: "gpos0",
-                    name: "q25",
-                    end: 117300000,
-                    start: 104000001
-                },
-                {
                     stain: "gpos100",
                     name: "q25.1",
                     end: 110100000,
@@ -3792,12 +3031,6 @@ CYTOBANDS=[
                     name: "q25.3",
                     end: 117300000,
                     start: 113100001
-                },
-                {
-                    stain: "gneg0",
-                    name: "q26",
-                    end: 133797422,
-                    start: 117300001
                 },
                 {
                     stain: "gneg",
@@ -3839,12 +3072,6 @@ CYTOBANDS=[
         {
             cytobands: [
                 {
-                    stain: "acen0",
-                    name: "p11",
-                    end: 53400000,
-                    start: 43400001
-                },
-                {
                     stain: "acen",
                     name: "p11.11",
                     end: 53400000,
@@ -3875,12 +3102,6 @@ CYTOBANDS=[
                     start: 31000001
                 },
                 {
-                    stain: "gpos0",
-                    name: "p14",
-                    end: 31000000,
-                    start: 22000001
-                },
-                {
                     stain: "gpos75",
                     name: "p14.1",
                     end: 31000000,
@@ -3897,12 +3118,6 @@ CYTOBANDS=[
                     name: "p14.3",
                     end: 26200000,
                     start: 22000001
-                },
-                {
-                    stain: "gneg0",
-                    name: "p15",
-                    end: 22000000,
-                    start: 1
                 },
                 {
                     stain: "gneg",
@@ -3941,12 +3156,6 @@ CYTOBANDS=[
                     start: 53400001
                 },
                 {
-                    stain: "gpos0",
-                    name: "q12",
-                    end: 63600000,
-                    start: 55800001
-                },
-                {
                     stain: "gpos75",
                     name: "q12.1",
                     end: 60100000,
@@ -3963,12 +3172,6 @@ CYTOBANDS=[
                     name: "q12.3",
                     end: 63600000,
                     start: 61900001
-                },
-                {
-                    stain: "gneg0",
-                    name: "q13",
-                    end: 85900000,
-                    start: 63600001
                 },
                 {
                     stain: "gneg",
@@ -4008,12 +3211,6 @@ CYTOBANDS=[
                 },
                 {
                     stain: "gneg",
-                    name: "q14",
-                    end: 93000000,
-                    start: 85900001
-                },
-                {
-                    stain: "gneg",
                     name: "q14.2",
                     end: 88600000,
                     start: 85900001
@@ -4029,12 +3226,6 @@ CYTOBANDS=[
                     name: "q21",
                     end: 97400000,
                     start: 93000001
-                },
-                {
-                    stain: "gpos0",
-                    name: "q22",
-                    end: 110600000,
-                    start: 97400001
                 },
                 {
                     stain: "gpos100",
@@ -4055,12 +3246,6 @@ CYTOBANDS=[
                     start: 103000001
                 },
                 {
-                    stain: "gneg0",
-                    name: "q23",
-                    end: 121300000,
-                    start: 110600001
-                },
-                {
                     stain: "gneg",
                     name: "q23.1",
                     end: 112700000,
@@ -4077,12 +3262,6 @@ CYTOBANDS=[
                     name: "q23.3",
                     end: 121300000,
                     start: 114600001
-                },
-                {
-                    stain: "gpos0",
-                    name: "q24",
-                    end: 130900000,
-                    start: 121300001
                 },
                 {
                     stain: "gpos50",
@@ -4118,12 +3297,6 @@ CYTOBANDS=[
         {
             cytobands: [
                 {
-                    stain: "acen0",
-                    name: "p11",
-                    end: 35500000,
-                    start: 26300001
-                },
-                {
                     stain: "acen",
                     name: "p11.1",
                     end: 35500000,
@@ -4148,12 +3321,6 @@ CYTOBANDS=[
                     start: 26300001
                 },
                 {
-                    stain: "gpos0",
-                    name: "p12",
-                    end: 26300000,
-                    start: 14600001
-                },
-                {
                     stain: "gpos100",
                     name: "p12.1",
                     end: 26300000,
@@ -4170,12 +3337,6 @@ CYTOBANDS=[
                     name: "p12.3",
                     end: 19800000,
                     start: 14600001
-                },
-                {
-                    stain: "gneg0",
-                    name: "p13",
-                    end: 14600000,
-                    start: 1
                 },
                 {
                     stain: "gneg",
@@ -4220,12 +3381,6 @@ CYTOBANDS=[
                     start: 37800001
                 },
                 {
-                    stain: "gneg0",
-                    name: "q13",
-                    end: 57700000,
-                    start: 46000001
-                },
-                {
                     stain: "gneg",
                     name: "q13.11",
                     end: 48700000,
@@ -4256,12 +3411,6 @@ CYTOBANDS=[
                     start: 56200001
                 },
                 {
-                    stain: "gpos0",
-                    name: "q14",
-                    end: 67300000,
-                    start: 57700001
-                },
-                {
                     stain: "gpos75",
                     name: "q14.1",
                     end: 62700000,
@@ -4284,12 +3433,6 @@ CYTOBANDS=[
                     name: "q15",
                     end: 71100000,
                     start: 67300001
-                },
-                {
-                    stain: "gpos0",
-                    name: "q21",
-                    end: 92200000,
-                    start: 71100001
                 },
                 {
                     stain: "gpos75",
@@ -4328,12 +3471,6 @@ CYTOBANDS=[
                     start: 92200001
                 },
                 {
-                    stain: "gpos0",
-                    name: "q23",
-                    end: 108600000,
-                    start: 95800001
-                },
-                {
                     stain: "gpos75",
                     name: "q23.1",
                     end: 101200000,
@@ -4350,12 +3487,6 @@ CYTOBANDS=[
                     name: "q23.3",
                     end: 108600000,
                     start: 103500001
-                },
-                {
-                    stain: "gneg",
-                    name: "q24",
-                    end: 133275309,
-                    start: 108600001
                 },
                 {
                     stain: "gneg",
@@ -4421,12 +3552,6 @@ CYTOBANDS=[
         {
             cytobands: [
                 {
-                    stain: "acen0",
-                    name: "p11",
-                    end: 17700000,
-                    start: 10100001
-                },
-                {
                     stain: "acen",
                     name: "p11.1",
                     end: 17700000,
@@ -4455,12 +3580,6 @@ CYTOBANDS=[
                     name: "q11",
                     end: 18900000,
                     start: 17700001
-                },
-                {
-                    stain: "gneg0",
-                    name: "q12",
-                    end: 31600000,
-                    start: 18900001
                 },
                 {
                     stain: "gneg",
@@ -4493,12 +3612,6 @@ CYTOBANDS=[
                     start: 28300001
                 },
                 {
-                    stain: "gpos0",
-                    name: "q13",
-                    end: 39500000,
-                    start: 31600001
-                },
-                {
                     stain: "gpos50",
                     name: "q13.1",
                     end: 33400000,
@@ -4515,12 +3628,6 @@ CYTOBANDS=[
                     name: "q13.3",
                     end: 39500000,
                     start: 34900001
-                },
-                {
-                    stain: "gneg0",
-                    name: "q14",
-                    end: 54700000,
-                    start: 39500001
                 },
                 {
                     stain: "gneg",
@@ -4553,12 +3660,6 @@ CYTOBANDS=[
                     start: 50300001
                 },
                 {
-                    stain: "gpos0",
-                    name: "q21",
-                    end: 72800000,
-                    start: 54700001
-                },
-                {
                     stain: "gpos100",
                     name: "q21.1",
                     end: 59000000,
@@ -4589,12 +3690,6 @@ CYTOBANDS=[
                     start: 68100001
                 },
                 {
-                    stain: "gneg0",
-                    name: "q22",
-                    end: 78500000,
-                    start: 72800001
-                },
-                {
                     stain: "gneg",
                     name: "q22.1",
                     end: 74900000,
@@ -4611,12 +3706,6 @@ CYTOBANDS=[
                     name: "q22.3",
                     end: 78500000,
                     start: 76700001
-                },
-                {
-                    stain: "gpos0",
-                    name: "q31",
-                    end: 94400000,
-                    start: 78500001
                 },
                 {
                     stain: "gpos100",
@@ -4637,12 +3726,6 @@ CYTOBANDS=[
                     start: 89400001
                 },
                 {
-                    stain: "gneg0",
-                    name: "q32",
-                    end: 101100000,
-                    start: 94400001
-                },
-                {
                     stain: "gneg",
                     name: "q32.1",
                     end: 97500000,
@@ -4659,12 +3742,6 @@ CYTOBANDS=[
                     name: "q32.3",
                     end: 101100000,
                     start: 98700001
-                },
-                {
-                    stain: "gpos0",
-                    name: "q33",
-                    end: 109600000,
-                    start: 101100001
                 },
                 {
                     stain: "gpos100",
@@ -4700,12 +3777,6 @@ CYTOBANDS=[
         {
             cytobands: [
                 {
-                    stain: "acen0",
-                    name: "p11",
-                    end: 17200000,
-                    start: 8000001
-                },
-                {
                     stain: "acen",
                     name: "p11.1",
                     end: 17200000,
@@ -4730,12 +3801,6 @@ CYTOBANDS=[
                     start: 1
                 },
                 {
-                    stain: "acen0",
-                    name: "q11",
-                    end: 24100000,
-                    start: 17200001
-                },
-                {
                     stain: "acen",
                     name: "q11.1",
                     end: 18200000,
@@ -4752,12 +3817,6 @@ CYTOBANDS=[
                     name: "q12",
                     end: 32900000,
                     start: 24100001
-                },
-                {
-                    stain: "gneg0",
-                    name: "q13",
-                    end: 37400000,
-                    start: 32900001
                 },
                 {
                     stain: "gneg",
@@ -4778,12 +3837,6 @@ CYTOBANDS=[
                     start: 36100001
                 },
                 {
-                    stain: "gpos0",
-                    name: "q21",
-                    end: 50400000,
-                    start: 37400001
-                },
-                {
                     stain: "gpos100",
                     name: "q21.1",
                     end: 43000000,
@@ -4800,12 +3853,6 @@ CYTOBANDS=[
                     name: "q21.3",
                     end: 50400000,
                     start: 46700001
-                },
-                {
-                    stain: "gneg0",
-                    name: "q22",
-                    end: 57600000,
-                    start: 50400001
                 },
                 {
                     stain: "gneg",
@@ -4826,12 +3873,6 @@ CYTOBANDS=[
                     start: 55000001
                 },
                 {
-                    stain: "gpos0",
-                    name: "q23",
-                    end: 67400000,
-                    start: 57600001
-                },
-                {
                     stain: "gpos75",
                     name: "q23.1",
                     end: 61600000,
@@ -4848,12 +3889,6 @@ CYTOBANDS=[
                     name: "q23.3",
                     end: 67400000,
                     start: 64300001
-                },
-                {
-                    stain: "gneg0",
-                    name: "q24",
-                    end: 78800000,
-                    start: 67400001
                 },
                 {
                     stain: "gneg",
@@ -4874,12 +3909,6 @@ CYTOBANDS=[
                     start: 73300001
                 },
                 {
-                    stain: "gpos0",
-                    name: "q31",
-                    end: 89300000,
-                    start: 78800001
-                },
-                {
                     stain: "gpos100",
                     name: "q31.1",
                     end: 83100000,
@@ -4896,12 +3925,6 @@ CYTOBANDS=[
                     name: "q31.3",
                     end: 89300000,
                     start: 84400001
-                },
-                {
-                    stain: "gneg0",
-                    name: "q32",
-                    end: 107043718,
-                    start: 89300001
                 },
                 {
                     stain: "gneg",
@@ -4955,12 +3978,6 @@ CYTOBANDS=[
         {
             cytobands: [
                 {
-                    stain: "acen0",
-                    name: "p11",
-                    end: 19000000,
-                    start: 9700001
-                },
-                {
                     stain: "acen",
                     name: "p11.1",
                     end: 19000000,
@@ -4985,12 +4002,6 @@ CYTOBANDS=[
                     start: 1
                 },
                 {
-                    stain: "acen0",
-                    name: "q11",
-                    end: 25500000,
-                    start: 19000001
-                },
-                {
                     stain: "acen",
                     name: "q11.1",
                     end: 20500000,
@@ -5007,12 +4018,6 @@ CYTOBANDS=[
                     name: "q12",
                     end: 27800000,
                     start: 25500001
-                },
-                {
-                    stain: "gneg0",
-                    name: "q13",
-                    end: 33400000,
-                    start: 27800001
                 },
                 {
                     stain: "gneg",
@@ -5039,12 +4044,6 @@ CYTOBANDS=[
                     start: 33400001
                 },
                 {
-                    stain: "gneg0",
-                    name: "q15",
-                    end: 44500000,
-                    start: 39800001
-                },
-                {
                     stain: "gneg",
                     name: "q15.1",
                     end: 42500000,
@@ -5063,12 +4062,6 @@ CYTOBANDS=[
                     start: 43300001
                 },
                 {
-                    stain: "gpos0",
-                    name: "q21",
-                    end: 58800000,
-                    start: 44500001
-                },
-                {
                     stain: "gpos75",
                     name: "q21.1",
                     end: 49200000,
@@ -5085,12 +4078,6 @@ CYTOBANDS=[
                     name: "q21.3",
                     end: 58800000,
                     start: 52600001
-                },
-                {
-                    stain: "gneg0",
-                    name: "q22",
-                    end: 67200000,
-                    start: 58800001
                 },
                 {
                     stain: "gneg",
@@ -5129,12 +4116,6 @@ CYTOBANDS=[
                     start: 67200001
                 },
                 {
-                    stain: "gneg0",
-                    name: "q24",
-                    end: 78000000,
-                    start: 72400001
-                },
-                {
                     stain: "gneg",
                     name: "q24.1",
                     end: 74900000,
@@ -5153,12 +4134,6 @@ CYTOBANDS=[
                     start: 76300001
                 },
                 {
-                    stain: "gpos0",
-                    name: "q25",
-                    end: 88500000,
-                    start: 78000001
-                },
-                {
                     stain: "gpos50",
                     name: "q25.1",
                     end: 81400000,
@@ -5175,12 +4150,6 @@ CYTOBANDS=[
                     name: "q25.3",
                     end: 88500000,
                     start: 84700001
-                },
-                {
-                    stain: "gneg0",
-                    name: "q26",
-                    end: 101991189,
-                    start: 88500001
                 },
                 {
                     stain: "gneg",
@@ -5210,12 +4179,6 @@ CYTOBANDS=[
         {
             cytobands: [
                 {
-                    stain: "acen0",
-                    name: "p11",
-                    end: 36800000,
-                    start: 28500001
-                },
-                {
                     stain: "acen",
                     name: "p11.1",
                     end: 36800000,
@@ -5226,12 +4189,6 @@ CYTOBANDS=[
                     name: "p11.2",
                     end: 35300000,
                     start: 28500001
-                },
-                {
-                    stain: "gpos0",
-                    name: "p12",
-                    end: 28500000,
-                    start: 16700001
                 },
                 {
                     stain: "gpos50",
@@ -5250,12 +4207,6 @@ CYTOBANDS=[
                     name: "p12.3",
                     end: 21200000,
                     start: 16700001
-                },
-                {
-                    stain: "gneg0",
-                    name: "p13",
-                    end: 16700000,
-                    start: 1
                 },
                 {
                     stain: "gneg",
@@ -5288,12 +4239,6 @@ CYTOBANDS=[
                     start: 1
                 },
                 {
-                    stain: "acen0",
-                    name: "q11",
-                    end: 47000000,
-                    start: 36800001
-                },
-                {
                     stain: "acen",
                     name: "q11.1",
                     end: 38400000,
@@ -5304,12 +4249,6 @@ CYTOBANDS=[
                     name: "q11.2",
                     end: 47000000,
                     start: 38400001
-                },
-                {
-                    stain: "gneg0",
-                    name: "q12",
-                    end: 56000000,
-                    start: 47000001
                 },
                 {
                     stain: "gneg",
@@ -5336,12 +4275,6 @@ CYTOBANDS=[
                     start: 57300001
                 },
                 {
-                    stain: "gneg0",
-                    name: "q22",
-                    end: 74100000,
-                    start: 66600001
-                },
-                {
                     stain: "gneg",
                     name: "q22.1",
                     end: 70800000,
@@ -5360,12 +4293,6 @@ CYTOBANDS=[
                     start: 72800001
                 },
                 {
-                    stain: "gpos0",
-                    name: "q23",
-                    end: 84100000,
-                    start: 74100001
-                },
-                {
                     stain: "gpos75",
                     name: "q23.1",
                     end: 79200000,
@@ -5382,12 +4309,6 @@ CYTOBANDS=[
                     name: "q23.3",
                     end: 84100000,
                     start: 81600001
-                },
-                {
-                    stain: "gneg0",
-                    name: "q24",
-                    end: 90338345,
-                    start: 84100001
                 },
                 {
                     stain: "gneg",
@@ -5417,12 +4338,6 @@ CYTOBANDS=[
         {
             cytobands: [
                 {
-                    stain: "acen0",
-                    name: "p11",
-                    end: 25100000,
-                    start: 16100001
-                },
-                {
                     stain: "acen",
                     name: "p11.1",
                     end: 25100000,
@@ -5439,12 +4354,6 @@ CYTOBANDS=[
                     name: "p12",
                     end: 16100000,
                     start: 10800001
-                },
-                {
-                    stain: "gneg0",
-                    name: "p13",
-                    end: 10800000,
-                    start: 1
                 },
                 {
                     stain: "gneg",
@@ -5465,12 +4374,6 @@ CYTOBANDS=[
                     start: 1
                 },
                 {
-                    stain: "acen0",
-                    name: "q11",
-                    end: 33500000,
-                    start: 25100001
-                },
-                {
                     stain: "acen",
                     name: "q11.1",
                     end: 27400000,
@@ -5487,12 +4390,6 @@ CYTOBANDS=[
                     name: "q12",
                     end: 39800000,
                     start: 33500001
-                },
-                {
-                    stain: "gneg0",
-                    name: "q21",
-                    end: 52100000,
-                    start: 39800001
                 },
                 {
                     stain: "gneg",
@@ -5531,12 +4428,6 @@ CYTOBANDS=[
                     start: 52100001
                 },
                 {
-                    stain: "gneg0",
-                    name: "q23",
-                    end: 64600000,
-                    start: 59500001
-                },
-                {
                     stain: "gneg",
                     name: "q23.1",
                     end: 60200000,
@@ -5555,12 +4446,6 @@ CYTOBANDS=[
                     start: 63100001
                 },
                 {
-                    stain: "gpos0",
-                    name: "q24",
-                    end: 72900000,
-                    start: 64600001
-                },
-                {
                     stain: "gpos50",
                     name: "q24.1",
                     end: 66200000,
@@ -5577,12 +4462,6 @@ CYTOBANDS=[
                     name: "q24.3",
                     end: 72900000,
                     start: 69100001
-                },
-                {
-                    stain: "gneg0",
-                    name: "q25",
-                    end: 83257441,
-                    start: 72900001
                 },
                 {
                     stain: "gneg",
@@ -5611,12 +4490,6 @@ CYTOBANDS=[
         },
         {
             cytobands: [
-                {
-                    stain: "acen0",
-                    name: "p11",
-                    end: 18500000,
-                    start: 1
-                },
                 {
                     stain: "acen",
                     name: "p11.1",
@@ -5654,12 +4527,6 @@ CYTOBANDS=[
                     start: 1
                 },
                 {
-                    stain: "acen0",
-                    name: "q11",
-                    end: 27500000,
-                    start: 18500001
-                },
-                {
                     stain: "acen",
                     name: "q11.1",
                     end: 21500000,
@@ -5670,12 +4537,6 @@ CYTOBANDS=[
                     name: "q11.2",
                     end: 27500000,
                     start: 21500001
-                },
-                {
-                    stain: "gpos0",
-                    name: "q12",
-                    end: 45900000,
-                    start: 27500001
                 },
                 {
                     stain: "gpos100",
@@ -5694,12 +4555,6 @@ CYTOBANDS=[
                     name: "q12.3",
                     end: 45900000,
                     start: 39500001
-                },
-                {
-                    stain: "gneg0",
-                    name: "q21",
-                    end: 63900000,
-                    start: 45900001
                 },
                 {
                     stain: "gneg",
@@ -5730,12 +4585,6 @@ CYTOBANDS=[
                     name: "q21.33",
                     end: 63900000,
                     start: 61300001
-                },
-                {
-                    stain: "gpos0",
-                    name: "q22",
-                    end: 75400000,
-                    start: 63900001
                 },
                 {
                     stain: "gpos100",
@@ -5783,12 +4632,6 @@ CYTOBANDS=[
                     start: 19900001
                 },
                 {
-                    stain: "gneg0",
-                    name: "p13",
-                    end: 19900000,
-                    start: 1
-                },
-                {
                     stain: "gneg",
                     name: "p13.11",
                     end: 19900000,
@@ -5829,12 +4672,6 @@ CYTOBANDS=[
                     name: "q12",
                     end: 31900000,
                     start: 28100001
-                },
-                {
-                    stain: "gneg0",
-                    name: "q13",
-                    end: 58617616,
-                    start: 31900001
                 },
                 {
                     stain: "gneg",
@@ -5906,12 +4743,6 @@ CYTOBANDS=[
         {
             cytobands: [
                 {
-                    stain: "acen0",
-                    name: "p11",
-                    end: 28100000,
-                    start: 17900001
-                },
-                {
                     stain: "acen",
                     name: "p11.1",
                     end: 28100000,
@@ -5936,12 +4767,6 @@ CYTOBANDS=[
                     start: 17900001
                 },
                 {
-                    stain: "gpos0",
-                    name: "p12",
-                    end: 17900000,
-                    start: 5100001
-                },
-                {
                     stain: "gpos75",
                     name: "p12.1",
                     end: 17900000,
@@ -5964,12 +4789,6 @@ CYTOBANDS=[
                     name: "p13",
                     end: 5100000,
                     start: 1
-                },
-                {
-                    stain: "acen0",
-                    name: "q11",
-                    end: 39000000,
-                    start: 28100001
                 },
                 {
                     stain: "acen",
@@ -6000,12 +4819,6 @@ CYTOBANDS=[
                     name: "q12",
                     end: 43100000,
                     start: 39000001
-                },
-                {
-                    stain: "gneg0",
-                    name: "q13",
-                    end: 64444167,
-                    start: 43100001
                 },
                 {
                     stain: "gneg",
@@ -6059,12 +4872,6 @@ CYTOBANDS=[
         {
             cytobands: [
                 {
-                    stain: "acen0",
-                    name: "p11",
-                    end: 12000000,
-                    start: 7000001
-                },
-                {
                     stain: "acen",
                     name: "p11.1",
                     end: 12000000,
@@ -6089,12 +4896,6 @@ CYTOBANDS=[
                     start: 1
                 },
                 {
-                    stain: "acen0",
-                    name: "q11",
-                    end: 15000000,
-                    start: 12000001
-                },
-                {
                     stain: "acen",
                     name: "q11.1",
                     end: 13000000,
@@ -6105,12 +4906,6 @@ CYTOBANDS=[
                     name: "q11.2",
                     end: 15000000,
                     start: 13000001
-                },
-                {
-                    stain: "gpos0",
-                    name: "q21",
-                    end: 30200000,
-                    start: 15000001
                 },
                 {
                     stain: "gpos100",
@@ -6129,12 +4924,6 @@ CYTOBANDS=[
                     name: "q21.3",
                     end: 30200000,
                     start: 25500001
-                },
-                {
-                    stain: "gneg0",
-                    name: "q22",
-                    end: 46709983,
-                    start: 30200001
                 },
                 {
                     stain: "gneg",
@@ -6176,12 +4965,6 @@ CYTOBANDS=[
         {
             cytobands: [
                 {
-                    stain: "acen0",
-                    name: "p11",
-                    end: 15000000,
-                    start: 9400001
-                },
-                {
                     stain: "acen",
                     name: "p11.1",
                     end: 15000000,
@@ -6204,12 +4987,6 @@ CYTOBANDS=[
                     name: "p13",
                     end: 4300000,
                     start: 1
-                },
-                {
-                    stain: "acen0",
-                    name: "q11",
-                    end: 25500000,
-                    start: 15000001
                 },
                 {
                     stain: "acen",
@@ -6236,12 +5013,6 @@ CYTOBANDS=[
                     start: 23100001
                 },
                 {
-                    stain: "gpos0",
-                    name: "q12",
-                    end: 37200000,
-                    start: 25500001
-                },
-                {
                     stain: "gpos50",
                     name: "q12.1",
                     end: 29200000,
@@ -6258,12 +5029,6 @@ CYTOBANDS=[
                     name: "q12.3",
                     end: 37200000,
                     start: 31800001
-                },
-                {
-                    stain: "gneg0",
-                    name: "q13",
-                    end: 50818468,
-                    start: 37200001
                 },
                 {
                     stain: "gneg",
@@ -6305,12 +5070,6 @@ CYTOBANDS=[
         {
             cytobands: [
                 {
-                    stain: "acen0",
-                    name: "p11",
-                    end: 61000000,
-                    start: 37800001
-                },
-                {
                     stain: "acen",
                     name: "p11.1",
                     end: 61000000,
@@ -6347,12 +5106,6 @@ CYTOBANDS=[
                     start: 37800001
                 },
                 {
-                    stain: "gpos0",
-                    name: "p21",
-                    end: 37800000,
-                    start: 24900001
-                },
-                {
                     stain: "gpos100",
                     name: "p21.1",
                     end: 37800000,
@@ -6369,12 +5122,6 @@ CYTOBANDS=[
                     name: "p21.3",
                     end: 29300000,
                     start: 24900001
-                },
-                {
-                    stain: "gneg0",
-                    name: "p22",
-                    end: 24900000,
-                    start: 1
                 },
                 {
                     stain: "gneg",
@@ -6419,12 +5166,6 @@ CYTOBANDS=[
                     start: 1
                 },
                 {
-                    stain: "acen0",
-                    name: "q11",
-                    end: 65400000,
-                    start: 61000001
-                },
-                {
                     stain: "acen",
                     name: "q11.1",
                     end: 63800000,
@@ -6443,12 +5184,6 @@ CYTOBANDS=[
                     start: 65400001
                 },
                 {
-                    stain: "gneg0",
-                    name: "q13",
-                    end: 76800000,
-                    start: 68500001
-                },
-                {
                     stain: "gneg",
                     name: "q13.1",
                     end: 73000000,
@@ -6465,12 +5200,6 @@ CYTOBANDS=[
                     name: "q13.3",
                     end: 76800000,
                     start: 74700001
-                },
-                {
-                    stain: "gpos0",
-                    name: "q21",
-                    end: 99100000,
-                    start: 76800001
                 },
                 {
                     stain: "gpos100",
@@ -6501,12 +5230,6 @@ CYTOBANDS=[
                     name: "q21.33",
                     end: 99100000,
                     start: 94300001
-                },
-                {
-                    stain: "gneg0",
-                    name: "q22",
-                    end: 109400000,
-                    start: 99100001
                 },
                 {
                     stain: "gneg",
@@ -6545,12 +5268,6 @@ CYTOBANDS=[
                     start: 121800001
                 },
                 {
-                    stain: "gneg0",
-                    name: "q26",
-                    end: 138900000,
-                    start: 129500001
-                },
-                {
                     stain: "gneg",
                     name: "q26.1",
                     end: 131300000,
@@ -6567,12 +5284,6 @@ CYTOBANDS=[
                     name: "q26.3",
                     end: 138900000,
                     start: 134500001
-                },
-                {
-                    stain: "gpos0",
-                    name: "q27",
-                    end: 148000000,
-                    start: 138900001
                 },
                 {
                     stain: "gpos75",
@@ -6608,12 +5319,6 @@ CYTOBANDS=[
         {
             cytobands: [
                 {
-                    stain: "acen0",
-                    name: "p11",
-                    end: 10400000,
-                    start: 1
-                },
-                {
                     stain: "acen",
                     name: "p11.1",
                     end: 10400000,
@@ -6636,12 +5341,6 @@ CYTOBANDS=[
                     name: "p11.32",
                     end: 300000,
                     start: 1
-                },
-                {
-                    stain: "acen0",
-                    name: "q11",
-                    end: 26600000,
-                    start: 10400001
                 },
                 {
                     stain: "acen",
