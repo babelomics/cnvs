@@ -391,7 +391,7 @@
                         </div>
                         <!-- The dosis' numbers are corrects. This are linked with DB -->
                             <div class="input_container vertical layout" id="doses">
-                                <label class="stv">Copy Number(Doses):</label>
+                                <label class="stv">Copy Number (Doses):</label>
                                 <div class="vertical layout">
                                     <label for="doses1" class="stv-control flex">
                                         <input type="checkbox" name="doses" value="1" id="doses1" checked/>
@@ -982,7 +982,7 @@
             this.ethnicValue = [];
         },
         cnvToString: function(o){
-            return  o.chromosome + "\t" + o.start + "\t" + o.end + "\t" + o.code +"\n";
+            return  o.chromosome + "\t" + o.start + "\t" + o.end + "\t" + o.organization +"-"+ o.code +"\n";
         },
 //        cnvToString: function(o){
 //            var size = o.end - o.start;

@@ -459,10 +459,10 @@
 
             if (z.hasOwnProperty("19-Phenotype (HPO)")) {
                 newRow.phenotype = z["19-Phenotype (HPO)"].split(",");
+
+            }else{
+                alert("Insert Phenotype in cnv number "+ index +", please");
             }
-//            }else{
-//                alert("Insert Phenotype in cnv number "+ index +", please");
-//            }
 
             if(z.hasOwnProperty("28-Aneuploidy-Deletion/Duplication Syndrome")){
                 newRow.syndromeName = z["28-Aneuploidy-Deletion/Duplication Syndrome"].split(",");

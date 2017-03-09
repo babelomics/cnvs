@@ -151,7 +151,7 @@
 
                 <div  id="pacientsAdd">
                     <div class="input_container vertical layout">
-                        <label class="stv"> Locals id</label>
+                        <label class="stv"> Locals id*</label>
                         <div class="horizontal layout" style="margin: 0px 10px 0px 0px">
                             <input type="text" class="stv" id="localId1Add" name="localId1Add" placeholder="Local ID1" value="{{localIdValue1::change}}" rows="1" style="border-bottom: 0px"/>
                             <input type="text" class="stv" id="localId2Add" name="localId2Add" placeholder="Local ID2" value="{{localIdValue2::change}}" rows="1" style="border-bottom: 0px"/>
@@ -212,7 +212,7 @@
                 </div>
                 <div id="sampleCharAdd">
                     <div class="input_container vertical layout" id="statusAdd">
-                        <label class="stv"> Status</label>
+                        <label class="stv"> Status*</label>
                         <div class="input_container vertical layout">
                             <div class="horizontal layout">
                                 <label for="status0Add" class="stv-control flex">
@@ -240,7 +240,7 @@
                     </div>
 
                     <div class="input_container vertical layout" id="clAdd">
-                        <label class="stv">Cell line:</label>
+                        <label class="stv">Cell line*:</label>
                         <div class="horizontal layout">
                             <label for="cl0Add" class="stv-control flex">
                                 <input type="radio" name="clAdd" value="Germline" id="cl0Add" />
@@ -254,7 +254,7 @@
                     </div>
 
                     <div class="input_container vertical layout" id="typeSAdd">
-                        <label class="stv"> Type of Sample</label>
+                        <label class="stv"> Type of Sample*</label>
                         <div class="horizontal layout">
                             <label for="typeS0Add" class="stv-control flex">
                                 <input type="radio" name="typeSAdd" value="Blood" id="typeS0Add" />
@@ -293,7 +293,7 @@
                     </div>
 
                     <div class="input_container vertical layout" id ="genderAdd">
-                        <label class="stv"> Chromosomal Gender</label>
+                        <label class="stv"> Chromosomal Gender*</label>
                         <div class="horizontal layout">
                             <label for="gender3Add" class="stv-control flex">
                                 <input type="radio" name="genderAdd" value="XXX" id="gender3Add" />
@@ -350,7 +350,7 @@
                 </div>
                 <div id="genomeAnalysis">
                     <div class="input_container vertical layout">
-                        <label class="stv">Chromosomal Location:</label>
+                        <label class="stv">Chromosomal Location*:</label>
                         <div class="horizontal layout" id="positionsAdd">
                             <label class="stv">Chromosome:</label>
                             <input type="text" class="stv" id="regionCAdd" name="regionCAdd" placeholder="1" value="{{regionValueC::change}}" rows="3"/>
@@ -365,7 +365,7 @@
                         <textarea type="text" class="stv" id="geneAdd" name="geneAdd" placeholder="BRCA2,PPL" value="{{geneValue::change}}" rows="3" disabled></textarea>
                     </div>
                     <div id="typeAdd" class="input_container vertical layout">
-                        <label class="stv">Type of Variant:</label>
+                        <label class="stv">Type of Variant*:</label>
                         <div class="horizontal layout">
                             <label for="type0Add" class="stv-control flex">
                                 <input type="radio" name="type" id="type0Add" value="Gain" />
@@ -382,12 +382,12 @@
                         </div>
                     </div>
                     <div class="input_container vertical layout">
-                        <label class="stv">Number of variant:</label>
+                        <label class="stv">Number of variant*:</label>
                         <input type="number" class="stv" id="nvariantsAdd" name="nvariantsAdd" placeholder="0" value="{{nvariantsValue::change}}" rows="3"/>
                     </div>
                     <!-- The dosis' numbers are corrects. This are linked with DB -->
                     <div class="input_container vertical layout" id="dosesAdd">
-                        <label class="stv">Copy Number(Doses):</label>
+                        <label class="stv">Copy Number (Doses)*:</label>
                         <div class="vertical layout">
                             <div class="horizontal layout">
                                 <label for="doses0Add" class="stv-control flex">
@@ -419,9 +419,9 @@
                             </div>
                         </div>
                     </div>
-                    <label class="stv">Mean Log2 Ratio:</label>
+                    <label class="stv">Mean Log2 Ratio*:</label>
                     <div class="horizontal layout">
-                        <input type="text" class="stv flex" id="dosesNumAdd" name="dosesNumAdd" placeholder="Numeric doses,Ex:-0.5" value="{{dosesValue::change}}"/>
+                        <input type="text" class="stv flex" id="dosesNumAdd" name="dosesNumAdd" placeholder="Mean log 2 ratio,Ex:-0.5" value="{{dosesValue::change}}"/>
                     </div>
                     <!--<div class="input_container vertical layout">-->
                         <!--<label class="stv">Size(Kb):</label>-->
@@ -435,7 +435,7 @@
                         <input type="text" class="stv" id="cytobandAdd" name="cytobandAdd" placeholder="1p36.33" value="{{bandValue::change}}" rows="3"/>
                     </div>
                     <div class="input_container vertical layout" id = "assemblyAdd">
-                        <label class="stv">Assembly:</label>
+                        <label class="stv">Assembly*:</label>
                         <div class="horizontal layout">
                             <label for="hg18Add" class="stv-control flex">
                                 <input type="radio" name="assemblyAdd" value="hg18" id="hg18Add" />
@@ -464,7 +464,7 @@
 
                     <div class="input_container vertical layout">
                         <div class="horizontal layout">
-                            <label style="color: black" class="stv flex">  Phenotype(HPO)</label>
+                            <label style="color: black" class="stv flex">  Phenotype(HPO)*</label>
                             <div class="horizontal layout" style="color: #006699;margin-top:2px;line-height:28px;">
                                 <div class="stv-btn stv-btn-shdw searchBut" on-click="showHPO" title="Search HPO" ><i class="fa fa-search" aria-hidden="true"></i></div>
                                 <div class="stv-btn stv-btn-shdw" title="Clean HPO form" on-click="clearHPO"><img style="height: 16px; padding:2px" src="../images/escoba.ico"></div>
@@ -486,7 +486,7 @@
 
 
                     <div class="input_container vertical layout" id="inheritanceAdd">
-                        <label class="stv">Inheritance</label>
+                        <label class="stv">Inheritance*</label>
                         <label for="inhe0Add" class="stv-control flex">
                             <input type="radio" name="inheritanceAdd" value="De novo, mosaic" id="inhe0Add" />
                             <span>De novo, mosaic.</span>
@@ -530,7 +530,7 @@
 
 
                     <div class="input_container vertical layout" id="clisAdd">
-                        <label class="stv">Clinical Significance</label>
+                        <label class="stv">Clinical Significance*</label>
                         <div class ="horizontal layout">
                             <label for="clis0Add" class="stv-control flex">
                                 <input type="radio" name="clisAdd" value="Definitely Pathogenic" id="clis0Add" />
@@ -1132,6 +1132,9 @@
             if (hpov.length > 0) {
 //                newRow.phenotype = hpov.join(",");
                 newRow.phenotype = hpov;
+            } else{
+                validateForm = false;
+                alert("Insert phenotype, please")
             }
 
             if(this.syndromeValue.length >0){
