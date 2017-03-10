@@ -876,10 +876,15 @@
             if(this.decipherIdValue != null){
                 newRow.decipherId = this.decipherIdValue;
             }
+            var nowyear = new Date();
 
             //not required Facultativo
             if(this.yearIdValue != null){
-                newRow.yearOfBirth = this.yearIdValue;
+                if(isNaN(this.yearIdValue) || (this.yearIdValue < 1900) || (this.yearIdValue > nowyear.getFullYear())){
+                    alert("Year of birth is not a number os is less than 1900, check the form");
+                }else{
+                    newRow.yearOfBirth = this.yearIdValue;
+                }
             }else{
 //                alert("Insert year of birt, please")
                 promtForm = true;
@@ -888,7 +893,11 @@
 
             //not required Facultativo
             if (this.yearTestValue != null) {
-                newRow.yearTest = this.yearTestValue;
+                if(isNaN(this.yearTestValue) || (this.yearTestValue < 1950) || (this.yearTestValue > nowyear.getFullYear())){
+                    alert("Year of Test is not a number os is less than 1950, chech the form");
+                }else {
+                    newRow.yearTest = this.yearTestValue;
+                }
             } else {
 //                alert("Insert year of Test, please")
                 promtForm = true;
@@ -1019,7 +1028,12 @@
             }
 
             if(!this.regionValueC == ""){
-                newRow.chromosome = this.regionValueC;
+                if(CYTOBANDMAP[this.regionValueC] == null){
+                    alert (" the chromosome "+ this.regionValueC+ " not exits.");
+                    validateForm = false;
+                }else {
+                    newRow.chromosome = this.regionValueC;
+                }
             }else{
                 validateForm = false;
                 alert("Insert Chromosome, please")
@@ -1079,7 +1093,11 @@
             }
 
             if( this.dosesValue!= null && !this.dosesValue == "" ){
+                if(isNaN(this.dosesValue)){
+                    alert("Insert a correct Mean Log2 Ratio, please")
+                }else{
                 newRow.dosesNum = this.dosesValue;
+                }
             }else{
                 validateForm = false;
                 alert("Insert Doses Number, please")
