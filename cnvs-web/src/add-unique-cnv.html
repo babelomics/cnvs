@@ -1096,6 +1096,7 @@
 
             if( this.dosesValue!= null && !this.dosesValue == "" ){
                 if(isNaN(this.dosesValue)){
+                    validateForm = false;
                     alert("Insert a correct Mean Log2 Ratio, please")
                 }else{
                 newRow.dosesNum = this.dosesValue;
