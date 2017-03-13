@@ -315,6 +315,7 @@
             if(z.hasOwnProperty("20-Year of Birth")){
                 if(isNaN(z["20-Year of Birth"]) || (z["20-Year of Birth"] < 1900) || (z["20-Year of Birth"] > nowyear.getFullYear())){
                     alert("Year of birth is not a number os is less than 1900, check cnv number "+ index +", please");
+                    validateForm = false;
                 }else {
                     newRow.yearOfBirth = z["20-Year of Birth"];
                 }
@@ -324,6 +325,7 @@
             if (z.hasOwnProperty("21-Year test performed")) {
                 if(isNaN(z["21-Year test performed"]) || (z["21-Year test performed"] < 1950) || (z["21-Year test performed"] > nowyear.getFullYear())){
                     alert("Year of Test is not a number os is less than 1950, check cnv number "+ index +", please");
+                    validateForm = false;
                 }else {
                     newRow.yearTest = z["21-Year test performed"];
                 }
