@@ -425,7 +425,7 @@ CNVSRenderer.prototype.drawHistogram = function (cacheItem, svgGroup, i, args) {
         var xfin = this.getFeatureX(end, args) - args.pixelBase / 2;
         var width = 1 * args.pixelBase;
         if ((feature.type == "gain") && (feature.clinicalSig === "benign")) {
-           this.drawindividual(start, end, xini, xfin, feature, 21, "blue", feature, width, args);
+           this.drawindividual(start, end, xini, xfin,"blue", 21, svgGroup, feature, width, args);
         } else {
             this.drawempty( xini, xfin, "blue", 21, svgGroup, width);
         }
