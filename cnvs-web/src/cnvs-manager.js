@@ -56,13 +56,13 @@ var CNVSManager = {
 
             var request = new XMLHttpRequest();
             request.onload = function () {
-                console.log("Dentro del onload");
+                //console.log("Dentro del onload");
                 var contentType = this.getResponseHeader('Content-Type');
                 if (contentType === 'application/json') {
                     args.request.success(JSON.parse(this.response), this);
-                    console.log("Dentro del success 1");
+                    //console.log("Dentro del success 1");
                 } else {
-                    console.log("Dentro del success 2");
+                    //console.log("Dentro del success 2");
                     args.request.success(this.response, this);
                 }
             };
@@ -73,20 +73,20 @@ var CNVSManager = {
 
 
             if (args.request.headers != null) {
-                console.log("Dentro del headers");
+                //console.log("Dentro del headers");
                 for (var header in args.request.headers) {
                     request.setRequestHeader(header, args.request.headers[header]);
                 }
             }
             var body = null;
             if (args.request.body != null) {
-                console.log("Dentro del body");
+                //console.log("Dentro del body");
                 body = args.request.body;
 
             }
 
             if (args.request.responseType != null) {
-                console.log("Dentro del responseType");
+                //console.log("Dentro del responseType");
                 request.responseType = args.request.responseType;
             }
             request.send(body);
