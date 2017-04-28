@@ -19,7 +19,7 @@
     "iron-list": "^1.2.8",
     "fontawesome": "*",
     "cookies-js": "~1.1.0",
-    "stevia-elements": "https://github.com/babelomics/stevia-elements.git#develop",
+    "stevia-elements": "https://github.com/frasator/stevia-elements.git#develop",
     "jsorolla": "https://github.com/opencb/jsorolla.git#develop",
     "js-xlsx": "^0.8.5"
   },
