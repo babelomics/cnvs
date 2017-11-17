@@ -17,4 +17,5 @@ As the database is concerned, this contains the following main features:
 The main developers and maintainers are:
 
 Joaquin Dopazo (joaquin.dopazo@juntadeandalucia.es) (Founder and Project Leader)
+
 Susi Gallego (sgaort@gmail.es)
